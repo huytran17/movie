@@ -1,5 +1,8 @@
 import colors from 'vuetify/es5/util/colors'
 
+import en from './locales/en.json'
+import vi from './locales/vi.json'
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -41,8 +44,18 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/i18n'
   ],
+
+  i18n: {
+    locales: ['en', 'vi'],
+    defaultLocale: 'vi',
+    vueI18n: {
+      fallbackLocale: 'vi',
+      messages: { en, vi }
+    }
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
