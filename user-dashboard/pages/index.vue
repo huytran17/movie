@@ -78,6 +78,9 @@
 
 <script>
 export default {
-  name: 'IndexPage'
+  name: 'IndexPage',
+  async created() {
+    await this.$axios.get("/api/").then(response => console.log(response))
+  }
 }
 </script>
