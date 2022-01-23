@@ -4,6 +4,9 @@ import vi from './locales/vi.json';
 import en from './locales/en.json';
 
 export default {
+  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
+  ssr: false,
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - user-dashboard',
@@ -54,7 +57,7 @@ export default {
     vueI18n: {
       fallbackLocale: 'vi',
       messages: {
-        vi, en
+        en, vi
       }
     }
   },
