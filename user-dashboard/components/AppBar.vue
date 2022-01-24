@@ -1,11 +1,7 @@
 <template>
   <div>
-    <v-app-bar elevation="0" color="white">
+    <v-app-bar elevation="0" color="white" app clipped-left>
       <div class="d-flex justify-between">
-        <v-app-bar-nav-icon
-          @click="drawer = true"
-          class="mx-1"
-        ></v-app-bar-nav-icon>
         <div class="d-flex flex-column justify-center">
           <v-img :src="logo" max-width="128" max-height="33"></v-img>
         </div>
@@ -73,15 +69,34 @@
             </v-list>
             <v-divider></v-divider>
             <v-list nav dense>
-              <v-list-item-group v-model="selectedItem" color="primary">
+              <v-list-item-group v-model="user_selected_item" color="primary">
                 <v-list-item v-for="(item, i) in items" :key="i">
                   <v-list-item-icon>
-                    <v-icon v-text="item.icon"></v-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
                   </v-list-item-icon>
 
                   <v-list-item-content>
                     <v-list-item-title> {{ item.text }} </v-list-item-title>
                   </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item>
+                  <template v-slot:default="{ active }">
+                    <v-list-item-icon>
+                      <v-icon>mdi-weather-night</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title>{{
+                        $t("Night Mode")
+                      }}</v-list-item-title>
+                    </v-list-item-content>
+                    <v-list-item-action>
+                      <v-checkbox
+                        :input-value="active"
+                        color="primary"
+                      ></v-checkbox>
+                    </v-list-item-action>
+                  </template>
                 </v-list-item>
               </v-list-item-group>
             </v-list>
@@ -90,7 +105,7 @@
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer permanent clipped app expand-on-hover>
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
@@ -112,15 +127,22 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
+
+    <LeftSideBox />
   </div>
 </template>
 
 <script>
+import LeftSideBox from "@/components/LeftSideBox";
+
 export default {
   name: "AppBar",
+  components: {
+    LeftSideBox,
+  },
   data() {
     return {
-      drawer: false,
+      night_mode: false,
       group: null,
       logo: require("@/assets/images/logo.png"),
       logo_mobile: require("@/assets/images/logo-mobile.png"),
@@ -131,7 +153,7 @@ export default {
         email: "john.doe@doe.com",
       },
       search_placeholder: this.$t("Search for Friends , Videos and more.."),
-      selectedItem: 0,
+      user_selected_item: 0,
       items: [
         { text: "My Files", icon: "mdi-folder" },
         { text: "Shared with me", icon: "mdi-account-multiple" },
