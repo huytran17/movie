@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar elevation="0" color="white pt-3 " app clipped-left>
+    <v-app-bar elevation="0" app clipped-left color="white">
       <div class="d-flex justify-between">
         <div class="d-flex flex-column justify-center">
           <nuxt-link to="/">
@@ -23,7 +23,7 @@
         <div v-for="(app_icon, index) in app_bar_icons" :key="index">
           <v-badge bordered color="error" :content="app_icon.amount" overlap>
             <div class="icon">
-              <v-btn icon small class="btn-app-bar-icon">
+              <v-btn icon small class="btn-app-bar-icon" color="black">
                 <v-icon size="21">{{ app_icon.icon }}</v-icon>
               </v-btn>
             </div>
@@ -76,7 +76,7 @@
                   </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item>
+                <v-list-item @click="changeAppTheme()">
                   <template v-slot:default="{ active }">
                     <v-list-item-icon>
                       <v-icon>mdi-weather-night</v-icon>
@@ -101,7 +101,7 @@
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer permanent clipped app expand-on-hover class="mt-6">
+    <v-navigation-drawer permanent clipped app expand-on-hover>
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
@@ -131,7 +131,6 @@ export default {
   },
   data() {
     return {
-      night_mode: false,
       group: null,
       logo: require("@/assets/images/logo.png"),
       logo_mobile: require("@/assets/images/logo-mobile.png"),
@@ -175,6 +174,14 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    /**
+     * @description change the app theme
+     */
+    changeAppTheme() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    },
   },
 };
 </script>
