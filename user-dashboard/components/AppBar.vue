@@ -1,9 +1,11 @@
 <template>
   <div>
-    <v-app-bar elevation="0" color="white" app clipped-left>
+    <v-app-bar elevation="0" color="white pt-3 " app clipped-left>
       <div class="d-flex justify-between">
         <div class="d-flex flex-column justify-center">
-          <v-img :src="logo" max-width="128" max-height="33"></v-img>
+          <nuxt-link to="/">
+            <v-img :src="logo" max-width="128" max-height="33"></v-img>
+          </nuxt-link>
         </div>
       </div>
       <div class="d-flex" justify="between">
@@ -18,21 +20,15 @@
         ></v-text-field>
       </div>
       <div class="d-flex icon-wrapper justify-between">
-        <v-badge bordered color="error" content="3" overlap>
-          <div class="icon">
-            <v-icon size="21">mdi-cart-outline</v-icon>
-          </div>
-        </v-badge>
-        <v-badge bordered color="error" content="3" overlap>
-          <div class="icon">
-            <v-icon size="21">mdi-message-text-outline</v-icon>
-          </div>
-        </v-badge>
-        <v-badge bordered color="error" content="3" overlap>
-          <div class="icon">
-            <v-icon size="21">mdi-bell-ring-outline</v-icon>
-          </div>
-        </v-badge>
+        <div v-for="(app_icon, index) in app_bar_icons" :key="index">
+          <v-badge bordered color="error" :content="app_icon.amount" overlap>
+            <div class="icon">
+              <v-btn icon small class="btn-app-bar-icon">
+                <v-icon size="21">{{ app_icon.icon }}</v-icon>
+              </v-btn>
+            </div>
+          </v-badge>
+        </div>
 
         <v-menu bottom min-width="200px" rounded offset-y>
           <template v-slot:activator="{ on }">
@@ -59,24 +55,24 @@
               <v-list-item link class="pl-2">
                 <v-list-item-content>
                   <v-list-item-title class="text-body-2 text-sm-body-1">
-                    John Leider
+                    {{ user.username }}
                   </v-list-item-title>
-                  <v-list-item-subtitle class="text-caption text-sm-body-2"
-                    >john@vuetifyjs.com</v-list-item-subtitle
-                  >
+                  <v-list-item-subtitle class="text-caption text-sm-body-2">{{
+                    user.email
+                  }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
             <v-list nav dense>
               <v-list-item-group v-model="user_selected_item" color="primary">
-                <v-list-item v-for="(item, i) in items" :key="i">
+                <v-list-item v-for="(item, i) in user_menu_items" :key="i">
                   <v-list-item-icon>
                     <v-icon>{{ item.icon }}</v-icon>
                   </v-list-item-icon>
 
                   <v-list-item-content>
-                    <v-list-item-title> {{ item.text }} </v-list-item-title>
+                    <v-list-item-title> {{ item.label }} </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
 
@@ -105,24 +101,17 @@
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer permanent clipped app expand-on-hover>
+    <v-navigation-drawer permanent clipped app expand-on-hover class="mt-6">
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item>
+          <v-list-item v-for="(nav_item, index) in nav_items" :key="index">
             <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
+              <v-icon>{{ nav_item.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
+            <v-list-item-title>{{ nav_item.label }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -154,14 +143,36 @@ export default {
       },
       search_placeholder: this.$t("Search for Friends , Videos and more.."),
       user_selected_item: 0,
-      items: [
-        { text: "My Files", icon: "mdi-folder" },
-        { text: "Shared with me", icon: "mdi-account-multiple" },
-        { text: "Starred", icon: "mdi-star" },
-        { text: "Recent", icon: "mdi-history" },
-        { text: "Offline", icon: "mdi-check-circle" },
-        { text: "Uploads", icon: "mdi-upload" },
-        { text: "Backups", icon: "mdi-cloud-upload" },
+      user_menu_items: [
+        { label: "My Files", icon: "mdi-folder" },
+        { label: "Shared with me", icon: "mdi-account-multiple" },
+        { label: "Starred", icon: "mdi-star" },
+        { label: "Recent", icon: "mdi-history" },
+        { label: "Offline", icon: "mdi-check-circle" },
+        { label: "Uploads", icon: "mdi-upload" },
+        { label: "Backups", icon: "mdi-cloud-upload" },
+      ],
+      nav_items: [
+        { label: "Home", icon: "mdi-home" },
+        { label: "Account", icon: "mdi-account" },
+      ],
+      user: {
+        username: "Huy Tran",
+        email: "huytran.13022k@gmail.com",
+      },
+      app_bar_icons: [
+        {
+          amount: 3,
+          icon: "mdi-cart-outline",
+        },
+        {
+          amount: 5,
+          icon: "mdi-message-text-outline",
+        },
+        {
+          amount: 9,
+          icon: "mdi-bell-ring-outline",
+        },
       ],
     };
   },
@@ -182,7 +193,6 @@ export default {
   -webkit-box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
 }
 .icon {
-  padding: 8px;
   border-radius: 999px;
   background: #f0f2f5;
 }
@@ -196,5 +206,8 @@ export default {
 .list-item-avatar-wrapper {
   flex-basis: 70px;
   max-height: 70px;
+}
+.btn-app-bar-icon {
+  padding: 20px;
 }
 </style>
