@@ -1,11 +1,11 @@
 <template>
-  <div class="ml-auto side-box-wrapper mt-3">
-    <div>
+  <div class="ml-auto side-box-wrapper mt-6">
+    <template>
       <BirthdayBox />
-    </div>
-    <div>
+    </template>
+    <template class="contact-box-wrapper">
       <ContactBox />
-    </div>
+    </template>
   </div>
 </template>
 
@@ -25,5 +25,7 @@ export default {
 <style scoped>
 .side-box-wrapper {
   width: 300px;
+}
+.contact-box-wrapper {
 }
 </style>
