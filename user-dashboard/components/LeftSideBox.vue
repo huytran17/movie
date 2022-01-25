@@ -26,6 +26,4 @@ export default {
 .side-box-wrapper {
   width: 300px;
 }
-.contact-box-wrapper {
-}
 </style>
