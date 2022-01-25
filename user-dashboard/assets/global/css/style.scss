@@ -31,3 +31,34 @@
 .no-box-shadow {
   box-shadow: none !important;
 }
+.tiny-scrollbar-vertical::-webkit-scrollbar {
+  width: 1px !important;
+}
+.tiny-scrollbar-vertical::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+.tiny-scrollbar-vertical::-webkit-scrollbar-thumb {
+  background: rgb(126, 122, 122) !important;
+}
+.tiny-scrollbar-vertical::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.tiny-scrollbar-horizontal::-webkit-scrollbar {
+  height: 1px !important;
+}
+.tiny-scrollbar-horizontal::-webkit-scrollbar-track {
+  background: #f1f1f1 !important;
+}
+.tiny-scrollbar-horizontal::-webkit-scrollbar-thumb {
+  background: rgb(126, 122, 122) !important;
+}
+.tiny-scrollbar-horizontal::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.no-boder {
+  border: none !important;
+}
+.clickable {
+  cursor: pointer;
+}
