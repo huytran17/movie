@@ -1,6 +1,10 @@
 <template>
   <div>
     <v-app-bar elevation="0" app clipped-left color="white">
+      <v-app-bar-nav-icon
+        v-if="smaller_than_1025"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
       <div class="d-flex justify-between">
         <div class="d-flex flex-column justify-center">
           <nuxt-link to="/">
@@ -104,7 +108,37 @@
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer permanent clipped app expand-on-hover>
+    <v-navigation-drawer
+      v-if="!smaller_than_1025"
+      permanent
+      clipped
+      app
+      expand-on-hover
+    >
+      <v-list nav dense>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item v-for="(nav_item, index) in nav_items" :key="index">
+            <v-list-item-icon>
+              <v-icon>{{ nav_item.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>{{ nav_item.label }}</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-navigation-drawer
+      v-else
+      v-model="drawer"
+      absolute
+      app
+      clipped
+      temporary
+      class="no-box-shadow"
+    >
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
@@ -136,6 +170,7 @@ export default {
   },
   data() {
     return {
+      drawer: false,
       group: null,
       logo: require("@/assets/images/logo.png"),
       logo_mobile: require("@/assets/images/logo-mobile.png"),
@@ -214,6 +249,8 @@ export default {
 ::v-deep.v-menu__content {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
   -webkit-box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+}
+::v-deep .v-navigation-drawer--is-mobile {
 }
 .icon {
   border-radius: 999px;
