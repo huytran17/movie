@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5">
+  <div class="mt-5" v-if="!smaller_than_1025">
     <div class="text-body-1 text-sm-h6 font-weight-medium pt-1 pb-5">
       <span>{{ $t("Contacts") }}</span>
     </div>
@@ -76,8 +76,11 @@
 </template>
 
 <script>
+import systemMixins from "@/mixins/system";
+
 export default {
   name: "ContactBox",
+  mixins: [systemMixins],
   data() {
     return {
       contact_tab: null,
@@ -174,6 +177,17 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.onResize();
+
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
+
+  beforeDestroy() {
+    if (typeof window === "undefined") return;
+
+    window.removeEventListener("resize", this.onResize, { passive: true });
   },
 };
 </script>

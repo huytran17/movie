@@ -1,5 +1,9 @@
 <template>
-  <v-sheet height="125" class="pl-3 pr-1 py-2 soft-box-shadow rounded-lg">
+  <v-sheet
+    height="125"
+    class="pl-3 pr-1 py-2 soft-box-shadow rounded-lg"
+    v-if="!smaller_than_1025"
+  >
     <div class="d-flex flex-column justify-around h-100">
       <div class="text-body-2 text-sm-body-1 font-weight-bold">
         <span>{{ $t("Birthdays") }}</span>
@@ -25,8 +29,11 @@
 </template>
 
 <script>
+import systemMixins from "@/mixins/system";
+
 export default {
   name: "BirthdayBox",
+  mixins: [systemMixins],
   data() {
     return {
       gift_icon: require("@/assets/images/gift-icon.png"),
@@ -39,6 +46,17 @@ export default {
         },
       },
     };
+  },
+  mounted() {
+    this.onResize();
+
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
+
+  beforeDestroy() {
+    if (typeof window === "undefined") return;
+
+    window.removeEventListener("resize", this.onResize, { passive: true });
   },
 };
 </script>
