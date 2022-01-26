@@ -8,7 +8,7 @@
           </nuxt-link>
         </div>
       </div>
-      <div class="d-flex" justify="between">
+      <div class="d-flex" justify="between" v-if="!smaller_than_800">
         <v-text-field
           hide-details
           filled
@@ -19,7 +19,10 @@
           v-model="search"
         ></v-text-field>
       </div>
-      <div class="d-flex icon-wrapper justify-between">
+      <div
+        class="d-flex icon-wrapper justify-between"
+        v-if="!smaller_than_1025"
+      >
         <div v-for="(app_icon, index) in app_bar_icons" :key="index">
           <v-badge bordered color="error" :content="app_icon.amount" overlap>
             <div class="icon">
@@ -122,10 +125,12 @@
 </template>
 
 <script>
+import systemMixins from "@/mixins/system";
 import LeftSideBox from "@/components/LeftSideBox";
 
 export default {
   name: "AppBar",
+  mixins: [systemMixins],
   components: {
     LeftSideBox,
   },
@@ -182,6 +187,11 @@ export default {
     changeAppTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
+  },
+  mounted() {
+    this.onResize();
+
+    window.addEventListener("resize", this.onResize, { passive: true });
   },
 };
 </script>
