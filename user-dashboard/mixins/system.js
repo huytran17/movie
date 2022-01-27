@@ -8,6 +8,20 @@ export default {
   computed: {
     /**
      *
+     * @returns true if screen size < 1025px
+     */
+    is_smaller_than_1025() {
+      return this.smaller_than_1025;
+    },
+    /**
+     *
+     * @returns true if screen size < 800px
+     */
+    is_smaller_than_800() {
+      return this.smaller_than_800;
+    },
+    /**
+     *
      * @returns true if xs;
      */
     is_mobile() {
@@ -50,5 +64,16 @@ export default {
       this.smaller_than_1025 = window.innerWidth < 1025;
       this.smaller_than_800 = window.innerWidth < 800;
     },
+  },
+  mounted() {
+    this.onResize();
+
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
+
+  beforeDestroy() {
+    if (typeof window === "undefined") return;
+
+    window.removeEventListener("resize", this.onResize, { passive: true });
   },
 };
