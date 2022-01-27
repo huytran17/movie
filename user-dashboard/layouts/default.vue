@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <v-container fluid>
-        <HomeDefault />
-      </v-container>
+      <HomeDefault />
     </v-main>
   </v-app>
 </template>
