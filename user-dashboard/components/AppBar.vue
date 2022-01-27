@@ -3,7 +3,7 @@
     <v-app-bar elevation="0" app clipped-left color="white">
       <v-app-bar-nav-icon
         v-if="is_smaller_than_1025"
-        @click.stop="is_open_drawer = !is_open_drawer"
+        @click.stop="toggleDrawer"
       ></v-app-bar-nav-icon>
       <div class="d-flex justify-between">
         <div class="d-flex flex-column justify-center">
@@ -107,28 +107,18 @@
         </v-menu>
       </div>
     </v-app-bar>
-
-    <Drawer :nav_items="nav_items" :is_open_drawer="is_open_drawer" />
-
-    <LeftSideBox />
   </div>
 </template>
 
 <script>
 import systemMixins from "@/mixins/system";
-import LeftSideBox from "@/components/LeftSideBox";
-import Drawer from "@/components/Drawer";
 
 export default {
   name: "AppBar",
   mixins: [systemMixins],
-  components: {
-    LeftSideBox,
-    Drawer,
-  },
+
   data() {
     return {
-      is_open_drawer: false,
       logo: require("@/assets/images/logo.png"),
       logo_mobile: require("@/assets/images/logo-mobile.png"),
       search: null,
@@ -148,10 +138,7 @@ export default {
         { label: "Uploads", icon: "mdi-upload" },
         { label: "Backups", icon: "mdi-cloud-upload" },
       ],
-      nav_items: [
-        { label: "Home", icon: "mdi-home" },
-        { label: "Account", icon: "mdi-account" },
-      ],
+
       user: {
         username: "Huy Tran",
         email: "huytran.13022k@gmail.com",
@@ -178,6 +165,12 @@ export default {
      */
     changeAppTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    },
+    /**
+     * @description toggle the drawer
+     */
+    toggleDrawer() {
+      this.$emit("toggle-drawer");
     },
   },
 };
