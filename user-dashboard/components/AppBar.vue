@@ -2,8 +2,8 @@
   <div>
     <v-app-bar elevation="0" app clipped-left color="white">
       <v-app-bar-nav-icon
-        v-if="smaller_than_1025"
-        @click.stop="drawer = !drawer"
+        v-if="is_smaller_than_1025"
+        @click.stop="is_open_drawer = !is_open_drawer"
       ></v-app-bar-nav-icon>
       <div class="d-flex justify-between">
         <div class="d-flex flex-column justify-center">
@@ -12,7 +12,7 @@
           </nuxt-link>
         </div>
       </div>
-      <div class="d-flex" justify="between" v-if="!smaller_than_800">
+      <div class="d-flex" justify="between" v-if="!is_smaller_than_800">
         <v-text-field
           hide-details
           filled
@@ -25,7 +25,7 @@
       </div>
       <div
         class="d-flex icon-wrapper justify-between"
-        v-if="!smaller_than_1025"
+        v-if="!is_smaller_than_1025"
       >
         <div v-for="(app_icon, index) in app_bar_icons" :key="index">
           <v-badge bordered color="error" :content="app_icon.amount" overlap>
@@ -108,51 +108,7 @@
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer
-      v-if="!smaller_than_1025"
-      permanent
-      clipped
-      app
-      expand-on-hover
-    >
-      <v-list nav dense>
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-4"
-        >
-          <v-list-item v-for="(nav_item, index) in nav_items" :key="index">
-            <v-list-item-icon>
-              <v-icon>{{ nav_item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>{{ nav_item.label }}</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-navigation-drawer
-      v-else
-      v-model="drawer"
-      absolute
-      app
-      clipped
-      temporary
-      class="no-box-shadow"
-    >
-      <v-list nav dense>
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-4"
-        >
-          <v-list-item v-for="(nav_item, index) in nav_items" :key="index">
-            <v-list-item-icon>
-              <v-icon>{{ nav_item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>{{ nav_item.label }}</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
+    <Drawer :nav_items="nav_items" :is_open_drawer="is_open_drawer" />
 
     <LeftSideBox />
   </div>
@@ -161,17 +117,18 @@
 <script>
 import systemMixins from "@/mixins/system";
 import LeftSideBox from "@/components/LeftSideBox";
+import Drawer from "@/components/Drawer";
 
 export default {
   name: "AppBar",
   mixins: [systemMixins],
   components: {
     LeftSideBox,
+    Drawer,
   },
   data() {
     return {
-      drawer: false,
-      group: null,
+      is_open_drawer: false,
       logo: require("@/assets/images/logo.png"),
       logo_mobile: require("@/assets/images/logo-mobile.png"),
       search: null,
@@ -223,17 +180,6 @@ export default {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
   },
-  mounted() {
-    this.onResize();
-
-    window.addEventListener("resize", this.onResize, { passive: true });
-  },
-
-  beforeDestroy() {
-    if (typeof window === "undefined") return;
-
-    window.removeEventListener("resize", this.onResize, { passive: true });
-  },
 };
 </script>
 
@@ -250,7 +196,7 @@ export default {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
   -webkit-box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
 }
-::v-deep .v-navigation-drawer--is-mobile {
+::v-deep .v-navigation-is_open_drawer--is-mobile {
 }
 .icon {
   border-radius: 999px;
