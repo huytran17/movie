@@ -3,7 +3,7 @@
     <template>
       <BirthdayBox />
     </template>
-    <template class="contact-box-wrapper">
+    <template>
       <ContactBox />
     </template>
   </div>
@@ -25,5 +25,11 @@ export default {
 <style scoped>
 .side-box-wrapper {
   width: 300px;
+}
+@media only screen and (max-width: 1025px) {
+  .side-box-wrapper {
+    width: 95% !important;
+    margin: auto;
+  }
 }
 </style>

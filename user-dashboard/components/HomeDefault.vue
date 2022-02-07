@@ -14,27 +14,25 @@
       :user_menu_items="user_menu_items"
     />
 
-    <LeftSideBox />
-
-    <!-- <ContactDialog /> -->
+    <LeftSideBox v-if="!smaller_than_1025"/>
   </v-container>
 </template>
 
 <script>
+import systemMixins from "@/mixins/system";
 import AppBar from "@/components/AppBar";
 import LeftSideBox from "@/components/LeftSideBox";
 import Drawer from "@/components/Drawer";
 import BottomNav from "@/components/BottomNav";
-import ContactDialog from "@/components/ContactDialog";
 
 export default {
   name: "HomeDefault",
+  mixins: [systemMixins],
   components: {
     LeftSideBox,
     Drawer,
     BottomNav,
     AppBar,
-    ContactDialog,
   },
   data() {
     return {
