@@ -6,7 +6,9 @@
     transition="slide-x-reverse-transition"
   >
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark v-bind="attrs" v-on="on"> Open Dialog </v-btn>
+      <v-btn color="primary" text v-bind="attrs" v-on="on" class="px-0" small>
+        <v-icon> mdi-dots-grid </v-icon></v-btn
+      >
     </template>
     <v-card>
       <v-toolbar dark color="primary">
@@ -97,4 +99,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+::v-deep .v-btn::before {
+  background-color: #ffffff !important;
+}
+</style>

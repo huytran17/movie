@@ -16,7 +16,7 @@
 
     <LeftSideBox />
 
-    <ContactDialog />
+    <!-- <ContactDialog /> -->
   </v-container>
 </template>
 

@@ -38,6 +38,8 @@
         </div>
         <ProfileMenu :user="user" :user_menu_items="user_menu_items" />
       </div>
+
+      <ContactDialog v-if="is_smaller_than_1025" />
     </v-app-bar>
   </div>
 </template>
@@ -45,11 +47,13 @@
 <script>
 import systemMixins from "@/mixins/system";
 import ProfileMenu from "@/components/ProfileMenu";
+import ContactDialog from "@/components/ContactDialog";
 
 export default {
   name: "AppBar",
   components: {
     ProfileMenu,
+    ContactDialog,
   },
   mixins: [systemMixins],
   props: {
