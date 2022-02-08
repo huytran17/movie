@@ -11,5 +11,8 @@
     "express": "^4.17.2",
     "nodemon": "^2.0.15"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.2.1"
+  }
 }
