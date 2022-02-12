@@ -1,6 +1,5 @@
-import moment from "moment";
-import { AdminModel } from "../../models";
 import Admin from "../../entities/admin";
+import IAdmin from "../../interfaces/admin";
 
 export default interface IAdminDb {}
 
