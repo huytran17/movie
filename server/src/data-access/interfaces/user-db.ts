@@ -1,6 +1,5 @@
 import User from "../../entities/user";
 import IUser from "../../interfaces/user";
-import { ClientSession } from "mongoose";
 
 export default interface IUserDb {
   findAll: () => Promise<IUser[] | null>;

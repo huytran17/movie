@@ -16,8 +16,9 @@ makeDb().then(async () => {
   const user = await UserDb.findOne();
   if (!user) {
     await UserDb.insert({
-      first_name: "joshua",
-      last_name: "phua",
+      first_name: "Huy",
+      last_name: "Tran",
+      username: "huytran",
       email: "a@gmail.com",
       password: "dadssd",
     });
