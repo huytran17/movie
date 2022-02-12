@@ -3,21 +3,22 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const database_uri = process.env.DATABASE_URI || "";
+async function makeDb() {
+  const DATABASE_URL = process.env.DATABASE_URI || "";
+  const DATABASE_OPTIONS = {
+    useNewUrlParser: true,
+    connectTimeoutMS: 10000,
+    useUnifiedTopology: true, //if set to true, create error: "MongooseServerSelectionError: getaddrinfo ENOTFOUND mongo mongo:27017"
+  };
 
-const connect_options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+  const is_not_connected = mongoose.connection.readyState == 0;
+  if (is_not_connected) {
+    console.log("Setting up database...");
+    await mongoose.connect(DATABASE_URL, DATABASE_OPTIONS);
+    console.log("Successfully connected to DB");
+  }
 
-export default function database_connect() {
-  mongoose.connect(database_uri);
-
-  const db = mongoose.connection;
-  db.on("error", function (err) {
-    if (err) console.log(err);
-  });
-  db.once("open", function () {
-    console.log("Connect to database successfully!");
-  });
+  return mongoose;
 }
+
+export default makeDb;

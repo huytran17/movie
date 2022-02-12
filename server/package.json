@@ -2,7 +2,7 @@
   "author": "Huy Tran",
   "license": "ISC",
   "scripts": {
-    "dev": "nodemon app.ts",
+    "dev": "nodemon src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.0",
+    "moment": "^2.29.1",
     "mongoose": "^6.2.1"
   }
 }
