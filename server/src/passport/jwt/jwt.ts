@@ -6,6 +6,7 @@ import { UserDb } from "../../data-access";
 const JWTStrategy = passport_jwt.Strategy;
 
 passport.use(
+  "jwt",
   new JWTStrategy(options, async function (payload, done) {
     try {
       const user = await UserDb.findById({ id: payload.sub });
