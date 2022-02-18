@@ -5,7 +5,7 @@ import { ActionTypes } from "./action-types";
 import { MutationTypes } from "./mutation-types";
 import _ from "lodash";
 
-export const actions: ActionTree<UserState, RootState> = {
+const actions: ActionTree<UserState, RootState> = {
   /**
    *
    * @param param0
@@ -34,3 +34,5 @@ export const actions: ActionTree<UserState, RootState> = {
     }
   },
 };
+
+export default actions;

@@ -12,8 +12,16 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/passport": "^1.0.7",
+    "@types/passport-jwt": "^3.0.6",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "moment": "^2.29.1",
-    "mongoose": "^6.2.1"
+    "mongoose": "^6.2.1",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0"
   }
 }

@@ -1,14 +1,17 @@
 import express from "express";
 import makeDb from "./databases";
 import { UserDb } from "./data-access";
+import cors from "cors";
+import bodyParser from "body-parser";
+import appRouter from "./routes";
 
 const app = express();
 
-app.get("/api/", (req, res) =>
-  res.json({
-    message: "Hello",
-  })
-);
+app.use(appRouter);
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.listen(3000, () => console.log("Server is listening on port 3000"));
 

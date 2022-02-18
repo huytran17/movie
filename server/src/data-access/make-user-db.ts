@@ -31,8 +31,20 @@ export default function makeUserDb({
       return null;
     }
 
+    async findById({ id }: { id: string }): Promise<User | null> {
+      const existing = await userDbModel
+        .findOne({ _id: id })
+        .lean({ virtuals: true });
+
+      if (existing) {
+        return new User(existing);
+      }
+
+      return null;
+    }
+
     async findOne(): Promise<User | null> {
-      const existing = await userDbModel.findOne();
+      const existing = await userDbModel.findOne().lean({ virtuals: true });
 
       if (existing) {
         return new User(existing);

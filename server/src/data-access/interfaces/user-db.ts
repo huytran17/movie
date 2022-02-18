@@ -5,6 +5,7 @@ export default interface IUserDb {
   findAll: () => Promise<IUser[] | null>;
   findOne: () => Promise<User | null>;
   insert: (payload: Partial<IUser>) => Promise<User | null>;
+  findById: ({ id }: { id: string }) => Promise<User | null>;
 }
 
 export interface PaginatedUserResult {

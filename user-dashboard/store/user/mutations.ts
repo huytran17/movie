@@ -3,7 +3,7 @@ import { UserState } from "./index";
 import { MutationTypes } from "./mutation-types";
 import _ from "lodash";
 
-export const mutations: MutationTree<UserState> = {
+const mutations: MutationTree<UserState> = {
   /**
    *
    * @param state
@@ -47,3 +47,5 @@ export const mutations: MutationTree<UserState> = {
     state.pagination = data;
   },
 };
+
+export default mutations;
