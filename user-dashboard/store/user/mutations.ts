@@ -30,6 +30,11 @@ const mutations: MutationTree<UserState> = {
     state.is_loading = data;
   },
 
+  /**
+   * set user pagination
+   * @param state
+   * @param param1
+   */
   [MutationTypes.SET_USERS_PAGINATION](
     state,
     {

@@ -30,7 +30,7 @@ const actions: ActionTree<UserState, RootState> = {
 
       return users;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 };

@@ -7,6 +7,8 @@ export const getters: GetterTree<AuthState, RootState> = {
     return "/auth";
   },
   user: (state) => state.user,
+  login_data: (state) => state.login_data,
+  register_data: (state) => state.register_data,
 };
 
 export default getters;
