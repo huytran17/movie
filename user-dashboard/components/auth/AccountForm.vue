@@ -36,10 +36,6 @@ export default {
   mixins: [authMixin],
   data() {
     return {
-      login_data: {
-        email: "",
-        password: "",
-      },
       logo: require("@/assets/images/logo.png"),
     };
   },
