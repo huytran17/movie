@@ -1,8 +1,9 @@
 import express from "express";
 import passport from "passport";
+import authenticateJWT from "../../middlewares/authenticateJWT";
 
 const authRouter = express.Router();
 
-authRouter.post("/login", passport.authenticate("jwt", { session: false }));
+authRouter.get("/login", authenticateJWT());
 
 export default authRouter;

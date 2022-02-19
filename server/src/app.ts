@@ -4,14 +4,15 @@ import { UserDb } from "./data-access";
 import cors from "cors";
 import bodyParser from "body-parser";
 import appRouter from "./routes";
+import passport from "./passport";
 
 const app = express();
-
-app.use(appRouter);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(appRouter);
 
 app.listen(3000, () => console.log("Server is listening on port 3000"));
 
