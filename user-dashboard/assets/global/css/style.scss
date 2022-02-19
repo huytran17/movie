@@ -18,6 +18,27 @@
 .h-100 {
   height: 100%;
 }
+.w-0 {
+  width: 0%;
+}
+.w-25 {
+  width: 25%;
+}
+.w-50 {
+  width: 50%;
+}
+.w-75 {
+  width: 75%;
+}
+.w-100 {
+  width: 100%;
+}
+.position-absolute {
+  position: absolute !important;
+}
+.position-relative {
+  position: relative !important;
+}
 .max-width {
   width: 100%;
 }
@@ -61,7 +82,7 @@
 .tiny-scrollbar-horizontal::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-.no-boder {
+.no-border {
   border: none !important;
 }
 .clickable {
