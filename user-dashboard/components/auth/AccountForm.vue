@@ -49,7 +49,6 @@ export default {
      */
     setLoginData(data, path) {
       this.SET_LOGIN_DATA({ data, path });
-      console.log(this.login_data);
     },
     /**
      * login
