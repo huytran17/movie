@@ -8,5 +8,11 @@
     "Contacts": "Liên lạc",
     "Groups": "Nhóm",
     "Friends": "Bạn bè",
-    "other": "người khác"
+    "other": "người khác",
+    "E-mail is required.": "E-mail là bắt buộc.",
+    "E-mail must be valid.": "E-mail không hợp lệ.",
+    "Password is required.": "Mật khẩu là bắt buộc.",
+    "Password must be min 8 characters.": "Mật khẩu không hợp lệ.",
+    "Login": "Đăng nhập",
+    "Password": "Mật khẩu"
 }
