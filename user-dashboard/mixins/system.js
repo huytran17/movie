@@ -1,3 +1,5 @@
+import { mapMutations, mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -6,6 +8,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      show_drawer: "show_drawer",
+    }),
     /**
      *
      * @returns true if screen size < 1025px
@@ -43,6 +48,10 @@ export default {
     },
   },
   methods: {
+    ...mapMutations({
+      SET_SHOW_DRAWER: "SET_SHOW_DRAWER",
+      TOGGLE_SHOW_DRAWER: "TOGGLE_SHOW_DRAWER",
+    }),
     /**
      *
      * @param {*} date

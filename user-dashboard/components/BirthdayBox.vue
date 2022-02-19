@@ -1,5 +1,8 @@
 <template>
-  <v-sheet height="125" max-width="300" class="pl-3 pr-1 py-2 soft-box-shadow rounded-lg mx-auto mx-sm-0">
+  <v-sheet
+    height="125"
+    class="pl-3 pr-1 py-2 soft-box-shadow rounded-lg mx-auto mx-sm-0"
+  >
     <div class="d-flex flex-column justify-around h-100">
       <div class="text-body-2 text-sm-body-1 font-weight-bold">
         <span>{{ $t("Birthdays") }}</span>

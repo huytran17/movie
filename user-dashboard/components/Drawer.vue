@@ -1,29 +1,7 @@
 <template>
   <v-navigation-drawer
-    v-if="!is_smaller_than_1025"
-    permanent
-    clipped
-    app
-    expand-on-hover
-  >
-    <v-list nav dense>
-      <v-list-item-group active-class="deep-purple--text text--accent-4">
-        <v-list-item v-for="(nav_item, index) in nav_items" :key="index">
-          <v-list-item-icon>
-            <v-icon>{{ nav_item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>{{ nav_item.label }}</v-list-item-title>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
-  </v-navigation-drawer>
-
-  <v-navigation-drawer
-    v-else
-    v-model="drawer"
+    v-model="local_show_drawer"
     absolute
-    app
-    clipped
     temporary
     class="no-box-shadow"
   >
@@ -62,12 +40,15 @@ export default {
   },
   data() {
     return {
-      drawer: false,
+      local_show_drawer: false,
     };
   },
   watch: {
-    is_open_drawer() {
-      this.drawer = !this.drawer;
+    local_show_drawer(data) {
+      this.SET_SHOW_DRAWER({ data });
+    },
+    show_drawer(data) {
+      this.local_show_drawer = data;
     },
   },
 };

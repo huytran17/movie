@@ -8,13 +8,21 @@
     />
 
     <Drawer :nav_items="nav_items" :is_open_drawer="is_open_drawer" />
+
     <BottomNav
       :app_bar_icons="app_bar_icons"
       :user="user"
       :user_menu_items="user_menu_items"
     />
 
-    <LeftSideBox v-if="!smaller_than_1025"/>
+    <div class="d-flex justify-between">
+      <div class="pl-2">
+        <nuxt />
+      </div>
+      <div>
+        <LeftSideBox v-if="!smaller_than_1025" />
+      </div>
+    </div>
   </v-container>
 </template>
 

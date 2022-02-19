@@ -1,10 +1,7 @@
 <template>
   <div>
     <v-app-bar elevation="0" app clipped-left color="white">
-      <v-app-bar-nav-icon
-        v-if="is_smaller_than_1025"
-        @click.stop="toggleDrawer"
-      ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="toggleDrawer"></v-app-bar-nav-icon>
       <div class="d-flex justify-between">
         <div class="d-flex flex-column justify-center">
           <nuxt-link to="/">
@@ -96,7 +93,7 @@ export default {
      * @description toggle the drawer
      */
     toggleDrawer() {
-      this.$emit("toggle-drawer");
+      this.TOGGLE_SHOW_DRAWER();
     },
   },
 };

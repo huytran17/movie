@@ -1,11 +1,7 @@
 <template>
-  <div class="ml-auto side-box-wrapper mt-6">
-    <template>
-      <BirthdayBox />
-    </template>
-    <template>
-      <ContactBox />
-    </template>
+  <div class="side-box-wrapper mt-6">
+    <BirthdayBox />
+    <ContactBox />
   </div>
 </template>
 
@@ -24,12 +20,6 @@ export default {
 
 <style scoped>
 .side-box-wrapper {
-  width: 300px;
-}
-@media only screen and (max-width: 1025px) {
-  .side-box-wrapper {
-    width: 95% !important;
-    margin: auto;
-  }
+  max-width: 300px !important;
 }
 </style>
