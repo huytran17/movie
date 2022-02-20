@@ -18,5 +18,7 @@
     "Password": "Password",
     "Confirm Password must match Password.": "Confirm Password must match Password.",
     "Sign Up": "Sign Up",
-    "OR": "OR"
+    "OR": "OR",
+    "Invalid data...": "Invalid data...",
+    "Welcome!": "Welcome!"
 }

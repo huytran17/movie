@@ -18,5 +18,7 @@
     "Re-Password": "Xác nhận mật khẩu",
     "Confirm Password must match Password.": "Mật khẩu nhập lại không khớp.",
     "Sign Up": "Đăng ký",
-    "OR": "HOẶC"
+    "OR": "HOẶC",
+    "Invalid data...": "Dữ liệu không hợp lệ...",
+    "Welcome!": "Chào mừng!"
 }
