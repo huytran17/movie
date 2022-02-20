@@ -2,7 +2,7 @@ import moment from "moment";
 import mongoose from "mongoose";
 
 import makeSignUpController from "./sign-up";
-import makeLoginUserController from "./login";
+import makeSignInUserController from "./sign-in";
 
 import { createUser, getUserByEmail } from "../../use-cases/user";
 
@@ -15,7 +15,7 @@ const signUpController = makeSignUpController({
   getUserByEmail,
 });
 
-const loginController = makeLoginUserController({
+const signInController = makeSignInUserController({
   verifyPassword,
   generateAccessToken,
   getUserByEmail,
@@ -23,7 +23,7 @@ const loginController = makeLoginUserController({
 
 export default Object.freeze({
   signUpController,
-  loginController,
+  signInController,
 });
 
-export { signUpController, loginController };
+export { signUpController, signInController };

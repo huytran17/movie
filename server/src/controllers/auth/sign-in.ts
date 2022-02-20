@@ -3,7 +3,7 @@ import { IGetUserByEmail } from "../../use-cases/user/get-user-by-email";
 import { IGenerateAccessToken } from "../../config/accessTokenManager/generate-access-token";
 import { IVerifyPassword } from "../../config/password/verify-password";
 
-export default function makeLoginUserController({
+export default function makeSignInUserController({
   getUserByEmail,
   generateAccessToken,
   verifyPassword,
@@ -12,7 +12,7 @@ export default function makeLoginUserController({
   generateAccessToken: IGenerateAccessToken;
   verifyPassword: IVerifyPassword;
 }) {
-  return async function loginUser(httpRequest: {
+  return async function signInUser(httpRequest: {
     context: { validated: { email: string } };
   }) {
     const headers = {

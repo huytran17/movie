@@ -3,15 +3,15 @@ import passport from "passport";
 import authenticateJWT from "../../middlewares/authenticateJWT";
 import makeValidator from "../../middlewares/validator-middleware";
 import makeExpressCallback from "../../express-callback";
-import { loginRules, signUpRules } from "../../controllers/auth/validators";
-import { signUpController, loginController } from "../../controllers/auth";
+import { signInRules, signUpRules } from "../../controllers/auth/validators";
+import { signUpController, signInController } from "../../controllers/auth";
 
 const authRouter = express.Router();
 
 authRouter.post(
   "/sign-in",
-  makeValidator(loginRules),
-  makeExpressCallback(loginController)
+  makeValidator(signInRules),
+  makeExpressCallback(signInController)
 );
 
 authRouter.post(

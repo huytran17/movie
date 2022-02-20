@@ -1,11 +1,11 @@
-import loginRules from "./login";
-import signUpRules from "./login";
+import signInRules from "./sign-in";
+import signUpRules from "./sign-up";
 
 const authValidators = Object.freeze({
-  loginRules,
+  signInRules,
   signUpRules,
 });
 
 export default authValidators;
 
-export { loginRules, signUpRules };
+export { signInRules, signUpRules };
