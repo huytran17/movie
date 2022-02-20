@@ -3,7 +3,7 @@
     <div class="d-flex justify-center">
       <v-img :src="logo" max-width="150px"></v-img>
     </div>
-    <v-form v-model="is_valid_data" lazy-validation>
+    <v-form v-model="is_valid_data">
       <v-text-field
         label="E-mail"
         type="email"
@@ -36,6 +36,7 @@
 
 <script>
 import authMixin from "@/mixins/auth";
+
 export default {
   name: "AccountFormSignup",
   mixins: [authMixin],
@@ -56,14 +57,26 @@ export default {
      * signup
      */
     async signup() {
+      this.$toast("My toast content", {
+        timeout: 2000,
+      });
       try {
-        if (!this.is_valid_data) {
+        const has_all_required_data =
+          this.sign_up_data.email &&
+          this.sign_up_data.password &&
+          this.sign_up_data.password_confirmation;
+
+        if (!this.is_valid_data || !has_all_required_data) {
           return;
         }
 
-        await this.SIGN_UP().then(() =>
-          this.$router.push(this.localePath("/login"))
-        );
+        await this.SIGN_UP()
+          .then(() => {
+            this.$router.push(this.localePath("/login"));
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       } catch (e) {
         console.log(e);
       }

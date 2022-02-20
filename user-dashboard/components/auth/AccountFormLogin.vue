@@ -50,7 +50,10 @@ export default {
      */
     async login() {
       try {
-        if (!this.is_valid_data) {
+        const has_all_required_data =
+          this.sign_in_data.email && this.sign_in_data.password;
+
+        if (!this.is_valid_data || !has_all_required_data) {
           return;
         }
 
