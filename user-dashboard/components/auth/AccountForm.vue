@@ -5,7 +5,6 @@
     </div>
     <form>
       <v-text-field
-        v-model="login_data.email"
         label="E-mail"
         type="email"
         required
@@ -13,7 +12,6 @@
         @input="setLoginData($event, 'email')"
       ></v-text-field>
       <v-text-field
-        v-model="login_data.password"
         type="password"
         :label="$t('Password')"
         required
