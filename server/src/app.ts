@@ -26,7 +26,7 @@ makeDb().then(async () => {
       last_name: "Tran",
       username: "huytran",
       email: "a@gmail.com",
-      password: "dadssd",
+      hash_password: "dadssd",
     });
   }
 });
