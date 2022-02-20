@@ -9,21 +9,21 @@
         type="email"
         required
         :rules="emailRules"
-        @input="setLoginData($event, 'email')"
+        @input="setSignUpData($event, 'email')"
       ></v-text-field>
       <v-text-field
         type="password"
         :label="$t('Password')"
         required
         :rules="passwordRules"
-        @input="setLoginData($event, 'password')"
+        @input="setSignUpData($event, 'password')"
       ></v-text-field>
       <v-text-field
         type="password"
         :label="$t('Re-Password')"
         required
         :rules="passwordConfirmationRules"
-        @input="setLoginData($event, 'passwordConfirmation')"
+        @input="setSignUpData($event, 'passwordConfirmation')"
       ></v-text-field>
       <div class="d-flex justify-center mt-4">
         <v-btn color="primary" outlined @click="signup">
@@ -48,8 +48,8 @@ export default {
     /**
      * set login data
      */
-    setLoginData(data, path) {
-      this.SET_LOGIN_DATA({ data, path });
+    setSignUpData(data, path) {
+      this.SET_SIGN_UP_DATA({ data, path });
     },
     /**
      * login

@@ -38,6 +38,7 @@ export default {
       SET_USER: "auth/SET_USER",
       SET_JWT_TOKEN: "auth/SET_JWT_TOKEN",
       SET_LOGIN_DATA: "auth/SET_LOGIN_DATA",
+      SET_SIGN_UP_DATA: "auth/SET_SIGN_UP_DATA",
     }),
   },
 };
