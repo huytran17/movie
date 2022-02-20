@@ -7,14 +7,14 @@ import { createUser, getUserByEmail } from "../../use-cases/user";
 
 import { verifyPassword, hashPassword } from "../../config/password";
 
-const signUpUser = makeSignUpController({
+const signUpController = makeSignUpController({
   hashPassword,
   createUser,
   getUserByEmail,
 });
 
 export default Object.freeze({
-  signUpUser,
+  signUpController,
 });
 
-export { signUpUser };
+export { signUpController };
