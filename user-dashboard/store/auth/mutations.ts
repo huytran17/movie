@@ -33,6 +33,8 @@ const mutations: MutationTree<AuthState> = {
     });
 
     state.sign_up_data = updated_data;
+
+    console.log("--------------", state.sign_up_data);
   },
 };
 

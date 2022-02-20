@@ -1,8 +1,14 @@
 export const state = () => ({
   user: {},
-  login_data: {},
-  sign_up_data: {},
-  register_data: {},
+  login_data: {
+    email: "",
+    password: "",
+  },
+  sign_up_data: {
+    email: "",
+    password: "",
+    password_confirmation: "",
+  },
 });
 
 export type AuthState = ReturnType<typeof state>;
