@@ -54,7 +54,7 @@ export default {
           return;
         }
 
-        await this.LOGIN();
+        await this.SIGN_IN();
       } catch (e) {
         console.log(e);
       }
