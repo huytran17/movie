@@ -54,10 +54,12 @@ export default {
     /**
      * signup
      */
-    signup() {
-      console.log(this.login_data);
-      console.log("s", this.sign_up_data);
-      this.SIGN_UP();
+    async signup() {
+      try {
+        await this.SIGN_UP();
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

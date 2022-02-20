@@ -47,8 +47,12 @@ export default {
     /**
      * login
      */
-    login() {
-      this.LOGIN();
+    async login() {
+      try {
+        await this.LOGIN();
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };
