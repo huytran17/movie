@@ -5,6 +5,7 @@ import makeValidator from "../../middlewares/validator-middleware";
 import makeExpressCallback from "../../express-callback";
 import { loginRules, signUpRules } from "../../controllers/auth/validators";
 // import { loginController } from "../../controllers/auth";
+import { signUpController } from "../../controllers/auth";
 
 const authRouter = express.Router();
 
@@ -16,8 +17,8 @@ authRouter.post(
 
 authRouter.post(
   "/sign-up",
-  makeValidator(signUpRules)
-  // makeExpressCallback(loginController)
+  makeValidator(signUpRules),
+  makeExpressCallback(signUpController)
 );
 
 export default authRouter;
