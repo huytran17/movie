@@ -3,7 +3,7 @@
     <div class="d-flex justify-center">
       <v-img :src="logo" max-width="150px"></v-img>
     </div>
-    <form>
+    <v-form v-model="is_valid_data" lazy-validation>
       <v-text-field
         label="E-mail"
         type="email"
@@ -23,7 +23,7 @@
           {{ $t("Login") }}
         </v-btn>
       </div>
-    </form>
+    </v-form>
   </div>
 </template>
 
@@ -34,6 +34,7 @@ export default {
   mixins: [authMixin],
   data() {
     return {
+      is_valid_data: false,
       logo: require("@/assets/images/logo.png"),
     };
   },
@@ -49,6 +50,10 @@ export default {
      */
     async login() {
       try {
+        if (this.is_valid_data) {
+          return;
+        }
+
         await this.LOGIN();
       } catch (e) {
         console.log(e);

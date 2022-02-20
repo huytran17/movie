@@ -16,7 +16,7 @@ export default {
         (v) =>
           (v && v.length > 7) || this.$t("Password must be min 8 characters."),
         (v) =>
-          this.login_data.password !== v ||
+          this.sign_up_data.password === v ||
           this.$t("Confirm Password must match Password."),
       ],
     };
