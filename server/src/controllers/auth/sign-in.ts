@@ -30,15 +30,7 @@ export default function makeSignInController({
       const exists = await getUserByEmail({ email });
 
       if (!exists) {
-        throw {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          statusCode: 400,
-          body: {
-            error: "User does not exists.",
-          },
-        };
+        throw new Error(`User does not exists.`);
       }
 
       const is_valid_password = await verifyPassword({
@@ -48,15 +40,7 @@ export default function makeSignInController({
 
       const authenticated = exists && is_valid_password;
       if (!authenticated) {
-        throw {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          statusCode: 400,
-          body: {
-            error: "You has provided a wrong password.",
-          },
-        };
+        throw new Error(`You has provided a wrong password.`);
       }
 
       const access_token = await generateAccessToken(

@@ -34,16 +34,9 @@ export default function makeSignUpController({
       const email = _email.toLowerCase();
       const exists = await getUserByEmail({ email });
       if (exists) {
-        throw {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          statusCode: 400,
-          body: {
-            error:
-              "This email has already been taken. If this is you, login instead.",
-          },
-        };
+        throw new Error(
+          "This email has already been taken. If this is you, login instead."
+        );
       }
 
       const hash_password = await hashPassword({
