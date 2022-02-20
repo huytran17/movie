@@ -23,7 +23,7 @@
         :label="$t('Re-Password')"
         required
         :rules="passwordConfirmationRules"
-        @input="setSignUpData($event, 'passwordConfirmation')"
+        @input="setSignUpData($event, 'password_confirmation')"
       ></v-text-field>
       <div class="d-flex justify-center mt-4">
         <v-btn color="primary" outlined @click="signup">
@@ -55,6 +55,8 @@ export default {
      * signup
      */
     signup() {
+      console.log(this.login_data);
+      console.log("s", this.sign_up_data);
       this.SIGN_UP();
     },
   },

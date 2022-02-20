@@ -10,13 +10,13 @@ export interface ICreateUserData {
 export type ICreateUser = (
   { userDetails }: ICreateUserData,
   options?: { session: ClientSession }
-) => Promise<User>;
+) => Promise<User | null>;
 
 export default function makeCreateUser(userDb: IUserDb): ICreateUser {
   return async function cratesUser(
     { userDetails }: ICreateUserData,
     options: { session?: ClientSession } = {}
-  ): Promise<User> {
+  ): Promise<User | null> {
     const exists = await userDb.findByEmail({ email: userDetails.email });
 
     if (exists) {

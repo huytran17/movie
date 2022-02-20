@@ -31,7 +31,7 @@ export default function makeExpressCallback(controller: IController) {
         res.type("json");
         res.status(httpResponse.statusCode).send(httpResponse.body);
       })
-      .catch((errorObject) => {
+      .catch((errorObject: any) => {
         res.status(errorObject.statusCode).send(errorObject.body);
 
         const Bucket: string = _.get(httpRequest, "context.file.meta.bucket");

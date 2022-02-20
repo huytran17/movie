@@ -16,7 +16,7 @@ export default {
         (v) =>
           (v && v.length > 7) || this.$t("Password must be min 8 characters."),
         (v) =>
-          this.user.password === v ||
+          this.login_data.password !== v ||
           this.$t("Confirm Password must match Password."),
       ],
     };
@@ -25,7 +25,7 @@ export default {
     ...mapGetters({
       user: "auth/user",
       login_data: "auth/login_data",
-      register_data: "auth/register_data",
+      sign_up_data: "auth/sign_up_data",
     }),
   },
   methods: {
