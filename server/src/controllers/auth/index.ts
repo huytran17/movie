@@ -2,7 +2,7 @@ import moment from "moment";
 import mongoose from "mongoose";
 
 import makeSignUpController from "./sign-up";
-import makeSignInUserController from "./sign-in";
+import makeSignInController from "./sign-in";
 
 import { createUser, getUserByEmail } from "../../use-cases/user";
 
@@ -15,7 +15,7 @@ const signUpController = makeSignUpController({
   getUserByEmail,
 });
 
-const signInController = makeSignInUserController({
+const signInController = makeSignInController({
   verifyPassword,
   generateAccessToken,
   getUserByEmail,
