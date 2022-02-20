@@ -28,7 +28,8 @@ export default function makeSignUpController({
     };
 
     try {
-      const user: IRawUserData = _.get(httpRequest, "context.validated");
+      const user: IRawUserData = _.get(httpRequest, "context.validated.data");
+
       const { password, password_confirmation, email: _email } = user;
       const email = _email.toLowerCase();
       const exists = await getUserByEmail({ email });
