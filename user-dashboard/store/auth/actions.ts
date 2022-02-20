@@ -9,9 +9,9 @@ const actions: ActionTree<AuthState, RootState> = {
    * login
    * @param param0
    */
-  [ActionTypes.LOGIN]({ state }) {
+  [ActionTypes.SIGN_IN]({ state }) {
     try {
-      const response = this.$axios.$post("/api/auth/login", {
+      const response = this.$axios.$post("/api/auth/sign-in", {
         data: state.login_data,
       });
 
