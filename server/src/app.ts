@@ -24,7 +24,6 @@ makeDb().then(async () => {
     await UserDb.insert({
       first_name: "Huy",
       last_name: "Tran",
-      username: "huytran",
       email: "a@gmail.com",
       hash_password: "dadssd",
     });
