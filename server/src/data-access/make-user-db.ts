@@ -15,10 +15,18 @@ export default function makeUserDb({
   moment: any;
 }): IUserDb {
   return new (class MongooseUserDb implements IUserDb {
+    /**
+     *
+     * @returns find all
+     */
     async findAll(): Promise<User[] | null> {
       return null;
     }
-
+    /**
+     * insert new record
+     * @param payload
+     * @returns
+     */
     async insert(payload: Partial<IUser>): Promise<User | null> {
       const result = await userDbModel.create([payload]);
 
@@ -30,7 +38,11 @@ export default function makeUserDb({
       }
       return null;
     }
-
+    /**
+     * find by id
+     * @param param0
+     * @returns
+     */
     async findById({ id }: { id: string }): Promise<User | null> {
       const existing = await userDbModel
         .findOne({ _id: id })
@@ -43,8 +55,29 @@ export default function makeUserDb({
       return null;
     }
 
+    /**
+     * find one record
+     * @returns
+     */
     async findOne(): Promise<User | null> {
       const existing = await userDbModel.findOne().lean({ virtuals: true });
+
+      if (existing) {
+        return new User(existing);
+      }
+
+      return null;
+    }
+
+    /**
+     * find by email
+     * @param param0
+     * @returns
+     */
+    async findByEmail({ email }: { email: string }): Promise<User | null> {
+      const existing = await userDbModel
+        .findOne({ email })
+        .lean({ virtuals: true });
 
       if (existing) {
         return new User(existing);
