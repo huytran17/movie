@@ -14,5 +14,9 @@
     "Password is required.": "Password is required.",
     "Password must be min 8 characters.": "Password must be min 8 characters.",
     "Login": "Login",
-    "Password": "Password"
+    "Re-Password": "Re-Password",
+    "Password": "Password",
+    "Confirm Password must match Password.": "Confirm Password must match Password.",
+    "Sign Up": "Sign Up",
+    "OR": "OR"
 }

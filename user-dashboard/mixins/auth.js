@@ -12,6 +12,13 @@ export default {
         (v) =>
           (v && v.length > 7) || this.$t("Password must be min 8 characters."),
       ],
+      passwordConfirmationRules: [
+        (v) =>
+          (v && v.length > 7) || this.$t("Password must be min 8 characters."),
+        (v) =>
+          this.user.password === v ||
+          this.$t("Confirm Password must match Password."),
+      ],
     };
   },
   computed: {

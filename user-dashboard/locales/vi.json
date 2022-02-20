@@ -12,7 +12,11 @@
     "E-mail is required.": "E-mail là bắt buộc.",
     "E-mail must be valid.": "E-mail không hợp lệ.",
     "Password is required.": "Mật khẩu là bắt buộc.",
-    "Password must be min 8 characters.": "Mật khẩu không hợp lệ.",
+    "Password must be min 8 characters.": "Mật khẩu phải từ 8 ký tự.",
     "Login": "Đăng nhập",
-    "Password": "Mật khẩu"
+    "Password": "Mật khẩu",
+    "Re-Password": "Xác nhận mật khẩu",
+    "Confirm Password must match Password.": "Mật khẩu nhập lại không khớp.",
+    "Sign Up": "Đăng ký",
+    "OR": "HOẶC"
 }
