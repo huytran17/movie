@@ -4,15 +4,14 @@ import authenticateJWT from "../../middlewares/authenticateJWT";
 import makeValidator from "../../middlewares/validator-middleware";
 import makeExpressCallback from "../../express-callback";
 import { loginRules, signUpRules } from "../../controllers/auth/validators";
-// import { loginController } from "../../controllers/auth";
-import { signUpController } from "../../controllers/auth";
+import { signUpController, loginController } from "../../controllers/auth";
 
 const authRouter = express.Router();
 
 authRouter.post(
-  "/login",
-  makeValidator(loginRules)
-  // makeExpressCallback(loginController)
+  "/sign-in",
+  makeValidator(loginRules),
+  makeExpressCallback(loginController)
 );
 
 authRouter.post(
