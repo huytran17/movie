@@ -12,7 +12,7 @@ const actions: ActionTree<AuthState, RootState> = {
   async [ActionTypes.SIGN_IN]({ state }) {
     try {
       const access_token = await this.$axios.$post("/api/auth/sign-in", {
-        data: state.login_data,
+        data: state.sign_in_data,
       });
 
       localStorage.setItem("access_token", access_token);

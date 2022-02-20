@@ -24,7 +24,7 @@ export default {
   computed: {
     ...mapGetters({
       user: "auth/user",
-      login_data: "auth/login_data",
+      sign_in_data: "auth/sign_in_data",
       sign_up_data: "auth/sign_up_data",
     }),
   },

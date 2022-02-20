@@ -13,11 +13,11 @@ const mutations: MutationTree<AuthState> = {
     state,
     { data, path }: { data: object; path: string }
   ) {
-    const updated_data = _.update(state.login_data, path, (n) => {
+    const updated_data = _.update(state.sign_in_data, path, (n) => {
       return data;
     });
 
-    state.login_data = updated_data;
+    state.sign_in_data = updated_data;
   },
   /**
    * set sign up data

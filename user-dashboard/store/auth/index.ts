@@ -1,6 +1,6 @@
 export const state = () => ({
   user: {},
-  login_data: {
+  sign_in_data: {
     email: "",
     password: "",
   },
