@@ -12,7 +12,7 @@
       >
         <div class="form pa-4 pa-sm-0 mt-7">
           <div>
-            <AccountForm />
+            <AccountFormLogin />
           </div>
           <div>
             <SocialiteForm />
@@ -25,13 +25,13 @@
 
 <script>
 import systemMixins from "@/mixins/system";
-import AccountForm from "@/components/auth/AccountForm";
+import AccountFormLogin from "@/components/auth/AccountFormLogin";
 import SocialiteForm from "@/components/auth/SocialiteForm";
 
 export default {
   name: "LoginForm",
   components: {
-    AccountForm,
+    AccountFormLogin,
     SocialiteForm,
   },
   mixins: [systemMixins],
