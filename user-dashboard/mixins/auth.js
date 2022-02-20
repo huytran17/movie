@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      LOGIN: "auth/LOGIN",
+      SIGN_IN: "auth/SIGN_IN",
       SIGN_UP: "auth/SIGN_UP",
     }),
 
