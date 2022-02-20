@@ -57,7 +57,7 @@ export default function makeSignUpController({
 
       return {
         headers,
-        statusCode: 200,
+        statusCode: 201,
         body: {
           is_registered: true,
           data: created_user,
