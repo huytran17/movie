@@ -3,7 +3,7 @@ import IUser from "../interfaces/user";
 export default class User implements IUser {
   public readonly _id: string;
   public readonly username: string;
-  public readonly password: string;
+  public readonly hash_password: string;
   public readonly first_name: string;
   public readonly last_name: string;
   public readonly avatar?: string;
@@ -18,7 +18,7 @@ export default class User implements IUser {
   constructor({
     _id,
     username,
-    password,
+    hash_password,
     first_name,
     last_name,
     avatar,
@@ -32,7 +32,7 @@ export default class User implements IUser {
   }: IUser) {
     this._id = _id;
     this.username = username;
-    this.password = password;
+    this.hash_password = hash_password;
     this.first_name = first_name;
     this.last_name = last_name;
     this.avatar = avatar;
