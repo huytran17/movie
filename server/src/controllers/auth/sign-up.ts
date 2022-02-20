@@ -65,13 +65,11 @@ export default function makeSignUpController({
       };
     } catch (err) {
       // TODO: add in error handling here
-
-      // await session.abortTransaction();
       throw {
         headers: {
           "Content-Type": "application/json",
         },
-        statusCode: 404,
+        statusCode: 500,
         body: {
           error: err.message,
         },
