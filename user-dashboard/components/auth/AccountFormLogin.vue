@@ -50,7 +50,7 @@ export default {
      */
     async login() {
       try {
-        if (this.is_valid_data) {
+        if (!this.is_valid_data) {
           return;
         }
 
