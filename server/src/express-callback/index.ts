@@ -5,11 +5,7 @@ import Storage from "../config/storage";
 // FIXME: fix all the any
 type IController = (httpRequest: any) => any;
 export default function makeExpressCallback(controller: IController) {
-  return (
-    req: Request & { clientIp: string },
-    res: Response,
-    next: NextFunction
-  ) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     const httpRequest = {
       context: {
         validated: Object.assign({}, req.body, req.params, req.query),
@@ -19,7 +15,6 @@ export default function makeExpressCallback(controller: IController) {
       },
       query: req.query,
       params: req.params,
-      ip: req.clientIp,
       method: req.method,
       path: req.path,
       headers: {
