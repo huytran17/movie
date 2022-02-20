@@ -5,7 +5,7 @@
         cols="12"
         sm="5"
         md="4"
-        class="login-form d-flex flex-column pa-3 pa-sm-0 pl-2 pl-sm-3"
+        class="login-form d-flex flex-column pa-3 pa-sm-0 pr-2 pr-sm-3"
       >
         <div class="form pa-4 pa-sm-0 mt-7">
           <div>
