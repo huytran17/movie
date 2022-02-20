@@ -31,7 +31,7 @@ export default {
   methods: {
     ...mapActions({
       LOGIN: "auth/LOGIN",
-      REGISTER: "auth/REGISTER",
+      SIGN_UP: "auth/SIGN_UP",
     }),
 
     ...mapMutations({

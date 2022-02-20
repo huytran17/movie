@@ -52,10 +52,10 @@ export default {
       this.SET_SIGN_UP_DATA({ data, path });
     },
     /**
-     * login
+     * signup
      */
-    login() {
-      this.LOGIN();
+    signup() {
+      this.SIGN_UP();
     },
   },
 };
