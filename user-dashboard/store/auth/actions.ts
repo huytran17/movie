@@ -11,9 +11,11 @@ const actions: ActionTree<AuthState, RootState> = {
    */
   [ActionTypes.LOGIN]({ state }) {
     try {
-      const result = this.$axios.$post("/api/auth/login", {
+      const response = this.$axios.$post("/api/auth/login", {
         data: state.login_data,
       });
+
+      return response;
     } catch (err) {
       console.error(err);
     }
@@ -25,9 +27,11 @@ const actions: ActionTree<AuthState, RootState> = {
    */
   [ActionTypes.SIGN_UP]({ state }) {
     try {
-      const result = this.$axios.$post("/api/auth/sign-up", {
+      const response = this.$axios.$post("/api/auth/sign-up", {
         data: state.sign_up_data,
       });
+
+      return response;
     } catch (err) {
       console.error(err);
     }

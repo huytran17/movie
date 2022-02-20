@@ -61,8 +61,9 @@ export default {
           return;
         }
 
-        await this.SIGN_UP();
-        // this.$router.push(this.localePath("/login"));
+        await this.SIGN_UP().then(() =>
+          this.$router.push(this.localePath("/login"))
+        );
       } catch (e) {
         console.log(e);
       }
