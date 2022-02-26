@@ -17,6 +17,9 @@
           <div>
             <SocialiteForm />
           </div>
+          <div class="text-center mt-4">
+            <span class="link" @click="goToSignUp">{{ $t("Sign up") }}</span>
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -39,6 +42,11 @@ export default {
     return {
       login_background: require("@/assets/images/auth/login-background.jpg"),
     };
+  },
+  methods: {
+    goToSignUp() {
+      return this.$router.push(this.localePath("/sign-up"));
+    },
   },
 };
 </script>

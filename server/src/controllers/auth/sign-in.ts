@@ -30,7 +30,14 @@ export default function makeSignInController({
       const exists = await getUserByEmail({ email });
 
       if (!exists) {
-        throw new Error(`User does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "User does not exists.",
+          },
+        };
       }
 
       const is_valid_password = await verifyPassword({
@@ -40,7 +47,14 @@ export default function makeSignInController({
 
       const authenticated = exists && is_valid_password;
       if (!authenticated) {
-        throw new Error(`You has provided a wrong password.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "You has provided a wrong password.",
+          },
+        };
       }
 
       const access_token = await generateAccessToken(
@@ -55,11 +69,9 @@ export default function makeSignInController({
       };
     } catch (err) {
       // TODO: add in error handling here
-      throw {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        statusCode: 500,
+      return {
+        headers,
+        statusCode: 200,
         body: {
           error: err.message,
         },

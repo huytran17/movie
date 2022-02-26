@@ -15,8 +15,6 @@ const actions: ActionTree<AuthState, RootState> = {
         data: state.sign_in_data,
       });
 
-      localStorage.setItem("access_token", access_token);
-
       return access_token;
     } catch (err) {
       console.error(err);

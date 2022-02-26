@@ -57,9 +57,6 @@ export default {
      * signup
      */
     async signup() {
-      this.$toast("My toast content", {
-        timeout: 2000,
-      });
       try {
         const has_all_required_data =
           this.sign_up_data.email &&
@@ -67,16 +64,19 @@ export default {
           this.sign_up_data.password_confirmation;
 
         if (!this.is_valid_data || !has_all_required_data) {
+          this.$toast.warning(this.$t("Invalid data..."));
           return;
         }
 
-        await this.SIGN_UP()
-          .then(() => {
-            this.$router.push(this.localePath("/login"));
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        await this.SIGN_UP().then((res) => {
+          if (res.is_error) {
+            this.$toast.error(this.$t(res.message));
+            return;
+          }
+
+          this.$toast.success(this.$t("Welcome!"));
+          this.$router.push(this.localePath("/login"));
+        });
       } catch (e) {
         console.log(e);
       }

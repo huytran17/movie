@@ -54,10 +54,20 @@ export default {
           this.sign_in_data.email && this.sign_in_data.password;
 
         if (!this.is_valid_data || !has_all_required_data) {
+          this.$toast.warning(this.$t("Invalid data..."));
           return;
         }
 
-        await this.SIGN_IN();
+        await this.SIGN_IN().then((res) => {
+          if (res.is_error) {
+            this.$toast.error(this.$t(res.message));
+            return;
+          }
+
+          localStorage.setItem("access_token", res.access_token);
+          this.$toast.success(this.$t("Welcome!"));
+          this.$router.push(this.localePath("/"));
+        });
       } catch (e) {
         console.log(e);
       }

@@ -18,7 +18,13 @@
     "Password": "Password",
     "Confirm Password must match Password.": "Confirm Password must match Password.",
     "Sign Up": "Sign Up",
+    "Sign up": "Sign up",
+    "Sign in": "Sign in",
+    "Sign In": "Sign In",
     "OR": "OR",
     "Invalid data...": "Invalid data...",
-    "Welcome!": "Welcome!"
+    "Welcome!": "Welcome!",
+    "This email has already been taken.": "This email has already been taken.",
+    "You has provided a wrong password.": "You has provided a wrong password.",
+    "User does not exists.": "User does not exists."
 }

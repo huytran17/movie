@@ -18,7 +18,13 @@
     "Re-Password": "Xác nhận mật khẩu",
     "Confirm Password must match Password.": "Mật khẩu nhập lại không khớp.",
     "Sign Up": "Đăng ký",
+    "Sign up": "Đăng ký",
+    "Sign in": "Đăng nhập",
+    "Sign In": "Đăng nhập",
     "OR": "HOẶC",
     "Invalid data...": "Dữ liệu không hợp lệ...",
-    "Welcome!": "Chào mừng!"
+    "Welcome!": "Chào mừng!",
+    "This email has already been taken.": "Email này đã được sử dụng.",
+    "You has provided a wrong password.": "Mật khẩu không đúng.",
+    "User does not exists.": "Tài khoản không tồn tại."
 }
