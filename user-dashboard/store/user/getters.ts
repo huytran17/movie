@@ -1,16 +1,15 @@
 import { GetterTree } from "vuex";
 import { RootState } from "../index";
 import { UserState } from "./index";
+import _ from "lodash";
 
 export const getters: GetterTree<UserState, RootState> = {
   prefix() {
     return "/user";
   },
-
   users: (state) => state.users,
-  user: (state) => state.user,
   pagination: (state) => state.pagination,
-  is_loading: (state) => state.is_loading,
+  loading: (state) => state.loading,
 };
 
 export default getters;

@@ -1,37 +1,11 @@
+import { MutationTypes } from "./mutation-type";
 import { MutationTree } from "vuex";
 import { UserState } from "./index";
-import { MutationTypes } from "./mutation-types";
 import _ from "lodash";
 
 const mutations: MutationTree<UserState> = {
   /**
-   *
-   * @param state
-   * @param param1
-   * @returns set users paginated
-   */
-  [MutationTypes.SET_USERS_PAGINATED](
-    state,
-    { data, new_state }: { data: any[]; new_state: boolean }
-  ) {
-    if (new_state) {
-      state.users = data;
-      return;
-    }
-
-    state.users = _.uniqBy(_.concat(state.users, data), "_id");
-  },
-  /**
-   * @description set is loading
-   * @param state
-   * @param param1
-   */
-  [MutationTypes.SET_LOADING](state, { data }: { data: boolean }) {
-    state.is_loading = data;
-  },
-
-  /**
-   * set user pagination
+   * @description to set the jobs pagination
    * @param state
    * @param param1
    */
@@ -50,6 +24,21 @@ const mutations: MutationTree<UserState> = {
     }
   ) {
     state.pagination = data;
+  },
+
+  [MutationTypes.SET_USERS](state, { users }) {
+    state.users = users;
+  },
+
+  [MutationTypes.SET_USER](
+    state,
+    { index, user }: { index: number; user: any }
+  ) {
+    state.users[index] = user;
+  },
+
+  [MutationTypes.SET_LOADING](state, { data }: { data: boolean }) {
+    state.loading = data;
   },
 };
 

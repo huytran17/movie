@@ -1,37 +1,79 @@
+import { ActionTypes } from "./action-type";
+import { MutationTypes } from "./mutation-type";
 import { ActionTree } from "vuex";
-import { RootState } from "../index";
 import { UserState } from "./index";
-import { ActionTypes } from "./action-types";
-import { MutationTypes } from "./mutation-types";
+import { RootState } from "../index";
 import _ from "lodash";
 
 const actions: ActionTree<UserState, RootState> = {
   /**
+   * @description Get all users
+   * @param param0
+   */
+  async [ActionTypes.GET_USERS]({ commit }, { type = "mentee" }) {
+    const { users } = await this.$axios.$get(`/api/user/all-users/${type}`);
+    commit(MutationTypes.SET_USERS, { users });
+    return users;
+  },
+  /**
+   * @description Get single user, the chosen user state is used in payment.
+   * @param param0
+   */
+  async [ActionTypes.GET_USER]({ commit }, { user_id }) {
+    let { data: user } = await this.$axios.$get(`/api/user/${user_id}`);
+    return user;
+  },
+
+  /**
+   * @description Get single user by slug.
+   * @param param0
+   */
+  async [ActionTypes.GET_USER_BY_SLUG]({ commit }, { slug }) {
+    let { data: user } = await this.$axios.$get(`/api/user/slug/${slug}`);
+    return user;
+  },
+
+  /**
+   * @description check if user slug is available
+   * @param param0
+   */
+  async [ActionTypes.CHECK_USER_SLUG_AVAILABLE]({ commit }, { slug }) {
+    let { data: user } = await this.$axios.$get(`/api/user/slug/${slug}`);
+    return user;
+  },
+
+  /**
+   * @description check if username is available
+   * @param param0
+   */
+  async [ActionTypes.CHECK_USERNAME_AVAILABLE]({ commit }, { username }) {
+    let { data: user } = await this.$axios.$get(
+      `/api/user/username/${username}`
+    );
+    return user;
+  },
+  /**
    *
+   * @description Update user
    * @param param0
    * @param param1
-   * @returns get users paginated
    */
-  async [ActionTypes.GET_USERS_PAGINATED]({ commit }, { params = {} }) {
-    try {
-      const query = _.get(params, "query", undefined);
-      const page = _.get(params, "page", 1);
-      const new_state = _.get(params, "new_state", true);
+  async [ActionTypes.UPDATE_USER]({ commit }, { user }) {
+    const result = await this.$axios.$put(`/api/user/`, user);
+    return result;
+  },
 
-      let url_query = new URLSearchParams(`page=${page}`);
+  /**
+   * @Description publish a user to show on mobile app
+   * @param {is_published: boolean}
+   */
+  async [ActionTypes.PUBLISH_USER]({ commit }, { user_id, is_published }) {
+    const result = await this.$axios.$post(`/api/user/publish`, {
+      user_id,
+      is_published,
+    });
 
-      if (query) {
-        url_query.set("query", query);
-      }
-
-      const users = await this.$axios.$get(`/api/users/paginated?${url_query}`);
-
-      commit(MutationTypes.SET_USERS_PAGINATED, { data: users, new_state });
-
-      return users;
-    } catch (error) {
-      console.error(error);
-    }
+    return result;
   },
 };
 
