@@ -7,23 +7,21 @@ export interface ICreateUserData {
   userDetails: Omit<IUser, "_id">;
 }
 
-export type ICreateUser = (
-  { userDetails }: ICreateUserData,
-  options?: { session: ClientSession }
-) => Promise<User | null>;
+export type ICreateUser = ({
+  userDetails,
+}: ICreateUserData) => Promise<User | null>;
 
 export default function makeCreateUser(userDb: IUserDb): ICreateUser {
-  return async function cratesUser(
-    { userDetails }: ICreateUserData,
-    options: { session?: ClientSession } = {}
-  ): Promise<User | null> {
+  return async function cratesUser({
+    userDetails,
+  }: ICreateUserData): Promise<User | null> {
     const exists = await userDb.findByEmail({ email: userDetails.email });
 
     if (exists) {
       return exists;
     }
 
-    const createdUser = await userDb.insert(userDetails, options);
+    const createdUser = await userDb.insert(userDetails);
 
     return createdUser;
   };
