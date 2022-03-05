@@ -1,31 +1,32 @@
+import password_jwt from "passport-jwt";
 import { PassportStatic } from "passport";
-import passport_jwt from "passport-jwt";
-import options from "./setup";
 import { UserDb } from "../../data-access";
+import _ from "lodash";
 
-interface IInitializeJWTData {
-  passport: PassportStatic;
-}
+export default function initializeJWT(
+  passport: PassportStatic,
+  secretOrKey: string
+): PassportStatic {
+  const JwtStrategy = password_jwt.Strategy,
+    ExtractJwt = password_jwt.ExtractJwt;
 
-export default function initializeJWT({
-  passport,
-}: IInitializeJWTData): PassportStatic {
-  const JWTStrategy = passport_jwt.Strategy;
+  const opts = {
+    secretOrKey,
+    jwtFromRequest: ExtractJwt.fromExtractors([
+      ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ExtractJwt.fromUrlQueryParameter("t"),
+    ]),
+  };
 
   passport.use(
-    "jwt",
-    new JWTStrategy(options, async function (payload, done) {
-      try {
-        const user = await UserDb.findById({ id: payload.sub });
-
-        if (!user) {
-          return done(null, null);
-        }
-
-        return done(null, user);
-      } catch (err) {
-        throw new Error(err);
+    "user-jwt",
+    new JwtStrategy(opts, async function (jwt_payload, done) {
+      const exist = await UserDb.findByEmail({ email: jwt_payload.email });
+      if (!exist) {
+        return done(null, null);
       }
+
+      return done(null, exist);
     })
   );
 
