@@ -9,6 +9,7 @@ export const state = () => ({
     password: "",
     password_confirmation: "",
   },
+  has_user: false,
 });
 
 export type AuthState = ReturnType<typeof state>;
