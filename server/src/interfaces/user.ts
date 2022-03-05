@@ -11,4 +11,5 @@ export default interface IUser {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
+  email_verified_at: Date;
 }
