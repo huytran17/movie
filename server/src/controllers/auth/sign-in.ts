@@ -65,7 +65,7 @@ export default function makeSignInController({
       return {
         headers,
         statusCode: 200,
-        body: { access_token },
+        body: { access_token, user: exists },
       };
     } catch (err) {
       // TODO: add in error handling here
