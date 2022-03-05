@@ -9,7 +9,7 @@ export default function makeGenerateAccessToken({
   generate,
   secret,
 }: {
-  generate: IJwtGenerate;
+  generate: IJwtGenerate; 
   secret: string;
 }): IGenerateAccessToken {
   return async function generateAccessToken(
