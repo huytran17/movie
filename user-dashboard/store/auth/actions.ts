@@ -20,9 +20,29 @@ const actions: ActionTree<AuthState, RootState> = {
 
       if (user && access_token) {
         commit(MutationTypes.SET_HAS_USER, { data: true });
+        commit(MutationTypes.SET_USER, { data: user });
       }
 
-      return access_token;
+      return { access_token, user };
+    } catch (err) {
+      console.error(err);
+    }
+  },
+
+  /**
+   * login
+   * @param param0
+   */
+  async [ActionTypes.VERIFY]({ commit, state }) {
+    try {
+      const { user } = await this.$axios.$get("/api/auth/verify");
+
+      if (user) {
+        commit(MutationTypes.SET_HAS_USER, { data: true });
+        commit(MutationTypes.SET_USER, { data: user });
+      }
+
+      return user;
     } catch (err) {
       console.error(err);
     }

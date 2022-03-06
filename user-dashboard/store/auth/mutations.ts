@@ -28,6 +28,14 @@ const mutations: MutationTree<AuthState> = {
     state.has_user = data;
   },
   /**
+   * set user
+   * @param state
+   * @param param1
+   */
+  [MutationTypes.SET_USER](state, { data }: { data: boolean }) {
+    state.user = data;
+  },
+  /**
    * set sign up data
    * @param state
    * @param param1
