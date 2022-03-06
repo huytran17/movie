@@ -9,6 +9,7 @@ export default class User implements IUser {
   public readonly email: string;
   public readonly phone_number?: string;
   public readonly country_code: string;
+  public readonly full_name: string;
   public readonly language_code: string;
   public readonly created_at: Date;
   public readonly updated_at: Date;
@@ -22,6 +23,7 @@ export default class User implements IUser {
     last_name,
     avatar,
     email,
+    full_name,
     phone_number,
     country_code,
     language_code,
@@ -35,6 +37,7 @@ export default class User implements IUser {
     this.first_name = first_name;
     this.last_name = last_name;
     this.avatar = avatar;
+    this.full_name = full_name;
     this.phone_number = phone_number;
     this.email_verified_at = email_verified_at;
     this.country_code = country_code;
