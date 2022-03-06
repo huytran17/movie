@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 import makeSignUpController from "./sign-up";
 import makeSignInController from "./sign-in";
+import makeVerifyController from "./verify";
 
 import { createUser, getUserByEmail } from "../../use-cases/user";
 
@@ -21,9 +22,12 @@ const signInController = makeSignInController({
   getUserByEmail,
 });
 
+const verifyController = makeVerifyController();
+
 export default Object.freeze({
   signUpController,
   signInController,
+  verifyController,
 });
 
-export { signUpController, signInController };
+export { signUpController, signInController, verifyController };
