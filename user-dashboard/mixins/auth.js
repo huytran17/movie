@@ -33,6 +33,7 @@ export default {
     ...mapActions({
       SIGN_IN: "auth/SIGN_IN",
       SIGN_UP: "auth/SIGN_UP",
+      VERIFY: "auth/VERIFY",
     }),
 
     ...mapMutations({

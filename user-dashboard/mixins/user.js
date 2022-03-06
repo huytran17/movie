@@ -6,7 +6,6 @@ export default {
     ...mapGetters({
       loading: "user/loading",
       pagination: "user/pagination",
-      has_user: "auth/has_user",
     }),
 
     /**
