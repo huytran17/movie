@@ -10,9 +10,7 @@ const userRouter = express.Router();
 userRouter.get(
   "/:user_id",
   makeValidator(getUserRules),
-  makeExpressCallback(getUserController),
+  makeExpressCallback(getUserController)
 );
-
-
 
 export default userRouter;
