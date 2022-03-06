@@ -12,6 +12,17 @@ export default {
         (v) =>
           (v && v.length > 7) || this.$t("Password must be min 8 characters."),
       ],
+      firstNameRules: [
+        (v) => !!v || this.$t("First name is required."),
+        (v) =>
+          (v && v.length > 1) ||
+          this.$t("First name must be min 2 characters."),
+      ],
+      lastNameRules: [
+        (v) => !!v || this.$t("Last name is required."),
+        (v) =>
+          (v && v.length > 1) || this.$t("Last name must be min 2 characters."),
+      ],
       passwordConfirmationRules: [
         (v) =>
           (v && v.length > 7) || this.$t("Password must be min 8 characters."),

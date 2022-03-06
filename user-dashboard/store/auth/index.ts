@@ -8,6 +8,8 @@ export const state = () => ({
     email: "",
     password: "",
     password_confirmation: "",
+    first_name: "",
+    last_name: "",
   },
   has_user: false,
 });

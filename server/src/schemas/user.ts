@@ -4,8 +4,8 @@ import _ from "lodash";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  first_name: { type: String, trim: true },
-  last_name: { type: String, trim: true },
+  first_name: { type: String, trim: true, required: true },
+  last_name: { type: String, trim: true, required: true },
   hash_password: { type: String, trim: true },
   avatar: { type: String, trim: true },
   email: { type: String, trim: true, lowercase: true },
