@@ -6,8 +6,10 @@ import {
   signUpController,
   signInController,
   verifyController,
+  autoSignInController,
 } from "../../controllers/auth";
 import authenticateUserJWT from "../../middlewares/authenticateUserJWT";
+import autoSignIn from "../../middlewares/autoSignIn";
 
 const authRouter = express.Router();
 
@@ -27,6 +29,12 @@ authRouter.get(
   "/verify",
   authenticateUserJWT(),
   makeExpressCallback(verifyController)
+);
+
+authRouter.get(
+  "/auto-sign-in",
+  autoSignIn(),
+  makeExpressCallback(autoSignInController)
 );
 
 export default authRouter;

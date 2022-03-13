@@ -13,7 +13,7 @@ export default function makeSignInController({
   verifyPassword: IVerifyPassword;
 }) {
   return async function signInController(httpRequest: {
-    context: { validated: { email: string } };
+    context: { validated: { email: string; password: string } };
   }) {
     const headers = {
       "Content-Type": "application/json",

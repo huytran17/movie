@@ -3,8 +3,14 @@ import jwt from "jsonwebtoken";
 type IJwtGenerate = (
   payload: { [key: string]: any },
   secret: string,
-  options?: { expiresIn: string | number },
+  options?: { expiresIn: string | number }
 ) => string;
+
+type IJwtVerify = (
+  payload: string,
+  secret: string,
+  options?: object
+) => string | jwt.JwtPayload;
 
 export default Object.freeze({
   generate: (
@@ -12,10 +18,17 @@ export default Object.freeze({
       [key: string]: any;
     },
     secret: string,
-    options = {},
+    options = {}
   ) => {
     return jwt.sign(payload, secret, options);
   },
-  verify: jwt.verify,
+  verify: (payload: string, secret: string, options = {}) => {
+    try {
+      const decoded = jwt.verify(payload, secret, options);
+      return decoded;
+    } catch (e) {
+      return "";
+    }
+  },
 });
-export { IJwtGenerate };
+export { IJwtGenerate, IJwtVerify };
