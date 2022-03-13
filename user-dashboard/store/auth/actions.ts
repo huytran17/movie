@@ -11,19 +11,16 @@ const actions: ActionTree<AuthState, RootState> = {
    */
   async [ActionTypes.SIGN_IN]({ commit, state }) {
     try {
-      const { user, access_token } = await this.$axios.$post(
-        "/api/auth/sign-in",
-        {
-          data: state.sign_in_data,
-        }
-      );
+      const response = await this.$axios.$post("/api/auth/sign-in", {
+        data: state.sign_in_data,
+      });
 
-      if (user && access_token) {
+      if (response.user && response.access_token) {
         commit(MutationTypes.SET_HAS_USER, { data: true });
-        commit(MutationTypes.SET_USER, { data: user });
+        commit(MutationTypes.SET_USER, { data: response.user });
       }
 
-      return { access_token, user };
+      return response;
     } catch (err) {
       console.error(err);
     }

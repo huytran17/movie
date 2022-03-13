@@ -23,12 +23,13 @@ const plugin: Plugin = ({ $axios, redirect, store }: Context, inject) => {
   $axios.onError((error) => {
     const code = _.get(error, "response.status", 404);
     if (code === 400) {
-      return redirect("/400");
+      // return redirect("/400");
+      return;
     }
 
     const expired = _.get(error, "response.status", 404);
     if (expired === 401) {
-      const origin = `${window.location.origin}/sign-in?message=${error.response?.data}`;
+      const origin = `${window.location.origin}/signin?message=${error.response?.data}`;
       window.location.replace(origin);
       return;
     }
