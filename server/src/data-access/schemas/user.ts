@@ -4,8 +4,8 @@ import _ from "lodash";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  first_name: { type: String, trim: true, required: true },
-  last_name: { type: String, trim: true, required: true },
+  first_name: { type: String, trim: true },
+  last_name: { type: String, trim: true },
   hash_password: { type: String, trim: true },
   avatar: { type: String, trim: true },
   email: { type: String, trim: true, lowercase: true },
@@ -18,20 +18,16 @@ const userSchema = new Schema({
   email_verified_at: { type: Date, default: null },
 });
 
-userSchema.virtual("full_name").get(() => {
-  const user = this as any;
-  const first_name = _.get(user, "first_name", "");
-  const last_name = _.get(user, "last_name", "");
-  const fullname = `${first_name} ${last_name}`;
+userSchema
+  .virtual("full_name")
+  .get(function (this: { first_name: string; last_name: string }) {
+    return `${this.first_name} ${this.last_name}`;
+  });
 
-  return fullname;
-});
+userSchema.virtual("alias_name").get(function (this: { full_name: string }) {
+  const matches = this.full_name?.match(/\b(\w)/g); // ['J','S','O','N']
 
-userSchema.virtual("alias_name").get(() => {
-  const user = this as any;
-  const { full_name } = user;
-  const matches = full_name.match(/\b(\w)/g); // ['J','S','O','N']
-  const acronym = matches.join(""); // JSON
+  const acronym = matches?.join(""); // JSON
 
   return acronym;
 });

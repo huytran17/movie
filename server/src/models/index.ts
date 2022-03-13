@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import userSchema from "../schemas/user";
-import adminSchema from "../schemas/admin";
+import userSchema from "../data-access/schemas/user";
+import adminSchema from "../data-access/schemas/admin";
 
 import IUser from "../interfaces/user";
 import IAdmin from "../interfaces/admin";

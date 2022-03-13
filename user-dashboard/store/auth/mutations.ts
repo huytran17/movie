@@ -9,9 +9,9 @@ const mutations: MutationTree<AuthState> = {
    * @param state
    * @param param1
    */
-  [MutationTypes.SET_LOGIN_DATA](
+  [MutationTypes.SET_SIGN_IN_DATA](
     state,
-    { data, path }: { data: object; path: string }
+    { data, path }: { data: any; path: string }
   ) {
     const updated_data = _.update(state.sign_in_data, path, (n) => {
       return data;
@@ -42,7 +42,7 @@ const mutations: MutationTree<AuthState> = {
    */
   [MutationTypes.SET_SIGN_UP_DATA](
     state,
-    { data, path }: { data: object; path: string }
+    { data, path }: { data: any; path: string }
   ) {
     const updated_data = _.update(state.sign_up_data, path, (n) => {
       return data;

@@ -97,7 +97,7 @@ export default function makeUserDb({
     }
 
     async findOne(): Promise<User | null> {
-      const existing = await userDbModel.findOne();
+      const existing = await userDbModel.findOne().lean({ virtuals: true });
 
       if (existing) {
         return new User(existing);
@@ -164,9 +164,7 @@ export default function makeUserDb({
         email,
         deleted_at: undefined,
       };
-      const existing = await userDbModel
-        .findOne(query_conditions)
-        .lean({ virtuals: true });
+      const existing = await userDbModel.findOne(query_conditions);
 
       if (existing) {
         return new User(existing);

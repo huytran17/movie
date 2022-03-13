@@ -22,6 +22,7 @@ export default function initializeJWT(
     "user-jwt",
     new JwtStrategy(opts, async function (jwt_payload, done) {
       const exist = await UserDb.findByEmail({ email: jwt_payload.email });
+
       if (!exist) {
         return done(null, null);
       }

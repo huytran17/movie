@@ -1,18 +1,14 @@
 <template>
   <v-app>
     <v-main>
-      <HomeDefault />
+      <nuxt />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HomeDefault from "@/components/HomeDefault";
-
 export default {
   name: "DefaultLayout",
-  components: {
-    HomeDefault,
-  },
+  components: {},
 };
 </script>
