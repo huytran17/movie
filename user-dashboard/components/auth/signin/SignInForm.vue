@@ -35,7 +35,7 @@
             depressed
             tile
             color="red"
-            class="w-100 mt-3 white--text"
+            class="w-100 mt-3 white--text py-5"
             @click="signin"
             >{{ $t("Sign In") }}</v-btn
           >

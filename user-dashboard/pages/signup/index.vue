@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container-fluid h-100 d-flex flex-column justify-center sign-in-page"
+    class="container-fluid h-100 d-flex flex-column justify-center sign-up-page"
   >
     <SignUpForm />
   </div>
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-.sign-in-page {
+.sign-up-page {
   background-image: url("assets/images/auth/background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -33,7 +33,7 @@ export default {
   position: relative;
 }
 
-.sign-in-page::before {
+.sign-up-page::before {
   content: "";
   position: absolute;
   top: 0;
