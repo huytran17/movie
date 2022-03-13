@@ -9,8 +9,7 @@ import { IHashPassword } from "../../config/password/hash-password";
 export type IRawUserData = Omit<User, "hash_password"> & {
   password: string;
   password_confirmation: string;
-  first_name: string;
-  last_name: string;
+  email: string;
 };
 
 export default function makeSignUpController({
@@ -32,13 +31,7 @@ export default function makeSignUpController({
     try {
       const user: IRawUserData = _.get(httpRequest, "context.validated.data");
 
-      const {
-        password,
-        password_confirmation,
-        email: _email,
-        first_name,
-        last_name,
-      } = user;
+      const { password, password_confirmation, email: _email } = user;
       const email = _email.toLowerCase();
       const exists = await getUserByEmail({ email });
       if (exists) {
@@ -62,8 +55,6 @@ export default function makeSignUpController({
         {
           email,
           hash_password,
-          first_name,
-          last_name,
         }
       );
       const created_user = await createUser({
