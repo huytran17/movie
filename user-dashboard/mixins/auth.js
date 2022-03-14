@@ -45,6 +45,7 @@ export default {
       SIGN_IN: "auth/SIGN_IN",
       SIGN_UP: "auth/SIGN_UP",
       VERIFY: "auth/VERIFY",
+      AUTO_SIGN_IN: "auth/AUTO_SIGN_IN",
     }),
 
     ...mapMutations({

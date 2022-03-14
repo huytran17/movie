@@ -4,20 +4,17 @@ import { IVerifyAccessToken } from "../../config/accessTokenManager/verify-acces
 
 export default function makeAutoSignInController({
   getUserByEmail,
-  verifyAccessToken,
 }: {
   getUserByEmail: IGetUserByEmail;
   verifyAccessToken: IVerifyAccessToken;
 }) {
-  return async function autoSignInController(httpRequest: {
-    context: { validated: {} };
-  }) {
+  return async function autoSignInController(httpRequest: { context: {} }) {
     const headers = {
       "Content-Type": "application/json",
     };
 
     try {
-      const payload = _.get(httpRequest, "context.validated");
+      const payload = _.get(httpRequest, "context.user");
 
       const email: string = _.get(payload, "email", "");
       const user = await getUserByEmail({ email });

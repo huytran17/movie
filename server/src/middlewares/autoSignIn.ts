@@ -13,6 +13,7 @@ export default function makeAutoSignIn() {
       "Content-Type": "application/json",
     });
     res.type("json");
+    res.status(200);
 
     const headers = _.get(req, "headers");
     const bearer_token = _.get(headers, "authorization", "");
@@ -43,6 +44,8 @@ export default function makeAutoSignIn() {
 
       return;
     }
+
+    req.user = user;
 
     next();
   };

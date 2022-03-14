@@ -46,6 +46,28 @@ const actions: ActionTree<AuthState, RootState> = {
   },
 
   /**
+   * login
+   * @param param0
+   */
+  async [ActionTypes.AUTO_SIGN_IN]({ commit, state }) {
+    try {
+      const response = await this.$axios.$get("/api/auth/auto-sign-in");
+
+      console.log(response);
+      const { user, is_error } = response;
+
+      if (user) {
+        commit(MutationTypes.SET_HAS_USER, { data: true });
+        commit(MutationTypes.SET_USER, { data: user });
+      }
+
+      return { user, is_error };
+    } catch (err) {
+      console.error(err);
+    }
+  },
+
+  /**
    * sign up
    * @param param0
    */

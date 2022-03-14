@@ -16,6 +16,17 @@ export default {
   components: {
     SignUpForm,
   },
+  async fetch() {
+    try {
+      const { is_error } = await this.AUTO_SIGN_IN();
+
+      if (!is_error) {
+        this.$router.push(this.localePath("/"));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
 </script>
 
