@@ -5,6 +5,7 @@
     max-height="700"
     hide-delimiter-background
     show-arrows-on-hover
+    :hide-delimiters="true"
   >
     <v-carousel-item v-for="(image, i) in slide_images" :key="i">
       <v-sheet height="100%" class="position-relative">
