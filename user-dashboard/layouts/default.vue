@@ -17,3 +17,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+::v-deep#app {
+  background: #000000 !important;
+}
+</style>
