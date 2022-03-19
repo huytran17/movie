@@ -1,10 +1,7 @@
-import { mapMutations, mapGetters } from "vuex";
+import _ from "lodash";
 
 export default {
   computed: {
-    ...mapGetters({
-      show_drawer: "show_drawer",
-    }),
     /**
      *
      * @returns true if xs;
@@ -28,10 +25,6 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
-      SET_SHOW_DRAWER: "SET_SHOW_DRAWER",
-      TOGGLE_SHOW_DRAWER: "TOGGLE_SHOW_DRAWER",
-    }),
     /**
      *
      * @param {*} date
@@ -44,6 +37,14 @@ export default {
       } else {
         return this.$moment(date).fromNow();
       }
+    },
+  },
+  filters: {
+    capitalize: function (value) {
+      if (!value) return "";
+      value = value.toString();
+
+      return value.replace(/\w+/g, _.capitalize);
     },
   },
 };
