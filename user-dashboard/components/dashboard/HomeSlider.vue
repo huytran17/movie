@@ -15,7 +15,7 @@
           :max-height="700"
         />
         <div
-          class="position-absolute slide-infomation white--text px-9 py-5 w-100"
+          class="position-absolute slide-infomation white--text px-3 px-sm-9 py-5 w-100"
         >
           <div class="slide-title">
             <div class="text-h5 text-sm-h4">
@@ -24,14 +24,18 @@
               </span>
             </div>
           </div>
-          <div class="slide-functions d-flex pt-8 pb-5">
+          <div class="slide-functions d-flex flex-column flex-sm-row pt-8 pb-5">
             <div>
               <v-btn color="white" depressed tile>
                 <span v-html="$t('Xem trailer')"></span>
               </v-btn>
             </div>
             <div>
-              <v-btn color="red white--text pr-2 ml-5" depressed tile>
+              <v-btn
+                color="red white--text pr-2 ml-0 ml-sm-5 mt-3 mt-sm-0"
+                depressed
+                tile
+              >
                 <span v-html="$t('Phát')"></span>
                 <v-icon>mdi-play</v-icon>
               </v-btn>
