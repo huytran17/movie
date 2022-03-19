@@ -25,6 +25,7 @@ export default function makeAutoSignInController({
           statusCode: 200,
           body: {
             is_error: true,
+            user: null,
             message: "User does not exists.",
           },
         };
