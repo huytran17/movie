@@ -1,13 +1,16 @@
 import express from "express";
 import makeValidator from "../../middlewares/validator-middleware";
 import makeExpressCallback from "../../express-callback";
-import { signInRules, signUpRules } from "../../controllers/auth/validators";
+import {
+  signInRules,
+  signUpRules,
+} from "../../controllers/api/auth/validators";
 import {
   signUpController,
   signInController,
   verifyController,
   autoSignInController,
-} from "../../controllers/auth";
+} from "../../controllers/api/auth";
 import authenticateUserJWT from "../../middlewares/authenticateUserJWT";
 import autoSignIn from "../../middlewares/autoSignIn";
 
