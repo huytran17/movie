@@ -16,6 +16,7 @@ export default class Film implements IFilm {
   constructor({
     _id,
     created_at,
+    slug,
     updated_at,
     deleted_at,
     title,
@@ -26,6 +27,7 @@ export default class Film implements IFilm {
     url,
   }: IFilm) {
     this._id = _id;
+    this.slug = slug;
     this.title = title;
     this.description = description;
     this.url = url;
