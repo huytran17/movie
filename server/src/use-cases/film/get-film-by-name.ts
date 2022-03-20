@@ -1,16 +1,14 @@
 import Film from "../../entities/film";
 import IFilmDb from "../../data-access/interfaces/film-db";
 
-export type IGetFilmByFilmname = ({
+export type IGetFilmByName = ({
   film_name,
 }: {
   film_name: string;
 }) => Promise<Film | null>;
 
-export default function makeGetFilmByFilmname(
-  filmDb: IFilmDb
-): IGetFilmByFilmname {
-  return async function getFilmByFilmname({
+export default function makeGetFilmByName(filmDb: IFilmDb): IGetFilmByName {
+  return async function getFilmByName({
     film_name,
   }: {
     film_name: string;
