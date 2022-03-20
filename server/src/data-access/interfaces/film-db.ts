@@ -13,11 +13,7 @@ export default interface IFilmDb {
   }) => Promise<PaginatedFilmResult | null>;
   findOne: () => Promise<Film | null>;
   findById: ({ id }: { id: string }) => Promise<Film | null>;
-  findByFilmName: ({
-    film_name,
-  }: {
-    film_name: string;
-  }) => Promise<Film | null>;
+  findByName: ({ film_name }: { film_name: string }) => Promise<Film | null>;
   findBySlug: ({ slug }: { slug: string }) => Promise<Film | null>;
   insert: (payload: Partial<IFilm>) => Promise<Film | null>;
   delete: ({ id }: { id: string }) => Promise<Film | null>;

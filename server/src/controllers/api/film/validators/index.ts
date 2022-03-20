@@ -1,18 +1,11 @@
-import getUserRules from "./get-user";
-import getUserBySlugRules from "./get-user-by-slug";
-import getUserByUsernameRules from "./get-user-by-username";
-import getUserByEmailRules from "./get-user-by-email";
+import getFilmRules from "./get-film";
+import getFilmBySlugRules from "./get-film-by-slug";
+import getFilmByNameRules from "./get-film-by-name";
 
 export default Object.freeze({
-  getUserRules,
-  getUserBySlugRules,
-  getUserByUsernameRules,
-  getUserByEmailRules,
+  getFilmRules,
+  getFilmBySlugRules,
+  getFilmByNameRules,
 });
 
-export {
-  getUserRules,
-  getUserBySlugRules,
-  getUserByUsernameRules,
-  getUserByEmailRules,
-};
+export { getFilmRules, getFilmBySlugRules, getFilmByNameRules };

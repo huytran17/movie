@@ -1,30 +1,30 @@
 import { Request } from "express";
 import * as _ from "lodash";
-import { IGetUserById } from "../../use-cases/user/get-user-by-id";
+import { IGetFilmById } from "../../../use-cases/film/get-film-by-id";
 
-export default function makeGetUserController({
-  getUserById,
+export default function makeGetFilmController({
+  getFilmById,
 }: {
-  getUserById: IGetUserById;
+  getFilmById: IGetFilmById;
 }) {
-  return async function getUserController(
+  return async function getFilmController(
     httpRequest: Request & { context: { validated: { _id: string } } }
   ) {
     const headers = {
       "Content-Type": "application/json",
     };
     try {
-      const { user_id }: { user_id: string } = _.get(
+      const { film_id }: { film_id: string } = _.get(
         httpRequest,
         "context.validated"
       );
 
-      const user = await getUserById({ id: user_id });
+      const film = await getFilmById({ id: film_id });
 
       return {
         headers,
         statusCode: 200,
-        body: { data: user }, // TODO: add in implementation of resource
+        body: { data: film }, // TODO: add in implementation of resource
       };
     } catch (err) {
       // TODO: add in error handling here

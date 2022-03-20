@@ -1,58 +1,46 @@
 import {
-  getUserById,
-  getUserByEmail,
-  getUserBySlug,
-  getUserByUsername,
-} from "../../use-cases/user";
-import makeGetUserController from "./get-user";
+  getFilmById,
+  getFilmBySlug,
+  getFilmByFilmname,
+} from "../../../use-cases/film";
+import makeGetFilmController from "./get-film";
 
-import makeGetUserBySlugController from "./get-user-by-slug";
-import makeGetUserByUsernameController from "./get-user-by-username";
-import makeGetUserByEmailController from "./get-user-by-email";
+import makeGetFilmBySlugController from "./get-film-by-slug";
+import makeGetFilmByFilmnameController from "./get-film-by-name";
 
 /**
- * get user controller based on id
- * @function getUserController
+ * get film controller based on id
+ * @function getFilmController
  */
-const getUserController = makeGetUserController({
-  getUserById,
+const getFilmController = makeGetFilmController({
+  getFilmById,
 });
 
 /**
- * get user by slug
- * @function getUserBySlugController
+ * get film by slug
+ * @function getFilmBySlugController
  */
-const getUserBySlugController = makeGetUserBySlugController({
-  getUserById,
-  getUserBySlug,
+const getFilmBySlugController = makeGetFilmBySlugController({
+  getFilmById,
+  getFilmBySlug,
 });
 
 /**
- * get user by username
- * @function getUserByUsernameController
+ * get film by filmname
+ * @function getFilmByFilmnameController
  */
-const getUserByUsernameController = makeGetUserByUsernameController({
-  getUserByUsername,
-});
-
-/**
- * get user by email
- * @function getUserByEmailController
- */
-const getUserByEmailController = makeGetUserByEmailController({
-  getUserByEmail,
+const getFilmByFilmnameController = makeGetFilmByFilmnameController({
+  getFilmByFilmname,
 });
 
 export default Object.freeze({
-  getUserController,
-  getUserBySlugController,
-  getUserByUsernameController,
-  getUserByEmailController,
+  getFilmController,
+  getFilmBySlugController,
+  getFilmByFilmnameController,
 });
 
 export {
-  getUserController,
-  getUserBySlugController,
-  getUserByUsernameController,
-  getUserByEmailController,
+  getFilmController,
+  getFilmBySlugController,
+  getFilmByFilmnameController,
 };
