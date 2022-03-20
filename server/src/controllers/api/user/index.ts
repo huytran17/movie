@@ -3,7 +3,7 @@ import {
   getUserByEmail,
   getUserBySlug,
   getUserByUsername,
-} from "../../use-cases/user";
+} from "../../../use-cases/user";
 import makeGetUserController from "./get-user";
 
 import makeGetUserBySlugController from "./get-user-by-slug";

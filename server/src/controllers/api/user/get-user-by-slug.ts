@@ -1,8 +1,8 @@
 import { Request } from "express";
 import * as _ from "lodash";
 
-import { IGetUserBySlug } from "../../use-cases/user/get-user-by-slug";
-import { IGetUserById } from "../../use-cases/user/get-user-by-id";
+import { IGetUserBySlug } from "../../../use-cases/user/get-user-by-slug";
+import { IGetUserById } from "../../../use-cases/user/get-user-by-id";
 
 export default function makeGetUserBySlugController({
   getUserById,
@@ -18,10 +18,6 @@ export default function makeGetUserBySlugController({
       "Content-Type": "application/json",
     };
     try {
-      const { email: requester_email, _id: follower_id } = _.get(
-        httpRequest,
-        "context.user"
-      );
       const { slug }: { slug: string } = _.get(
         httpRequest,
         "context.validated"

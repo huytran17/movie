@@ -1,7 +1,7 @@
 import { Request } from "express";
 import * as _ from "lodash";
 
-import { IGetUserByUsername } from "../../use-cases/user/get-user-by-username";
+import { IGetUserByUsername } from "../../../use-cases/user/get-user-by-username";
 
 export default function makeGetUserByUsernameController({
   getUserByUsername,
