@@ -12,7 +12,7 @@ export type ICreateUser = ({
 }: ICreateUserData) => Promise<User | null>;
 
 export default function makeCreateUser(userDb: IUserDb): ICreateUser {
-  return async function cratesUser({
+  return async function createsUser({
     userDetails,
   }: ICreateUserData): Promise<User | null> {
     const exists = await userDb.findByEmail({ email: userDetails.email });
