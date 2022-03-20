@@ -2,9 +2,14 @@
   <v-container fluid>
     <HomeSlider />
     <ListFilm title="Phổ biến" />
-    <ListFilm title="Phổ biến" />
-    <ListFilm title="Phổ biến" />
-    <ListFilm title="Phổ biến" />
+    <ListFilm title="Âu - Mỹ" />
+    <ListFilm title="Mới phát hành" />
+    <ListFilm title="Việt Nam" />
+    <ListFilm title="Kinh dị" />
+    <ListFilm title="Hài" />
+    <ListFilm title="Phim tài liệu" />
+    <ListFilm title="Trẻ em" />
+    <ListFilm title="Gia đình" />
   </v-container>
 </template>
 
