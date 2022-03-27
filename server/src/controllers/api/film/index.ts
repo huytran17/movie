@@ -1,12 +1,12 @@
 import {
   getFilmById,
   getFilmBySlug,
-  getFilmByName,
+  getFilmByTitle,
 } from "../../../use-cases/film";
 import makeGetFilmController from "./get-film";
 
 import makeGetFilmBySlugController from "./get-film-by-slug";
-import makeGetFilmByNameController from "./get-film-by-name";
+import makeGetFilmByTitleController from "./get-film-by-title";
 
 /**
  * get film controller based on id
@@ -27,16 +27,16 @@ const getFilmBySlugController = makeGetFilmBySlugController({
 
 /**
  * get film by filmname
- * @function getFilmByNameController
+ * @function getFilmByTitleController
  */
-const getFilmByNameController = makeGetFilmByNameController({
-  getFilmByName,
+const getFilmByTitleController = makeGetFilmByTitleController({
+  getFilmByTitle,
 });
 
 export default Object.freeze({
   getFilmController,
   getFilmBySlugController,
-  getFilmByNameController,
+  getFilmByTitleController,
 });
 
-export { getFilmController, getFilmBySlugController, getFilmByNameController };
+export { getFilmController, getFilmBySlugController, getFilmByTitleController };

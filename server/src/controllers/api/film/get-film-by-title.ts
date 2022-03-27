@@ -1,26 +1,26 @@
 import { Request } from "express";
 import * as _ from "lodash";
 
-import { IGetFilmByName } from "../../../use-cases/film/get-film-by-name";
+import { IGetFilmByTitle } from "../../../use-cases/film/get-film-by-title";
 
-export default function makeGetFilmByNameController({
-  getFilmByName,
+export default function makeGetFilmByTitleController({
+  getFilmByTitle,
 }: {
-  getFilmByName: IGetFilmByName;
+  getFilmByTitle: IGetFilmByTitle;
 }) {
-  return async function getFilmByNameController(
+  return async function getFilmByTitleController(
     httpRequest: Request & { context: { validated: { _id: string } } }
   ) {
     const headers = {
       "Content-Type": "application/json",
     };
     try {
-      const { film_name }: { film_name: string } = _.get(
+      const { title }: { title: string } = _.get(
         httpRequest,
         "context.validated"
       );
 
-      const film = await getFilmByName({ film_name });
+      const film = await getFilmByTitle({ title });
 
       return {
         headers,
