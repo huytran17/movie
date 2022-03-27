@@ -8,7 +8,7 @@ import { getFilmController } from "../../controllers/api/film";
 const filmRouter = express.Router();
 
 filmRouter.get(
-  "/:user_id",
+  "/:film_id",
   makeValidator(getFilmRules),
   makeExpressCallback(getFilmController)
 );

@@ -1,10 +1,10 @@
 import { Request } from "express";
 import * as _ from "lodash";
-import User from "../../entities/user";
+import User from "../../../entities/user";
 
-import { IGetUserByEmail } from "../../use-cases/user/get-user-by-email";
-import { ICreateUser } from "../../use-cases/user/create-user";
-import { IHashPassword } from "../../config/password/hash-password";
+import { IGetUserByEmail } from "../../../use-cases/user/get-user-by-email";
+import { ICreateUser } from "../../../use-cases/user/create-user";
+import { IHashPassword } from "../../../config/password/hash-password";
 
 export type IRawUserData = Omit<User, "hash_password"> & {
   password: string;

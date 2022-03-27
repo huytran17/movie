@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { IGetUserByEmail } from "../../use-cases/user/get-user-by-email";
-import { IVerifyAccessToken } from "../../config/accessTokenManager/verify-access-token";
+import { IGetUserByEmail } from "../../../use-cases/user/get-user-by-email";
+import { IVerifyAccessToken } from "../../../config/accessTokenManager/verify-access-token";
 
 export default function makeAutoSignInController({
   getUserByEmail,

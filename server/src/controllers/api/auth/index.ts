@@ -6,13 +6,13 @@ import makeSignInController from "./sign-in";
 import makeVerifyController from "./verify";
 import makeAutoSignInController from "./auto-sign-in";
 
-import { createUser, getUserByEmail } from "../../use-cases/user";
+import { createUser, getUserByEmail } from "../../../use-cases/user";
 
-import { verifyPassword, hashPassword } from "../../config/password";
+import { verifyPassword, hashPassword } from "../../../config/password";
 import {
   generateAccessToken,
   verifyAccessToken,
-} from "../../config/accessTokenManager";
+} from "../../../config/accessTokenManager";
 
 const signUpController = makeSignUpController({
   hashPassword,
