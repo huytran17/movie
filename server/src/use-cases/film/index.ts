@@ -6,7 +6,7 @@ import makeRemoveFilm from "./delete-film";
 import makeGetFilmById from "./get-film-by-id";
 import makeRemoveFilmById from "./delete-film-by-id";
 import makeGetFilmBySlug from "./get-film-by-slug";
-import makeGetFilmByName from "./get-film-by-name";
+import makeGetFilmBytitle from "./get-film-by-title";
 import makeGetFilms from "./get-films";
 
 const createFilm = makeCreateFilm(FilmDb);
@@ -28,9 +28,9 @@ const getFilmBySlug = makeGetFilmBySlug(FilmDb);
 
 /**
  * get one film by filmname
- * @function getFilmByName
+ * @function getFilmByTitle
  */
-const getFilmByName = makeGetFilmByName(FilmDb);
+const getFilmByTitle = makeGetFilmBytitle(FilmDb);
 
 /**
  * used by admin dashboard to get films
@@ -42,7 +42,7 @@ const filmServices = Object.freeze({
   createFilm,
   getFilmById,
   getFilmBySlug,
-  getFilmByName,
+  getFilmByTitle,
   getFilms,
   updateFilm,
   removeFilm,
@@ -54,7 +54,7 @@ export {
   createFilm,
   getFilmById,
   getFilmBySlug,
-  getFilmByName,
+  getFilmByTitle,
   getFilms,
   updateFilm,
   removeFilm,
