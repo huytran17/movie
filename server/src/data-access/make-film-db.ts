@@ -121,6 +121,17 @@ export default function makeFilmDb({
       return null;
     }
 
+    async findByTitle({ title }: { title: string }): Promise<Film | null> {
+      const existing = await filmDbModel
+        .findOne({ title: title })
+        .lean({ virtuals: true });
+
+      if (existing) {
+        return new Film(existing);
+      }
+      return null;
+    }
+
     /**
      * finding one film by slug
      * @param param0
