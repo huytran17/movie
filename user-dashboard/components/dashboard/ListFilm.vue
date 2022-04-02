@@ -9,7 +9,7 @@
     </div>
     <div class="video-list mt-2">
       <v-sheet class="mx-auto w-100" elevation="8" dark>
-        <v-slide-group show-arrows="mobile">
+        <v-slide-group show-arrows="mobile" class="position-relative">
           <v-slide-item
             v-for="(film, index) in films"
             :key="index"
@@ -30,8 +30,8 @@
                   cover
                 >
                   <div
-                    :class="{ 'show-title': hover }"
-                    class="transparent--text film-title position-absolute px-2 py-1 w-100"
+                    :class="{ 'show-title': hover && !is_mobile }"
+                    class="transparent--text px-2 py-1 w-100 film-title position-absolute"
                   >
                     <div class="text-subtitle-2 text-sm-subtitle-1">
                       <span class="app-title">
@@ -50,8 +50,11 @@
 </template>
 
 <script>
+import systemMixins from "@/mixins/system";
+
 export default {
   name: "ListFilm",
+  mixins: [systemMixins],
   props: {
     title: {
       type: String,
@@ -127,15 +130,48 @@ export default {
 <style scoped>
 .show-title {
   color: #ffffff !important;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.5);
+  transform: translateY(0%) !important;
 }
 .film-title {
   bottom: 0;
-  transition: all 0.3s linear;
+  transition: all 0.25s linear;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  transform: translateY(100%);
+}
+::v-deep .v-slide-group__prev,
+::v-deep .v-slide-group__next {
+  position: absolute;
+  height: 100%;
+  transition: all 0.3s linear;
+  background: rgba(0, 0, 0, 0);
+  min-width: 30px !important;
+  z-index: 999;
+}
+::v-deep .v-slide-group__prev .v-icon,
+::v-deep .v-slide-group__next .v-icon {
+  opacity: 0 !important;
+}
+::v-deep .v-slide-group__prev {
+  left: 0;
+}
+::v-deep .v-slide-group__next {
+  right: 0;
+}
+::v-deep .v-item-group:hover .v-slide-group__prev {
+  background: rgba(0, 0, 0, 0.2);
+}
+::v-deep .v-item-group:hover .v-slide-group__next {
+  background: rgba(0, 0, 0, 0.2);
+}
+::v-deep .v-item-group:hover .v-slide-group__prev .v-icon {
+  opacity: 1 !important;
+}
+::v-deep .v-item-group:hover .v-slide-group__next .v-icon {
+  opacity: 1 !important;
 }
 </style>
