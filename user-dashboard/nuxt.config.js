@@ -59,6 +59,7 @@ export default {
         en,
         vi,
       },
+      silentTranslationWarn: true,
     },
   },
 
