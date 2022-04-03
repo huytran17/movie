@@ -53,7 +53,7 @@ const actions: ActionTree<AuthState, RootState> = {
     try {
       const response = await this.$axios.$get("/api/auth/auto-sign-in");
 
-      const { user, is_error } = response;
+      const { user, is_error } = response.body;
 
       if (user) {
         commit(MutationTypes.SET_HAS_USER, { data: true });
