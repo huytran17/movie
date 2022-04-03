@@ -1,0 +1,6 @@
+export enum MutationTypes {
+  SET_USER = "SET_USER",
+  SET_SIGN_IN_DATA = "SET_SIGN_IN_DATA",
+  SET_SIGN_UP_DATA = "SET_SIGN_UP_DATA",
+  SET_HAS_USER = "SET_HAS_USER",
+}

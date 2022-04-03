@@ -9,8 +9,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: "%s - admin-dashboard",
-    title: "admin-dashboard",
+    titleTemplate: "%s - user-dashboard",
+    title: "user-dashboard",
     htmlAttrs: {
       lang: "en",
     },
@@ -24,10 +24,13 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ["~/assets/global/css/style"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    { src: "~/plugins/vue-toastification", ssr: false },
+    { src: "~/plugins/axios", ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -56,7 +59,12 @@ export default {
         en,
         vi,
       },
+      silentTranslationWarn: true,
     },
+  },
+
+  server: {
+    port: 8080, // default: 3000
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -68,10 +76,6 @@ export default {
 
   proxy: {
     "/api/": "http://localhost:3000",
-  },
-
-  server: {
-    port: 8080, // default: 3000
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -88,6 +92,7 @@ export default {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
+          white: colors.shades.black,
         },
       },
     },
