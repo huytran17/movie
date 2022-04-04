@@ -19,20 +19,8 @@
     <v-navigation-drawer v-model="drawer" temporary top fixed>
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
-          <v-list-item>
-            <v-list-item-title>Foo</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Bar</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Fizz</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Buzz</v-list-item-title>
+          <v-list-item v-for="item in list_items" :key="item.value">
+            <v-list-item-title>{{ $t(item.text) }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -47,6 +35,29 @@ export default {
   name: "TheSideNav",
   mixins: [systemMixins],
   components: {},
+  props: {
+    list_items: {
+      type: Array,
+      default: [
+        {
+          text: "Dashboard",
+          value: "dashboard",
+        },
+        {
+          text: "User",
+          value: "user",
+        },
+        {
+          text: "Film",
+          value: "film",
+        },
+        {
+          text: "Category",
+          value: "category",
+        },
+      ],
+    },
+  },
   data() {
     return {
       drawer: false,
