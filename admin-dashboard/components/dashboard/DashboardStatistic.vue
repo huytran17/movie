@@ -1,7 +1,13 @@
 <template>
-  <div>
-    <BaseLineCharts :chartData="chartData" :options="options" />
-  </div>
+  <v-container fluid>
+    <div class="user-statistic">
+      <BaseLineCharts
+        :chartData="chartData"
+        :options="options"
+        class="user-statistic-chart"
+      />
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -25,6 +31,7 @@ export default {
         ],
       },
       options: {
+        maintainAspectRatio: false,
         responsive: true,
       },
     };
@@ -32,4 +39,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.user-statistic-chart {
+  height: 300px;
+  max-height: 300px;
+}
+</style>

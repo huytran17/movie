@@ -1,8 +1,12 @@
 <template>
   <v-app light>
     <v-main>
-      <TheSideNav />
-      <nuxt />
+      <div class="nav">
+        <TheSideNav />
+      </div>
+      <div class="main mt-14">
+        <nuxt />
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -17,3 +21,5 @@ export default {
   },
 };
 </script>
+
+<style scoped></style>
