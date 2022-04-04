@@ -19,7 +19,11 @@
     <v-navigation-drawer v-model="drawer" temporary top fixed>
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
-          <v-list-item v-for="item in list_items" :key="item.value">
+          <v-list-item
+            v-for="item in list_items"
+            :key="item.value"
+            @click="$router.push(localePath(item.path))"
+          >
             <v-list-item-title>{{ $t(item.text) }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -38,22 +42,21 @@ export default {
   props: {
     list_items: {
       type: Array,
-      default: [
+      default: () => [
         {
           text: "Dashboard",
           value: "dashboard",
+          path: "/",
         },
         {
           text: "User",
           value: "user",
+          path: "/user",
         },
         {
           text: "Film",
           value: "film",
-        },
-        {
-          text: "Category",
-          value: "category",
+          path: "/film",
         },
       ],
     },
