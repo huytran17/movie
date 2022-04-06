@@ -3,7 +3,7 @@ import IAdmin from "../../interfaces/admin";
 
 export default interface IAdminDb {}
 
-export interface PaginatedUserResult {
+export interface PaginatedAdminResult {
   data: Admin[];
   pagination: {
     current_page: number;
