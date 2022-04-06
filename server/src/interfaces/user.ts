@@ -5,11 +5,8 @@ export default interface IUser {
   last_name?: string;
   full_name: string;
   alias_name: string;
-  avatar?: string;
+  avatar_url?: string;
   email: string;
-  phone_number?: string;
-  country_code: string;
-  language_code: string;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

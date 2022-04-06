@@ -4,12 +4,15 @@ export default class Film implements IFilm {
   public readonly _id: string;
   public readonly title: string;
   public readonly description: string;
-  public readonly url: string;
+  public readonly film_url: string;
   public readonly slug: string;
   public readonly thumnail_url: string;
-  public readonly views: number;
+  public readonly view_count: number;
   public readonly category: CategoryType;
-  public readonly manufactured_at: Date;
+  public readonly meta: {
+    view_count: number;
+    manufactured_at: Date;
+  };
   public readonly created_at: Date;
   public readonly updated_at: Date;
   public readonly deleted_at: Date;
@@ -22,20 +25,18 @@ export default class Film implements IFilm {
     deleted_at,
     title,
     description,
-    views,
+    meta,
     thumnail_url,
-    manufactured_at,
-    url,
+    film_url,
     category,
   }: IFilm) {
     this._id = _id;
     this.slug = slug;
     this.title = title;
     this.description = description;
-    this.url = url;
+    this.film_url = film_url;
     this.thumnail_url = thumnail_url;
-    this.views = views;
-    this.manufactured_at = manufactured_at;
+    this.meta = meta;
     this.category = category;
     this.created_at = created_at;
     this.updated_at = updated_at;

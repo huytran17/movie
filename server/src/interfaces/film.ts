@@ -2,12 +2,14 @@ export default interface IAdmin {
   _id: string;
   title: string;
   description: string;
-  url: string;
+  film_url: string;
   thumnail_url: string;
   slug: string;
-  views: number;
+  meta: {
+    view_count: number;
+    manufactured_at: Date;
+  };
   category: CategoryType;
-  manufactured_at: Date;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
