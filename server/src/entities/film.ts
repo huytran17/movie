@@ -7,7 +7,6 @@ export default class Film implements IFilm {
   public readonly film_url: string;
   public readonly slug: string;
   public readonly thumnail_url: string;
-  public readonly view_count: number;
   public readonly category: CategoryType;
   public readonly meta: {
     view_count: number;
