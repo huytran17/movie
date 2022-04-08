@@ -11,6 +11,7 @@
       >
         <v-app-bar-nav-icon
           large
+          color="white"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
       </v-badge>
