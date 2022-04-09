@@ -1,5 +1,5 @@
 <template>
-  <BaseTableLoader v-if="user_loading" />
+  <BaseTableLoader v-if="film_loading" />
   <v-data-table
     v-else
     :headers="headers"
@@ -38,11 +38,11 @@
 </template>
 
 <script>
-import userMixins from "@/mixins/user";
+import filmMixins from "@/mixins/film";
 import BaseTableLoader from "@/components/loaders/BaseTableLoader";
 export default {
   name: "BaseFilmTable",
-  mixins: [userMixins],
+  mixins: [filmMixins],
   components: {
     BaseTableLoader,
   },

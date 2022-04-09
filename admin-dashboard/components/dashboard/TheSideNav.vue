@@ -49,6 +49,11 @@ export default {
           path: "/",
         },
         {
+          text: "Admin",
+          value: "admin",
+          path: "/admin",
+        },
+        {
           text: "User",
           value: "user",
           path: "/users-client",
