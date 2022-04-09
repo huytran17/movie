@@ -12,6 +12,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/i18n": "^7.2.0",
     "core-js": "^3.19.3",
+    "material-design-icons-iconfont": "^6.6.0",
     "nuxt": "^2.15.8",
     "tiptap-vuetify": "^2.24.0",
     "vue": "^2.6.14",
@@ -27,6 +28,22 @@
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/vuetify": "^1.12.3",
     "@types/lodash": "^4.14.178"
+  },
+  "resolutions": {
+    "**/**/prosemirror-model": "1.11.2",
+    "**/**/sass": "1.32.11",
+    "**/**/sass-loader": "10.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "proxy": "http://localhost:3000"
 }
