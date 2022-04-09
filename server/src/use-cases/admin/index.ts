@@ -5,7 +5,9 @@ import makeUpdateAdmin from "./update-admin";
 import makeGetAdminById from "./get-admin-by-id";
 import makeRemoveAdminById from "./delete-admin-by-id";
 import makeGetAdmins from "./get-admins";
+import makeGetAdminByEmail from "./get-admin-by-email";
 
+const getAdminByEmail = makeGetAdminByEmail(AdminDb);
 const createAdmin = makeCreateAdmin(AdminDb);
 const updateAdmin = makeUpdateAdmin(AdminDb);
 const removeAdminById = makeRemoveAdminById(AdminDb);
@@ -28,7 +30,15 @@ const adminServices = Object.freeze({
   getAdmins,
   updateAdmin,
   removeAdminById,
+  getAdminByEmail,
 });
 
 export default adminServices;
-export { createAdmin, getAdminById, getAdmins, updateAdmin, removeAdminById };
+export {
+  createAdmin,
+  getAdminById,
+  getAdmins,
+  updateAdmin,
+  removeAdminById,
+  getAdminByEmail,
+};

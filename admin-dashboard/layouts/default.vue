@@ -12,12 +12,22 @@
 </template>
 
 <script>
+import authMixin from "@/mixins/auth";
+
 import TheSideNav from "@/components/dashboard/TheSideNav";
 
 export default {
   name: "DefaultLayout",
+  mixins: [authMixin],
   components: {
     TheSideNav,
+  },
+  async fetch() {
+    try {
+      await Promise.all([this.GET_ME()]);
+    } catch (e) {
+      console.log(e);
+    }
   },
 };
 </script>

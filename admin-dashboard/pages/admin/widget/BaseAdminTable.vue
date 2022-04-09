@@ -8,7 +8,7 @@
     :items-per-page="15"
   >
     <template v-slot:item.admin_tools="{ item }">
-      <v-btn icon @click="deleteAdmin({ id: item._id })">
+      <v-btn v-if="is_super_admin" icon @click="deleteAdmin({ id: item._id })">
         <v-icon color="red">mdi-delete-forever</v-icon>
       </v-btn>
     </template>
@@ -36,10 +36,12 @@
 
 <script>
 import adminMixins from "@/mixins/admin";
+import authMixins from "@/mixins/auth";
+
 import BaseTableLoader from "@/components/loaders/BaseTableLoader";
 export default {
   name: "BaseAdminTable",
-  mixins: [adminMixins],
+  mixins: [adminMixins, authMixins],
   components: {
     BaseTableLoader,
   },

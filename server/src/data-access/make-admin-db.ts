@@ -157,6 +157,19 @@ export default function makeAdminDb({
       return null;
     }
 
+    async findByEmail({ email }: { email: string }): Promise<Admin | null> {
+      const query_conditions = {
+        email,
+        deleted_at: undefined,
+      };
+      const existing = await adminDbModel.findOne(query_conditions);
+
+      if (existing) {
+        return new Admin(existing);
+      }
+      return null;
+    }
+
     /**
      *
      * @description used by admin API

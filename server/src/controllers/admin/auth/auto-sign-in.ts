@@ -1,11 +1,11 @@
 import _ from "lodash";
-import { IGetUserByEmail } from "../../../use-cases/user/get-user-by-email";
+import { IGetAdminByEmail } from "../../../use-cases/admin/get-admin-by-email";
 import { IVerifyAccessToken } from "../../../config/accessTokenManager/verify-access-token";
 
 export default function makeAutoSignInController({
-  getUserByEmail,
+  getAdminByEmail,
 }: {
-  getUserByEmail: IGetUserByEmail;
+  getAdminByEmail: IGetAdminByEmail;
   verifyAccessToken: IVerifyAccessToken;
 }) {
   return async function autoSignInController(httpRequest: { context: {} }) {
@@ -17,7 +17,7 @@ export default function makeAutoSignInController({
       const payload = _.get(httpRequest, "context.user");
 
       const email: string = _.get(payload, "email", "");
-      const user = await getUserByEmail({ email });
+      const user = await getAdminByEmail({ email });
 
       if (!user) {
         return {

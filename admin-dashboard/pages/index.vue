@@ -13,12 +13,12 @@ export default {
   components: {
     DashboardStatistic,
   },
-  async fetch() {
-    try {
-      await this.VERIFY();
-    } catch (e) {
-      console.log(e);
-    }
-  },
+  // async fetch() {
+  //   try {
+  //     await this.VERIFY();
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // },
 };
 </script>

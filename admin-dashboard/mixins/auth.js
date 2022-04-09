@@ -39,6 +39,12 @@ export default {
       sign_in_data: "auth/sign_in_data",
       sign_up_data: "auth/sign_up_data",
     }),
+
+    is_super_admin() {
+      const super_admin_type = _.get(this.user, "type", "");
+      const is_super_admin_tpye = super_admin_type === "super";
+      return is_super_admin_tpye;
+    },
   },
   methods: {
     ...mapActions({
@@ -46,6 +52,7 @@ export default {
       SIGN_UP: "auth/SIGN_UP",
       VERIFY: "auth/VERIFY",
       AUTO_SIGN_IN: "auth/AUTO_SIGN_IN",
+      GET_ME: "auth/ME",
     }),
 
     ...mapMutations({

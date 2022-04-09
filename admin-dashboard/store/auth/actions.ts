@@ -67,6 +67,29 @@ const actions: ActionTree<AuthState, RootState> = {
   },
 
   /**
+   * @description get myself as a user
+   * @param param0
+   */
+  async [ActionTypes.ME]({ commit }) {
+    try {
+      const { data: user } = await this.$axios.$get("/admin/auth");
+
+      if (!user) {
+        localStorage.removeItem("admin_access_token");
+        commit(MutationTypes.SET_HAS_USER, { data: false });
+        throw new Error("user is not valid");
+      }
+      commit(MutationTypes.SET_USER, { data: user });
+      commit(MutationTypes.SET_HAS_USER, { data: true });
+      return user;
+    } catch (err) {
+      localStorage.removeItem("admin_access_token");
+      commit(MutationTypes.SET_HAS_USER, { data: false });
+      throw err;
+    }
+  },
+
+  /**
    * sign up
    * @param param0
    */

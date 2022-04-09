@@ -1,6 +1,6 @@
 import password_jwt from "passport-jwt";
 import { PassportStatic } from "passport";
-import { UserDb } from "../../data-access";
+import { UserDb, AdminDb } from "../../data-access";
 import _ from "lodash";
 
 export default function initializeJWT(
@@ -22,6 +22,19 @@ export default function initializeJWT(
     "user-jwt",
     new JwtStrategy(opts, async function (jwt_payload, done) {
       const exist = await UserDb.findByEmail({ email: jwt_payload.email });
+
+      if (!exist) {
+        return done(null, null);
+      }
+
+      return done(null, exist);
+    })
+  );
+
+  passport.use(
+    "admin-jwt",
+    new JwtStrategy(opts, async function (jwt_payload, done) {
+      const exist = await AdminDb.findByEmail({ email: jwt_payload.email });
 
       if (!exist) {
         return done(null, null);

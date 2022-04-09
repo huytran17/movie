@@ -12,6 +12,7 @@ import SignInForm from "@/components/auth/signin/SignInForm";
 
 export default {
   name: "SignInPage",
+  layout: "public",
   mixins: [authMixin],
   components: {
     SignInForm,
