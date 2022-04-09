@@ -45,7 +45,7 @@
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
-                :rules="firstNameRules"
+                :rules="emailRules"
                 :label="$t('Email')"
                 :value="user.email"
                 required

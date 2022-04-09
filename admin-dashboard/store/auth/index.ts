@@ -12,6 +12,7 @@ export const state = () => ({
     last_name: "",
   },
   has_user: false,
+  is_edited: false,
 });
 
 export type AuthState = ReturnType<typeof state>;

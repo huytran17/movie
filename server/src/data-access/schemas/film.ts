@@ -6,8 +6,21 @@ const filmSchema = new Schema({
   title: { type: String, required: true, trim: true },
   description: { type: String, required: true, trim: true },
   url: { type: String, required: true, trim: true },
-  slug: { type: String, required: true, trim: true },
   thumnail_url: { type: String, trim: true },
+  category: {
+    type: String,
+    trim: true,
+    enum: [
+      "comedy",
+      "horror",
+      "documentary",
+      "family",
+      "kid",
+      "vietnam",
+      "usuk",
+    ],
+    default: "vietnam",
+  },
   meta: {
     manufactured_at: { type: Date, default: null },
     view_count: { type: Number, trim: true, default: 0 },

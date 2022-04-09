@@ -14,14 +14,11 @@
     </template>
 
     <template v-slot:item.full_name="{ item }">
-      <a
-        @click="$router.push(localePath(`/user/${item._id}`))"
-        class="text-body-2 primary--text"
-      >
+      <div class="text-body-2 primary--text">
         <span class="app-title">
           {{ item.first_name }} {{ item.last_name }}
         </span>
-      </a>
+      </div>
     </template>
 
     <template v-slot:item.created_at="{ item }">
@@ -114,7 +111,7 @@ export default {
   },
   methods: {
     async deleteUser({ id }) {
-      await this.DELETE_USER({ user_id: id });
+      await Promise.all([this.DELETE_USER({ user_id: id }), this.GET_USERS()]);
     },
   },
   async fetch() {

@@ -10,6 +10,8 @@ export const getters: GetterTree<FilmState, RootState> = {
   films: (state) => state.films,
   pagination: (state) => state.pagination,
   loading: (state) => state.loading,
+  new_film: (state) => state.new_film,
+  film: (state) => state.film,
 };
 
 export default getters;

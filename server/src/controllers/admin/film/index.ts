@@ -6,6 +6,7 @@ import {
   getFilmBySlug,
   getFilms,
   removeFilmById,
+  createFilm,
 } from "../../../use-cases/film";
 import makeGetFilmController from "./get-film";
 
@@ -14,6 +15,11 @@ import makeUpdateFilmController from "./update-film";
 import makeUploadFilmAvatarController from "./upload-film-thumbnail";
 import makeGetFilmsController from "./get-films";
 import makeDeleteFilmController from "./delete-film";
+import makeCreateFilmController from "./create-film";
+
+const createFilmController = makeCreateFilmController({
+  createFilm,
+});
 
 const deleteFilmController = makeDeleteFilmController({
   deleteFilmById: removeFilmById,
@@ -62,6 +68,7 @@ export default Object.freeze({
   uploadFilmThumbnailController,
   getFilmsController,
   deleteFilmController,
+  createFilmController,
 });
 
 export {
@@ -71,4 +78,5 @@ export {
   uploadFilmThumbnailController,
   getFilmsController,
   deleteFilmController,
+  createFilmController,
 };

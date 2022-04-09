@@ -21,10 +21,24 @@ const actions: ActionTree<FilmState, RootState> = {
    * @param param0
    */
   async [ActionTypes.GET_FILM]({ commit }, { film_id }) {
-    let { data: film } = await this.$axios.$get(`/admin/film/${film_id}`);
-    commit(MutationTypes.SET_FILM, { film });
+    let { data } = await this.$axios.$get(`/admin/film/${film_id}`);
+    commit(MutationTypes.SET_FILM, { data });
 
-    return film;
+    return data;
+  },
+
+  /**
+   *
+   * @description Update admin
+   * @param param0
+   * @param param1
+   */
+  async [ActionTypes.CREATE_FILM]({ commit, state }) {
+    const result = await this.$axios.$post(`/admin/film/create-film`, {
+      data: state.new_film,
+    });
+
+    return result;
   },
 
   /**
@@ -33,11 +47,12 @@ const actions: ActionTree<FilmState, RootState> = {
    * @param param0
    * @param param1
    */
-  async [ActionTypes.UPDATE_FILM]({ commit }, { film }) {
-    const result = await this.$axios.$put(`/admin/film/`, film);
-    commit(MutationTypes.SET_FILM, { film: result });
+  async [ActionTypes.UPDATE_FILM]({ commit, state }, { film_id }) {
+    const { data } = await this.$axios.$put(`/admin/film/${film_id}`, {
+      data: state.film,
+    });
 
-    return result;
+    return data;
   },
 
   /**UPLOAD_EVENT_IMAGE

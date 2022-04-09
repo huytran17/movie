@@ -7,12 +7,21 @@ import {
   updateAdmin,
   removeAdminById,
 } from "../../../use-cases/admin";
+import { getUserByEmail, createUser } from "../../../use-cases/user";
+import { verifyPassword, hashPassword } from "../../../config/password";
+
 import makeGetAdminController from "./get-admin-by-id";
 import makeUpdateAdminController from "./update-admin";
 import makeUploadAdminAvatarController from "./upload-admin-avatar";
 import makeGetAdminsController from "./get-admins";
 import makeDeleteAdminController from "./delete-admin";
+import makeCreateUserController from "./create-user";
 
+const createUserController = makeCreateUserController({
+  getUserByEmail,
+  createUser,
+  hashPassword,
+});
 const deleteAdminController = makeDeleteAdminController({
   deleteAdminById: removeAdminById,
 });
@@ -50,6 +59,7 @@ export default Object.freeze({
   uploadAdminThumbnailController,
   getAdminsController,
   deleteAdminController,
+  createUserController,
 });
 
 export {
@@ -58,4 +68,5 @@ export {
   uploadAdminThumbnailController,
   getAdminsController,
   deleteAdminController,
+  createUserController,
 };

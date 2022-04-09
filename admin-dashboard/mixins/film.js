@@ -2,11 +2,30 @@ import _ from "lodash";
 import { mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      titleRules: [(v) => !!v || this.$t("Title is required.")],
+      descriptionRules: [(v) => !!v || this.$t("Description is required.")],
+      manufactureYearRules: [
+        (v) => !!v || this.$t("Manufacture year is required."),
+      ],
+      urlRules: [
+        // eslint-disable-next-line no-useless-escape
+        (v) =>
+          v
+            ? /https?:[0-9]*\/\/[\w!?/\+\-_~=;\.,*&@#$%\(\)\'\[\]]+/.test(v) ||
+              "URL must be valid"
+            : true,
+      ],
+    };
+  },
   computed: {
     ...mapGetters({
       film_loading: "film/loading",
       pagination: "film/pagination",
       films: "film/films",
+      new_film: "film/new_film",
+      film: "film/film",
     }),
 
     /**
@@ -27,10 +46,13 @@ export default {
       HARD_DELETE_FILM: "film/HARD_DELETE_FILM",
       UPDATE_FILM_THUMBNAIL: "film/UPDATE_FILM_THUMBNAIL",
       UPDATE_FILM: "film/UPDATE_FILM",
+      CREATE_FILM: "film/CREATE_FILM",
     }),
 
     ...mapMutations({
       SET_LOADING: "film/SET_LOADING",
+      SET_NEW_FILM_DATA: "film/SET_NEW_FILM_DATA",
+      SET_FILM_DATA: "film/SET_FILM_DATA",
     }),
   },
 };

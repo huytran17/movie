@@ -123,7 +123,10 @@ export default {
   },
   methods: {
     async deleteAdmin({ id }) {
-      await this.DELETE_ADMIN({ admin_id: id });
+      await Promise.all([
+        this.DELETE_ADMIN({ admin_id: id }),
+        this.GET_ADMINS(),
+      ]);
     },
   },
   async fetch() {

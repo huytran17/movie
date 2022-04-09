@@ -6,6 +6,15 @@ export const state = () => ({
   },
   films: [] as any[],
   loading: false,
+  new_film: {
+    title: "",
+    description: "",
+    url: "",
+    meta: {
+      manufactured_at: "",
+    },
+  },
+  film: {},
 });
 
 export type FilmState = ReturnType<typeof state>;

@@ -2,9 +2,8 @@ export default interface IAdmin {
   _id: string;
   title: string;
   description: string;
-  film_url: string;
+  url: string;
   thumnail_url: string;
-  slug: string;
   meta: {
     view_count: number;
     manufactured_at: Date;

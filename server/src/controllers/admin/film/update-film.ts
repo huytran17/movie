@@ -23,12 +23,12 @@ export default function makeUpdateFilmController({
     };
 
     try {
-      const filmDetails: IFilm = _.get(httpRequest, "context.validated");
+      const filmDetails: IFilm = _.get(httpRequest, "context.validated.data");
 
-      const { _id: film_id } = filmDetails; // the film's ID
-      const exists = await getFilmById({ id: film_id });
+      const { _id } = filmDetails; // the film's ID
+      const exists = await getFilmById({ id: _id });
       if (!exists) {
-        throw new Error(`Film by ${film_id} does not exists.`);
+        throw new Error(`Film by ${_id} does not exists.`);
       }
 
       const updatedFilm = await updateFilm({
@@ -39,7 +39,7 @@ export default function makeUpdateFilmController({
         headers,
         statusCode: 200,
         body: {
-          film: updatedFilm,
+          data: updatedFilm,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {

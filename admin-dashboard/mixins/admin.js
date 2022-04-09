@@ -26,6 +26,7 @@ export default {
       HARD_DELETE_ADMIN: "admin/HARD_DELETE_ADMIN",
       UPDATE_ADMIN_AVATAR: "admin/UPDATE_ADMIN_AVATAR",
       UPDATE_ADMIN: "admin/UPDATE_ADMIN",
+      CREATE_USER: "admin/CREATE_USER",
     }),
 
     ...mapMutations({

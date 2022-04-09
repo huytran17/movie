@@ -8,6 +8,7 @@ import {
   updateFilmRules,
   uploadFilmThumbnailRules,
   getFilmRules,
+  createFilmRules,
 } from "../../controllers/admin/film/validators";
 import {
   getFilmController,
@@ -16,6 +17,7 @@ import {
   uploadFilmThumbnailController,
   getFilmsController,
   deleteFilmController,
+  createFilmController,
 } from "../../controllers/admin/film";
 
 const filmRouter = express.Router();
@@ -24,6 +26,12 @@ filmRouter.get(
   "/:film_id",
   makeValidator(getFilmRules),
   makeExpressCallback(getFilmController)
+);
+
+filmRouter.post(
+  "/create-film",
+  makeValidator(createFilmRules),
+  makeExpressCallback(createFilmController)
 );
 
 filmRouter.put(
@@ -35,7 +43,7 @@ filmRouter.put(
 filmRouter.get("/", makeExpressCallback(getFilmsController));
 
 filmRouter.delete(
-  "/:film_id",
+  "/delete/:film_id",
   makeValidator(deleteFilmRules),
   makeExpressCallback(deleteFilmController)
 );

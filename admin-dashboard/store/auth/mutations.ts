@@ -50,6 +50,21 @@ const mutations: MutationTree<AuthState> = {
 
     state.sign_up_data = updated_data;
   },
+
+  /**
+   * update user state
+   * @param state
+   * @param param1
+   */
+  [MutationTypes.UPDATE_USER_STATE](
+    state,
+    { data, variable_path }: { data: Object | string; variable_path: string }
+  ) {
+    state.user = _.update(state.user, variable_path, (n) => {
+      return data;
+    });
+    state.is_edited = true;
+  },
 };
 
 export default mutations;

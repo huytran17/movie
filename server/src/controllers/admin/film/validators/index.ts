@@ -3,6 +3,7 @@ import getFilmBySlugRules from "./get-film-by-slug";
 import updateFilmRules from "./update-film";
 import uploadFilmThumbnailRules from "./upload-film-thumbnail";
 import getFilmRules from "./get-film";
+import createFilmRules from "./create-film";
 
 export default Object.freeze({
   deleteFilmRules,
@@ -10,6 +11,7 @@ export default Object.freeze({
   updateFilmRules,
   uploadFilmThumbnailRules,
   getFilmRules,
+  createFilmRules,
 });
 
 export {
@@ -18,4 +20,5 @@ export {
   updateFilmRules,
   uploadFilmThumbnailRules,
   getFilmRules,
+  createFilmRules,
 };

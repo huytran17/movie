@@ -8,7 +8,10 @@
     :items-per-page="15"
   >
     <template v-slot:item.film_tools="{ item }">
-      <v-btn icon @click="$router.push(localePath(`/film/${item._id}`))">
+      <v-btn
+        icon
+        @click="$router.push(localePath(`/films-client/${item._id}`))"
+      >
         <v-icon color="red">mdi-grease-pencil</v-icon>
       </v-btn>
       <v-btn icon @click="deleteFilm({ id: item._id })">
@@ -18,7 +21,7 @@
 
     <template v-slot:item.title="{ item }">
       <a
-        @click="$router.push(localePath(`/film/${item._id}`))"
+        @click="$router.push(localePath(`/films-client/${item._id}`))"
         class="text-body-2 primary--text"
       >
         <span class="app-title">
@@ -64,6 +67,20 @@ export default {
             filterable: false,
             value: "description",
             width: 250,
+          },
+          {
+            text: "Category",
+            align: "start",
+            filterable: false,
+            value: "category",
+            width: 200,
+          },
+          {
+            text: "Manufacture year",
+            align: "start",
+            filterable: false,
+            value: "meta.manufactured_at",
+            width: 200,
           },
           {
             text: "Url",
@@ -139,7 +156,7 @@ export default {
   },
   methods: {
     async deleteFilm({ id }) {
-      await this.DELETE_FILM({ film_id: id });
+      await Promise.all([this.DELETE_FILM({ film_id: id }), this.GET_FILMS()]);
     },
   },
   async fetch() {

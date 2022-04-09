@@ -4,8 +4,7 @@ export default class Film implements IFilm {
   public readonly _id: string;
   public readonly title: string;
   public readonly description: string;
-  public readonly film_url: string;
-  public readonly slug: string;
+  public readonly url: string;
   public readonly thumnail_url: string;
   public readonly category: CategoryType;
   public readonly meta: {
@@ -19,21 +18,19 @@ export default class Film implements IFilm {
   constructor({
     _id,
     created_at,
-    slug,
     updated_at,
     deleted_at,
     title,
     description,
     meta,
     thumnail_url,
-    film_url,
+    url,
     category,
   }: IFilm) {
     this._id = _id;
-    this.slug = slug;
     this.title = title;
     this.description = description;
-    this.film_url = film_url;
+    this.url = url;
     this.thumnail_url = thumnail_url;
     this.meta = meta;
     this.category = category;
