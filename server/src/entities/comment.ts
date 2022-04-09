@@ -12,6 +12,7 @@ export default class Comment {
   public readonly deleted_at: Date;
 
   constructor({
+    _id,
     content,
     user,
     film,
@@ -19,6 +20,7 @@ export default class Comment {
     updated_at,
     deleted_at,
   }: IComment) {
+    this._id = _id;
     this.content = content;
     this.user = user;
     this.film = film;
