@@ -7,7 +7,9 @@ export const state = () => ({
   comments: [] as any[],
   loading: false,
   comment: {},
-  new_comment: {},
+  new_comment: {
+    content: "",
+  },
 });
 
 export type CommentState = ReturnType<typeof state>;
