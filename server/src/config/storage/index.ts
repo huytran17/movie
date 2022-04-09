@@ -31,4 +31,16 @@ export default class Storage {
     const storage = new Storage();
     return Storage.s3;
   }
+
+  static getSignedUrl(key: string) {
+    if (!key) {
+      return "";
+    }
+
+    const signed_url = Storage.s3.getSignedUrl("getObject", {
+      Bucket: process.env.BUCKET_NAME,
+      Key: key,
+    });
+    return signed_url;
+  }
 }
