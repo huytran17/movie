@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <v-main>
       <TheSideNav />
       <div class="h-100">
@@ -18,6 +18,11 @@ export default {
   mixins: [authMixin],
   components: {
     TheSideNav,
+  },
+  computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? "dark" : "light";
+    },
   },
   async fetch() {
     try {

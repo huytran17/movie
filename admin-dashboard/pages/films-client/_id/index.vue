@@ -136,10 +136,13 @@ export default {
   },
   async fetch() {
     try {
+      this.SET_LOADING({ data: true });
       const film_id = this.$route.params.id;
       await this.GET_FILM({ film_id });
     } catch (e) {
       console.log(e);
+    } finally {
+      this.SET_LOADING({ data: false });
     }
   },
 };

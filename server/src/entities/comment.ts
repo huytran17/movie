@@ -3,6 +3,7 @@ import IFilm from "../interfaces/film";
 import IComment from "../interfaces/comment";
 
 export default class Comment {
+  public readonly _id: string;
   public readonly content: string;
   public readonly user: IUser;
   public readonly film: IFilm;

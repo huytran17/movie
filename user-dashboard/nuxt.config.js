@@ -30,6 +30,7 @@ export default {
   plugins: [
     { src: "~/plugins/vue-toastification", ssr: false },
     { src: "~/plugins/axios", ssr: false },
+    { src: "~/plugins/vue-plyr", mode: "client" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -92,7 +93,6 @@ export default {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
-          white: colors.shades.black,
         },
       },
     },

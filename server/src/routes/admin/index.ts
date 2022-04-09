@@ -1,5 +1,5 @@
 import express from "express";
-import authenticateUserJWT from "../../middlewares/adminAuthenticateUserJWT";
+import authenticateAdminJWT from "../../middlewares/authenticateAdminJWT";
 
 const adminRouter = express.Router();
 
@@ -10,9 +10,9 @@ import userRouter from "./user";
 import _adminRouter from "./admin";
 
 adminRouter.use("/auth", authRouter);
-adminRouter.use("/film", authenticateUserJWT(), filmRouter);
-adminRouter.use("/analytics", authenticateUserJWT(), analyticRouter);
-adminRouter.use("/user", authenticateUserJWT(), userRouter);
-adminRouter.use("/admin", authenticateUserJWT(), _adminRouter);
+adminRouter.use("/film", authenticateAdminJWT(), filmRouter);
+adminRouter.use("/analytics", authenticateAdminJWT(), analyticRouter);
+adminRouter.use("/user", authenticateAdminJWT(), userRouter);
+adminRouter.use("/admin", authenticateAdminJWT(), _adminRouter);
 
 export default adminRouter;

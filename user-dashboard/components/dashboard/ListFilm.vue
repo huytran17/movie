@@ -11,37 +11,26 @@
       <v-sheet class="mx-auto w-100 no-box-shadow" elevation="0">
         <v-slide-group show-arrows="mobile" class="position-relative">
           <v-slide-item
-            v-for="(film, index) in films"
+            v-for="(film, index) in list_films"
             :key="index"
             class="clickable"
           >
-            <v-hover v-slot="{ hover }">
-              <v-card
-                class="my-4 mx-2 position-relative"
-                height="250"
-                width="180"
+            <v-card
+              class="my-4 mx-2 position-relative"
+              height="250"
+              width="180"
+              @click="$router.push(localePath(`/film/${film._id}`))"
+            >
+              <v-img
+                :lazy-src="film.image_lazy_src"
+                :src="film.image_src"
+                :alt="film.title"
+                height="100%"
+                width="100%"
+                cover
               >
-                <v-img
-                  :lazy-src="film.image_lazy_src"
-                  :src="film.image_src"
-                  :alt="film.title"
-                  height="100%"
-                  width="100%"
-                  cover
-                >
-                  <div
-                    :class="{ 'show-title': hover && !is_mobile }"
-                    class="transparent--text px-2 py-1 w-100 film-title position-absolute"
-                  >
-                    <div class="text-subtitle-2 text-sm-subtitle-1">
-                      <span class="app-title">
-                        <span v-html="$t(film.title)"></span>
-                      </span>
-                    </div>
-                  </div>
-                </v-img>
-              </v-card>
-            </v-hover>
+              </v-img>
+            </v-card>
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
@@ -51,10 +40,11 @@
 
 <script>
 import systemMixins from "@/mixins/system";
+import filmMixins from "@/mixins/film";
 
 export default {
   name: "ListFilm",
-  mixins: [systemMixins],
+  mixins: [systemMixins, filmMixins],
   props: {
     title: {
       type: String,
@@ -62,7 +52,7 @@ export default {
         return "";
       },
     },
-    films: {
+    list_films: {
       type: Array,
       default() {
         return [
@@ -128,21 +118,6 @@ export default {
 </script>
 
 <style scoped>
-.show-title {
-  color: #ffffff !important;
-  background: rgba(0, 0, 0, 0.5);
-  transform: translateY(0%) !important;
-}
-.film-title {
-  bottom: 0;
-  transition: all 0.25s linear;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  transform: translateY(100%);
-}
 ::v-deep .v-slide-group__prev,
 ::v-deep .v-slide-group__next {
   position: absolute;

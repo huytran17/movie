@@ -119,6 +119,7 @@ export default {
   methods: {
     async createFilm() {
       await this.CREATE_FILM({ film_data: this.new_film });
+      this.$router.push(this.localePath("/films-client"));
     },
 
     updateInput({ variable_path, data }) {

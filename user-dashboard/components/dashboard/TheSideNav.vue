@@ -49,6 +49,12 @@ export default {
       default() {
         return [
           {
+            text: "Trang chủ",
+            value: "home",
+            icon: "mdi-home",
+            route: "/",
+          },
+          {
             text: "Tài khoản",
             value: "account",
             icon: "mdi-account",
