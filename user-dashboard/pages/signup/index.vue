@@ -13,6 +13,7 @@ import SignUpForm from "@/components/auth/signup/SignUpForm";
 export default {
   name: "SignInPage",
   mixins: [authMixin],
+  layout: "public",
   components: {
     SignUpForm,
   },

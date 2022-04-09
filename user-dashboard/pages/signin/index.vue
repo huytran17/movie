@@ -13,6 +13,7 @@ import SignInForm from "@/components/auth/signin/SignInForm";
 export default {
   name: "SignInPage",
   mixins: [authMixin],
+  layout: "public",
   components: {
     SignInForm,
   },
@@ -20,9 +21,9 @@ export default {
     try {
       const { is_error } = await this.AUTO_SIGN_IN();
 
-      if (!is_error) {
-        this.$router.push(this.localePath("/"));
-      }
+      // if (!is_error) {
+      //   this.$router.push(this.localePath("/"));
+      // }
     } catch (e) {
       console.log(e);
     }
