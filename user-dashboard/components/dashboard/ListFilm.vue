@@ -2,13 +2,13 @@
   <div class="mt-5">
     <div class="title">
       <div class="text-subtitle-1 text-h6">
-        <span class="app-body white--text">
+        <span class="app-title">
           <span v-html="$t(title)"></span>
         </span>
       </div>
     </div>
     <div class="video-list mt-2">
-      <v-sheet class="mx-auto w-100" elevation="8" dark>
+      <v-sheet class="mx-auto w-100 no-box-shadow" elevation="0">
         <v-slide-group show-arrows="mobile" class="position-relative">
           <v-slide-item
             v-for="(film, index) in films"

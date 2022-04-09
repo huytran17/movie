@@ -11,29 +11,25 @@
       >
         <v-app-bar-nav-icon
           large
-          color="white"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
       </v-badge>
     </div>
 
-    <v-navigation-drawer v-model="drawer" temporary dark top fixed>
+    <v-navigation-drawer v-model="drawer" temporary top fixed>
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
-          <v-list-item>
-            <v-list-item-title>Foo</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Bar</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Fizz</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Buzz</v-list-item-title>
+          <v-list-item
+            v-for="(nav_item, index) in nav_items"
+            :key="index"
+            @click="$router.push(localePath(nav_item.route))"
+          >
+            <v-list-item-icon>
+              <v-icon v-text="nav_item.icon"></v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-html="nav_item.text"></v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -47,7 +43,21 @@ import systemMixins from "@/mixins/system";
 export default {
   name: "TheSideNav",
   mixins: [systemMixins],
-  components: {},
+  props: {
+    nav_items: {
+      type: Array,
+      default() {
+        return [
+          {
+            text: "Tài khoản",
+            value: "account",
+            icon: "mdi-account",
+            route: "/profile",
+          },
+        ];
+      },
+    },
+  },
   data() {
     return {
       drawer: false,
