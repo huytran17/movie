@@ -4,9 +4,10 @@ export default interface IUser {
   first_name?: string;
   last_name?: string;
   full_name: string;
-  avatar_url?: string;
+  aws?: Record<string, unknown>;
   email: string;
   created_at: Date;
+  avatar_url?: string;
   updated_at: Date;
   deleted_at: Date;
   email_verified_at: Date;

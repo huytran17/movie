@@ -5,6 +5,7 @@ export default class User implements IUser {
   public readonly hash_password: string;
   public readonly first_name?: string;
   public readonly last_name?: string;
+  public readonly aws?: Record<string, unknown>;
   public readonly avatar_url?: string;
   public readonly email: string;
   public readonly full_name: string;
@@ -16,9 +17,10 @@ export default class User implements IUser {
   constructor({
     _id,
     hash_password,
+    avatar_url,
     first_name,
     last_name,
-    avatar_url,
+    aws,
     email,
     full_name,
     email_verified_at,
@@ -27,10 +29,11 @@ export default class User implements IUser {
     deleted_at,
   }: IUser) {
     this._id = _id;
+    this.avatar_url = avatar_url;
     this.hash_password = hash_password;
     this.first_name = first_name;
     this.last_name = last_name;
-    this.avatar_url = avatar_url;
+    this.aws = aws;
     this.full_name = full_name;
     this.email_verified_at = email_verified_at;
     this.email = email;
