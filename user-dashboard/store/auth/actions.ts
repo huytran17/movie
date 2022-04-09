@@ -51,9 +51,9 @@ const actions: ActionTree<AuthState, RootState> = {
    */
   async [ActionTypes.AUTO_SIGN_IN]({ commit, state }) {
     try {
-      const response = await this.$axios.$get("/api/auth/auto-sign-in");
-
-      const { user, is_error } = response.body;
+      const { user, is_error } = await this.$axios.$get(
+        "/api/auth/auto-sign-in"
+      );
 
       if (user) {
         commit(MutationTypes.SET_HAS_USER, { data: true });
@@ -79,6 +79,29 @@ const actions: ActionTree<AuthState, RootState> = {
       return response;
     } catch (err) {
       console.error(err);
+    }
+  },
+
+  /**
+   * @description get myself as a user
+   * @param param0
+   */
+  async [ActionTypes.ME]({ commit }) {
+    try {
+      const { data: user } = await this.$axios.$get("/api/auth/");
+
+      if (!user) {
+        localStorage.removeItem("access_token");
+        commit(MutationTypes.SET_HAS_USER, { data: false });
+        throw new Error("user is not valid");
+      }
+      commit(MutationTypes.SET_USER, { data: user });
+      commit(MutationTypes.SET_HAS_USER, { data: true });
+      return user;
+    } catch (err) {
+      localStorage.removeItem("access_token");
+      commit(MutationTypes.SET_HAS_USER, { data: false });
+      throw err;
     }
   },
 };

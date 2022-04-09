@@ -28,6 +28,20 @@ const mutations: MutationTree<AuthState> = {
     state.has_user = data;
   },
   /**
+   * update user state
+   * @param state
+   * @param param1
+   */
+  [MutationTypes.UPDATE_USER_STATE](
+    state,
+    { data, variable_path }: { data: Object | string; variable_path: string }
+  ) {
+    state.user = _.update(state.user, variable_path, (n) => {
+      return data;
+    });
+    state.is_edited = true;
+  },
+  /**
    * set user
    * @param state
    * @param param1
