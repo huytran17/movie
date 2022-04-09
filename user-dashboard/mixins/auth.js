@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      GET_ME: "auth/ME",
       SIGN_IN: "auth/SIGN_IN",
       SIGN_UP: "auth/SIGN_UP",
       VERIFY: "auth/VERIFY",
@@ -52,6 +53,17 @@ export default {
       SET_USER: "auth/SET_USER",
       SET_SIGN_IN_DATA: "auth/SET_SIGN_IN_DATA",
       SET_SIGN_UP_DATA: "auth/SET_SIGN_UP_DATA",
+      UPDATE_USER_STATE: "auth/UPDATE_USER_STATE",
     }),
+
+    /**
+     * @description update user in store
+     */
+    updateUserObject({ variable_path, data }) {
+      this.UPDATE_USER_STATE({
+        variable_path,
+        data,
+      });
+    },
   },
 };
