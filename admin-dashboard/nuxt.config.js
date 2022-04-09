@@ -75,7 +75,7 @@ export default {
   },
 
   proxy: {
-    "/api/": "http://localhost:3000",
+    "/admin/": "http://localhost:3000",
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

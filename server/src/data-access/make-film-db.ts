@@ -1,6 +1,9 @@
 import _ from "lodash";
 import mongoose from "mongoose";
-import IFilmDb, { PaginatedFilmResult } from "./interfaces/film-db";
+import IFilmDb, {
+  PaginatedFilmResult,
+  IGetFilmAnalyticsData,
+} from "./interfaces/film-db";
 import Film from "../entities/film";
 import IFilm from "../interfaces/film";
 
@@ -16,16 +19,63 @@ export default function makeFilmDb({
 }): IFilmDb {
   return new (class MongooseFilmDb implements IFilmDb {
     /**
+     * get the number of resumes daily for past "distance & unit" (including today)
+     * @param param0
+     * @returns
+     */
+    async aggregateFilmCount({
+      distance = 6,
+      unit = "day",
+    }: {
+      distance?: number;
+      unit?: string;
+    }): Promise<IGetFilmAnalyticsData> {
+      const from_date_formatted = moment().subtract(distance, unit);
+      const to_date_formatted = moment();
+      const formatted_dates = [];
+      const counts = [];
+      const total_cumulative_counts = [];
+
+      const query_conditions = { deleted_at: undefined };
+
+      while (from_date_formatted.isSameOrBefore(to_date_formatted, unit)) {
+        const date = from_date_formatted.format("YYYY-MM-DD");
+        formatted_dates.push(date);
+
+        const [total_cumulative_count, total_count] = await Promise.all([
+          filmDbModel.countDocuments({
+            ...query_conditions,
+            created_at: {
+              $lte: moment(from_date_formatted, "yyyy-MM-DD").endOf(unit),
+            },
+          }),
+          filmDbModel.countDocuments({
+            ...query_conditions,
+            created_at: {
+              $gte: moment(from_date_formatted, "yyyy-MM-DD").startOf(unit),
+              $lte: moment(from_date_formatted, "yyyy-MM-DD").endOf(unit),
+            },
+          }),
+        ]);
+
+        counts.push(total_count);
+        total_cumulative_counts.push(total_cumulative_count);
+        from_date_formatted.add(1, unit);
+      }
+      return {
+        formatted_dates,
+        counts,
+        total_cumulative_counts,
+      };
+    }
+    /**
      * @description used by admin dashboard
      * FIXME: Currently not in used. To be removed and should never be used.
      * @param param0
      * @returns
      */
     async findAll(): Promise<Film[] | null> {
-      const existing = await filmDbModel
-        .find()
-        .limit(2000)
-        .lean({ virtuals: true });
+      const existing = await filmDbModel.find().lean({ virtuals: true });
       if (existing) {
         return existing.map((film) => new Film(film));
       }

@@ -11,9 +11,11 @@
 </template>
 
 <script>
+import analyticsMixins from "@/mixins/analytics";
 import BaseLineCharts from "@/components/charts/BaseLineCharts";
 export default {
   name: "DashboardStatistic",
+  mixins: [analyticsMixins],
   components: {
     BaseLineCharts,
   },
@@ -35,6 +37,14 @@ export default {
         responsive: true,
       },
     };
+  },
+
+  async fetch() {
+    try {
+      await this.GET_USER_ANALYTICS();
+    } catch (e) {
+      console.log(e);
+    }
   },
 };
 </script>

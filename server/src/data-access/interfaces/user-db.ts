@@ -22,6 +22,13 @@ export default interface IUserDb {
   hardDeleteByEmail: ({ email }: { email: string }) => Promise<User | null>;
   hardDelete: ({ id }: { id: string }) => Promise<User | null>;
   update: (updatePayload: Partial<IUser>) => Promise<User | null>;
+  aggregateUserCount: ({
+    distance,
+    unit,
+  }: {
+    distance?: number;
+    unit?: string;
+  }) => Promise<IGetUserAnalyticsData | null>;
 }
 
 export interface PaginatedUserResult {
@@ -34,4 +41,10 @@ export interface PaginatedUserResult {
     total: number | null;
     total_pages: number | null;
   };
+}
+
+export interface IGetUserAnalyticsData {
+  formatted_dates: string[];
+  counts: number[];
+  total_cumulative_counts: number[];
 }

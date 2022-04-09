@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import S3 from "../../config/storage";
 import _ from "lodash";
+import { hashPassword } from "../../config/password";
 
 const Schema = mongoose.Schema;
 
@@ -42,6 +43,20 @@ userSchema.virtual("avatar_url").get(function (this: any) {
     user_avatar = S3.getSignedUrl(user_avatar_key);
   }
   return user_avatar;
+});
+
+/**
+ * works when you create a new user
+ */
+userSchema.pre("save", async function (this: any, next) {
+  const user = this as any;
+
+  user.hash_password = await hashPassword({
+    password: user.hash_password,
+    password_confirmation: user.hash_password,
+  });
+
+  next();
 });
 
 export default userSchema;

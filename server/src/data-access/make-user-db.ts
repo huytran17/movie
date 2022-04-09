@@ -1,6 +1,9 @@
 import _ from "lodash";
 import mongoose from "mongoose";
-import IUserDb, { PaginatedUserResult } from "./interfaces/user-db";
+import IUserDb, {
+  PaginatedUserResult,
+  IGetUserAnalyticsData,
+} from "./interfaces/user-db";
 import User from "../entities/user";
 import IUser from "../interfaces/user";
 
@@ -16,16 +19,65 @@ export default function makeUserDb({
 }): IUserDb {
   return new (class MongooseUserDb implements IUserDb {
     /**
+     * get the number of resumes daily for past "distance & unit" (including today)
+     * @param param0
+     * @returns
+     */
+    async aggregateUserCount({
+      distance = 6,
+      unit = "day",
+    }: {
+      distance?: number;
+      unit?: string;
+    }): Promise<IGetUserAnalyticsData> {
+      const from_date_formatted = moment().subtract(distance, unit);
+      const to_date_formatted = moment();
+      const formatted_dates = [];
+      const counts = [];
+      const total_cumulative_counts = [];
+
+      const query_conditions = { deleted_at: undefined };
+
+      const users = await userDbModel.find(query_conditions);
+
+      while (from_date_formatted.isSameOrBefore(to_date_formatted, unit)) {
+        const date = from_date_formatted.format("YYYY-MM-DD");
+        formatted_dates.push(date);
+
+        const [total_cumulative_count, total_count] = await Promise.all([
+          userDbModel.countDocuments({
+            ...query_conditions,
+            created_at: {
+              $lte: moment(from_date_formatted, "yyyy-MM-DD").endOf(unit),
+            },
+          }),
+          userDbModel.countDocuments({
+            ...query_conditions,
+            created_at: {
+              $gte: moment(from_date_formatted, "yyyy-MM-DD").startOf(unit),
+              $lte: moment(from_date_formatted, "yyyy-MM-DD").endOf(unit),
+            },
+          }),
+        ]);
+
+        counts.push(total_count);
+        total_cumulative_counts.push(total_cumulative_count);
+        from_date_formatted.add(1, unit);
+      }
+      return {
+        formatted_dates,
+        counts,
+        total_cumulative_counts,
+      };
+    }
+    /**
      * @description used by admin dashboard
      * FIXME: Currently not in used. To be removed and should never be used.
      * @param param0
      * @returns
      */
     async findAll(): Promise<User[] | null> {
-      const existing = await userDbModel
-        .find()
-        .limit(2000)
-        .lean({ virtuals: true });
+      const existing = await userDbModel.find().lean({ virtuals: true });
       if (existing) {
         return existing.map((user) => new User(user));
       }

@@ -19,6 +19,13 @@ export default interface IFilmDb {
   delete: ({ id }: { id: string }) => Promise<Film | null>;
   hardDelete: ({ id }: { id: string }) => Promise<Film | null>;
   update: (updatePayload: Partial<IFilm>) => Promise<Film | null>;
+  aggregateFilmCount: ({
+    distance,
+    unit,
+  }: {
+    distance?: number;
+    unit?: string;
+  }) => Promise<IGetFilmAnalyticsData | null>;
 }
 
 export interface PaginatedFilmResult {
@@ -31,4 +38,9 @@ export interface PaginatedFilmResult {
     total: number | null;
     total_pages: number | null;
   };
+}
+export interface IGetFilmAnalyticsData {
+  formatted_dates: string[];
+  counts: number[];
+  total_cumulative_counts: number[];
 }
