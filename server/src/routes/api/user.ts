@@ -2,8 +2,16 @@ import express from "express";
 import makeValidator from "../../middlewares/validator-middleware";
 import makeExpressCallback from "../../express-callback";
 
-import { getUserRules } from "../../controllers/api/user/validators";
-import { getUserController } from "../../controllers/api/user";
+import {
+  getUserRules,
+  updateUserRules,
+  uploadUserAvatarRules,
+} from "../../controllers/api/user/validators";
+import {
+  getUserController,
+  updateUserController,
+  uploadUserAvatarController,
+} from "../../controllers/api/user";
 
 const userRouter = express.Router();
 
@@ -12,5 +20,17 @@ userRouter.get(
   makeValidator(getUserRules),
   makeExpressCallback(getUserController)
 );
+
+userRouter.post(
+  "/upload-avatar/:user_id",
+  makeValidator(uploadUserAvatarRules),
+  makeExpressCallback(uploadUserAvatarController)
+);
+
+userRouter.put(
+  "/",
+  makeValidator(updateUserRules),
+  makeExpressCallback(updateUserController)
+); // DONE
 
 export default userRouter;
