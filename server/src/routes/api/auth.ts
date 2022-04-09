@@ -10,12 +10,19 @@ import {
   signInController,
   verifyController,
   autoSignInController,
+  getUserController,
 } from "../../controllers/api/auth";
+
 import authenticateUserJWT from "../../middlewares/authenticateUserJWT";
 import autoSignIn from "../../middlewares/autoSignIn";
 
 const authRouter = express.Router();
 
+authRouter.get(
+  "/",
+  authenticateUserJWT(),
+  makeExpressCallback(getUserController)
+); // DONE
 authRouter.post(
   "/sign-in",
   makeValidator(signInRules),

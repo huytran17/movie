@@ -1,10 +1,10 @@
+import _ from "lodash";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import Storage from "../config/storage";
 
 export default function makeS3FileUploadMiddleware() {
   const s3 = Storage.getS3();
-
   // TODO: add in file limit and file name sanitisation
   const upload = multer({
     storage: multerS3({

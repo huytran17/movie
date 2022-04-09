@@ -34,7 +34,7 @@ export default function makeUpdateUser(userDb: IUserDb): IUpdateUser {
       throw new RangeError("User not found.");
     }
 
-    const omit_list = ["_id", "email", "type", "tnc_accepted_at"];
+    const omit_list = ["_id", "email"];
     if (!update_password) {
       omit_list.push("hash_password");
     }
