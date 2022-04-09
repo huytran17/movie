@@ -5,14 +5,24 @@ import makeSignUpController from "./sign-up";
 import makeSignInController from "./sign-in";
 import makeVerifyController from "./verify";
 import makeAutoSignInController from "./auto-sign-in";
+import makeGetUserController from "./get-user";
 
-import { createUser, getUserByEmail } from "../../../use-cases/user";
+import {
+  createUser,
+  getUserByEmail,
+  getUserById,
+} from "../../../use-cases/user";
 
 import { verifyPassword, hashPassword } from "../../../config/password";
 import {
   generateAccessToken,
   verifyAccessToken,
 } from "../../../config/accessTokenManager";
+
+const getUserController = makeGetUserController({
+  getUserById,
+  moment,
+});
 
 const signUpController = makeSignUpController({
   hashPassword,
@@ -38,6 +48,7 @@ export default Object.freeze({
   signInController,
   verifyController,
   autoSignInController,
+  getUserController,
 });
 
 export {
@@ -45,4 +56,5 @@ export {
   signInController,
   verifyController,
   autoSignInController,
+  getUserController,
 };
