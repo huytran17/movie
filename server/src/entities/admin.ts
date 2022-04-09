@@ -1,6 +1,7 @@
 import IAdmin, { AdminType } from "../interfaces/admin";
 
 export default class Admin {
+  public readonly _id: string;
   public readonly first_name: string;
   public readonly last_name: string;
   public readonly hash_password: string;
@@ -14,6 +15,7 @@ export default class Admin {
   public readonly deleted_at: Date;
 
   constructor({
+    _id,
     first_name,
     last_name,
     hash_password,
@@ -26,6 +28,7 @@ export default class Admin {
     updated_at,
     deleted_at,
   }: IAdmin) {
+    this._id = _id;
     this.first_name = first_name;
     this.last_name = last_name;
     this.hash_password = hash_password;
