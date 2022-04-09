@@ -2,10 +2,10 @@ import User from "../../entities/user";
 import IUserDb from "../../data-access/interfaces/user-db";
 import { ClientSession } from "mongoose";
 
-export type IRemoveUserById = ({ id }: { id: string }) => Promise<User | null>;
+export type IDeleteUserById = ({ id }: { id: string }) => Promise<User | null>;
 
-export default function makeRemoveUserById(userDb: IUserDb): IRemoveUserById {
-  return async function removeUserById({
+export default function makeDeleteUserById(userDb: IUserDb): IDeleteUserById {
+  return async function deleteUserById({
     id,
   }: {
     id: string;

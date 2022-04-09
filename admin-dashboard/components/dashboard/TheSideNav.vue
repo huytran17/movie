@@ -51,12 +51,12 @@ export default {
         {
           text: "User",
           value: "user",
-          path: "/user",
+          path: "/users-client",
         },
         {
           text: "Film",
           value: "film",
-          path: "/film",
+          path: "/films-client",
         },
       ],
     },

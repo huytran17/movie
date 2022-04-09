@@ -75,7 +75,10 @@ export default function makeFilmDb({
      * @returns
      */
     async findAll(): Promise<Film[] | null> {
-      const existing = await filmDbModel.find().lean({ virtuals: true });
+      const query_conditions = { deleted_at: undefined };
+      const existing = await filmDbModel
+        .find(query_conditions)
+        .lean({ virtuals: true });
       if (existing) {
         return existing.map((film) => new Film(film));
       }

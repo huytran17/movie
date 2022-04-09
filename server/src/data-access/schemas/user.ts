@@ -12,8 +12,6 @@ const userSchema = new Schema({
   aws: { type: Object },
   email: { type: String, trim: true, lowercase: true },
   phone_number: { type: Number },
-  country_code: { type: String, trim: true },
-  language_code: { type: String, trim: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
   deleted_at: { type: Date, default: null },

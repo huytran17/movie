@@ -13,7 +13,7 @@ const actions: ActionTree<AuthState, RootState> = {
     const { data } = await this.$axios.$get(
       `/admin/analytics/user-analytics/`,
       {
-        params: { distance: 1, unit: "year" },
+        params: { distance: 365, unit: "day" },
       }
     );
 
@@ -37,17 +37,17 @@ const actions: ActionTree<AuthState, RootState> = {
     const { data } = await this.$axios.$get(
       `/admin/analytics/film-analytics/`,
       {
-        params: { distance: 1, unit: "year" },
+        params: { distance: 365, unit: "day" },
       }
     );
 
-    commit(MutationTypes.SET_FILM_ACOUNT_NALYTICS, {
+    commit(MutationTypes.SET_FILM_COUNT_ANALYTICS, {
       data: data.counts,
     });
-    commit(MutationTypes.SET_FILM_COMULATIVE_ACOUNT_ANALYTICS, {
+    commit(MutationTypes.SET_FILM_CUMULATIVE_COUNT_ANALYTICS, {
       data: data.total_cumulative_counts,
     });
-    commit(MutationTypes.SET_FILM_DATE_ACOUNT_NALYTICS, {
+    commit(MutationTypes.SET_FILM_DATE_COUNT_ANALYTICS, {
       data: data.formatted_dates,
     });
     return data;
@@ -61,7 +61,7 @@ const actions: ActionTree<AuthState, RootState> = {
     const { data } = await this.$axios.$get(
       `/admin/analytics/admin-analytics/`,
       {
-        params: { distance: 1, unit: "year" },
+        params: { distance: 365, unit: "day" },
       }
     );
 

@@ -13,7 +13,7 @@ const mutations: MutationTree<AuthState> = {
   /**
    * @description set the array of users created dates
    */
-  [MutationTypes.SET_FILM_ACOUNT_NALYTICS](state, { data }: { data: [] }) {
+  [MutationTypes.SET_FILM_COUNT_ANALYTICS](state, { data }: { data: [] }) {
     state.film_count_analytics = data;
   },
   /**
@@ -35,7 +35,7 @@ const mutations: MutationTree<AuthState> = {
   /**
    * @description set the array of users created dates
    */
-  [MutationTypes.SET_FILM_COMULATIVE_ACOUNT_ANALYTICS](
+  [MutationTypes.SET_FILM_CUMULATIVE_COUNT_ANALYTICS](
     state,
     { data }: { data: [] }
   ) {
@@ -60,7 +60,7 @@ const mutations: MutationTree<AuthState> = {
   /**
    * @description set the array of users created dates
    */
-  [MutationTypes.SET_FILM_DATE_ACOUNT_NALYTICS](state, { data }: { data: [] }) {
+  [MutationTypes.SET_FILM_DATE_COUNT_ANALYTICS](state, { data }: { data: [] }) {
     state.film_date_count_analytics = data;
   },
   /**
@@ -102,7 +102,7 @@ const mutations: MutationTree<AuthState> = {
    * @param param1
    */
   [MutationTypes.SET_LOADING](state, { data }: { data: boolean }) {
-    state.loading = data;
+    state.chart_loading = data;
   },
 
   /**

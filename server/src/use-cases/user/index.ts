@@ -4,17 +4,17 @@ import { UserDb } from "../../data-access";
 import makeCreateUser from "./create-user";
 import makeGetUserByEmail from "./get-user-by-email";
 import makeUpdateUser from "./update-user";
-import makeRemoveUser from "./delete-user";
+import makeDeleteUser from "./delete-user";
 import makeGetUserById from "./get-user-by-id";
-import makeRemoveUserById from "./delete-user-by-id";
+import makeDeleteUserById from "./delete-user-by-id";
 import makeGetUserBySlug from "./get-user-by-slug";
 import makeGetUserByUsername from "./get-user-by-username";
 import makeGetUsers from "./get-users";
 
 const createUser = makeCreateUser(UserDb);
 const updateUser = makeUpdateUser(UserDb);
-const removeUser = makeRemoveUser(UserDb);
-const removeUserById = makeRemoveUserById(UserDb);
+const deleteUser = makeDeleteUser(UserDb);
+const deleteUserById = makeDeleteUserById(UserDb);
 const getUserByEmail = makeGetUserByEmail(UserDb);
 
 /**
@@ -49,8 +49,8 @@ const userServices = Object.freeze({
   getUserByUsername,
   getUsers,
   updateUser,
-  removeUser,
-  removeUserById,
+  deleteUser,
+  deleteUserById,
 });
 
 export default userServices;
@@ -62,6 +62,6 @@ export {
   getUserByUsername,
   getUsers,
   updateUser,
-  removeUser,
-  removeUserById,
+  deleteUser,
+  deleteUserById,
 };

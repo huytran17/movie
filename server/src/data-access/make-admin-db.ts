@@ -22,7 +22,11 @@ export default function makeAdminDb({
      * @returns
      */
     async findAll(): Promise<Admin[] | null> {
-      const existing = await adminDbModel.find().lean({ virtuals: true });
+      const query_conditions = { deleted_at: undefined };
+
+      const existing = await adminDbModel
+        .find(query_conditions)
+        .lean({ virtuals: true });
       if (existing) {
         return existing.map((user) => new Admin(user));
       }

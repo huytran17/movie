@@ -77,7 +77,10 @@ export default function makeUserDb({
      * @returns
      */
     async findAll(): Promise<User[] | null> {
-      const existing = await userDbModel.find().lean({ virtuals: true });
+      const query_conditions = { deleted_at: undefined };
+      const existing = await userDbModel
+        .find(query_conditions)
+        .lean({ virtuals: true });
       if (existing) {
         return existing.map((user) => new User(user));
       }
@@ -246,6 +249,21 @@ export default function makeUserDb({
 
       const updated = await userDbModel
         .findOne({ email })
+        .lean({ virtuals: true });
+      if (updated) {
+        return new User(updated);
+      }
+      return null;
+    }
+
+    async deleteById({ _id }: { _id: string }): Promise<User | null> {
+      const existing = await userDbModel.findOneAndUpdate(
+        { _id },
+        { deleted_at: new Date() }
+      );
+
+      const updated = await userDbModel
+        .findOne({ _id })
         .lean({ virtuals: true });
       if (updated) {
         return new User(updated);

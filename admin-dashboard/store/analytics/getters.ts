@@ -22,7 +22,7 @@ export const getters: GetterTree<AuthState, RootState> = {
   user_date_count_analytics: (state) => state.user_date_count_analytics,
   film_date_count_analytics: (state) => state.film_date_count_analytics,
   admin_date_count_analytics: (state) => state.admin_date_count_analytics,
-  loading: (state) => state.loading,
+  chart_loading: (state) => state.chart_loading,
 };
 
 export default getters;

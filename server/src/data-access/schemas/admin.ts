@@ -23,6 +23,12 @@ const adminSchema = new Schema({
   deleted_at: { type: Date, default: null },
 });
 
+adminSchema
+  .virtual("full_name")
+  .get(function (this: { first_name: string; last_name: string }) {
+    return `${this.first_name} ${this.last_name}`;
+  });
+
 /**
  * works when you create a new admin
  */

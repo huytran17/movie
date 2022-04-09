@@ -18,6 +18,7 @@ export default interface IUserDb {
   findByEmail: ({ email }: { email: string }) => Promise<User | null>;
   insert: (payload: Partial<IUser>) => Promise<User | null>;
   deleteByEmail: ({ email }: { email: string }) => Promise<User | null>;
+  deleteById: ({ _id }: { _id: string }) => Promise<User | null>;
   delete: ({ id }: { id: string }) => Promise<User | null>;
   hardDeleteByEmail: ({ email }: { email: string }) => Promise<User | null>;
   hardDelete: ({ id }: { id: string }) => Promise<User | null>;

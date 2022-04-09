@@ -1,0 +1,6 @@
+export enum MutationTypes {
+  SET_USERS = "SET_USERS",
+  SET_USER = "SET_USER",
+  SET_LOADING = "SET_LOADING",
+  SET_USERS_PAGINATION = "SET_USERS_PAGINATION",
+}

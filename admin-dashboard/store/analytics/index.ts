@@ -21,7 +21,7 @@ export const state = () => ({
   user_date_count_analytics: [],
   film_date_count_analytics: [],
   admin_date_count_analytics: [],
-  loading: true,
+  chart_loading: true,
 });
 
 export type AuthState = ReturnType<typeof state>;

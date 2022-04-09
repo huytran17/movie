@@ -10,8 +10,8 @@ const actions: ActionTree<UserState, RootState> = {
    * @description Get all users
    * @param param0
    */
-  async [ActionTypes.GET_USERS]({ commit }, { type = "mentee" }) {
-    const { users } = await this.$axios.$get(`/api/user/all-users/${type}`);
+  async [ActionTypes.GET_USERS]({ commit }) {
+    const { users } = await this.$axios.$get(`/api/user/all-users`);
     commit(MutationTypes.SET_USERS, { users });
     return users;
   },
@@ -43,16 +43,6 @@ const actions: ActionTree<UserState, RootState> = {
   },
 
   /**
-   * @description check if username is available
-   * @param param0
-   */
-  async [ActionTypes.CHECK_USERNAME_AVAILABLE]({ commit }, { username }) {
-    let { data: user } = await this.$axios.$get(
-      `/api/user/username/${username}`
-    );
-    return user;
-  },
-  /**
    *
    * @description Update user
    * @param param0
@@ -80,19 +70,6 @@ const actions: ActionTree<UserState, RootState> = {
       formData,
       config
     );
-
-    return result;
-  },
-
-  /**
-   * @Description publish a user to show on mobile app
-   * @param {is_published: boolean}
-   */
-  async [ActionTypes.PUBLISH_USER]({ commit }, { user_id, is_published }) {
-    const result = await this.$axios.$post(`/api/user/publish`, {
-      user_id,
-      is_published,
-    });
 
     return result;
   },
