@@ -63,6 +63,27 @@ const actions: ActionTree<UserState, RootState> = {
     return result;
   },
 
+  /**UPLOAD_EVENT_IMAGE
+   * @Description upload a user's profile image
+   * @param param0
+   */
+  async [ActionTypes.UPDATE_USER_AVATAR]({ commit }, { file, user_id }) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const result = await this.$axios.$post(
+      `/api/user/upload-avatar/${user_id}`,
+      formData,
+      config
+    );
+
+    return result;
+  },
+
   /**
    * @Description publish a user to show on mobile app
    * @param {is_published: boolean}
