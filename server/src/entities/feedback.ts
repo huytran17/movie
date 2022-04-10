@@ -3,6 +3,7 @@ import IFilm from "../interfaces/film";
 import IFeedback from "../interfaces/feedback";
 
 export default class Comment {
+  public readonly _id: string;
   public readonly content: string;
   public readonly user: IUser;
   public readonly film: IFilm;
@@ -12,6 +13,7 @@ export default class Comment {
   public readonly deleted_at: Date;
 
   constructor({
+    _id,
     content,
     user,
     film,
@@ -20,6 +22,7 @@ export default class Comment {
     updated_at,
     deleted_at,
   }: IFeedback) {
+    this._id = _id;
     this.content = content;
     this.user = user;
     this.film = film;

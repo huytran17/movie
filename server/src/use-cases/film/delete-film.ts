@@ -1,15 +1,15 @@
-import User from "../../entities/film";
-import IUserDb from "../../data-access/interfaces/film-db";
+import Film from "../../entities/film";
+import IFilmDb from "../../data-access/interfaces/film-db";
 
-export type IRemoveUser = ({ id }: { id: string }) => Promise<User | null>;
+export type IRemoveFilm = ({ id }: { id: string }) => Promise<Film | null>;
 
-export default function makeRemoveUser(filmDb: IUserDb): IRemoveUser {
-  return async function removeUser({
+export default function makeRemoveFilm(filmDb: IFilmDb): IRemoveFilm {
+  return async function removeFilm({
     id,
   }: {
     id: string;
-  }): Promise<User | null> {
-    const deletedUser = await filmDb.delete({ id });
-    return deletedUser;
+  }): Promise<Film | null> {
+    const deletedFilm = await filmDb.delete({ id });
+    return deletedFilm;
   };
 }

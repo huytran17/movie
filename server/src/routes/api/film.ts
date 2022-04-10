@@ -3,22 +3,14 @@ import makeValidator from "../../middlewares/validator-middleware";
 import makeExpressCallback from "../../express-callback";
 
 import {
-  deleteFilmRules,
   getFilmBySlugRules,
-  updateFilmRules,
-  uploadFilmThumbnailRules,
   getFilmRules,
-  createFilmRules,
-} from "../../controllers/admin/film/validators";
+} from "../../controllers/api/film/validators";
 import {
   getFilmController,
   getFilmBySlugController,
-  updateFilmController,
-  uploadFilmThumbnailController,
   getFilmsController,
-  deleteFilmController,
-  createFilmController,
-} from "../../controllers/admin/film";
+} from "../../controllers/api/film";
 
 const filmRouter = express.Router();
 
