@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-container>
     <BaseAdminTable />
-  </div>
+  </v-container>
 </template>
 
 <script>
