@@ -63,6 +63,11 @@ export default {
           value: "film",
           path: "/films-client",
         },
+        {
+          text: "Feedback",
+          value: "feedback",
+          path: "/feedbacks-client",
+        },
       ],
     },
   },
