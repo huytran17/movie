@@ -2,14 +2,14 @@ import deleteFeedbackRules from "./delete-feedback";
 import createFeedbackRules from "./create-feedback";
 import updateFeedbackRules from "./update-feedback";
 import getFeedbackByIdRules from "./get-feedback";
-import getFeedbackByFilmIdRules from "./get-feedback-by-film-id";
+import getFeedbacksByFilmIdRules from "./get-feedbacks-by-film-id";
 
 export default Object.freeze({
   deleteFeedbackRules,
   createFeedbackRules,
   updateFeedbackRules,
   getFeedbackByIdRules,
-  getFeedbackByFilmIdRules,
+  getFeedbacksByFilmIdRules,
 });
 
 export {
@@ -17,5 +17,5 @@ export {
   createFeedbackRules,
   updateFeedbackRules,
   getFeedbackByIdRules,
-  getFeedbackByFilmIdRules,
+  getFeedbacksByFilmIdRules,
 };

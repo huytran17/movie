@@ -2,7 +2,7 @@ import { Request } from "express";
 import * as _ from "lodash";
 import { IGetFeedbacksByFilmId } from "../../../use-cases/feedback/get-feedbacks-by-film-id";
 
-export default function makeGetFeedbackByFilmIdController({
+export default function makeGetFeedbacksByFilmIdController({
   getFeedbacksByFilmId,
 }: {
   getFeedbacksByFilmId: IGetFeedbacksByFilmId;
@@ -13,8 +13,10 @@ export default function makeGetFeedbackByFilmIdController({
     const headers = {
       "Content-Type": "application/json",
     };
+
+    const film_id = _.get(httpRequest, "context.validated.data");
     try {
-      const feedbacks = await getFeedbacksByFilmId();
+      const feedbacks = await getFeedbacksByFilmId({ film_id });
 
       return {
         headers,
