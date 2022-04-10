@@ -23,6 +23,7 @@ export default {
       DELETE_FEEDBACK: "feedback/DELETE_FEEDBACK",
       CREATE_FEEDBACK: "feedback/CREATE_FEEDBACK",
       UPDATE_FEEDBACK: "feedback/UPDATE_FEEDBACK",
+      GET_FEEDBACK_BY_FILM_ID: "feedback/GET_FEEDBACK_BY_FILM_ID",
     }),
 
     ...mapMutations({

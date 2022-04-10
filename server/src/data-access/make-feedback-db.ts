@@ -93,5 +93,29 @@ export default function makeFeedbackDb({
       }
       return null;
     }
+
+    async findAllByFilmId({
+      film_id,
+    }: {
+      film_id: string;
+    }): Promise<Feedback[] | null> {
+      const mongo_id_regex = new RegExp(/^[0-9a-fA-F]{24}$/i);
+      const is_mongo_id = mongo_id_regex.test(film_id);
+      if (!is_mongo_id || !film_id) {
+        return null;
+      }
+
+      const query_conditions = { deleted_at: undefined, film: film_id };
+
+      const existing = await feedbackDbModel
+        .find(query_conditions)
+        .lean({ virtuals: true });
+
+      if (existing) {
+        return existing.map((feedback) => new Feedback(feedback));
+      }
+
+      return null;
+    }
   })();
 }

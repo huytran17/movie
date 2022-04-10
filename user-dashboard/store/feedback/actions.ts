@@ -18,6 +18,17 @@ const actions: ActionTree<FeedbackState, RootState> = {
   },
 
   /**
+   * @description Get feedbacks by film id
+   * @param param0
+   */
+  async [ActionTypes.GET_FEEDBACK_BY_FILM_ID]({ commit }, { film_id }) {
+    const { data } = await this.$axios.$get(`/admin/feedback/${film_id}`);
+
+    commit(MutationTypes.SET_FEEDBACKS, { feedbacks: data });
+    return data;
+  },
+
+  /**
    * @Description publish a feedback to show on mobile app
    * @param {is_published: boolean}
    */

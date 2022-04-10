@@ -7,17 +7,25 @@ import {
   createFeedbackRules,
   updateFeedbackRules,
   getFeedbackByIdRules,
+  getFeedbacksByFilmIdRules,
 } from "../../controllers/api/feedback/validators";
 import {
   getFeedbacksController,
   deleteFeedbackController,
   createFeedbackController,
   updateFeedbackController,
+  getFeedbacksByFilmIdController,
 } from "../../controllers/api/feedback";
 
 const feedbackRouter = express.Router();
 
 feedbackRouter.get("/", makeExpressCallback(getFeedbacksController));
+
+feedbackRouter.get(
+  "/:film_id",
+  makeValidator(getFeedbacksByFilmIdRules),
+  makeExpressCallback(getFeedbacksByFilmIdController)
+);
 
 feedbackRouter.post(
   "/",

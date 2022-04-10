@@ -6,11 +6,17 @@ import {
   createFeedback,
   updateFeedback,
   getFeedbackById,
+  getFeedbacksByFilmId,
 } from "../../../use-cases/feedback";
 import makeGetFeedbacksController from "./get-feedbacks";
 import makeDeleteFeedbackController from "./delete-feedback";
 import makeCreateFeedbackController from "./create-feedback";
 import makeUpdateFeedbackController from "./update-feedback";
+import makeGetFeedbackByFilmIdController from "./get-feedbacks-by-film-id";
+
+const getFeedbacksByFilmIdController = makeGetFeedbackByFilmIdController({
+  getFeedbacksByFilmId,
+});
 
 const updateFeedbackController = makeUpdateFeedbackController({
   updateFeedback,
@@ -35,6 +41,7 @@ export default Object.freeze({
   deleteFeedbackController,
   createFeedbackController,
   updateFeedbackController,
+  getFeedbacksByFilmIdController,
 });
 
 export {
@@ -42,4 +49,5 @@ export {
   deleteFeedbackController,
   createFeedbackController,
   updateFeedbackController,
+  getFeedbacksByFilmIdController,
 };

@@ -5,6 +5,9 @@ import makeGetFeedbacks from "./get-feedbacks";
 import makeRemoveFeedback from "./delete-feedback";
 import makeGetFeedbackById from "./get-feedback-by-id";
 import makeUpdateFeedback from "./update-feedback";
+import makeGetFeedbacksByFilmId from "./get-feedbacks-by-film-id";
+
+const getFeedbacksByFilmId = makeGetFeedbacksByFilmId(FeedbackDb);
 
 const getFeedbackById = makeGetFeedbackById(FeedbackDb);
 
@@ -26,6 +29,7 @@ const filmServices = Object.freeze({
   removeFeedback,
   getFeedbackById,
   updateFeedback,
+  getFeedbacksByFilmId,
 });
 
 export default filmServices;
@@ -35,4 +39,5 @@ export {
   removeFeedback,
   getFeedbackById,
   updateFeedback,
+  getFeedbacksByFilmId,
 };
