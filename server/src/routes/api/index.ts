@@ -7,10 +7,12 @@ import authRouter from "./auth";
 import userRouter from "./user";
 import filmRouter from "./film";
 import commentRouter from "./comment";
+import feedbackRouter from "./feedback";
 
 apiRouter.use("/auth", authRouter);
 apiRouter.use("/user", authenticateUserJWT(), userRouter);
 apiRouter.use("/film", authenticateUserJWT(), filmRouter);
 apiRouter.use("/comment", authenticateUserJWT(), commentRouter);
+apiRouter.use("/feedback", authenticateUserJWT(), feedbackRouter);
 
 export default apiRouter;
