@@ -1,1 +1,3 @@
-# https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANode.js_logo.svg&psig=AOvVaw1sM3ViQCjpuSc8kIBHf-7-&ust=1649692529204000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCOiX0dvtifcCFQAAAAAdAAAAABAD
+# NodeJS
+# NuxtJS
+# MongoDB
