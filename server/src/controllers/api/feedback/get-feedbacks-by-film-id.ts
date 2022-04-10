@@ -13,8 +13,7 @@ export default function makeGetFeedbacksByFilmIdController({
     const headers = {
       "Content-Type": "application/json",
     };
-
-    const film_id = _.get(httpRequest, "context.validated.data");
+    const { film_id } = _.get(httpRequest, "context.validated");
     try {
       const feedbacks = await getFeedbacksByFilmId({ film_id });
 

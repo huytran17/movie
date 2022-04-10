@@ -6,7 +6,9 @@ export const state = () => ({
   },
   feedbacks: [] as any[],
   loading: false,
-  new_feedback: {},
+  new_feedback: {
+    star_count: 5,
+  },
   feedback: {},
 });
 

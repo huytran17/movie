@@ -23,7 +23,7 @@
             >
               <v-img
                 :lazy-src="film.image_lazy_src"
-                :src="film.image_src"
+                src="https://picsum.photos/id/11/500/300"
                 :alt="film.title"
                 height="100%"
                 width="100%"

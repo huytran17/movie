@@ -22,7 +22,7 @@ const actions: ActionTree<FeedbackState, RootState> = {
    * @param param0
    */
   async [ActionTypes.GET_FEEDBACK_BY_FILM_ID]({ commit }, { film_id }) {
-    const { data } = await this.$axios.$get(`/api/feedback/${film_id}`);
+    const { data } = await this.$axios.$get(`/api/feedback/by-film/${film_id}`);
 
     commit(MutationTypes.SET_FEEDBACKS, { feedbacks: data });
     return data;

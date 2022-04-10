@@ -7,6 +7,7 @@ export default {
       feedback_loading: "feedback/loading",
       pagination: "feedback/pagination",
       feedbacks: "feedback/feedbacks",
+      new_feedback: "feedback/new_feedback",
     }),
 
     /**
@@ -30,5 +31,12 @@ export default {
       SET_LOADING: "feedback/SET_LOADING",
       UPDATE_NEW_FEEDBACK_DATA: "feedback/UPDATE_NEW_FEEDBACK_DATA",
     }),
+
+    updateFeedbackObject({ data, variable_path }) {
+      this.UPDATE_NEW_FEEDBACK_DATA({
+        data,
+        variable_path,
+      });
+    },
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <v-row v-if="has_suggestion_list">
+  <v-row v-if="has_suggestion_list" class="pt-3">
     <v-col cols="12">
       <v-row class="suggestion-list">
         <v-col
@@ -111,5 +111,8 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+::v-deep .v-btn {
+  border-radius: 0 !important;
 }
 </style>

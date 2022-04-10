@@ -5,8 +5,10 @@
         <Player :options="options()" />
       </v-col>
       <v-col cols="12" lg="3">
-        <BaseSuggestionList :category="film.category" :exclude_id="film._id" />
+        <BaseSuggestionList :category="film.category" :exclude_id="film_id" />
       </v-col>
+    </v-row>
+    <v-row class="flex-column-reverse flex-lg-row">
       <v-col cols="12" lg="9">
         <div class="d-flex flex-column">
           <div>
@@ -22,10 +24,8 @@
         <BaseCommentList />
       </v-col>
 
-      <v-col cols="12" lg="3">
-        <BaseSuggestionList :category="film.category" :exclude_id="film._id" />
-      </v-col>
-    </v-row>
+      <v-col cols="12" lg="3"> <BaseFeedbacksList :film_id="film_id" /> </v-col
+    ></v-row>
   </v-container>
 </template>
 
@@ -35,6 +35,7 @@ import commentMixins from "@/mixins/comment";
 import userMixins from "@/mixins/user";
 import authMixins from "@/mixins/auth";
 
+import BaseFeedbacksList from "@/pages/feedback/BaseFeedbacksList";
 import BaseSuggestionList from "@/pages/film/widget/BaseSuggestionList";
 import BaseCommentForm from "@/pages/film/widget/BaseCommentForm";
 import BaseCommentList from "@/pages/comment/widget/BaseCommentList";
@@ -46,9 +47,11 @@ export default {
     BaseSuggestionList,
     BaseCommentForm,
     BaseCommentList,
+    BaseFeedbacksList,
   },
   data() {
     return {
+      film_id: "",
       default_options: {
         type: "video",
         title: "Example title",
@@ -99,8 +102,8 @@ export default {
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
-      const film_id = this.$route.params.id;
-      await this.GET_FILM({ film_id });
+      this.film_id = this.$route.params.id;
+      await this.GET_FILM({ film_id: this.film_id });
     } catch (e) {
       console.log(e);
     } finally {
@@ -110,4 +113,16 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media only screen and (max-width: 1263px) {
+  .comment-column {
+    order: 2;
+  }
+  .feedback-column {
+    order: 1;
+  }
+}
+::v-deep .v-btn {
+  border-radius: 0 !important;
+}
+</style>

@@ -22,13 +22,13 @@ const feedbackRouter = express.Router();
 feedbackRouter.get("/", makeExpressCallback(getFeedbacksController));
 
 feedbackRouter.get(
-  "/:film_id",
+  "/by-film/:film_id",
   makeValidator(getFeedbacksByFilmIdRules),
   makeExpressCallback(getFeedbacksByFilmIdController)
 );
 
 feedbackRouter.post(
-  "/",
+  "/create-feedback/:user/:film",
   makeValidator(createFeedbackRules),
   makeExpressCallback(createFeedbackController)
 );
@@ -40,7 +40,7 @@ feedbackRouter.put(
 );
 
 feedbackRouter.delete(
-  "/:feedback_id",
+  "/delete/:feedback_id",
   makeValidator(deleteFeedbackRules),
   makeExpressCallback(deleteFeedbackController)
 );

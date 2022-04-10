@@ -38,8 +38,6 @@ export default {
         data,
         variable_path,
       });
-
-      console.log(this.new_comment);
     },
   },
 };

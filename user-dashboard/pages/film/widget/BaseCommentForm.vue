@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-3">
     <Editor
       :content="comment_data"
       @on-input="

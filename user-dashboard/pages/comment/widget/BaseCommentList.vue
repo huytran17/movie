@@ -4,7 +4,7 @@
       <v-col cols="12" class="d-flex pb-0">
         <div>
           <v-img
-            :src="comment.user.avatar_url"
+            src="https://picsum.photos/id/11/500/300"
             width="40"
             height="40"
             class="rounded-circle"

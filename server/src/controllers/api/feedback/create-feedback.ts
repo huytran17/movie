@@ -22,8 +22,14 @@ export default function makeCreateFeedbackController({
         "context.validated.data"
       );
 
+      const { user, film } = _.get(httpRequest, "context.validated");
+
+      const final_feedback_details = Object.assign({}, feedbackDetails, {
+        user,
+        film,
+      });
       const created_feedback = await createFeedback({
-        feedbackDetails,
+        feedbackDetails: final_feedback_details,
       });
 
       return {

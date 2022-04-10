@@ -25,6 +25,14 @@ export default function makeFeedbackDb({
       const query_conditions = { deleted_at: undefined };
       const existing = await feedbackDbModel
         .find(query_conditions)
+        .populate({
+          path: "user",
+          select: "-__v",
+        })
+        .populate({
+          path: "film",
+          select: "-__v",
+        })
         .lean({ virtuals: true });
       if (existing) {
         return existing.map((feedback) => new Feedback(feedback));
@@ -109,6 +117,14 @@ export default function makeFeedbackDb({
 
       const existing = await feedbackDbModel
         .find(query_conditions)
+        .populate({
+          path: "user",
+          select: "-__v",
+        })
+        .populate({
+          path: "film",
+          select: "-__v",
+        })
         .lean({ virtuals: true });
 
       if (existing) {

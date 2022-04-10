@@ -13,7 +13,7 @@ const feedbackRouter = express.Router();
 feedbackRouter.get("/", makeExpressCallback(getFeedbacksController));
 
 feedbackRouter.delete(
-  "/:feedback_id",
+  "/delete/:feedback_id",
   makeValidator(deleteFeedbackRules),
   makeExpressCallback(deleteFeedbackController)
 );
