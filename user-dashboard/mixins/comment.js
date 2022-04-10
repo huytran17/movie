@@ -30,6 +30,16 @@ export default {
 
     ...mapMutations({
       SET_LOADING: "comment/SET_LOADING",
+      UPDATE_NEW_COMMENT_DATA: "comment/UPDATE_NEW_COMMENT_DATA",
     }),
+
+    updateCommentObject({ data, variable_path }) {
+      this.UPDATE_NEW_COMMENT_DATA({
+        data,
+        variable_path,
+      });
+
+      console.log(this.new_comment);
+    },
   },
 };

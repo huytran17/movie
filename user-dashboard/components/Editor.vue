@@ -1,15 +1,18 @@
 <template>
-  <div class="editor-component">
+  <v-sheet>
     <!-- Use the component in the right place of the template -->
     <tiptap-vuetify
-      :toolbar-attributes="toolbarAttrs"
-      v-model="content[attr]"
-      :placeholder="placeholder"
+      :value="content[attr]"
       :extensions="extensions"
+      :placeholder="placeholder"
+      :toolbar-attributes="toolbarAttrs"
       :disabled="disabled"
       :loading="loading"
-    />
-  </div>
+      :card-props="{ flat: true, outlined: true, tile: true }"
+      @input="onInput"
+    >
+    </tiptap-vuetify>
+  </v-sheet>
 </template>
 
 <script>
@@ -37,6 +40,7 @@ import {
 } from "tiptap-vuetify";
 
 export default {
+  name: "BaseCommentEditor",
   // specify TiptapVuetify component in "components"
   components: { TiptapVuetify },
   props: {
@@ -64,6 +68,7 @@ export default {
   data() {
     // declare extensions you want to use
     return {
+      reply_as_coach: false,
       local_loading: false,
       extensions: [
         History,
@@ -75,14 +80,6 @@ export default {
         ListItem,
         BulletList,
         OrderedList,
-        [
-          Heading,
-          {
-            options: {
-              levels: [1, 2, 3],
-            },
-          },
-        ],
         Bold,
         Code,
         HorizontalRule,
@@ -95,13 +92,14 @@ export default {
     toolbarAttrs() {
       return this.$vuetify.theme.isDark
         ? { color: "black", dark: true }
-        : { color: "white" };
+        : { color: "#2b81d6" };
+    },
+  },
+  methods: {
+    onInput(update) {
+      this.$emit("on-input", update);
     },
   },
 };
 </script>
-<style scoped>
-.editor-component {
-  padding: 10px 0px;
-}
-</style>
+<style scoped></style>

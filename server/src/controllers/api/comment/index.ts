@@ -11,6 +11,11 @@ import makeUpdateCommentController from "./update-comment";
 import makeGetCommentsController from "./get-comments";
 import makeDeleteCommentController from "./delete-comment";
 import makeCreateCommentController from "./create-comment";
+import makeGetCommentByIdController from "./get-comment-by-id";
+
+const getCommentByIdController = makeGetCommentByIdController({
+  getCommentById,
+});
 
 const createCommentController = makeCreateCommentController({
   createComment,
@@ -38,6 +43,7 @@ export default Object.freeze({
   getCommentsController,
   deleteCommentController,
   createCommentController,
+  getCommentByIdController,
 });
 
 export {
@@ -45,4 +51,5 @@ export {
   getCommentsController,
   deleteCommentController,
   createCommentController,
+  getCommentByIdController,
 };

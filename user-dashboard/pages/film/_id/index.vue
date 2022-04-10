@@ -4,11 +4,26 @@
       <v-col cols="12" lg="9">
         <Player :options="options()" />
       </v-col>
-      <v-col cols="12" lg="3" class="f-">
+      <v-col cols="12" lg="3">
         <BaseSuggestionList :category="film.category" :exclude_id="film._id" />
       </v-col>
-      <v-col cols="12">
-        <BaseCommentForm :content="film" />
+      <v-col cols="12" lg="9">
+        <div class="d-flex flex-column">
+          <div>
+            <BaseCommentForm :content="film" />
+          </div>
+          <div class="d-flex justify-end mt-4">
+            <v-btn depressed color="primary" @click="createComment">
+              <span v-html="$t('Bình luận')"></span>
+            </v-btn>
+          </div>
+        </div>
+
+        <BaseCommentList />
+      </v-col>
+
+      <v-col cols="12" lg="3">
+        <BaseSuggestionList :category="film.category" :exclude_id="film._id" />
       </v-col>
     </v-row>
   </v-container>
@@ -16,14 +31,21 @@
 
 <script>
 import filmMixins from "@/mixins/film";
+import commentMixins from "@/mixins/comment";
+import userMixins from "@/mixins/user";
+import authMixins from "@/mixins/auth";
+
 import BaseSuggestionList from "@/pages/film/widget/BaseSuggestionList";
 import BaseCommentForm from "@/pages/film/widget/BaseCommentForm";
+import BaseCommentList from "@/pages/comment/widget/BaseCommentList";
+
 export default {
   name: "FilmPlayer",
-  mixins: [filmMixins],
+  mixins: [filmMixins, commentMixins, userMixins, authMixins],
   components: {
     BaseSuggestionList,
     BaseCommentForm,
+    BaseCommentList,
   },
   data() {
     return {
@@ -46,6 +68,13 @@ export default {
     };
   },
   methods: {
+    async createComment() {
+      await this.CREATE_COMMENT({
+        user: this.user._id,
+        film: this.film._id,
+      });
+      await this.GET_COMMENTS();
+    },
     /**
      * @description video options
      */

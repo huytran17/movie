@@ -28,6 +28,14 @@ export default function makeCommentDb({
       const query_conditions = { deleted_at: undefined };
       const existing = await commentDbModel
         .find(query_conditions)
+        .populate({
+          path: "user",
+          select: "-__v",
+        })
+        .populate({
+          path: "film",
+          select: "-__v",
+        })
         .lean({ virtuals: true });
       if (existing) {
         return existing.map((comment) => new Comment(comment));

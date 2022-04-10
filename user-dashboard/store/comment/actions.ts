@@ -32,10 +32,13 @@ const actions: ActionTree<CommentState, RootState> = {
    * @param param0
    * @param param1
    */
-  async [ActionTypes.CREATE_COMMENT]({ commit, state }) {
-    const result = await this.$axios.$post(`/admin/comment/create-comment`, {
-      data: state.new_comment,
-    });
+  async [ActionTypes.CREATE_COMMENT]({ commit, state }, { user, film }) {
+    const result = await this.$axios.$post(
+      `/api/comment/create-comment/${user}/${film}`,
+      {
+        data: state.new_comment,
+      }
+    );
 
     return result;
   },

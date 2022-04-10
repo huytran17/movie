@@ -37,6 +37,20 @@ const mutations: MutationTree<CommentState> = {
   [MutationTypes.SET_LOADING](state, { data }: { data: boolean }) {
     state.loading = data;
   },
+
+  /**
+   * update user state
+   * @param state
+   * @param param1
+   */
+  [MutationTypes.UPDATE_NEW_COMMENT_DATA](
+    state,
+    { data, variable_path }: { data: Object | string; variable_path: string }
+  ) {
+    state.new_comment = _.update(state.new_comment, variable_path, (n) => {
+      return data;
+    });
+  },
 };
 
 export default mutations;

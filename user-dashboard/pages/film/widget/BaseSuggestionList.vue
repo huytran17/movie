@@ -1,14 +1,7 @@
 <template>
   <v-row v-if="has_suggestion_list">
     <v-col cols="12">
-      <div class="text-body-2 text-sm-body-1">
-        <span class="app-title">
-          <span v-html="$t('Gợi ý')"></span>
-        </span>
-      </div>
-    </v-col>
-    <v-col cols="12">
-      <v-row>
+      <v-row class="suggestion-list">
         <v-col
           cols="4"
           lg="12"
@@ -16,13 +9,23 @@
           :key="index"
         >
           <v-row>
-            <v-col cols="4" lg="5">
-              <v-img :src="film.thumbnail_url" width=""></v-img>
+            <v-col cols="12" lg="5" class="d-flex d-lg-block">
+              <v-img
+                src="https://picsum.photos/id/11/500/300"
+                cover
+                width="200px"
+                @click="$router.push(localePath(`/film/${film._id}`))"
+                class="clickable"
+              ></v-img>
             </v-col>
-            <v-col cols="7" class="d-none d-lg-block">
+            <v-col cols="7" class="d-none d-lg-block pl-0">
               <div class="text-body-2">
                 <span class="app-body">
-                  <span v-html="$t(film.title)"></span>
+                  <span
+                    class="suggestion-title clickable"
+                    v-html="$t(film.title)"
+                    @click="$router.push(localePath(`/film/${film._id}`))"
+                  ></span>
                 </span>
               </div>
             </v-col>
@@ -55,10 +58,11 @@ export default {
   },
   computed: {
     get_suggestion_list() {
-      return this.filterFilmByCategory({
+      const filtered_films = this.filterFilmByCategory({
         category: this.category,
         exclude_id: this.exclude_id,
       });
+      return filtered_films;
     },
     has_suggestion_list() {
       return this.get_suggestion_list.length > 0;
@@ -77,4 +81,35 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.suggestion-list {
+  max-height: 507.75px;
+  overflow: auto;
+}
+/* width */
+.suggestion-list::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* Track */
+.suggestion-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.suggestion-list::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.suggestion-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.suggestion-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+</style>

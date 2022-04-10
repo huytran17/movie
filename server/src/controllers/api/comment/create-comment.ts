@@ -22,8 +22,15 @@ export default function makeCreateCommentController({
         "context.validated.data"
       );
 
+      const { user, film } = _.get(httpRequest, "context.validated");
+
+      const final_comment_data = Object.assign({}, commentDetails, {
+        user,
+        film,
+      });
+
       const created_comment = await createComment({
-        commentDetails,
+        commentDetails: final_comment_data,
       });
 
       return {

@@ -1,18 +1,18 @@
 import deleteCommentRules from "./delete-comment";
 import updateCommentRules from "./update-comment";
-import getCommentRules from "./get-comment";
 import createCommentRules from "./create-comment";
+import getCommentByIdRules from "./get-comment";
 
 export default Object.freeze({
   deleteCommentRules,
   updateCommentRules,
-  getCommentRules,
   createCommentRules,
+  getCommentByIdRules,
 });
 
 export {
   deleteCommentRules,
   updateCommentRules,
-  getCommentRules,
   createCommentRules,
+  getCommentByIdRules,
 };
