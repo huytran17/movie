@@ -11,7 +11,7 @@ const actions: ActionTree<FeedbackState, RootState> = {
    * @param param0
    */
   async [ActionTypes.GET_FEEDBACKS]({ commit }) {
-    const { data } = await this.$axios.$get(`/admin/feedback`);
+    const { data } = await this.$axios.$get(`/api/feedback`);
 
     commit(MutationTypes.SET_FEEDBACKS, { feedbacks: data });
     return data;
@@ -22,7 +22,7 @@ const actions: ActionTree<FeedbackState, RootState> = {
    * @param param0
    */
   async [ActionTypes.GET_FEEDBACK_BY_FILM_ID]({ commit }, { film_id }) {
-    const { data } = await this.$axios.$get(`/admin/feedback/${film_id}`);
+    const { data } = await this.$axios.$get(`/api/feedback/${film_id}`);
 
     commit(MutationTypes.SET_FEEDBACKS, { feedbacks: data });
     return data;
@@ -34,7 +34,7 @@ const actions: ActionTree<FeedbackState, RootState> = {
    */
   async [ActionTypes.DELETE_FEEDBACK]({ commit }, { feedback_id }) {
     const result = await this.$axios.$delete(
-      `/admin/feedback/delete/${feedback_id}`
+      `/api/feedback/delete/${feedback_id}`
     );
 
     return result;
@@ -42,7 +42,7 @@ const actions: ActionTree<FeedbackState, RootState> = {
 
   /**
    *
-   * @description Update admin
+   * @description Update api
    * @param param0
    * @param param1
    */
@@ -64,7 +64,7 @@ const actions: ActionTree<FeedbackState, RootState> = {
    * @param param1
    */
   async [ActionTypes.UPDATE_FEEDBACK]({ commit, state }, { feedback_id }) {
-    const { data } = await this.$axios.$put(`/admin/feedback/${feedback_id}`, {
+    const { data } = await this.$axios.$put(`/api/feedback/${feedback_id}`, {
       data: state.feedback,
     });
 
