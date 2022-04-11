@@ -12,6 +12,7 @@ import {
   updateUserController,
   uploadUserAvatarController,
 } from "../../controllers/api/user";
+import { upload } from "../../middlewares/file-upload-middleware";
 
 const userRouter = express.Router();
 
@@ -23,6 +24,7 @@ userRouter.get(
 
 userRouter.post(
   "/upload-avatar/:user_id",
+  upload.single("file"),
   makeValidator(uploadUserAvatarRules),
   makeExpressCallback(uploadUserAvatarController)
 );

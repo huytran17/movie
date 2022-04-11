@@ -167,11 +167,11 @@ export default {
         this.$nextTick(async () => {
           this.image_file = file;
 
-          const event_image_location = URL.createObjectURL(file);
+          // const event_image_location = URL.createObjectURL(file);
           this.avatar_valid = true;
           this.$forceUpdate();
           await this.UPDATE_USER_AVATAR({
-            file: event_image_location,
+            file: this.image_file,
             user_id: this.user._id,
           });
         });

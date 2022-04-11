@@ -5,18 +5,23 @@ import { hashPassword } from "../../config/password";
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  first_name: { type: String, trim: true },
-  last_name: { type: String, trim: true },
-  hash_password: { type: String, trim: true },
-  aws: { type: Object },
-  email: { type: String, trim: true, lowercase: true },
-  phone_number: { type: Number },
-  created_at: { type: Date, default: Date.now },
-  updated_at: { type: Date, default: Date.now },
-  deleted_at: { type: Date, default: null },
-  email_verified_at: { type: Date, default: null },
-});
+const userSchema = new Schema(
+  {
+    first_name: { type: String, trim: true },
+    last_name: { type: String, trim: true },
+    hash_password: { type: String, trim: true },
+    aws: { type: Object },
+    email: { type: String, trim: true, lowercase: true },
+    phone_number: { type: Number },
+    created_at: { type: Date, default: Date.now },
+    updated_at: { type: Date, default: Date.now },
+    deleted_at: { type: Date, default: null },
+    email_verified_at: { type: Date, default: null },
+  },
+  {
+    toJSON: { virtuals: true },
+  }
+);
 
 userSchema
   .virtual("full_name")
@@ -33,7 +38,7 @@ userSchema.virtual("alias_name").get(function (this: { full_name: string }) {
 });
 
 userSchema.virtual("avatar_url").get(function (this: any) {
-  const user = this as any;
+  const user = this;
 
   const user_avatar_key = _.get(user, "aws.dirname", "");
   let user_avatar = "";

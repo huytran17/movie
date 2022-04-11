@@ -48,17 +48,17 @@ export default function makeUploadUserAvatarController({
         },
       };
 
-      const new_event = Object.assign({}, exists, {
+      const new_user = Object.assign({}, exists, {
         aws: aws_payload,
       });
 
-      const updated_event = await updateUser({ userDetails: new_event });
+      const updated_user = await updateUser({ userDetails: new_user });
 
       return {
         headers,
         statusCode: 200,
         body: {
-          event: updated_event,
+          user: updated_user,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {
