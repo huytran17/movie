@@ -1,1 +1,3 @@
-# social-network
+# NodeJS
+# NuxtJS
+# MongoDB
