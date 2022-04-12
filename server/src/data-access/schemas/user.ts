@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import S3 from "../../config/storage";
 import _ from "lodash";
 import { hashPassword } from "../../config/password";
+import IUser from "../../interfaces/user";
 
 const Schema = mongoose.Schema;
 
@@ -37,7 +38,7 @@ userSchema.virtual("alias_name").get(function (this: { full_name: string }) {
   return acronym;
 });
 
-userSchema.virtual("avatar_url").get(function (this: any) {
+userSchema.virtual("avatar_url").get(function (this: IUser) {
   const user = this;
 
   const user_avatar_key = _.get(user, "aws.dirname", "");
@@ -51,8 +52,8 @@ userSchema.virtual("avatar_url").get(function (this: any) {
 /**
  * works when you create a new user
  */
-userSchema.pre("save", async function (this: any, next) {
-  const user = this as any;
+userSchema.pre("save", async function (this: IUser, next) {
+  const user = this;
 
   user.hash_password = await hashPassword({
     password: user.hash_password,

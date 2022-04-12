@@ -12,6 +12,21 @@
       <v-tab-item class="mt-4">
         <v-form v-model="form_valid">
           <v-row>
+            <v-col cols="12">
+              <div
+                v-if="get_user_avatar_location"
+                class="d-flex justify-center my-3"
+              >
+                <v-img
+                  max-height="100px"
+                  max-width="100px"
+                  contain
+                  :src="get_user_avatar_location"
+                  alt="photo-upload"
+                  class="rounded-circle"
+                ></v-img>
+              </div>
+            </v-col>
             <v-col cols="12" md="6">
               <v-text-field
                 :rules="firstNameRules"
@@ -63,10 +78,7 @@
           <v-row>
             <v-col cols="12">
               <div
-                :class="[
-                  'wrapper-input-upload mx-auto px-2 d-flex align-center',
-                  { 'justify-center': !user.avatar_url },
-                ]"
+                class="wrapper-input-upload mx-auto px-2 d-flex align-center justify-center"
               >
                 <input
                   type="file"
@@ -76,10 +88,7 @@
                   accept="image/*"
                   class="input-upload"
                 />
-                <div
-                  class="d-flex justify-center align-center"
-                  v-if="!user.avatar_url"
-                >
+                <div class="d-flex justify-center align-center">
                   <v-spacer></v-spacer>
                   <div class="d-flex">
                     <v-icon class="mr-4" size="40">mdi-image-plus</v-icon>
@@ -97,15 +106,6 @@
                     </div>
                   </div>
                   <v-spacer></v-spacer>
-                </div>
-                <div v-else class="wrapper-photo">
-                  <v-img
-                    max-height="100%"
-                    max-width="100%"
-                    contain
-                    :src="user.avatar_url"
-                    alt="photo-upload"
-                  ></v-img>
                 </div>
               </div>
             </v-col>
@@ -147,6 +147,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    get_user_avatar_location() {
+      return _.get(this.user, "aws.meta.location", "") || undefined;
+    },
   },
   methods: {
     /**
@@ -194,11 +199,6 @@ export default {
   position: relative;
   cursor: pointer;
   border-radius: 4px;
-}
-
-.wrapper-photo {
-  height: 90px;
-  width: 160px;
 }
 
 .input-upload {
