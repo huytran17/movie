@@ -94,8 +94,7 @@
                     <v-icon class="mr-4" size="40">mdi-image-plus</v-icon>
                     <div>
                       <span class="font-weight-bold">
-                        Drag or
-                        <span class="text--primary">upload</span>
+                        <span class="primary--text">Upload</span>
                         your photo here.
                       </span>
                       <br />

@@ -16,6 +16,13 @@ import makeUploadFilmAvatarController from "./upload-film-thumbnail";
 import makeGetFilmsController from "./get-films";
 import makeDeleteFilmController from "./delete-film";
 import makeCreateFilmController from "./create-film";
+import makeUploadFilmController from "./upload-film";
+
+const uploadFilmController = makeUploadFilmController({
+  getFilmById,
+  updateFilm,
+  mongoose,
+});
 
 const createFilmController = makeCreateFilmController({
   createFilm,
@@ -69,6 +76,7 @@ export default Object.freeze({
   getFilmsController,
   deleteFilmController,
   createFilmController,
+  uploadFilmController,
 });
 
 export {
@@ -79,4 +87,5 @@ export {
   getFilmsController,
   deleteFilmController,
   createFilmController,
+  uploadFilmController,
 };

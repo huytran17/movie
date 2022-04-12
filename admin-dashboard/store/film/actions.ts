@@ -77,6 +77,27 @@ const actions: ActionTree<FilmState, RootState> = {
     return result;
   },
 
+  /**UPLOAD_EVENT_IMAGE
+   * @Description upload a film's profile image
+   * @param param0
+   */
+  async [ActionTypes.UPLOAD_FILM]({ commit }, { file, film_id }) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const result = await this.$axios.$post(
+      `/admin/film/upload/${film_id}`,
+      formData,
+      config
+    );
+
+    return result;
+  },
+
   /**
    * @Description publish a film to show on mobile app
    * @param {is_published: boolean}

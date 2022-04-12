@@ -3,6 +3,7 @@ import IFilm, { CategoryType } from "../interfaces/film";
 export default class Film implements IFilm {
   public readonly _id: string;
   public readonly title: string;
+  public readonly aws?: Record<string, unknown>;
   public readonly description: string;
   public readonly url: string;
   public readonly thumnail_url: string;
@@ -19,6 +20,7 @@ export default class Film implements IFilm {
     _id,
     created_at,
     updated_at,
+    aws,
     deleted_at,
     title,
     description,
@@ -28,6 +30,7 @@ export default class Film implements IFilm {
     category,
   }: IFilm) {
     this._id = _id;
+    this.aws = aws;
     this.title = title;
     this.description = description;
     this.url = url;

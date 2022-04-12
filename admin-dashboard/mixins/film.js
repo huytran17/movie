@@ -47,6 +47,7 @@ export default {
       UPDATE_FILM_THUMBNAIL: "film/UPDATE_FILM_THUMBNAIL",
       UPDATE_FILM: "film/UPDATE_FILM",
       CREATE_FILM: "film/CREATE_FILM",
+      UPLOAD_FILM: "film/UPLOAD_FILM",
     }),
 
     ...mapMutations({

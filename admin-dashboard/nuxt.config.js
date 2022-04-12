@@ -30,6 +30,7 @@ export default {
   plugins: [
     { src: "~/plugins/vue-toastification", ssr: false },
     { src: "~/plugins/axios", ssr: false },
+    { src: "~/plugins/vue-plyr", mode: "client" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

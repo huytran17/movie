@@ -39,6 +39,7 @@ import BaseFeedbacksList from "@/pages/feedback/BaseFeedbacksList";
 import BaseSuggestionList from "@/pages/film/widget/BaseSuggestionList";
 import BaseCommentForm from "@/pages/film/widget/BaseCommentForm";
 import BaseCommentList from "@/pages/comment/widget/BaseCommentList";
+import Player from "@/components/Player";
 
 export default {
   name: "FilmPlayer",
@@ -48,6 +49,7 @@ export default {
     BaseCommentForm,
     BaseCommentList,
     BaseFeedbacksList,
+    Player,
   },
   data() {
     return {
