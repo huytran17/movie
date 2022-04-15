@@ -6,11 +6,12 @@ export default class Film implements IFilm {
   public readonly aws?: Record<string, unknown>;
   public readonly description: string;
   public readonly url: string;
-  public readonly thumnail_url: string;
+  public readonly aws_thumnail: Record<string, unknown>;
   public readonly category: CategoryType;
   public readonly meta: {
     view_count: number;
     manufactured_at: Date;
+    released_at: Date;
   };
   public readonly created_at: Date;
   public readonly updated_at: Date;
@@ -25,7 +26,7 @@ export default class Film implements IFilm {
     title,
     description,
     meta,
-    thumnail_url,
+    aws_thumnail,
     url,
     category,
   }: IFilm) {
@@ -34,7 +35,7 @@ export default class Film implements IFilm {
     this.title = title;
     this.description = description;
     this.url = url;
-    this.thumnail_url = thumnail_url;
+    this.aws_thumnail = aws_thumnail;
     this.meta = meta;
     this.category = category;
     this.created_at = created_at;

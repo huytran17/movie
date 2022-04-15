@@ -9,7 +9,7 @@ import {
   uploadFilmThumbnailRules,
   getFilmRules,
   createFilmRules,
-  uploadFilmRules
+  uploadFilmRules,
 } from "../../controllers/admin/film/validators";
 import {
   getFilmController,
@@ -42,6 +42,13 @@ filmRouter.post(
   upload.single("file"),
   makeValidator(uploadFilmRules),
   makeExpressCallback(uploadFilmController)
+);
+
+filmRouter.post(
+  "/upload-thumbnail/:film_id",
+  upload.single("file"),
+  makeValidator(uploadFilmThumbnailRules),
+  makeExpressCallback(uploadFilmThumbnailController)
 );
 
 filmRouter.put(

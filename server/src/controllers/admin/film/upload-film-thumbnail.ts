@@ -48,17 +48,17 @@ export default function makeUploadFilmAvatarController({
         },
       };
 
-      const new_event = Object.assign({}, exists, {
-        aws: aws_payload,
+      const film_details = Object.assign({}, exists, {
+        aws_thumnail: aws_payload,
       });
 
-      const updated_event = await updateFilm({ filmDetails: new_event });
+      const updated_event = await updateFilm({ filmDetails: film_details });
 
       return {
         headers,
         statusCode: 200,
         body: {
-          event: updated_event,
+          data: updated_event,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {

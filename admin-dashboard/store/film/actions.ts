@@ -67,14 +67,14 @@ const actions: ActionTree<FilmState, RootState> = {
         "Content-Type": "multipart/form-data",
       },
     };
-    const result = await this.$axios.$post(
-      `/admin/film/upload-avatar/${film_id}`,
+    const { data } = await this.$axios.$post(
+      `/admin/film/upload-thumbnail/${film_id}`,
       formData,
       config
     );
-    commit(MutationTypes.SET_FILM, { film: result });
+    commit(MutationTypes.SET_FILM, { data });
 
-    return result;
+    return data;
   },
 
   /**UPLOAD_EVENT_IMAGE

@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="has_film">
     <v-form>
       <v-row>
         <v-col cols="12" md="6">
@@ -48,39 +48,115 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-row>
-            <v-col cols="12">
-              <v-file-input
-                v-model="file_of_film"
-                small-chips
-                truncate-length="15"
-                :label="$t('File')"
-                @change="uploadFilm"
-                accept="video/*"
-              ></v-file-input>
-            </v-col>
-            <v-col cols="12">
-              <Player :options="options" />
-            </v-col>
-          </v-row>
+          <v-file-input
+            v-model="file_of_film"
+            small-chips
+            truncate-length="15"
+            :label="$t('Choose film')"
+            @change="uploadFilm"
+            accept="video/*"
+          ></v-file-input>
         </v-col>
 
         <v-col cols="12" md="6" class="d-flex justify-end">
-          <v-date-picker
-            :value="get_film_manufacture_at"
-            v-model="film_manufactured_at"
-            color="green lighten-1"
-            @input="
-              updateInput({
-                variable_path: 'meta.manufactured_at',
-                data: $event,
-              })
-            "
-          ></v-date-picker>
+          <v-menu
+            ref="menu"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                label="Manufacture year"
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                :value="get_film_manufacture_at"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              :value="get_film_manufacture_at"
+              v-model="film_manufactured_at"
+              color="green lighten-1"
+              full-width
+              @input="
+                updateInput({
+                  variable_path: 'meta.manufactured_at',
+                  data: $event,
+                })
+              "
+            ></v-date-picker>
+          </v-menu>
         </v-col>
       </v-row>
 
       <v-row>
+        <v-col v-if="has_film_url" cols="12">
+          <Player :options="options" />
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-row>
+            <v-col cols="12">
+              <v-file-input
+                v-model="file_of_film_thumbnail"
+                small-chips
+                truncate-length="15"
+                :label="$t('Choose thumbnail')"
+                @change="uploadThumbnail"
+                accept="image/*"
+              ></v-file-input>
+            </v-col>
+
+            <v-col cols="12">
+              <v-menu
+                ref="menu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    label="Release year"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                    :value="get_film_release_at"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  :value="get_film_release_at"
+                  v-model="film_released_at"
+                  color="green lighten-1"
+                  @input="
+                    updateInput({
+                      variable_path: 'meta.released_at',
+                      data: $event,
+                    })
+                  "
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
+          </v-row>
+        </v-col>
+
+        <v-col
+          v-if="has_film_thumbnail_url"
+          cols="12"
+          md="6"
+          class="d-flex justify-end"
+        >
+          <v-img :src="film_thumbnail"></v-img>
+        </v-col>
+      </v-row>
+
+      <v-row class="mt-5">
         <v-col cols="12" class="d-flex justify-end">
           <v-btn depressed color="primary" @click="updateFilm()">
             <span v-html="$t('Lưu')"></span>
@@ -121,7 +197,9 @@ export default {
         ],
       },
       file_of_film: null,
+      file_of_film_thumbnail: null,
       film_manufactured_at: new Date(Date.now()).toISOString().substr(0, 10),
+      film_released_at: new Date(Date.now()).toISOString().substr(0, 10),
       film_categories: [
         {
           text: "Comedy",
@@ -155,12 +233,41 @@ export default {
     };
   },
   computed: {
-    get_film_manufacture_at() {
-      return _.get(this.film, "meta.manufactured_at", "");
-    },
     has_film() {
+      return !!this.film;
+    },
+
+    get_film_manufacture_at() {
+      const manufactured_at = _.get(this.film, "meta.manufactured_at", "");
+      const manufactured_at_formatted =
+        this.$moment(manufactured_at).format("YYYY/MM/DD");
+      return manufactured_at_formatted;
+    },
+
+    get_film_release_at() {
+      const release_at = _.get(this.film, "meta.released_at", "");
+      const release_at_formatted =
+        this.$moment(release_at).format("YYYY/MM/DD");
+      return release_at_formatted;
+    },
+
+    has_film_url() {
       const has_aws_location = _.get(this.film, "aws.meta.location", false);
       return has_aws_location;
+    },
+
+    has_film_thumbnail_url() {
+      const has_aws_location = _.get(
+        this.film,
+        "aws_thumnail.meta.location",
+        false
+      );
+      return has_aws_location;
+    },
+
+    film_thumbnail() {
+      const thumbnail = _.get(this.film, "aws_thumnail.meta.location", "");
+      return thumbnail;
     },
     /**
      * @description video options
@@ -191,7 +298,6 @@ export default {
   methods: {
     async updateFilm() {
       await this.UPDATE_FILM({ film_id: this.film._id });
-      this.$router.push(this.localePath("/films-client"));
     },
 
     updateInput({ variable_path, data }) {
@@ -209,6 +315,22 @@ export default {
         this.$nextTick(async () => {
           await this.UPLOAD_FILM({
             file: this.file_of_film,
+            film_id: this.film._id,
+          });
+
+          location.reload();
+        });
+      }
+    },
+    uploadThumbnail() {
+      const max_size = 50 * 1024 * 1024; // 5MB
+      const file = this.file_of_film_thumbnail;
+      const file_size = _.get(file, "size", max_size + 1);
+
+      if (file && file_size <= max_size) {
+        this.$nextTick(async () => {
+          const data = await this.UPDATE_FILM_THUMBNAIL({
+            file: this.file_of_film_thumbnail,
             film_id: this.film._id,
           });
           this.$forceUpdate();
