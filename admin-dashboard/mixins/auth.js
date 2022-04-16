@@ -62,6 +62,7 @@ export default {
       SIGN_IN: "auth/SIGN_IN",
       SIGN_UP: "auth/SIGN_UP",
       VERIFY: "auth/VERIFY",
+      LOGOUT: "auth/LOGOUT",
       AUTO_SIGN_IN: "auth/AUTO_SIGN_IN",
       GET_ME: "auth/ME",
     }),

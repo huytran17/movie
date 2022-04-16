@@ -6,6 +6,33 @@ import { MutationTypes } from "./mutation-types";
 
 const actions: ActionTree<AuthState, RootState> = {
   /**
+   * @description logout
+   * @param param0
+   */
+  async [ActionTypes.LOGOUT]({ commit }) {
+    try {
+      const { data } = await this.$axios.$post(`/admin/auth/logout`);
+
+      const { is_logout } = data;
+
+      if (!is_logout) {
+        return;
+      }
+
+      localStorage.removeItem("admin_access_token");
+      commit(MutationTypes.SET_USER, { user: null });
+      commit(MutationTypes.SET_HAS_USER, { data: false });
+
+      const origin = `${window.location.origin}/`;
+      window.location.replace(origin);
+    } catch (err: any) {
+      const error = err && err.message ? `?errorMessage=${err.message}` : "";
+      const origin = `${window.location.origin}/signin${error}`;
+
+      // window.location.replace(origin);
+    }
+  },
+  /**
    * login
    * @param param0
    */

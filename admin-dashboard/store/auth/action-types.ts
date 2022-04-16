@@ -4,4 +4,5 @@ export enum ActionTypes {
   VERIFY = "VERIFY",
   AUTO_SIGN_IN = "AUTO_SIGN_IN",
   ME = "ME",
+  LOGOUT = "LOGOUT",
 }

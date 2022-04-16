@@ -1,10 +1,10 @@
 import moment from "moment";
-import mongoose from "mongoose";
 
 import makeSignInController from "./sign-in";
 import makeVerifyController from "./verify";
 import makeAutoSignInController from "./auto-sign-in";
 import makeGetAdminController from "./get-admin";
+import makeLogoutController from "./logout";
 
 import { getAdminByEmail } from "../../../use-cases/admin";
 import { getAdminById } from "../../../use-cases/admin";
@@ -14,6 +14,10 @@ import {
   generateAccessToken,
   verifyAccessToken,
 } from "../../../config/accessTokenManager";
+
+const logoutController = makeLogoutController({
+  getAdminByEmail,
+});
 
 const getAdminController = makeGetAdminController({
   getAdminById,
@@ -38,6 +42,7 @@ export default Object.freeze({
   verifyController,
   autoSignInController,
   getAdminController,
+  logoutController,
 });
 
 export {
@@ -45,4 +50,5 @@ export {
   verifyController,
   autoSignInController,
   getAdminController,
+  logoutController,
 };

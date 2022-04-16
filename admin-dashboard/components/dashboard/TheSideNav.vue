@@ -23,8 +23,21 @@
             v-for="item in list_items"
             :key="item.value"
             @click="$router.push(localePath(item.path))"
+            class="py-1"
           >
-            <v-list-item-title>{{ $t(item.text) }}</v-list-item-title>
+            <v-icon :color="item.color" class="mr-3">{{ item.icon }}</v-icon>
+            <v-list-item-title>
+              <span v-html="$t(item.text)"> </span>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+
+        <v-list-item-group active-class="deep-purple--text text--accent-4">
+          <v-list-item @click="logout" class="py-1">
+            <v-icon color="#546E7A" class="mr-3">mdi-logout-variant</v-icon>
+            <v-list-item-title>
+              <span v-html="$t('Logout')"> </span>
+            </v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -34,10 +47,11 @@
 
 <script>
 import systemMixins from "@/mixins/system";
+import authMixins from "@/mixins/auth";
 
 export default {
   name: "TheSideNav",
-  mixins: [systemMixins],
+  mixins: [systemMixins, authMixins],
   components: {},
   props: {
     list_items: {
@@ -47,26 +61,36 @@ export default {
           text: "Dashboard",
           value: "dashboard",
           path: "/",
+          icon: "mdi-home-analytics",
+          color: "#64DD17",
         },
         {
           text: "Admin",
           value: "admin",
           path: "/admin",
+          icon: "mdi-shield-crown-outline",
+          color: "#039BE5",
         },
         {
           text: "User",
           value: "user",
           path: "/users-client",
+          icon: "mdi-account-group-outline",
+          color: "#D81B60",
         },
         {
           text: "Film",
           value: "film",
           path: "/films-client",
+          icon: "mdi-movie-roll",
+          color: "#00ACC1",
         },
         {
           text: "Feedback",
           value: "feedback",
           path: "/feedbacks-client",
+          icon: "mdi-comment-quote-outline",
+          color: "#FFFF00",
         },
       ],
     },
@@ -75,6 +99,11 @@ export default {
     return {
       drawer: true,
     };
+  },
+  methods: {
+    async logout() {
+      await this.LOGOUT();
+    },
   },
 };
 </script>
