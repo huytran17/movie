@@ -1,53 +1,65 @@
 <template>
-  <BaseTableLoader v-if="film_loading" />
-  <v-data-table
-    v-else
-    :headers="headers"
-    :items="get_films"
-    :search="search"
-    :items-per-page="15"
-  >
-    <template v-slot:item.film_tools="{ item }">
-      <v-btn
-        icon
-        @click="$router.push(localePath(`/films-client/${item._id}`))"
-      >
-        <v-icon color="red">mdi-grease-pencil</v-icon>
-      </v-btn>
-      <v-btn icon @click="deleteFilm({ id: item._id })">
-        <v-icon color="red">mdi-delete-forever</v-icon>
-      </v-btn>
-    </template>
+  <div>
+    <BaseTableLoader v-if="film_loading" />
+    <v-data-table
+      v-else
+      :headers="headers"
+      :items="get_films"
+      :search="search"
+      :items-per-page="15"
+    >
+      <template v-slot:item.film_tools="{ item }">
+        <v-btn
+          icon
+          @click="$router.push(localePath(`/films-client/${item._id}`))"
+        >
+          <v-icon color="primary">mdi-grease-pencil</v-icon>
+        </v-btn>
+        <v-btn icon @click="openDeleteFilmConfirmDialog({ id: item._id })">
+          <v-icon color="red">mdi-delete-forever</v-icon>
+        </v-btn>
+      </template>
 
-    <template v-slot:item.title="{ item }">
-      <a
-        @click="$router.push(localePath(`/films-client/${item._id}`))"
-        class="text-body-2 primary--text"
-      >
-        <span class="app-title">
-          {{ item.title }}
-        </span>
-      </a>
-    </template>
+      <template v-slot:item.title="{ item }">
+        <a
+          @click="$router.push(localePath(`/films-client/${item._id}`))"
+          class="text-body-2 primary--text"
+        >
+          <span class="app-title">
+            {{ item.title }}
+          </span>
+        </a>
+      </template>
 
-    <template v-slot:item.created_at="{ item }">
-      {{ $moment(item.created_at).format("DD-MM-YYYY") }}
-    </template>
+      <template v-slot:item.created_at="{ item }">
+        {{ $moment(item.created_at).format("DD-MM-YYYY") }}
+      </template>
 
-    <template v-slot:item.updated_at="{ item }">
-      {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
-    </template>
-  </v-data-table>
+      <template v-slot:item.updated_at="{ item }">
+        {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
+      </template>
+    </v-data-table>
+
+    <ConfirmDialog
+      :show_confirm_dialog="show_confirm_dialog"
+      :content="confirm_content"
+      :action="deleteFilm"
+      @close-dialog="show_confirm_dialog = false"
+    />
+  </div>
 </template>
 
 <script>
 import filmMixins from "@/mixins/film";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import BaseTableLoader from "@/components/loaders/BaseTableLoader";
+
 export default {
   name: "BaseFilmTable",
   mixins: [filmMixins],
   components: {
     BaseTableLoader,
+    ConfirmDialog,
   },
   props: {
     headers: {
@@ -147,6 +159,8 @@ export default {
   data() {
     return {
       search: null,
+      show_confirm_dialog: false,
+      confirm_content: "",
     };
   },
   computed: {
@@ -155,8 +169,19 @@ export default {
     },
   },
   methods: {
-    async deleteFilm({ id }) {
-      await Promise.all([this.DELETE_FILM({ film_id: id }), this.GET_FILMS()]);
+    async openDeleteFilmConfirmDialog({ id }) {
+      const film = await this.GET_FILM({ film_id: id });
+      this.confirm_content = `Bạn có muốn xóa phim <b>${film.title}</b> không?`;
+      this.show_confirm_dialog = true;
+    },
+
+    async deleteFilm() {
+      await Promise.all([
+        this.DELETE_FILM({ film_id: this.film._id }),
+        this.GET_FILMS(),
+      ]);
+
+      this.show_confirm_dialog = false;
     },
   },
   async fetch() {

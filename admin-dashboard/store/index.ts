@@ -1,7 +1,7 @@
 import { ActionTree, MutationTree, GetterTree } from "vuex";
 
 export const state = () => ({
-  show_confirm_dialog: false,
+  // show_confirm_dialog: false,
 });
 
 export type RootState = ReturnType<typeof state>;
@@ -9,7 +9,7 @@ export type RootState = ReturnType<typeof state>;
 export const actions: ActionTree<RootState, RootState> = {};
 
 export const getters: GetterTree<RootState, RootState> = {
-  show_confirm_dialog: (state) => state.show_confirm_dialog,
+  // show_confirm_dialog: (state) => state.show_confirm_dialog,
 };
 
 export const mutations: MutationTree<RootState> = {
@@ -18,8 +18,8 @@ export const mutations: MutationTree<RootState> = {
    * @param state
    * @param param1
    */
-  SET_SHOW_CONFIRM_DIALOG(state, { data }: { data: boolean }) {
-    // console.log("data", data);
-    state.show_confirm_dialog = data;
-  },
+  // SET_SHOW_CONFIRM_DIALOG(state, { data }: { data: boolean }) {
+  //   // console.log("data", data);
+  //   state.show_confirm_dialog = data;
+  // },
 };
