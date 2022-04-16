@@ -2,14 +2,14 @@ import deleteAdminRules from "./delete-admin";
 import updateAdminRules from "./update-admin";
 import uploadAdminAvatarRules from "./upload-admin-avatar";
 import getAdminRules from "./get-admin";
-import createUserRules from "./create-user";
+import createAdminRules from "./create-admin";
 
 export default Object.freeze({
   deleteAdminRules,
   updateAdminRules,
   uploadAdminAvatarRules,
   getAdminRules,
-  createUserRules,
+  createAdminRules,
 });
 
 export {
@@ -17,5 +17,5 @@ export {
   updateAdminRules,
   uploadAdminAvatarRules,
   getAdminRules,
-  createUserRules,
+  createAdminRules,
 };

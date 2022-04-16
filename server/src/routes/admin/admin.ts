@@ -7,7 +7,7 @@ import {
   updateAdminRules,
   uploadAdminAvatarRules,
   getAdminRules,
-  createUserRules,
+  createAdminRules,
 } from "../../controllers/admin/admin/validators";
 import {
   getAdminController,
@@ -15,7 +15,7 @@ import {
   uploadAdminThumbnailController,
   getAdminsController,
   deleteAdminController,
-  createUserController,
+  createAdminController,
 } from "../../controllers/admin/admin";
 
 const adminRouter = express.Router();
@@ -27,9 +27,9 @@ adminRouter.get(
 );
 
 adminRouter.post(
-  "/create-user",
-  makeValidator(createUserRules),
-  makeExpressCallback(createUserController)
+  "/create-admin",
+  makeValidator(createAdminRules),
+  makeExpressCallback(createAdminController)
 );
 
 adminRouter.put(
@@ -41,7 +41,7 @@ adminRouter.put(
 adminRouter.get("/", makeExpressCallback(getAdminsController));
 
 adminRouter.delete(
-  "/:admin_id",
+  "/delete/:admin_id",
   makeValidator(deleteAdminRules),
   makeExpressCallback(deleteAdminController)
 );

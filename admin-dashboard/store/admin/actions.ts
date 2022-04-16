@@ -46,9 +46,9 @@ const actions: ActionTree<AdminState, RootState> = {
    * @param param0
    * @param param1
    */
-  async [ActionTypes.CREATE_USER]({ commit }, { user_data }) {
-    const result = await this.$axios.$post(`/admin/admin/create-user`, {
-      data: user_data,
+  async [ActionTypes.CREATE_ADMIN]({ commit }, { admin_data }) {
+    const result = await this.$axios.$post(`/admin/admin/create-admin`, {
+      data: admin_data,
     });
 
     return result;

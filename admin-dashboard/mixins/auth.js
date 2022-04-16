@@ -23,6 +23,17 @@ export default {
         (v) =>
           (v && v.length > 1) || this.$t("Last name must be min 2 characters."),
       ],
+      addressRules: [
+        (v) => !!v || this.$t("Address is required."),
+        (v) =>
+          (v && v.length > 19) || this.$t("Address must be min 20 characters."),
+      ],
+      phoneNumberRules: [
+        (v) => !!v || this.$t("Phone number is required."),
+        (v) =>
+          (v && /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(v)) ||
+          this.$t("Phone number must have valid format."),
+      ],
       passwordConfirmationRules: [
         (v) =>
           (v && v.length > 7) || this.$t("Password must be min 8 characters."),

@@ -1,37 +1,50 @@
 <template>
-  <BaseTableLoader v-if="admin_loading" />
-  <v-data-table
-    v-else
-    :headers="headers"
-    :items="get_admins"
-    :search="search"
-    :items-per-page="15"
-  >
-    <template v-slot:item.admin_tools="{ item }">
-      <v-btn v-if="is_super_admin" icon @click="deleteAdmin({ id: item._id })">
-        <v-icon color="red">mdi-delete-forever</v-icon>
-      </v-btn>
-    </template>
+  <div>
+    <BaseTableLoader v-if="admin_loading" />
+    <v-data-table
+      v-else
+      :headers="headers"
+      :items="get_admins"
+      :search="search"
+      :items-per-page="15"
+    >
+      <template v-slot:item.admin_tools="{ item }">
+        <v-btn
+          v-if="is_super_admin"
+          icon
+          @click="openDeleteAdminConfirmDialog({ admin: item })"
+        >
+          <v-icon color="red">mdi-delete-forever</v-icon>
+        </v-btn>
+      </template>
 
-    <template v-slot:item.full_name="{ item }">
-      <a
-        @click="$router.push(localePath(`/admin/${item._id}`))"
-        class="text-body-2 primary--text"
-      >
-        <span class="app-title">
-          {{ item.first_name }} {{ item.last_name }}
-        </span>
-      </a>
-    </template>
+      <template v-slot:item.full_name="{ item }">
+        <a
+          @click="$router.push(localePath(`/admin/${item._id}`))"
+          class="text-body-2 primary--text"
+        >
+          <span class="app-title">
+            {{ item.first_name }} {{ item.last_name }}
+          </span>
+        </a>
+      </template>
 
-    <template v-slot:item.created_at="{ item }">
-      {{ $moment(item.created_at).format("DD-MM-YYYY") }}
-    </template>
+      <template v-slot:item.created_at="{ item }">
+        {{ $moment(item.created_at).format("DD-MM-YYYY") }}
+      </template>
 
-    <template v-slot:item.updated_at="{ item }">
-      {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
-    </template>
-  </v-data-table>
+      <template v-slot:item.updated_at="{ item }">
+        {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
+      </template>
+    </v-data-table>
+
+    <ConfirmDialog
+      :show_confirm_dialog="show_confirm_dialog"
+      :content="confirm_content"
+      :action="deleteAdmin"
+      @close-dialog="show_confirm_dialog = false"
+    />
+  </div>
 </template>
 
 <script>
@@ -39,11 +52,13 @@ import adminMixins from "@/mixins/admin";
 import authMixins from "@/mixins/auth";
 
 import BaseTableLoader from "@/components/loaders/BaseTableLoader";
+import ConfirmDialog from "@/components/ConfirmDialog";
 export default {
   name: "BaseAdminTable",
   mixins: [adminMixins, authMixins],
   components: {
     BaseTableLoader,
+    ConfirmDialog,
   },
   props: {
     headers: {
@@ -114,6 +129,9 @@ export default {
   data() {
     return {
       search: null,
+      show_confirm_dialog: false,
+      confirm_content: "",
+      choosen_admin: null,
     };
   },
   computed: {
@@ -122,11 +140,19 @@ export default {
     },
   },
   methods: {
-    async deleteAdmin({ id }) {
+    async openDeleteAdminConfirmDialog({ admin }) {
+      this.confirm_content = `Bạn có muốn xóa quản trị viên <b>${admin.first_name} ${admin.last_name}</b> không?`;
+      this.show_confirm_dialog = true;
+      this.choosen_admin = admin;
+    },
+
+    async deleteAdmin() {
       await Promise.all([
-        this.DELETE_ADMIN({ admin_id: id }),
+        this.DELETE_ADMIN({ admin_id: this.choosen_admin._id }),
         this.GET_ADMINS(),
       ]);
+
+      this.show_confirm_dialog = false;
     },
   },
   async fetch() {

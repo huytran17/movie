@@ -1,39 +1,39 @@
 import { Request } from "express";
 import * as _ from "lodash";
-import User from "../../../entities/user";
+import Admin from "../../../entities/admin";
 
-import { IGetUserByEmail } from "../../../use-cases/user/get-user-by-email";
-import { ICreateUser } from "../../../use-cases/user/create-user";
+import { IGetAdminByEmail } from "../../../use-cases/admin/get-admin-by-email";
+import { ICreateAdmin } from "../../../use-cases/admin/create-admin";
 import { IHashPassword } from "../../../config/password/hash-password";
 
-export type IRawUserData = Omit<User, "hash_password"> & {
+export type IRawAdminData = Omit<Admin, "hash_password"> & {
   password: string;
   password_confirmation: string;
   email: string;
 };
 
-export default function makeCreateUserController({
-  getUserByEmail,
-  createUser,
+export default function makeCreateAdminController({
+  getAdminByEmail,
+  createAdmin,
   hashPassword,
 }: {
-  getUserByEmail: IGetUserByEmail;
-  createUser: ICreateUser;
+  getAdminByEmail: IGetAdminByEmail;
+  createAdmin: ICreateAdmin;
   hashPassword: IHashPassword;
 }) {
-  return async function createUserController(
-    httpRequest: Request & { context: { validated: IRawUserData } }
+  return async function createAdminController(
+    httpRequest: Request & { context: { validated: IRawAdminData } }
   ) {
     const headers = {
       "Content-Type": "application/json",
     };
 
     try {
-      const user: IRawUserData = _.get(httpRequest, "context.validated.data");
+      const admin: IRawAdminData = _.get(httpRequest, "context.validated.data");
 
-      const { password, password_confirmation, email: _email } = user;
+      const { password, password_confirmation, email: _email } = admin;
       const email = _email.toLowerCase();
-      const exists = await getUserByEmail({ email });
+      const exists = await getAdminByEmail({ email });
       if (exists) {
         return {
           headers,
@@ -49,16 +49,16 @@ export default function makeCreateUserController({
         password,
         password_confirmation,
       });
-      const create_user_payload = Object.assign(
+      const create_admin_payload = Object.assign(
         {},
-        _.omit(user, ["password", "password_confirmation"]),
+        _.omit(admin, ["password", "password_confirmation"]),
         {
           email,
           hash_password,
         }
       );
-      const created_user = await createUser({
-        userDetails: create_user_payload,
+      const created_admin = await createAdmin({
+        adminDetails: create_admin_payload,
       });
 
       return {
@@ -66,7 +66,7 @@ export default function makeCreateUserController({
         statusCode: 201,
         body: {
           is_registered: true,
-          data: created_user,
+          data: created_admin,
         },
       };
     } catch (err) {

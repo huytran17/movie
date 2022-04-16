@@ -6,8 +6,8 @@ import {
   getAdmins,
   updateAdmin,
   removeAdminById,
+  getAdminByEmail,
 } from "../../../use-cases/admin";
-import { getUserByEmail, createUser } from "../../../use-cases/user";
 import { verifyPassword, hashPassword } from "../../../config/password";
 
 import makeGetAdminController from "./get-admin-by-id";
@@ -15,11 +15,11 @@ import makeUpdateAdminController from "./update-admin";
 import makeUploadAdminAvatarController from "./upload-admin-avatar";
 import makeGetAdminsController from "./get-admins";
 import makeDeleteAdminController from "./delete-admin";
-import makeCreateUserController from "./create-user";
+import makeCreateAdminController from "./create-admin";
 
-const createUserController = makeCreateUserController({
-  getUserByEmail,
-  createUser,
+const createAdminController = makeCreateAdminController({
+  getAdminByEmail,
+  createAdmin,
   hashPassword,
 });
 const deleteAdminController = makeDeleteAdminController({
@@ -59,7 +59,7 @@ export default Object.freeze({
   uploadAdminThumbnailController,
   getAdminsController,
   deleteAdminController,
-  createUserController,
+  createAdminController,
 });
 
 export {
@@ -68,5 +68,5 @@ export {
   uploadAdminThumbnailController,
   getAdminsController,
   deleteAdminController,
-  createUserController,
+  createAdminController,
 };
