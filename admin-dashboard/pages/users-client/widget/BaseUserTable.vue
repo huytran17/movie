@@ -1,44 +1,55 @@
 <template>
-  <BaseTableLoader v-if="user_loading" />
-  <v-data-table
-    v-else
-    :headers="headers"
-    :items="get_users"
-    :search="search"
-    :items-per-page="15"
-  >
-    <template v-slot:item.user_tools="{ item }">
-      <v-btn icon @click="deleteUser({ id: item._id })">
-        <v-icon color="red">mdi-delete-forever</v-icon>
-      </v-btn>
-    </template>
+  <div>
+    <BaseTableLoader v-if="user_loading" />
+    <v-data-table
+      v-else
+      :headers="headers"
+      :items="get_users"
+      :search="search"
+      :items-per-page="15"
+    >
+      <template v-slot:item.user_tools="{ item }">
+        <v-btn icon @click="deleteUserConfirmDialog({ user: item })">
+          <v-icon color="red">mdi-delete-forever</v-icon>
+        </v-btn>
+      </template>
 
-    <template v-slot:item.full_name="{ item }">
-      <div class="text-body-2 primary--text">
-        <span class="app-title">
-          {{ item.first_name }} {{ item.last_name }}
-        </span>
-      </div>
-    </template>
+      <template v-slot:item.full_name="{ item }">
+        <div class="text-body-2 primary--text">
+          <span class="app-title">
+            {{ item.first_name }} {{ item.last_name }}
+          </span>
+        </div>
+      </template>
 
-    <template v-slot:item.created_at="{ item }">
-      {{ $moment(item.created_at).format("DD-MM-YYYY") }}
-    </template>
+      <template v-slot:item.created_at="{ item }">
+        {{ $moment(item.created_at).format("DD-MM-YYYY") }}
+      </template>
 
-    <template v-slot:item.updated_at="{ item }">
-      {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
-    </template>
-  </v-data-table>
+      <template v-slot:item.updated_at="{ item }">
+        {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
+      </template>
+    </v-data-table>
+
+    <ConfirmDialog
+      :show_confirm_dialog="show_confirm_dialog"
+      :content="confirm_content"
+      :action="deleteUser"
+      @close-dialog="show_confirm_dialog = false"
+    />
+  </div>
 </template>
 
 <script>
 import userMixins from "@/mixins/user";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import BaseTableLoader from "@/components/loaders/BaseTableLoader";
 export default {
   name: "BaseUserTable",
   mixins: [userMixins],
   components: {
     BaseTableLoader,
+    ConfirmDialog,
   },
   props: {
     headers: {
@@ -102,6 +113,9 @@ export default {
   data() {
     return {
       search: null,
+      show_confirm_dialog: false,
+      confirm_content: "",
+      choosen_user: null,
     };
   },
   computed: {
@@ -110,8 +124,19 @@ export default {
     },
   },
   methods: {
-    async deleteUser({ id }) {
-      await Promise.all([this.DELETE_USER({ user_id: id }), this.GET_USERS()]);
+    async deleteUser() {
+      await Promise.all([
+        this.DELETE_USER({ user_id: this.choosen_user._id }),
+        this.GET_USERS(),
+      ]);
+
+      this.show_confirm_dialog = false;
+    },
+
+    async deleteUserConfirmDialog({ user }) {
+      this.confirm_content = `Bạn có muốn xóa người dùng <b>${user.first_name} ${user.last_name}</b> không?`;
+      this.show_confirm_dialog = true;
+      this.choosen_user = user;
     },
   },
   async fetch() {

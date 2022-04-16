@@ -15,7 +15,7 @@
         >
           <v-icon color="primary">mdi-grease-pencil</v-icon>
         </v-btn>
-        <v-btn icon @click="openDeleteFilmConfirmDialog({ id: item._id })">
+        <v-btn icon @click="openDeleteFilmConfirmDialog({ film: item })">
           <v-icon color="red">mdi-delete-forever</v-icon>
         </v-btn>
       </template>
@@ -161,6 +161,7 @@ export default {
       search: null,
       show_confirm_dialog: false,
       confirm_content: "",
+      choosen_film: null,
     };
   },
   computed: {
@@ -169,15 +170,15 @@ export default {
     },
   },
   methods: {
-    async openDeleteFilmConfirmDialog({ id }) {
-      const film = await this.GET_FILM({ film_id: id });
+    async openDeleteFilmConfirmDialog({ film }) {
       this.confirm_content = `Bạn có muốn xóa phim <b>${film.title}</b> không?`;
       this.show_confirm_dialog = true;
+      this.choosen_film = film;
     },
 
     async deleteFilm() {
       await Promise.all([
-        this.DELETE_FILM({ film_id: this.film._id }),
+        this.DELETE_FILM({ film_id: this.choosen_film._id }),
         this.GET_FILMS(),
       ]);
 
