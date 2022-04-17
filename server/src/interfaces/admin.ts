@@ -8,6 +8,7 @@ export default interface IAdmin {
   phone_number?: string;
   email: string;
   address?: string;
+  birthday: Date;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;

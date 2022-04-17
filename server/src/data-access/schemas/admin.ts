@@ -7,6 +7,7 @@ const adminSchema = new Schema({
   first_name: { type: String, required: true, trim: true },
   last_name: { type: String, required: true, trim: true },
   hash_password: { type: String, trim: true },
+  birthday: { type: Date, default: null },
   avatar_url: { type: String, trim: true },
   type: {
     type: String,

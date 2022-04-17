@@ -9,6 +9,7 @@ export default class Admin {
   public readonly avatar_url?: string;
   public readonly email: string;
   public readonly address?: string;
+  public readonly birthday: Date;
   public readonly phone_number?: string;
   public readonly created_at: Date;
   public readonly updated_at: Date;
@@ -24,6 +25,7 @@ export default class Admin {
     email,
     address,
     phone_number,
+    birthday,
     created_at,
     updated_at,
     deleted_at,
@@ -35,6 +37,7 @@ export default class Admin {
     this.type = type;
     this.avatar_url = avatar_url;
     this.email = email;
+    this.birthday = birthday;
     this.address = address;
     this.phone_number = phone_number;
     this.created_at = created_at;
