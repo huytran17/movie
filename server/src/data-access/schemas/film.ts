@@ -33,6 +33,7 @@ const filmSchema = new Schema({
     quality: { type: String, trim: true, default: "" },
     rating: { type: String, trim: true, default: "" },
     language: { type: String, trim: true, default: "" },
+    film_studio: { type: String, trim: true, default: "" },
     status: {
       type: String,
       trim: true,
