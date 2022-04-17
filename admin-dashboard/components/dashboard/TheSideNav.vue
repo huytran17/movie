@@ -79,6 +79,13 @@ export default {
           color: "#D81B60",
         },
         {
+          text: "Series",
+          value: "series",
+          path: "/series-client",
+          icon: "mdi-filmstrip-box-multiple",
+          color: "#E040FB",
+        },
+        {
           text: "Film",
           value: "film",
           path: "/films-client",
