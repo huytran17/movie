@@ -29,10 +29,6 @@ export default function makeSeriesDb({
       const existing = await seriesDbModel
         .find(query_conditions)
         .populate({
-          path: "user",
-          select: "-__v",
-        })
-        .populate({
           path: "film",
           select: "-__v",
         })
@@ -72,6 +68,10 @@ export default function makeSeriesDb({
 
       const existing = await seriesDbModel
         .find(query_conditions)
+        .populate({
+          path: "film",
+          select: "-__v",
+        })
         .skip(number_of_entries_to_skip)
         .limit(entries_per_page)
         .sort({
@@ -126,6 +126,10 @@ export default function makeSeriesDb({
 
       const existing = await seriesDbModel
         .findById(id)
+        .populate({
+          path: "film",
+          select: "-__v",
+        })
         .lean({ virtuals: true });
 
       if (existing) {
@@ -147,6 +151,10 @@ export default function makeSeriesDb({
 
       const existing = await seriesDbModel
         .findOne({ film: film_id })
+        .populate({
+          path: "film",
+          select: "-__v",
+        })
         .lean({ virtuals: true });
 
       if (existing) {
@@ -201,6 +209,10 @@ export default function makeSeriesDb({
 
       const updated = await seriesDbModel
         .findOne({ _id: result?._id })
+        .populate({
+          path: "film",
+          select: "-__v",
+        })
         .lean({ virtuals: true });
 
       if (updated) {
