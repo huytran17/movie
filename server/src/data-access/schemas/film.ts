@@ -29,10 +29,10 @@ const filmSchema = new Schema({
     director: { type: String, trim: true, default: "" },
     actors: [{ type: String }],
     total_time: { type: String, trim: true, default: "" },
-    country: { type: String, trim: true, default: "" },
+    countries: [{ type: String, trim: true }],
     quality: { type: String, trim: true, default: "" },
     rating: { type: String, trim: true, default: "" },
-    language: { type: String, trim: true, default: "" },
+    languages: [{ type: String, trim: true }],
     film_studio: { type: String, trim: true, default: "" },
     status: {
       type: String,

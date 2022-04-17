@@ -13,10 +13,10 @@ export default class Film implements IFilm {
     director: string;
     actors: string[];
     total_time: string;
-    country: string;
+    countries: string[];
     quality: string;
     rating: string;
-    language: string;
+    languages: string[];
     status: string;
     film_studio: string;
     tags: string[];
