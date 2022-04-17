@@ -5,6 +5,13 @@ export default {
   data() {
     return {
       titleRules: [(v) => !!v || this.$t("Title is required.")],
+      ageLimitRules: [(v) => !!v || this.$t("Age limit is required.")],
+      studioRules: [(v) => !!v || this.$t("Studio is required.")],
+      ratingRules: [(v) => !!v || this.$t("Rating is required.")],
+      qualityRules: [(v) => !!v || this.$t("Quality is required.")],
+      actorsRules: [(v) => !!v || this.$t("Actor time is required.")],
+      directorRules: [(v) => !!v || this.$t("Director is required.")],
+      totalTimeRules: [(v) => !!v || this.$t("Total time is required.")],
       // countriesRules: [(v) => !!v || this.$t("Country is required.")],
       // languagesRules: [(v) => !!v || this.$t("Language is required.")],
       // tagsRules: [(v) => !!v || this.$t("Tag is required.")],
@@ -59,5 +66,21 @@ export default {
       SET_NEW_FILM_DATA: "film/SET_NEW_FILM_DATA",
       SET_FILM_DATA: "film/SET_FILM_DATA",
     }),
+
+    getFormattedDatetime(path) {
+      const datetime = _.get(this.film, path, "");
+      const datetime_formatted = this.$moment(datetime).format("YYYY/MM/DD");
+      return datetime_formatted;
+    },
+
+    getFilmMetaData(path) {
+      const data = _.get(this.film, `meta.${path}`, "");
+      return data;
+    },
+
+    getFilmData(path) {
+      const data = _.get(this.film, path, "");
+      return data;
+    },
   },
 };

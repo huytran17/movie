@@ -31,13 +31,16 @@
       <v-row>
         <v-col cols="12" md="6">
           <v-text-field
-            :rules="urlRules"
-            :label="$t('URL Film')"
-            :value="new_film.url"
-            required
-            type="email"
-            @input="updateInput({ variable_path: 'url', data: $event })"
-          ></v-text-field>
+            :value="new_film.meta.director"
+            @input="
+              updateInput({
+                variable_path: 'meta.director',
+                data: $event,
+              })
+            "
+            :label="$t('Director')"
+          >
+          </v-text-field>
         </v-col>
         <v-col cols="12" md="6">
           <v-autocomplete
@@ -57,6 +60,9 @@
 
       <v-row>
         <v-col cols="12" md="6">
+          <div class="text-body-2">
+            <label class="date-picker-label"> Manufacture at </label>
+          </div>
           <v-date-picker
             :value="new_film.meta.manufactured_at"
             v-model="film_manufactured_at"
@@ -70,80 +76,96 @@
             "
           ></v-date-picker>
         </v-col>
+        <v-col cols="12" md="6"
+          ><div class="text-body-2">
+            <label class="date-picker-label"> Release at </label>
+          </div>
+          <v-date-picker
+            :value="new_film.meta.released_at"
+            v-model="film_released_at"
+            color="green lighten-1"
+            full-width
+            @input="
+              updateInput({
+                variable_path: 'meta.released_at',
+                data: $event,
+              })
+            "
+          ></v-date-picker>
+        </v-col>
+      </v-row>
+
+      <v-row>
         <v-col cols="12" md="6">
-          <v-row>
-            <v-col cols="12">
-              <v-autocomplete
-                :value="new_film.meta.countries"
-                :items="countries"
-                item-text="name"
-                item-value="code"
-                chips
-                multiple
-                clearable
-                deletable-chips
-                small-chips
-                @input="
-                  updateInput({
-                    variable_path: 'meta.countries',
-                    data: $event,
-                  })
-                "
-                :label="$t('Countries')"
-              ></v-autocomplete>
-            </v-col>
-            <v-col cols="12">
-              <v-autocomplete
-                :value="new_film.meta.languages"
-                :items="languages"
-                item-text="name"
-                item-value="code"
-                chips
-                multiple
-                clearable
-                deletable-chips
-                small-chips
-                @input="
-                  updateInput({
-                    variable_path: 'meta.languages',
-                    data: $event,
-                  })
-                "
-                :label="$t('Languages')"
-              ></v-autocomplete>
-            </v-col>
-            <v-col cols="12">
-              <v-autocomplete
-                :value="new_film.meta.tags"
-                :items="tags"
-                chips
-                multiple
-                clearable
-                deletable-chips
-                small-chips
-                @input="
-                  updateInput({
-                    variable_path: 'meta.tags',
-                    data: $event,
-                  })
-                "
-                :label="$t('Tags')"
-              ></v-autocomplete>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                :value="new_film.meta.actors"
-                @input="
-                  updateInput({
-                    variable_path: 'meta.actors',
-                    data: $event,
-                  })
-                "
-                :label="$t('Actors')"
-                :hint="$t('Separate by the comma')"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-autocomplete
+            :value="new_film.meta.countries"
+            :items="countries"
+            item-text="name"
+            item-value="code"
+            chips
+            multiple
+            clearable
+            deletable-chips
+            small-chips
+            @input="
+              updateInput({
+                variable_path: 'meta.countries',
+                data: $event,
+              })
+            "
+            :label="$t('Countries')"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-autocomplete
+            :value="new_film.meta.languages"
+            :items="languages"
+            item-text="name"
+            item-value="code"
+            chips
+            multiple
+            clearable
+            deletable-chips
+            small-chips
+            @input="
+              updateInput({
+                variable_path: 'meta.languages',
+                data: $event,
+              })
+            "
+            :label="$t('Languages')"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-autocomplete
+            :value="new_film.meta.tags"
+            :items="tags"
+            chips
+            multiple
+            clearable
+            deletable-chips
+            small-chips
+            @input="
+              updateInput({
+                variable_path: 'meta.tags',
+                data: $event,
+              })
+            "
+            :label="$t('Tags')"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            :value="new_film.meta.actors"
+            @input="
+              updateInput({
+                variable_path: 'meta.actors',
+                data: $event,
+              })
+            "
+            :label="$t('Actors')"
+            :hint="$t('Separate by the comma')"
+          ></v-text-field>
         </v-col>
       </v-row>
 
@@ -215,6 +237,23 @@
       </v-row>
 
       <v-row>
+        <v-col cols="12" md="6">
+          <v-autocomplete
+            :value="getFilmData('series')"
+            :items="series_array"
+            label="Series"
+            item-text="title"
+            item-value="_id"
+            chips
+            clearable
+            deletable-chips
+            small-chips
+            @input="updateInput({ variable_path: 'series', data: $event })"
+          ></v-autocomplete>
+        </v-col>
+      </v-row>
+
+      <v-row>
         <v-col cols="12" class="d-flex justify-end">
           <v-btn
             depressed
@@ -237,6 +276,7 @@ import adminMixins from "@/mixins/admin";
 import countriesMixins from "@/mixins/countries";
 import languagesMixins from "@/mixins/languages";
 import tagsMixins from "@/mixins/tags";
+import seriesMixins from "@/mixins/series";
 
 export default {
   name: "NewFilm",
@@ -247,6 +287,7 @@ export default {
     countriesMixins,
     languagesMixins,
     tagsMixins,
+    seriesMixins,
   ],
   data() {
     return {
@@ -284,6 +325,7 @@ export default {
         },
       ],
       film_manufactured_at: new Date(Date.now()).toISOString().substr(0, 10),
+      film_released_at: new Date(Date.now()).toISOString().substr(0, 10),
       film_categories: [
         {
           text: "Comedy",
@@ -328,6 +370,16 @@ export default {
         data,
       });
     },
+  },
+  async fetch() {
+    try {
+      this.SET_LOADING({ data: true });
+      await Promise.all([this.GET_SERIES_ARRAY()]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.SET_LOADING({ data: false });
+    }
   },
 };
 </script>

@@ -1,8 +1,7 @@
 const createFilmRules = {
   title: "required|string",
   description: "required|string",
-  url: "required|string",
-  category: [
+  categories: [
     "required",
     "in:comedy,horror,documentary,family,kid,vietnam,usuk",
   ],

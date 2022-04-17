@@ -31,8 +31,15 @@ export default function makeUpdateFilmController({
         throw new Error(`Film by ${_id} does not exists.`);
       }
 
+      const actors = _.get(filmDetails, "meta.actors", "");
+      const actors_array = _.split(actors, ",");
+
+      const final_film_details = Object.assign({}, filmDetails, {
+        "meta.actors": actors_array,
+      });
+
       const updatedFilm = await updateFilm({
-        filmDetails,
+        filmDetails: final_film_details,
       });
 
       return {

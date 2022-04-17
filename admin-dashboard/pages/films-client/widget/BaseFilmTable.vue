@@ -48,6 +48,68 @@
       <template v-slot:item.meta.manufactured_at="{ item }">
         {{ $moment(item.meta.manufactured_at).format("DD-MM-YYYY") }}
       </template>
+
+      <template v-slot:item.categories="{ item }">
+        <ul>
+          <li v-for="(category, index) in item.categories" :key="index">
+            <div class="text-body-2">
+              <span class="app-body">
+                <span v-html="$t(category)"></span>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </template>
+
+      <template v-slot:item.meta.actors="{ item }">
+        <ul>
+          <li v-for="(actor, index) in item.meta.actors" :key="index">
+            <div class="text-body-2">
+              <span class="app-body">
+                <span v-html="$t(actor)"></span>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </template>
+      <template v-slot:item.meta.countries="{ item }">
+        <ul>
+          <li v-for="(country, index) in item.meta.countries" :key="index">
+            <div class="text-body-2">
+              <span class="app-body">
+                <span
+                  v-html="$t(getCountryText({ country_code: country }))"
+                ></span>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </template>
+      <template v-slot:item.meta.languages="{ item }">
+        <ul>
+          <li v-for="(language, index) in item.meta.languages" :key="index">
+            <div class="text-body-2">
+              <span class="app-body">
+                <span
+                  v-html="$t(getLanguageText({ language_code: language }))"
+                ></span>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </template>
+
+      <template v-slot:item.meta.tags="{ item }">
+        <ul>
+          <li v-for="(tag, index) in item.meta.tags" :key="index">
+            <div class="text-body-2">
+              <span class="app-body">
+                <span v-html="$t(tag)"></span>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </template>
     </v-data-table>
 
     <ConfirmDialog
@@ -63,10 +125,12 @@
 import filmMixins from "@/mixins/film";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import BaseTableLoader from "@/components/loaders/BaseTableLoader";
+import countriesMixins from "@/mixins/countries";
+import languagesMixins from "@/mixins/languages";
 
 export default {
   name: "BaseFilmTable",
-  mixins: [filmMixins],
+  mixins: [filmMixins, countriesMixins, languagesMixins],
   components: {
     BaseTableLoader,
     ConfirmDialog,
@@ -94,7 +158,7 @@ export default {
             text: "Category",
             align: "start",
             filterable: false,
-            value: "category",
+            value: "categories",
             width: 200,
           },
           {
@@ -112,18 +176,11 @@ export default {
             width: 250,
           },
           {
-            text: "Url",
+            text: "Series",
             align: "start",
             filterable: false,
-            value: "url",
+            value: "series.title",
             width: 200,
-          },
-          {
-            text: "Slug",
-            align: "start",
-            filterable: false,
-            value: "slug",
-            width: 250,
           },
           {
             text: "Thumnail",
@@ -152,7 +209,7 @@ export default {
             text: "Actors",
             align: "start",
             filterable: false,
-            value: "actors",
+            value: "meta.actors",
             width: 150,
             sortable: false,
           },
@@ -168,7 +225,7 @@ export default {
             text: "Country",
             align: "start",
             filterable: false,
-            value: "meta.country",
+            value: "meta.countries",
             width: 150,
             sortable: false,
           },
@@ -192,7 +249,7 @@ export default {
             text: "Language",
             align: "start",
             filterable: false,
-            value: "meta.language",
+            value: "meta.languages",
             width: 150,
             sortable: false,
           },

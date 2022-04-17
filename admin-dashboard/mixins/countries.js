@@ -29,4 +29,15 @@ export default {
       ],
     };
   },
+  methods: {
+    getCountryText({ country_code }) {
+      const country = this.countries.find(
+        (country) => country.code === country_code
+      );
+
+      const country_text = _.get(country, "name", "");
+
+      return country_text;
+    },
+  },
 };

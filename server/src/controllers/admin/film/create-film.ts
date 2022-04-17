@@ -19,8 +19,15 @@ export default function makeCreateFilmController({
     try {
       const filmDetails: Film = _.get(httpRequest, "context.validated.data");
 
+      const actors = _.get(filmDetails, "meta.actors", "");
+      const actors_array = _.split(actors, ",");
+
+      const final_film_details = Object.assign({}, filmDetails, {
+        "meta.actors": actors_array,
+      });
+
       const created_film = await createFilm({
-        filmDetails,
+        filmDetails: final_film_details,
       });
 
       return {

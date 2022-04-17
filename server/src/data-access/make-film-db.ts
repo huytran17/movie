@@ -78,6 +78,13 @@ export default function makeFilmDb({
       const query_conditions = { deleted_at: undefined };
       const existing = await filmDbModel
         .find(query_conditions)
+        .populate({
+          path: "series",
+          select: "-__v",
+        })
+        .sort({
+          created_at: -1, //desc
+        })
         .lean({ virtuals: true });
       if (existing) {
         return existing.map((film) => new Film(film));

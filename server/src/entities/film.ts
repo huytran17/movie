@@ -6,8 +6,7 @@ export default class Film implements IFilm {
   public readonly title: string;
   public readonly aws?: Record<string, unknown>;
   public readonly description: string;
-  public readonly url: string;
-  public readonly series_asset: ISeries;
+  public readonly series: ISeries;
   public readonly aws_thumnail: Record<string, unknown>;
   public readonly categories: CategoryType;
   public readonly meta: {
@@ -37,19 +36,17 @@ export default class Film implements IFilm {
     aws,
     deleted_at,
     title,
-    series_asset,
+    series,
     description,
     meta,
     aws_thumnail,
-    url,
     categories,
   }: IFilm) {
     this._id = _id;
     this.aws = aws;
-    this.series_asset = series_asset;
+    this.series = series;
     this.title = title;
     this.description = description;
-    this.url = url;
     this.aws_thumnail = aws_thumnail;
     this.meta = meta;
     this.categories = categories;

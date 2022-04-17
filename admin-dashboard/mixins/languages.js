@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export default {
   data() {
     return {
@@ -28,5 +30,16 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    getLanguageText({ language_code }) {
+      const language = this.languages.find(
+        (language) => language.code === language_code
+      );
+
+      const language_text = _.get(language, "name", "");
+
+      return language_text;
+    },
   },
 };

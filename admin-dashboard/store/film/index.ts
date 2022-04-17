@@ -9,9 +9,9 @@ export const state = () => ({
   new_film: {
     title: "",
     description: "",
-    url: "",
     meta: {
       manufactured_at: new Date(Date.now()).toISOString().substr(0, 10),
+      released_at: new Date(Date.now()).toISOString().substr(0, 10),
     },
   },
   film: {},

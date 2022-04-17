@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const filmSchema = new Schema({
   title: { type: String, required: true, trim: true },
   description: { type: String, required: true, trim: true },
-  url: { type: String, required: true, trim: true },
   aws: { type: Object },
   aws_thumnail: { type: Object },
   categories: [
@@ -32,7 +31,7 @@ const filmSchema = new Schema({
       default: "odd",
     },
   ],
-  series_asset: { type: Schema.Types.ObjectId, ref: "series" },
+  series: { type: Schema.Types.ObjectId, ref: "Series" },
   meta: {
     manufactured_at: { type: Date, default: null },
     released_at: { type: Date, default: null },

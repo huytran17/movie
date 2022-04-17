@@ -41,11 +41,16 @@
         </v-col>
         <v-col cols="12" md="6">
           <v-autocomplete
-            :value="film.category"
+            :value="film.categories"
             :items="film_categories"
             label="Category"
             item-text="text"
             item-value="value"
+            multiple
+            chips
+            clearable
+            deletable-chips
+            small-chips
             @input="updateInput({ variable_path: 'category', data: $event })"
           ></v-autocomplete>
         </v-col>
@@ -73,16 +78,16 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                label="Manufacture year"
+                label="Manufacture at"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
                 v-on="on"
-                :value="get_film_manufacture_at"
+                :value="getFormattedDatetime('meta.manufactured_at')"
               ></v-text-field>
             </template>
             <v-date-picker
-              :value="get_film_manufacture_at"
+              :value="getFormattedDatetime('meta.manufactured_at')"
               v-model="film_manufactured_at"
               color="green lighten-1"
               full-width
@@ -104,19 +109,8 @@
       </v-row>
 
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="7">
           <v-row>
-            <v-col cols="12">
-              <v-file-input
-                v-model="file_of_film_thumbnail"
-                small-chips
-                truncate-length="15"
-                :label="$t('Choose thumbnail')"
-                @change="uploadThumbnail"
-                accept="image/*"
-              ></v-file-input>
-            </v-col>
-
             <v-col cols="12">
               <v-menu
                 ref="menu"
@@ -127,16 +121,16 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    label="Release year"
+                    label="Release at"
                     prepend-icon="mdi-calendar"
                     readonly
                     v-bind="attrs"
                     v-on="on"
-                    :value="get_film_release_at"
+                    :value="getFormattedDatetime('meta.released_at')"
                   ></v-text-field>
                 </template>
                 <v-date-picker
-                  :value="get_film_release_at"
+                  :value="getFormattedDatetime('meta.released_at')"
                   v-model="film_released_at"
                   color="green lighten-1"
                   @input="
@@ -148,16 +142,199 @@
                 ></v-date-picker>
               </v-menu>
             </v-col>
+            <v-col cols="12">
+              <v-file-input
+                v-model="file_of_film_thumbnail"
+                small-chips
+                truncate-length="15"
+                :label="$t('Choose thumbnail')"
+                @change="uploadThumbnail"
+                accept="image/*"
+              ></v-file-input>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                :value="getFilmMetaData('director')"
+                :label="$t('Director')"
+                :rules="directorRules"
+                required
+                @input="
+                  updateInput({
+                    variable_path: 'meta.director',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-autocomplete
+                :value="getFilmData('series')"
+                :items="series_array"
+                label="Series"
+                item-text="title"
+                item-value="_id"
+                multiple
+                chips
+                clearable
+                deletable-chips
+                small-chips
+                @input="updateInput({ variable_path: 'series', data: $event })"
+              ></v-autocomplete>
+            </v-col>
           </v-row>
         </v-col>
 
         <v-col
           v-if="has_film_thumbnail_url"
           cols="12"
-          md="6"
+          md="5"
           class="d-flex justify-end"
         >
           <v-img :src="film_thumbnail"></v-img>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-autocomplete
+            :value="getFilmMetaData('countries')"
+            :items="countries"
+            item-text="name"
+            item-value="code"
+            chips
+            multiple
+            clearable
+            deletable-chips
+            small-chips
+            @input="
+              updateInput({
+                variable_path: 'meta.countries',
+                data: $event,
+              })
+            "
+            :label="$t('Countries')"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            :value="getFilmMetaData('quality')"
+            :label="$t('Quality')"
+            :rules="qualityRules"
+            required
+            @input="
+              updateInput({
+                variable_path: 'meta.quality',
+                data: $event,
+              })
+            "
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-autocomplete
+            :value="getFilmMetaData('languages')"
+            :items="languages"
+            item-text="name"
+            item-value="code"
+            chips
+            multiple
+            clearable
+            deletable-chips
+            small-chips
+            @input="
+              updateInput({
+                variable_path: 'meta.languages',
+                data: $event,
+              })
+            "
+            :label="$t('Languages')"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            :value="getFilmMetaData('actors')"
+            :label="$t('Actors')"
+            :rules="actorsRules"
+            required
+            @input="
+              updateInput({
+                variable_path: 'meta.actors',
+                data: $event,
+              })
+            "
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-autocomplete
+            :value="getFilmMetaData('status')"
+            :items="statuses"
+            chips
+            multiple
+            clearable
+            deletable-chips
+            small-chips
+            @input="
+              updateInput({
+                variable_path: 'meta.status',
+                data: $event,
+              })
+            "
+            :label="$t('Status')"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            :value="getFilmMetaData('film_studio')"
+            :label="$t('Quality')"
+            :rules="studioRules"
+            required
+            @input="
+              updateInput({
+                variable_path: 'meta.film_studio',
+                data: $event,
+              })
+            "
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-autocomplete
+            :value="getFilmMetaData('tags')"
+            :items="tags"
+            chips
+            multiple
+            clearable
+            deletable-chips
+            small-chips
+            @input="
+              updateInput({
+                variable_path: 'meta.tags',
+                data: $event,
+              })
+            "
+            :label="$t('Tags')"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            :value="getFilmMetaData('age_limit')"
+            :label="$t('Age limit')"
+            :rules="ageLimitRules"
+            required
+            @input="
+              updateInput({
+                variable_path: 'meta.age_limit',
+                data: $event,
+              })
+            "
+          ></v-text-field>
         </v-col>
       </v-row>
 
@@ -181,8 +358,10 @@
 import filmMixins from "@/mixins/film";
 import authMixins from "@/mixins/auth";
 import adminMixins from "@/mixins/admin";
+import seriesMixins from "@/mixins/series";
 import countriesMixins from "@/mixins/countries";
 import languagesMixins from "@/mixins/languages";
+import tagsMixins from "@/mixins/tags";
 
 import Player from "@/components/Player";
 
@@ -194,10 +373,44 @@ export default {
     adminMixins,
     countriesMixins,
     languagesMixins,
+    tagsMixins,
+    seriesMixins,
   ],
   components: { Player },
   data() {
     return {
+      qualities: [
+        {
+          text: "4K",
+          value: "4k",
+        },
+        {
+          text: "Full HD",
+          value: "full hd",
+        },
+        {
+          text: "HD",
+          value: "hd",
+        },
+        {
+          text: "Low",
+          value: "low",
+        },
+      ],
+      statuses: [
+        {
+          text: "Available",
+          value: "available",
+        },
+        {
+          text: "Blocked",
+          value: "blocked",
+        },
+        {
+          text: "Updating",
+          value: "updating",
+        },
+      ],
       form_valid: false,
       film_id: "",
       default_options: {
@@ -255,20 +468,6 @@ export default {
   computed: {
     has_film() {
       return !!this.film;
-    },
-
-    get_film_manufacture_at() {
-      const manufactured_at = _.get(this.film, "meta.manufactured_at", "");
-      const manufactured_at_formatted =
-        this.$moment(manufactured_at).format("YYYY/MM/DD");
-      return manufactured_at_formatted;
-    },
-
-    get_film_release_at() {
-      const release_at = _.get(this.film, "meta.released_at", "");
-      const release_at_formatted =
-        this.$moment(release_at).format("YYYY/MM/DD");
-      return release_at_formatted;
     },
 
     has_film_url() {
@@ -362,7 +561,7 @@ export default {
     try {
       this.SET_LOADING({ data: true });
       const film_id = this.$route.params.id;
-      await this.GET_FILM({ film_id });
+      await Promise.all([this.GET_FILM({ film_id }), this.GET_SERIES_ARRAY()]);
     } catch (e) {
       console.log(e);
     } finally {
