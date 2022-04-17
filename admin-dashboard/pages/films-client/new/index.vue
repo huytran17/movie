@@ -1,6 +1,11 @@
 <template>
   <v-container>
-    <v-form>
+    <div class="text-body-1 text-sm-h6 text-uppercase primary--text mb-4">
+      <span class="app-title">
+        <span v-html="$t('Thêm Phim')"></span>
+      </span>
+    </div>
+    <v-form v-model="form_valid">
       <v-row>
         <v-col cols="12" md="6">
           <v-text-field
@@ -211,7 +216,12 @@
 
       <v-row>
         <v-col cols="12" class="d-flex justify-end">
-          <v-btn depressed color="primary" @click="createFilm()">
+          <v-btn
+            depressed
+            color="primary"
+            @click="createFilm()"
+            :disabled="!form_valid"
+          >
             <span v-html="$t('Lưu')"></span>
           </v-btn>
         </v-col>
@@ -240,6 +250,7 @@ export default {
   ],
   data() {
     return {
+      form_valid: false,
       qualities: [
         {
           text: "4K",

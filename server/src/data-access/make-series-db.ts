@@ -138,31 +138,6 @@ export default function makeSeriesDb({
       return null;
     }
 
-    async findByFilmId({
-      film_id,
-    }: {
-      film_id: string;
-    }): Promise<Series | null> {
-      const mongo_id_regex = new RegExp(/^[0-9a-fA-F]{24}$/i);
-      const is_mongo_id = mongo_id_regex.test(film_id);
-      if (!is_mongo_id || !film_id) {
-        return null;
-      }
-
-      const existing = await seriesDbModel
-        .findOne({ film: film_id })
-        .populate({
-          path: "film",
-          select: "-__v",
-        })
-        .lean({ virtuals: true });
-
-      if (existing) {
-        return new Series(existing);
-      }
-      return null;
-    }
-
     async insert(payload: Partial<ISeries>): Promise<Series | null> {
       const updated_payload = payload;
 

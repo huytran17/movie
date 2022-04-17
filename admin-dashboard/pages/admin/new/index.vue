@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <div class="text-body-1 text-sm-h6 text-uppercase primary--text mb-4">
+      <span class="app-title">
+        <span v-html="$t('Thêm Quản Trị Viên')"></span>
+      </span>
+    </div>
     <v-form v-model="form_valid">
       <v-row>
         <v-col cols="12" md="6">

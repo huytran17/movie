@@ -51,6 +51,20 @@ const mutations: MutationTree<SeriesState> = {
       return data;
     });
   },
+
+  /**
+   * update film state
+   * @param state
+   * @param param1
+   */
+  [MutationTypes.SET_SERIES_DATA](
+    state,
+    { data, variable_path }: { data: Object | string; variable_path: string }
+  ) {
+    state.series = _.update(state.series, variable_path, (n) => {
+      return data;
+    });
+  },
 };
 
 export default mutations;

@@ -1,6 +1,11 @@
 <template>
   <v-container v-if="has_film">
-    <v-form>
+    <div class="text-body-1 text-sm-h6 text-uppercase primary--text mb-5">
+      <span class="app-title">
+        <span v-html="$t('Chỉnh Sửa Phim')"></span>
+      </span>
+    </div>
+    <v-form v-model="form_valid">
       <v-row>
         <v-col cols="12" md="6">
           <v-text-field
@@ -158,7 +163,12 @@
 
       <v-row class="mt-5">
         <v-col cols="12" class="d-flex justify-end">
-          <v-btn depressed color="primary" @click="updateFilm()">
+          <v-btn
+            depressed
+            color="primary"
+            @click="updateFilm()"
+            :disabled="!form_valid"
+          >
             <span v-html="$t('Lưu')"></span>
           </v-btn>
         </v-col>
@@ -188,6 +198,7 @@ export default {
   components: { Player },
   data() {
     return {
+      form_valid: false,
       film_id: "",
       default_options: {
         type: "video",

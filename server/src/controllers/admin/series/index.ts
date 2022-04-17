@@ -6,21 +6,15 @@ import {
   getSeries,
   updateSeries,
   removeSeriesById,
-  getSeriesByFilmId,
 } from "../../../use-cases/series";
 import makeUpdateSeriesController from "./update-series";
 import makeGetSeriesController from "./get-series";
 import makeDeleteSeriesController from "./delete-series";
 import makeCreateSeriesController from "./create-series";
 import makeGetSeriesByIdController from "./get-series-by-id";
-import makeGetSeriesByFilmId from "./get-series-by-film-id";
 
 const getSeriesByIdController = makeGetSeriesByIdController({
   getSeriesById,
-});
-
-const getSeriesByFilmIdController = makeGetSeriesByFilmId({
-  getSeriesByFilmId,
 });
 
 const createSeriesController = makeCreateSeriesController({
@@ -50,7 +44,6 @@ export default Object.freeze({
   deleteSeriesController,
   createSeriesController,
   getSeriesByIdController,
-  getSeriesByFilmIdController,
 });
 
 export {
@@ -59,5 +52,4 @@ export {
   deleteSeriesController,
   createSeriesController,
   getSeriesByIdController,
-  getSeriesByFilmIdController,
 };

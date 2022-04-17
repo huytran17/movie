@@ -13,7 +13,6 @@ export default interface ISeriesDb {
   }) => Promise<PaginatedSeriesResult | null>;
   findOne: () => Promise<Series | null>;
   findById: ({ id }: { id: string }) => Promise<Series | null>;
-  findByFilmId: ({ film_id }: { film_id: string }) => Promise<Series | null>;
   insert: (payload: Partial<ISeries>) => Promise<Series | null>;
   delete: ({ id }: { id: string }) => Promise<Series | null>;
   hardDelete: ({ id }: { id: string }) => Promise<Series | null>;

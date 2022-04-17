@@ -5,12 +5,10 @@ import makeUpdateSeries from "./update-series";
 import makeGetSeriesById from "./get-series-by-id";
 import makeRemoveSeriesById from "./delete-series-by-id";
 import makeGetSeries from "./get-series";
-import makeGetSeriesByFilmId from "./get-series-by-film-id";
 
 const createSeries = makeCreateSeries(SeriesDb);
 const updateSeries = makeUpdateSeries(SeriesDb);
 const removeSeriesById = makeRemoveSeriesById(SeriesDb);
-const getSeriesByFilmId = makeGetSeriesByFilmId(SeriesDb);
 
 /**
  * get film by _id
@@ -30,7 +28,6 @@ const filmServices = Object.freeze({
   getSeries,
   updateSeries,
   removeSeriesById,
-  getSeriesByFilmId,
 });
 
 export default filmServices;
@@ -40,5 +37,4 @@ export {
   getSeries,
   updateSeries,
   removeSeriesById,
-  getSeriesByFilmId,
 };

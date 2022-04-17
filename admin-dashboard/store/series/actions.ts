@@ -11,7 +11,7 @@ const actions: ActionTree<SeriesState, RootState> = {
    * @param param0
    */
   async [ActionTypes.GET_SERIES_ARRAY]({ commit }) {
-    const { data } = await this.$axios.$get(`/api/series`);
+    const { data } = await this.$axios.$get(`/admin/series`);
 
     commit(MutationTypes.SET_SERIES_ARRAY, { series: data });
     return data;
@@ -21,7 +21,7 @@ const actions: ActionTree<SeriesState, RootState> = {
    * @param param0
    */
   async [ActionTypes.GET_SERIES]({ commit }, { series_id }) {
-    let { data } = await this.$axios.$get(`/api/series/${series_id}`);
+    let { data } = await this.$axios.$get(`/admin/series/${series_id}`);
     commit(MutationTypes.SET_SERIES, { data });
 
     return data;
@@ -32,13 +32,10 @@ const actions: ActionTree<SeriesState, RootState> = {
    * @param param0
    * @param param1
    */
-  async [ActionTypes.CREATE_SERIES]({ commit, state }, { user, film }) {
-    const result = await this.$axios.$post(
-      `/api/series/create-series/${user}/${film}`,
-      {
-        data: state.new_series,
-      }
-    );
+  async [ActionTypes.CREATE_SERIES]({ commit, state }) {
+    const result = await this.$axios.$post(`/admin/series/create-series`, {
+      data: state.new_series,
+    });
 
     return result;
   },

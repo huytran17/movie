@@ -8,7 +8,7 @@ export const state = () => ({
   loading: false,
   series: {},
   new_series: {
-    content: "",
+    title: "",
   },
 });
 

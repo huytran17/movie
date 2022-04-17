@@ -15,9 +15,12 @@ export default function makeGetSeriesByIdController({
       "Content-Type": "application/json",
     };
     try {
-      const { id }: { id: string } = _.get(httpRequest, "context.validated");
+      const { series_id }: { series_id: string } = _.get(
+        httpRequest,
+        "context.validated"
+      );
 
-      const series = await getSeriesById({ id });
+      const series = await getSeriesById({ id: series_id });
 
       return {
         headers,

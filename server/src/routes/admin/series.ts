@@ -7,11 +7,9 @@ import {
   updateSeriesRules,
   createSeriesRules,
   getSeriesByIdRules,
-  getSeriesByFilmIdRules,
 } from "../../controllers/admin/series/validators";
 import {
   getSeriesByIdController,
-  getSeriesByFilmIdController,
   updateSeriesController,
   getSeriesController,
   deleteSeriesController,
@@ -26,16 +24,10 @@ seriesRouter.get(
   makeExpressCallback(getSeriesByIdController)
 );
 
-seriesRouter.get(
-  "/:film_id",
-  makeValidator(getSeriesByFilmIdRules),
-  makeExpressCallback(getSeriesByFilmIdController)
-);
-
 seriesRouter.get("/", makeExpressCallback(getSeriesController));
 
 seriesRouter.put(
-  "/update-series",
+  "/:series_id",
   makeValidator(updateSeriesRules),
   makeExpressCallback(updateSeriesController)
 );
@@ -47,7 +39,7 @@ seriesRouter.delete(
 );
 
 seriesRouter.post(
-  "/create-series/:film",
+  "/create-series",
   makeValidator(createSeriesRules),
   makeExpressCallback(createSeriesController)
 );

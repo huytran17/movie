@@ -2,6 +2,11 @@ import _ from "lodash";
 import { mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      titleRules: [(v) => !!v || this.$t("Title is required.")],
+    };
+  },
   computed: {
     ...mapGetters({
       series_loading: "series/loading",
@@ -31,6 +36,7 @@ export default {
     ...mapMutations({
       SET_LOADING: "series/SET_LOADING",
       UPDATE_NEW_SERIES_DATA: "series/UPDATE_NEW_SERIES_DATA",
+      SET_SERIES_DATA: "series/SET_SERIES_DATA",
     }),
 
     updateSeriesObject({ data, variable_path }) {
