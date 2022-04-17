@@ -13,6 +13,7 @@ const userSchema = new Schema(
     hash_password: { type: String, trim: true },
     aws: { type: Object },
     email: { type: String, trim: true, lowercase: true },
+    birthday: { type: Date, default: null },
     phone_number: { type: Number },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },

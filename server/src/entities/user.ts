@@ -9,6 +9,7 @@ export default class User implements IUser {
   public readonly avatar_url?: string;
   public readonly email: string;
   public readonly full_name: string;
+  public readonly birthday: Date;
   public readonly created_at: Date;
   public readonly updated_at: Date;
   public readonly deleted_at: Date;
@@ -24,6 +25,7 @@ export default class User implements IUser {
     email,
     full_name,
     email_verified_at,
+    birthday,
     created_at,
     updated_at,
     deleted_at,
@@ -33,6 +35,7 @@ export default class User implements IUser {
     this.hash_password = hash_password;
     this.first_name = first_name;
     this.last_name = last_name;
+    this.birthday = birthday;
     this.aws = aws;
     this.full_name = full_name;
     this.email_verified_at = email_verified_at;

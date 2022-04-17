@@ -7,6 +7,7 @@ export default interface IUser {
   aws?: Record<string, unknown>;
   email: string;
   created_at: Date;
+  birthday: Date;
   avatar_url?: string;
   updated_at: Date;
   deleted_at: Date;
