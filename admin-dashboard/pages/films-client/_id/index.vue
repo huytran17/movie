@@ -171,11 +171,20 @@
 import filmMixins from "@/mixins/film";
 import authMixins from "@/mixins/auth";
 import adminMixins from "@/mixins/admin";
+import countriesMixins from "@/mixins/countries";
+import languagesMixins from "@/mixins/languages";
+
 import Player from "@/components/Player";
 
 export default {
   name: "NewFilm",
-  mixins: [filmMixins, authMixins, adminMixins],
+  mixins: [
+    filmMixins,
+    authMixins,
+    adminMixins,
+    countriesMixins,
+    languagesMixins,
+  ],
   components: { Player },
   data() {
     return {

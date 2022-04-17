@@ -36,12 +36,16 @@
         </v-col>
         <v-col cols="12" md="6">
           <v-autocomplete
-            :value="new_film.category"
+            :value="new_film.categories"
             :items="film_categories"
-            label="Category"
+            label="Categories"
             item-text="text"
             item-value="value"
-            @input="updateInput({ variable_path: 'category', data: $event })"
+            multiple
+            deletable-chips
+            small-chips
+            chips
+            @input="updateInput({ variable_path: 'categories', data: $event })"
           ></v-autocomplete>
         </v-col>
       </v-row>
@@ -52,6 +56,7 @@
             :value="new_film.meta.manufactured_at"
             v-model="film_manufactured_at"
             color="green lighten-1"
+            full-width
             @input="
               updateInput({
                 variable_path: 'meta.manufactured_at',
@@ -59,6 +64,148 @@
               })
             "
           ></v-date-picker>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-row>
+            <v-col cols="12">
+              <v-autocomplete
+                :value="new_film.meta.countries"
+                :items="countries"
+                item-text="name"
+                item-value="code"
+                chips
+                multiple
+                clearable
+                deletable-chips
+                small-chips
+                @input="
+                  updateInput({
+                    variable_path: 'meta.countries',
+                    data: $event,
+                  })
+                "
+                :label="$t('Countries')"
+              ></v-autocomplete>
+            </v-col>
+            <v-col cols="12">
+              <v-autocomplete
+                :value="new_film.meta.languages"
+                :items="languages"
+                item-text="name"
+                item-value="code"
+                chips
+                multiple
+                clearable
+                deletable-chips
+                small-chips
+                @input="
+                  updateInput({
+                    variable_path: 'meta.languages',
+                    data: $event,
+                  })
+                "
+                :label="$t('Languages')"
+              ></v-autocomplete>
+            </v-col>
+            <v-col cols="12">
+              <v-autocomplete
+                :value="new_film.meta.tags"
+                :items="tags"
+                chips
+                multiple
+                clearable
+                deletable-chips
+                small-chips
+                @input="
+                  updateInput({
+                    variable_path: 'meta.tags',
+                    data: $event,
+                  })
+                "
+                :label="$t('Tags')"
+              ></v-autocomplete>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                :value="new_film.meta.actors"
+                @input="
+                  updateInput({
+                    variable_path: 'meta.actors',
+                    data: $event,
+                  })
+                "
+                :label="$t('Actors')"
+                :hint="$t('Separate by the comma')"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+
+      <v-row class="mt-0">
+        <v-col cols="12" md="6" class="pt-0">
+          <v-autocomplete
+            :value="new_film.meta.quality"
+            :items="qualities"
+            chips
+            clearable
+            deletable-chips
+            small-chips
+            @input="
+              updateInput({
+                variable_path: 'meta.quality',
+                data: $event,
+              })
+            "
+            :label="$t('Quality')"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="6" class="pt-0">
+          <v-text-field
+            :value="new_film.meta.film_studio"
+            @input="
+              updateInput({
+                variable_path: 'meta.film_studio',
+                data: $event,
+              })
+            "
+            :label="$t('Studio')"
+          >
+          </v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-autocomplete
+            :value="new_film.meta.status"
+            :items="statuses"
+            chips
+            clearable
+            deletable-chips
+            small-chips
+            @input="
+              updateInput({
+                variable_path: 'meta.status',
+                data: $event,
+              })
+            "
+            :label="$t('Status')"
+          ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            :value="new_film.meta.age_limit"
+            type="number"
+            @input="
+              updateInput({
+                variable_path: 'meta.age_limit',
+                data: $event,
+              })
+            "
+            :label="$t('Age limit')"
+          >
+          </v-text-field>
         </v-col>
       </v-row>
 
@@ -77,12 +224,54 @@
 import filmMixins from "@/mixins/film";
 import authMixins from "@/mixins/auth";
 import adminMixins from "@/mixins/admin";
+import countriesMixins from "@/mixins/countries";
+import languagesMixins from "@/mixins/languages";
+import tagsMixins from "@/mixins/tags";
 
 export default {
   name: "NewFilm",
-  mixins: [filmMixins, authMixins, adminMixins],
+  mixins: [
+    filmMixins,
+    authMixins,
+    adminMixins,
+    countriesMixins,
+    languagesMixins,
+    tagsMixins,
+  ],
   data() {
     return {
+      qualities: [
+        {
+          text: "4K",
+          value: "4k",
+        },
+        {
+          text: "Full HD",
+          value: "full hd",
+        },
+        {
+          text: "HD",
+          value: "hd",
+        },
+        {
+          text: "Low",
+          value: "low",
+        },
+      ],
+      statuses: [
+        {
+          text: "Available",
+          value: "available",
+        },
+        {
+          text: "Blocked",
+          value: "blocked",
+        },
+        {
+          text: "Updating",
+          value: "updating",
+        },
+      ],
       film_manufactured_at: new Date(Date.now()).toISOString().substr(0, 10),
       film_categories: [
         {

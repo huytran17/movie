@@ -8,6 +8,7 @@ const createFilmRules = {
   ],
   meta: {
     manufactured_at: "required|date",
+    released_at: "required|date",
   },
 };
 

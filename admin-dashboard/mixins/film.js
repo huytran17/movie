@@ -5,6 +5,10 @@ export default {
   data() {
     return {
       titleRules: [(v) => !!v || this.$t("Title is required.")],
+      // countriesRules: [(v) => !!v || this.$t("Country is required.")],
+      // languagesRules: [(v) => !!v || this.$t("Language is required.")],
+      // tagsRules: [(v) => !!v || this.$t("Tag is required.")],
+      // categoriesRules: [(v) => !!v || this.$t("Category is required.")],
       descriptionRules: [(v) => !!v || this.$t("Description is required.")],
       manufactureYearRules: [
         (v) => !!v || this.$t("Manufacture year is required."),

@@ -30,13 +30,23 @@
           </span>
         </a>
       </template>
-
+      <template v-slot:item.thumnail="{ item }">
+        <v-img :src="getFilmThumbnail(item)" max-width="200px"></v-img>
+      </template>
       <template v-slot:item.created_at="{ item }">
         {{ $moment(item.created_at).format("DD-MM-YYYY") }}
       </template>
 
       <template v-slot:item.updated_at="{ item }">
         {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
+      </template>
+
+      <template v-slot:item.meta.released_at="{ item }">
+        {{ $moment(item.meta.released_at).format("DD-MM-YYYY") }}
+      </template>
+
+      <template v-slot:item.meta.manufactured_at="{ item }">
+        {{ $moment(item.meta.manufactured_at).format("DD-MM-YYYY") }}
       </template>
     </v-data-table>
 
@@ -95,6 +105,13 @@ export default {
             width: 200,
           },
           {
+            text: "Release at",
+            align: "start",
+            filterable: false,
+            value: "meta.released_at",
+            width: 250,
+          },
+          {
             text: "Url",
             align: "start",
             filterable: false,
@@ -109,24 +126,105 @@ export default {
             width: 250,
           },
           {
-            text: "Thumnail url",
+            text: "Thumnail",
             align: "start",
             filterable: false,
-            value: "created_at",
+            value: "thumnail",
             width: 250,
           },
           {
-            text: "Manufactured at",
-            align: "start",
-            filterable: false,
-            value: "manufactured_at",
-            width: 250,
-          },
-          {
-            text: "View count",
+            text: "Views",
             align: "start",
             filterable: false,
             value: "view_count",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Director",
+            align: "start",
+            filterable: false,
+            value: "meta.director",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Actors",
+            align: "start",
+            filterable: false,
+            value: "actors",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Total time",
+            align: "start",
+            filterable: false,
+            value: "meta.total_time",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Country",
+            align: "start",
+            filterable: false,
+            value: "meta.country",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Quality",
+            align: "start",
+            filterable: false,
+            value: "meta.quality",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Rating",
+            align: "start",
+            filterable: false,
+            value: "meta.rating",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Language",
+            align: "start",
+            filterable: false,
+            value: "meta.language",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Film studio",
+            align: "start",
+            filterable: false,
+            value: "meta.film_studio",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Status",
+            align: "start",
+            filterable: false,
+            value: "meta.status",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Tags",
+            align: "start",
+            filterable: false,
+            value: "meta.tags",
+            width: 150,
+            sortable: false,
+          },
+          {
+            text: "Age limit",
+            align: "start",
+            filterable: false,
+            value: "meta.age_limit",
             width: 150,
             sortable: false,
           },
@@ -170,6 +268,10 @@ export default {
     },
   },
   methods: {
+    getFilmThumbnail(item) {
+      const thumbnail = _.get(item, "aws_thumnail.meta.location", "");
+      return thumbnail;
+    },
     async openDeleteFilmConfirmDialog({ film }) {
       this.confirm_content = `Bạn có muốn xóa phim <b>${film.title}</b> không?`;
       this.show_confirm_dialog = true;
