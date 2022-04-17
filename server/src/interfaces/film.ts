@@ -20,7 +20,7 @@ export default interface IAdmin {
     manufactured_at: Date;
     released_at: Date;
   };
-  category: CategoryType;
+  categories: CategoryType;
   aws?: Record<string, unknown>;
   created_at: Date;
   updated_at: Date;

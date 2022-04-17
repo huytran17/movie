@@ -8,20 +8,22 @@ const filmSchema = new Schema({
   url: { type: String, required: true, trim: true },
   aws: { type: Object },
   aws_thumnail: { type: Object },
-  category: {
-    type: String,
-    trim: true,
-    enum: [
-      "comedy",
-      "horror",
-      "documentary",
-      "family",
-      "kid",
-      "vietnam",
-      "usuk",
-    ],
-    default: "vietnam",
-  },
+  categories: [
+    {
+      type: String,
+      trim: true,
+      enum: [
+        "comedy",
+        "horror",
+        "documentary",
+        "family",
+        "kid",
+        "vietnam",
+        "usuk",
+      ],
+      default: "vietnam",
+    },
+  ],
   meta: {
     manufactured_at: { type: Date, default: null },
     released_at: { type: Date, default: null },
