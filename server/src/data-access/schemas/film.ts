@@ -24,6 +24,15 @@ const filmSchema = new Schema({
       default: "vietnam",
     },
   ],
+  type: [
+    {
+      type: String,
+      trim: true,
+      enum: ["series", "odd"],
+      default: "odd",
+    },
+  ],
+  series_asset: { type: Schema.Types.ObjectId, ref: "series" },
   meta: {
     manufactured_at: { type: Date, default: null },
     released_at: { type: Date, default: null },
@@ -32,7 +41,6 @@ const filmSchema = new Schema({
     actors: [{ type: String }],
     total_time: { type: String, trim: true, default: "" },
     countries: [{ type: String, trim: true }],
-    quality: { type: String, trim: true, default: "" },
     rating: { type: String, trim: true, default: "" },
     languages: [{ type: String, trim: true }],
     film_studio: { type: String, trim: true, default: "" },
@@ -40,7 +48,13 @@ const filmSchema = new Schema({
       type: String,
       trim: true,
       enum: ["available", "blocked", "updating"],
-      default: "",
+      default: "blocked",
+    },
+    quality: {
+      type: String,
+      trim: true,
+      enum: ["4k", "full hd", "hd", "low"],
+      default: "full hd",
     },
     tags: [{ type: String }],
     age_limit: { type: Number, default: 18 },

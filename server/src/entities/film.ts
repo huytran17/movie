@@ -1,4 +1,5 @@
 import IFilm, { CategoryType } from "../interfaces/film";
+import ISeries from "../interfaces/series";
 
 export default class Film implements IFilm {
   public readonly _id: string;
@@ -6,6 +7,7 @@ export default class Film implements IFilm {
   public readonly aws?: Record<string, unknown>;
   public readonly description: string;
   public readonly url: string;
+  public readonly series_asset: ISeries;
   public readonly aws_thumnail: Record<string, unknown>;
   public readonly categories: CategoryType;
   public readonly meta: {
@@ -35,6 +37,7 @@ export default class Film implements IFilm {
     aws,
     deleted_at,
     title,
+    series_asset,
     description,
     meta,
     aws_thumnail,
@@ -43,6 +46,7 @@ export default class Film implements IFilm {
   }: IFilm) {
     this._id = _id;
     this.aws = aws;
+    this.series_asset = series_asset;
     this.title = title;
     this.description = description;
     this.url = url;
