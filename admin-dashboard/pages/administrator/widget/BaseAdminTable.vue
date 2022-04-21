@@ -20,7 +20,7 @@
 
       <template v-slot:item.full_name="{ item }">
         <a
-          @click="$router.push(localePath(`/admin/${item._id}`))"
+          @click="$router.push(localePath(`/administrator/${item._id}`))"
           class="text-body-2 primary--text"
         >
           <span class="app-title">

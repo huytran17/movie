@@ -20,7 +20,7 @@
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
           <v-list-item
-            @click="$router.push(localePath(`/admin/${user._id}`))"
+            @click="$router.push(localePath(`/administrator/${user._id}`))"
             class="py-1"
           >
             <v-img
@@ -84,7 +84,7 @@ export default {
         {
           text: "Admin",
           value: "admin",
-          path: "/admin",
+          path: "/administrator",
           icon: "mdi-shield-crown-outline",
           color: "#039BE5",
         },

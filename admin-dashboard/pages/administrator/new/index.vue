@@ -172,7 +172,7 @@ export default {
           return;
         }
         this.$toast.success(this.$t("Welcome!"));
-        this.$router.push(this.localePath("/admin"));
+        this.$router.push(this.localePath("/administrator"));
       });
     },
 

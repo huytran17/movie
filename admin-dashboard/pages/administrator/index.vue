@@ -7,7 +7,7 @@
             depressed
             dense
             color="primary"
-            @click="$router.push(localePath('/admin/new'))"
+            @click="$router.push(localePath('/administrator/new'))"
           >
             <span class="text-body-2">
               <span class="app-body">
