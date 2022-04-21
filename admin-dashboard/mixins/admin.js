@@ -2,6 +2,11 @@ import _ from "lodash";
 import { mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      typeRules: [(v) => !!v || this.$t("Type is required.")],
+    };
+  },
   computed: {
     ...mapGetters({
       admin_loading: "admin/loading",

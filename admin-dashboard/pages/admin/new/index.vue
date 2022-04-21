@@ -104,11 +104,12 @@
       <v-row>
         <v-col cols="12" md="6">
           <v-autocomplete
-            :value="sign_up_data.category"
+            :value="sign_up_data.type"
             :items="admin_types"
             label="Type"
             item-text="text"
             item-value="value"
+            :rules="typeRules"
             @input="updateInput({ variable_path: 'type', data: $event })"
           ></v-autocomplete>
         </v-col>
