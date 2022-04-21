@@ -1,55 +1,67 @@
 <template>
-  <BaseTableLoader v-if="feedback_loading" />
-  <v-data-table
-    v-else
-    :headers="headers"
-    :items="get_feedbacks"
-    :search="search"
-    :items-per-page="15"
-  >
-    <template v-slot:item.feedback_tools="{ item }">
-      <v-btn icon @click="deleteFeedback({ id: item._id })">
-        <v-icon color="red">mdi-delete-forever</v-icon>
-      </v-btn>
-    </template>
+  <div>
+    <BaseTableLoader v-if="feedback_loading" />
+    <v-data-table
+      v-else
+      :headers="headers"
+      :items="get_feedbacks"
+      :search="search"
+      :items-per-page="15"
+    >
+      <template v-slot:item.feedback_tools="{ item }">
+        <v-btn icon @click="openDeleteFilmConfirmDialog({ feedback: item })">
+          <v-icon color="red">mdi-delete-forever</v-icon>
+        </v-btn>
+      </template>
 
-    <template v-slot:item.user_full_name="{ item }">
-      <div class="text-body-2 primary--text">
-        <span class="app-title">
-          {{ item.user.first_name }} {{ item.user.last_name }}
-        </span>
-      </div>
-    </template>
+      <template v-slot:item.user_full_name="{ item }">
+        <div class="text-body-2 primary--text">
+          <span class="app-title">
+            {{ item.user.first_name }} {{ item.user.last_name }}
+          </span>
+        </div>
+      </template>
 
-    <template v-slot:item.feedback_on="{ item }">
-      <a
-        class="text-body-2 primary--text"
-        @click="$router.push(localePath(`/films-client/${item.film._id}`))"
-      >
-        <span class="app-title">
-          {{ item.film.title }}
-        </span>
-      </a>
-    </template>
+      <template v-slot:item.feedback_on="{ item }">
+        <a
+          class="text-body-2 primary--text"
+          @click="$router.push(localePath(`/films-client/${item.film._id}`))"
+        >
+          <span class="app-title">
+            {{ item.film.title }}
+          </span>
+        </a>
+      </template>
 
-    <template v-slot:item.created_at="{ item }">
-      {{ $moment(item.created_at).format("DD-MM-YYYY") }}
-    </template>
+      <template v-slot:item.created_at="{ item }">
+        {{ $moment(item.created_at).format("DD-MM-YYYY") }}
+      </template>
 
-    <template v-slot:item.updated_at="{ item }">
-      {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
-    </template>
-  </v-data-table>
+      <template v-slot:item.updated_at="{ item }">
+        {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
+      </template>
+    </v-data-table>
+
+    <ConfirmDialog
+      :show_confirm_dialog="show_confirm_dialog"
+      :content="confirm_content"
+      :action="deleteFeedback"
+      @close-dialog="show_confirm_dialog = false"
+    />
+  </div>
 </template>
 
 <script>
 import feedbackMixins from "@/mixins/feedback";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import BaseTableLoader from "@/components/loaders/BaseTableLoader";
+
 export default {
   name: "BaseFeedbackTable",
   mixins: [feedbackMixins],
   components: {
     BaseTableLoader,
+    ConfirmDialog,
   },
   props: {
     headers: {
@@ -114,6 +126,9 @@ export default {
   data() {
     return {
       search: null,
+      show_confirm_dialog: false,
+      confirm_content: "",
+      choosen_feedback: null,
     };
   },
   computed: {
@@ -122,11 +137,18 @@ export default {
     },
   },
   methods: {
-    async deleteFeedback({ id }) {
+    async deleteFeedback() {
       await Promise.all([
-        this.DELETE_FEEDBACK({ feedback_id: id }),
+        this.DELETE_FEEDBACK({ feedback_id: this.choosen_feedback._id }),
         this.GET_FEEDBACKS(),
       ]);
+
+      this.show_confirm_dialog = false;
+    },
+    async openDeleteFilmConfirmDialog({ feedback }) {
+      this.confirm_content = `Bạn có muốn xóa feedback <b>${feedback.content}</b> không?`;
+      this.show_confirm_dialog = true;
+      this.choosen_feedback = feedback;
     },
   },
   async fetch() {

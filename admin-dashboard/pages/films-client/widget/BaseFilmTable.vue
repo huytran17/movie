@@ -61,7 +61,7 @@
         </ul>
       </template>
 
-      <template v-slot:item.meta.actors="{ item }">
+      <template v-slot:item.actors="{ item }">
         <ul>
           <li v-for="(actor, index) in item.meta.actors" :key="index">
             <div class="text-body-2">
@@ -209,7 +209,7 @@ export default {
             text: "Actors",
             align: "start",
             filterable: false,
-            value: "meta.actors",
+            value: "actors",
             width: 150,
             sortable: false,
           },

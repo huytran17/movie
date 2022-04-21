@@ -119,3 +119,11 @@ input:-webkit-autofill:active {
   display: inline-block;
   color: #1976d2 !important;
 }
+
+.content-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
