@@ -13,7 +13,7 @@ export default function makeUploadAdminAvatarController({
   updateAdmin: IUpdateAdmin;
   mongoose: Mongoose;
 }) {
-  return async function (
+  return async function uploadAdminAvatarController(
     httpRequest: Request & { context: { validated: {} } }
   ) {
     const headers = {
@@ -48,17 +48,17 @@ export default function makeUploadAdminAvatarController({
         },
       };
 
-      const new_event = Object.assign({}, exists, {
-        aws: aws_payload,
+      const admin_details = Object.assign({}, exists, {
+        aws_avatar: aws_payload,
       });
 
-      const updated_event = await updateAdmin({ adminDetails: new_event });
+      const updated_event = await updateAdmin({ adminDetails: admin_details });
 
       return {
         headers,
         statusCode: 200,
         body: {
-          event: updated_event,
+          data: updated_event,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {

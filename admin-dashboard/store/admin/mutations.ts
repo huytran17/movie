@@ -30,11 +30,13 @@ const mutations: MutationTree<AdminState> = {
     state.admins = admins;
   },
 
-  [MutationTypes.SET_ADMIN](
-    state,
-    { index, user }: { index: number; user: any }
-  ) {
-    state.admins[index] = user;
+  /**
+   * set user
+   * @param state
+   * @param param1
+   */
+  [MutationTypes.SET_ADMIN](state, { data }: { data: boolean }) {
+    state.admin = data;
   },
 
   [MutationTypes.SET_LOADING](state, { data }: { data: boolean }) {

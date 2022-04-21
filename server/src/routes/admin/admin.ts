@@ -12,11 +12,12 @@ import {
 import {
   getAdminController,
   updateAdminController,
-  uploadAdminThumbnailController,
+  uploadAdminAvatarController,
   getAdminsController,
   deleteAdminController,
   createAdminController,
 } from "../../controllers/admin/admin";
+import { upload } from "../../middlewares/file-upload-middleware";
 
 const adminRouter = express.Router();
 
@@ -30,6 +31,13 @@ adminRouter.post(
   "/create-admin",
   makeValidator(createAdminRules),
   makeExpressCallback(createAdminController)
+);
+
+adminRouter.post(
+  "/upload-avatar/:admin_id",
+  upload.single("file"),
+  makeValidator(uploadAdminAvatarRules),
+  makeExpressCallback(uploadAdminAvatarController)
 );
 
 adminRouter.put(

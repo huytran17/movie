@@ -15,9 +15,12 @@ export default function makeGetAdminByAdminnameController({
       "Content-Type": "application/json",
     };
     try {
-      const { id }: { id: string } = _.get(httpRequest, "context.validated");
+      const { admin_id }: { admin_id: string } = _.get(
+        httpRequest,
+        "context.validated"
+      );
 
-      const admin = await getAdminById({ id });
+      const admin = await getAdminById({ id: admin_id });
 
       return {
         headers,

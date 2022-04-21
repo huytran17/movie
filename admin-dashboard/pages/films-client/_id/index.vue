@@ -69,13 +69,7 @@
         </v-col>
 
         <v-col cols="12" md="6" class="d-flex justify-end">
-          <v-menu
-            ref="menu"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-          >
+          <v-menu transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 label="Manufacture at"
@@ -83,14 +77,17 @@
                 readonly
                 v-bind="attrs"
                 v-on="on"
-                :value="getFormattedDatetime('meta.manufactured_at')"
+                :value="
+                  formatDate(getFilmMetaData('manufactured_at'), 'YYYY/MM/DD')
+                "
               ></v-text-field>
             </template>
             <v-date-picker
-              :value="getFormattedDatetime('meta.manufactured_at')"
+              :value="
+                formatDate(getFilmMetaData('manufactured_at'), 'YYYY/MM/DD')
+              "
               v-model="film_manufactured_at"
               color="green lighten-1"
-              full-width
               @input="
                 updateInput({
                   variable_path: 'meta.manufactured_at',
@@ -112,13 +109,7 @@
         <v-col cols="12" md="7">
           <v-row>
             <v-col cols="12">
-              <v-menu
-                ref="menu"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                min-width="auto"
-              >
+              <v-menu transition="scale-transition" offset-y min-width="auto">
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
                     label="Release at"
@@ -126,11 +117,15 @@
                     readonly
                     v-bind="attrs"
                     v-on="on"
-                    :value="getFormattedDatetime('meta.released_at')"
+                    :value="
+                      formatDate(getFilmMetaData('released_at'), 'YYYY/MM/DD')
+                    "
                   ></v-text-field>
                 </template>
                 <v-date-picker
-                  :value="getFormattedDatetime('meta.released_at')"
+                  :value="
+                    formatDate(getFilmMetaData('released_at'), 'YYYY/MM/DD')
+                  "
                   v-model="film_released_at"
                   color="green lighten-1"
                   @input="
@@ -362,6 +357,7 @@ import seriesMixins from "@/mixins/series";
 import countriesMixins from "@/mixins/countries";
 import languagesMixins from "@/mixins/languages";
 import tagsMixins from "@/mixins/tags";
+import systemMixins from "@/mixins/system";
 
 import Player from "@/components/Player";
 
@@ -375,6 +371,7 @@ export default {
     languagesMixins,
     tagsMixins,
     seriesMixins,
+    systemMixins,
   ],
   components: { Player },
   data() {
@@ -520,7 +517,7 @@ export default {
         data,
       });
     },
-    uploadFilm() {
+    async uploadFilm() {
       const max_size = 50 * 1024 * 1024; // 5MB
       const file = this.file_of_film;
       const file_size = _.get(file, "size", max_size + 1);
@@ -536,14 +533,14 @@ export default {
         });
       }
     },
-    uploadThumbnail() {
+    async uploadThumbnail() {
       const max_size = 50 * 1024 * 1024; // 5MB
       const file = this.file_of_film_thumbnail;
       const file_size = _.get(file, "size", max_size + 1);
 
       if (file && file_size <= max_size) {
         this.$nextTick(async () => {
-          const data = await this.UPDATE_FILM_THUMBNAIL({
+          await this.UPDATE_FILM_THUMBNAIL({
             file: this.file_of_film_thumbnail,
             film_id: this.film._id,
           });

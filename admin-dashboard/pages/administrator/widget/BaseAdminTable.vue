@@ -20,7 +20,7 @@
 
       <template v-slot:item.full_name="{ item }">
         <a
-          @click="$router.push(localePath(`/administrator/${item._id}`))"
+          @click="editProfile({ user: item })"
           class="text-body-2 primary--text"
         >
           <span class="app-title">
@@ -170,6 +170,13 @@ export default {
       this.confirm_content = `Bạn có muốn xóa quản trị viên <b>${admin.first_name} ${admin.last_name}</b> không?`;
       this.show_confirm_dialog = true;
       this.choosen_admin = admin;
+    },
+
+    editProfile({ user }) {
+      if (!this.is_super_admin) {
+        return;
+      }
+      this.$router.push(this.localePath(`/administrator/${user._id}`));
     },
 
     async deleteAdmin() {

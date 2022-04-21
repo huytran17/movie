@@ -32,7 +32,7 @@ const getAdminsController = makeGetAdminsController({ getAdmins });
 /**
  * @description update admin's details excluding password
  */
-const uploadAdminThumbnailController = makeUploadAdminAvatarController({
+const uploadAdminAvatarController = makeUploadAdminAvatarController({
   updateAdmin,
   getAdminById,
   mongoose,
@@ -56,7 +56,7 @@ const getAdminController = makeGetAdminController({
 export default Object.freeze({
   getAdminController,
   updateAdminController,
-  uploadAdminThumbnailController,
+  uploadAdminAvatarController,
   getAdminsController,
   deleteAdminController,
   createAdminController,
@@ -65,7 +65,7 @@ export default Object.freeze({
 export {
   getAdminController,
   updateAdminController,
-  uploadAdminThumbnailController,
+  uploadAdminAvatarController,
   getAdminsController,
   deleteAdminController,
   createAdminController,

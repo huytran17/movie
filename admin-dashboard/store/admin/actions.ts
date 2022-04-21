@@ -21,10 +21,10 @@ const actions: ActionTree<AdminState, RootState> = {
    * @param param0
    */
   async [ActionTypes.GET_ADMIN]({ commit }, { admin_id }) {
-    let { data: admin } = await this.$axios.$get(`/admin/admin/${admin_id}`);
-    commit(MutationTypes.SET_ADMIN, { admin });
+    let { data } = await this.$axios.$get(`/admin/admin/${admin_id}`);
+    commit(MutationTypes.SET_ADMIN, { data });
 
-    return admin;
+    return data;
   },
 
   /**
@@ -66,14 +66,16 @@ const actions: ActionTree<AdminState, RootState> = {
         "Content-Type": "multipart/form-data",
       },
     };
-    const result = await this.$axios.$post(
+    const { data } = await this.$axios.$post(
       `/admin/admin/upload-avatar/${admin_id}`,
       formData,
       config
     );
-    commit(MutationTypes.SET_ADMIN, { admin: result });
+    console.log(data);
 
-    return result;
+    commit(MutationTypes.SET_ADMIN, { data });
+
+    return data;
   },
 
   /**

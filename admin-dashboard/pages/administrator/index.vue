@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import BaseAdminTable from "@/pages/admin/widget/BaseAdminTable";
+import BaseAdminTable from "@/pages/administrator/widget/BaseAdminTable";
 import authMixins from "@/mixins/auth";
 export default {
   name: "UsersClient",

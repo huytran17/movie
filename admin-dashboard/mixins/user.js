@@ -2,6 +2,11 @@ import _ from "lodash";
 import { mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      birthdayRules: [(v) => !!v || this.$t("Birthday is required.")],
+    };
+  },
   computed: {
     ...mapGetters({
       user_loading: "user/loading",

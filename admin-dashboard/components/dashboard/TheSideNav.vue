@@ -26,12 +26,15 @@
             <v-img
               v-if="avatar_url"
               :src="avatar_url"
-              width="36px"
+              width="45px"
+              height="45px"
               :alt="$t('no avatar')"
+              class="rounded-circle"
             ></v-img>
             <v-icon v-else class="mr-3" color="#D32F2F">mdi-crown</v-icon>
             <v-list-item-title>
-              <span v-html="user_fullname"> </span>
+              <span v-html="user_fullname" :class="avatar_url ? 'ml-4' : ''">
+              </span>
             </v-list-item-title>
           </v-list-item>
         </v-list-item-group>

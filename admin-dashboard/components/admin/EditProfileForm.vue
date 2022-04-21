@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-6">
+  <div v-if="has_admin" class="mt-6">
     <v-tabs v-model="tab">
       <v-tabs-slider></v-tabs-slider>
 
@@ -14,14 +14,14 @@
           <v-row>
             <v-col cols="12">
               <div
-                v-if="get_user_avatar_location"
+                v-if="admin_avatar_location"
                 class="d-flex justify-center my-3"
               >
                 <v-img
                   max-height="100px"
                   max-width="100px"
                   contain
-                  :src="get_user_avatar_location"
+                  :src="admin_avatar_location"
                   alt="photo-upload"
                   class="rounded-circle"
                 ></v-img>
@@ -31,7 +31,7 @@
               <v-text-field
                 :rules="firstNameRules"
                 :label="$t('First name')"
-                :value="user.first_name"
+                :value="admin.first_name"
                 required
                 @input="
                   updateUserObject({
@@ -45,7 +45,7 @@
               <v-text-field
                 :rules="lastNameRules"
                 :label="$t('Last name')"
-                :value="user.last_name"
+                :value="admin.last_name"
                 required
                 @input="
                   updateUserObject({
@@ -62,7 +62,7 @@
               <v-text-field
                 :rules="emailRules"
                 :label="$t('Email')"
-                :value="user.email"
+                :value="admin.email"
                 required
                 type="email"
                 @input="
@@ -73,40 +73,75 @@
                 "
               ></v-text-field>
             </v-col>
+
+            <v-col cols="12" md="6">
+              <v-menu transition="scale-transition" offset-y min-width="auto">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    label="Birthday"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                    :value="formatDate(admin.birthday, 'YYYY/MM/DD')"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  :value="formatDate(admin.birthday, 'YYYY/MM/DD')"
+                  v-model="admin_birthday"
+                  color="green lighten-1"
+                  @input="
+                    updateUserObject({
+                      variable_path: 'birthday',
+                      data: $event,
+                    })
+                  "
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
           </v-row>
 
           <v-row>
-            <v-col cols="12">
-              <div
-                class="wrapper-input-upload mx-auto px-2 d-flex align-center justify-center"
-              >
-                <input
-                  type="file"
-                  multiple
-                  name="file"
-                  @input="inputFile($event)"
-                  accept="image/*"
-                  class="input-upload"
-                />
-                <div class="d-flex justify-center align-center">
-                  <v-spacer></v-spacer>
-                  <div class="d-flex">
-                    <v-icon class="mr-4" size="40">mdi-image-plus</v-icon>
-                    <div>
-                      <span class="font-weight-bold">
-                        <span class="primary--text">Upload</span>
-                        your photo here.
-                      </span>
-                      <br />
-                      <span
-                        >Upload file in JPG, JPEG, or PNG format and maximum
-                        size 5MB</span
-                      >
-                    </div>
-                  </div>
-                  <v-spacer></v-spacer>
-                </div>
-              </div>
+            <v-col cols="12" md="6">
+              <v-text-field
+                :rules="addressRules"
+                :label="$t('Address')"
+                :value="admin.address"
+                required
+                @input="
+                  updateUserObject({
+                    variable_path: 'address',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                :rules="phoneNumberRules"
+                :label="$t('Phone number')"
+                :value="admin.phone_number"
+                required
+                @input="
+                  updateUserObject({
+                    variable_path: 'phone_number',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-file-input
+                v-model="file_of_avatar"
+                small-chips
+                truncate-length="15"
+                :label="$t('Choose avatar')"
+                @change="uploadAvatar"
+                accept="image/*"
+              ></v-file-input>
             </v-col>
           </v-row>
 
@@ -124,16 +159,18 @@
 </template>
 
 <script>
-import userMixins from "@/mixins/user";
-import authMixins from "@/mixins/auth";
+import adminMixins from "@/mixins/admin";
+import systemMixins from "@/mixins/system";
 
 export default {
   name: "EditProfileForm",
-  mixins: [userMixins, authMixins],
+  mixins: [adminMixins, systemMixins],
   data() {
     return {
       form_valid: false,
       avatar_valid: false,
+      file_of_avatar: null,
+      admin_birthday: new Date(Date.now()).toISOString().substr(0, 10),
       tab: null,
       tab_items: [
         {
@@ -148,43 +185,49 @@ export default {
     };
   },
   computed: {
-    get_user_avatar_location() {
-      return _.get(this.user, "aws.meta.location", "") || undefined;
+    admin_avatar_location() {
+      return _.get(this.admin, "aws_avatar.meta.location", "");
+    },
+
+    has_admin() {
+      return !!this.admin;
     },
   },
   methods: {
     /**
      * @description input file
      */
-    inputFile(event) {
-      const max_size = 5 * 1024 * 1024; // 5MB
-      const file = _.get(event, "target.files[0]");
+    async uploadAvatar() {
+      const max_size = 50 * 1024 * 1024; // 5MB
+      const file = this.file_of_avatar;
+      const file_size = _.get(file, "size", max_size + 1);
 
-      if (this.image_file) {
-        this.$nextTick(() => {
-          // reset image file
-          this.image_file = "";
-        });
-      }
-
-      if (file && file.size <= max_size) {
+      if (file && file_size <= max_size) {
         this.$nextTick(async () => {
-          this.image_file = file;
-
-          // const event_image_location = URL.createObjectURL(file);
-          this.avatar_valid = true;
-          this.$forceUpdate();
-          await this.UPDATE_USER_AVATAR({
-            file: this.image_file,
-            user_id: this.user._id,
+          await this.UPDATE_ADMIN_AVATAR({
+            file: this.file_of_avatar,
+            admin_id: this.admin._id,
           });
+          this.$forceUpdate();
         });
       }
     },
 
     async updateUser() {
-      await this.UPDATE_USER({ user: this.user });
+      await this.UPDATE_ADMIN({ admin: this.admin });
     },
+  },
+
+  async fetch() {
+    try {
+      this.SET_LOADING({ data: true });
+      const admin_id = this.$route.params.id;
+      await Promise.all([this.GET_ADMIN({ admin_id })]);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.SET_LOADING({ data: false });
+    }
   },
 };
 </script>

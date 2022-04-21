@@ -67,12 +67,6 @@ export default {
       SET_FILM_DATA: "film/SET_FILM_DATA",
     }),
 
-    getFormattedDatetime(path) {
-      const datetime = _.get(this.film, path, "");
-      const datetime_formatted = this.$moment(datetime).format("YYYY/MM/DD");
-      return datetime_formatted;
-    },
-
     getFilmMetaData(path) {
       const data = _.get(this.film, `meta.${path}`, "");
       return data;

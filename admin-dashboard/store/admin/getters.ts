@@ -10,6 +10,7 @@ export const getters: GetterTree<AdminState, RootState> = {
   admins: (state) => state.admins,
   pagination: (state) => state.pagination,
   loading: (state) => state.loading,
+  admin: (state) => state.admin,
 };
 
 export default getters;
