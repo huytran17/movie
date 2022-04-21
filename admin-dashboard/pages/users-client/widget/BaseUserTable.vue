@@ -29,6 +29,23 @@
       <template v-slot:item.updated_at="{ item }">
         {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
       </template>
+
+      <template v-slot:item.email_verified_at="{ item }">
+        <span v-if="item.email_verified_at">
+          {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
+        </span>
+      </template>
+      <template v-slot:item.birthday="{ item }">
+        <span v-if="item.birthday">
+          {{ $moment(item.birthday).format("DD-MM-YYYY") }}
+        </span>
+      </template>
+
+      <template v-slot:item.age="{ item }">
+        <span v-if="item.birthday">
+          {{ $moment().diff(item.birthday, "years", false) }}
+        </span>
+      </template>
     </v-data-table>
 
     <ConfirmDialog
@@ -68,6 +85,20 @@ export default {
             align: "start",
             filterable: false,
             value: "email",
+            width: 250,
+          },
+          {
+            text: "Birthday",
+            align: "start",
+            filterable: false,
+            value: "birthday",
+            width: 250,
+          },
+          {
+            text: "Age",
+            align: "start",
+            filterable: false,
+            value: "age",
             width: 250,
           },
           {

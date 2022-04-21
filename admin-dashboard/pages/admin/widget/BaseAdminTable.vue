@@ -42,6 +42,12 @@
           {{ $moment(item.birthday).format("DD-MM-YYYY") }}
         </span>
       </template>
+
+      <template v-slot:item.age="{ item }">
+        <span v-if="item.birthday">
+          {{ $moment().diff(item.birthday, "years", false) }}
+        </span>
+      </template>
     </v-data-table>
 
     <ConfirmDialog
@@ -97,6 +103,13 @@ export default {
             align: "start",
             filterable: false,
             value: "birthday",
+            width: 250,
+          },
+          {
+            text: "Age",
+            align: "start",
+            filterable: false,
+            value: "age",
             width: 250,
           },
           {
