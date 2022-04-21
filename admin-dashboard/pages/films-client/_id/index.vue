@@ -103,7 +103,7 @@
       </v-row>
 
       <v-row>
-        <v-col v-if="has_film_url" cols="12">
+        <v-col v-if="film_url" cols="12">
           <Player :options="options" />
         </v-col>
       </v-row>
@@ -185,7 +185,7 @@
         </v-col>
 
         <v-col
-          v-if="has_film_thumbnail_url"
+          v-if="film_thumbnail"
           cols="12"
           md="5"
           class="d-flex justify-end"
@@ -470,29 +470,24 @@ export default {
       return !!this.film;
     },
 
-    has_film_url() {
-      const has_aws_location = _.get(this.film, "aws.meta.location", false);
-      return has_aws_location;
-    },
-
-    has_film_thumbnail_url() {
-      const has_aws_location = _.get(
-        this.film,
-        "aws_thumnail.meta.location",
-        false
-      );
+    film_url() {
+      const has_aws_location = _.get(this.film, "aws.meta.location", "");
       return has_aws_location;
     },
 
     film_thumbnail() {
-      const thumbnail = _.get(this.film, "aws_thumnail.meta.location", "");
-      return thumbnail;
+      const has_aws_location = _.get(
+        this.film,
+        "aws_thumnail.meta.location",
+        ""
+      );
+      return has_aws_location;
     },
     /**
      * @description video options
      */
     options() {
-      const film_url = _.get(this.film, "aws.meta.location", "");
+      const film_url = this.film_url;
       const film_title = _.get(this.film, "title", "");
       const film_type = _.get(this.film, "aws.mime_type", "");
 

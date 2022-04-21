@@ -20,6 +20,23 @@
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
           <v-list-item
+            @click="$router.push(localePath(`/admin/${user._id}`))"
+            class="py-1"
+          >
+            <v-img
+              v-if="avatar_url"
+              :src="avatar_url"
+              width="36px"
+              :alt="$t('no avatar')"
+            ></v-img>
+            <v-icon v-else class="mr-3" color="#D32F2F">mdi-crown</v-icon>
+            <v-list-item-title>
+              <span v-html="user_fullname"> </span>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+        <v-list-item-group active-class="deep-purple--text text--accent-4">
+          <v-list-item
             v-for="item in list_items"
             :key="item.value"
             @click="$router.push(localePath(item.path))"
@@ -106,6 +123,15 @@ export default {
     return {
       drawer: true,
     };
+  },
+  computed: {
+    avatar_url() {
+      const has_aws_location = _.get(this.user, "aws_avatar.meta.location", "");
+      return has_aws_location;
+    },
+    user_fullname() {
+      return `${this.user.first_name} ${this.user.last_name}`;
+    },
   },
   methods: {
     async logout() {
