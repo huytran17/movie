@@ -301,7 +301,7 @@ export default {
           },
           {
             text: "Tools",
-            align: "start",
+            align: "center",
             filterable: false,
             value: "film_tools",
             width: 150,

@@ -116,7 +116,7 @@ export default {
           },
           {
             text: "Tools",
-            align: "start",
+            align: "center",
             filterable: false,
             value: "admin_tools",
             width: 150,

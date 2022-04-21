@@ -100,7 +100,7 @@ export default {
           },
           {
             text: "Tools",
-            align: "start",
+            align: "center",
             filterable: false,
             value: "user_tools",
             width: 150,

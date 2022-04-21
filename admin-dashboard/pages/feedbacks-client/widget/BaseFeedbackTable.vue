@@ -113,7 +113,7 @@ export default {
           },
           {
             text: "Tools",
-            align: "start",
+            align: "center",
             filterable: false,
             value: "feedback_tools",
             width: 150,
