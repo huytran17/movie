@@ -6,7 +6,7 @@ export default class Admin {
   public readonly last_name: string;
   public readonly hash_password: string;
   public readonly type: AdminType;
-  public readonly avatar_url?: string;
+  public readonly aws_avatar?: Record<string, unknown>;
   public readonly email: string;
   public readonly address?: string;
   public readonly birthday: Date;
@@ -18,10 +18,10 @@ export default class Admin {
   constructor({
     _id,
     first_name,
+    aws_avatar,
     last_name,
     hash_password,
     type,
-    avatar_url,
     email,
     address,
     phone_number,
@@ -31,11 +31,11 @@ export default class Admin {
     deleted_at,
   }: IAdmin) {
     this._id = _id;
+    this.aws_avatar = aws_avatar;
     this.first_name = first_name;
     this.last_name = last_name;
     this.hash_password = hash_password;
     this.type = type;
-    this.avatar_url = avatar_url;
     this.email = email;
     this.birthday = birthday;
     this.address = address;

@@ -8,7 +8,7 @@ const adminSchema = new Schema({
   last_name: { type: String, required: true, trim: true },
   hash_password: { type: String, trim: true },
   birthday: { type: Date, default: null },
-  avatar_url: { type: String, trim: true },
+  aws_avatar: { type: Object },
   type: {
     type: String,
     required: true,

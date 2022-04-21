@@ -5,7 +5,7 @@ export default interface IAdmin {
   title: string;
   description: string;
   series: ISeries;
-  aws_thumnail: Record<string, unknown>;
+  aws_thumnail?: Record<string, unknown>;
   meta: {
     view_count: number;
     director: string;

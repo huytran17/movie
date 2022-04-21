@@ -4,7 +4,7 @@ export default interface IAdmin {
   last_name: string;
   hash_password: string;
   type: AdminType;
-  avatar_url?: string;
+  aws_avatar?: Record<string, unknown>;
   phone_number?: string;
   email: string;
   address?: string;

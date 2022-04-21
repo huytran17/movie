@@ -7,7 +7,7 @@ export default class Film implements IFilm {
   public readonly aws?: Record<string, unknown>;
   public readonly description: string;
   public readonly series: ISeries;
-  public readonly aws_thumnail: Record<string, unknown>;
+  public readonly aws_thumnail?: Record<string, unknown>;
   public readonly categories: CategoryType;
   public readonly meta: {
     view_count: number;
