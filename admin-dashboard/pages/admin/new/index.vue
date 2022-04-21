@@ -146,8 +146,14 @@ export default {
   },
   methods: {
     async createUser() {
-      await this.CREATE_ADMIN({ admin_data: this.sign_up_data });
-      this.$router.push(this.localePath("/admin"));
+      await this.CREATE_ADMIN({ admin_data: this.sign_up_data }).then((res) => {
+        if (res.is_error) {
+          this.$toast.error(this.$t(res.message));
+          return;
+        }
+        this.$toast.success(this.$t("Welcome!"));
+        this.$router.push(this.localePath("/admin"));
+      });
     },
 
     updateInput({ variable_path, data }) {

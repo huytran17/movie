@@ -10,7 +10,7 @@
     >
       <template v-slot:item.admin_tools="{ item }">
         <v-btn
-          v-if="is_super_admin"
+          v-if="shouldShowDeleteButton({ user: item })"
           icon
           @click="openDeleteAdminConfirmDialog({ admin: item })"
         >
@@ -153,6 +153,10 @@ export default {
       ]);
 
       this.show_confirm_dialog = false;
+    },
+
+    shouldShowDeleteButton({ user }) {
+      return this.is_super_admin && user._id !== this.user._id;
     },
   },
   async fetch() {
