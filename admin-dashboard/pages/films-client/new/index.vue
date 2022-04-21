@@ -76,8 +76,8 @@
             "
           ></v-date-picker>
         </v-col>
-        <v-col cols="12" md="6"
-          ><div class="text-body-2">
+        <v-col cols="12" md="6">
+          <div class="text-body-2">
             <label class="date-picker-label"> Release at </label>
           </div>
           <v-date-picker

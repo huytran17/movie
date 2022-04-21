@@ -113,6 +113,24 @@
             @input="updateInput({ variable_path: 'type', data: $event })"
           ></v-autocomplete>
         </v-col>
+        <v-col cols="12" md="6">
+          <div class="text-body-2">
+            <label class="date-picker-label"> Birthday </label>
+          </div>
+          <v-date-picker
+            :value="sign_up_data.birthday"
+            v-model="admin_birthday"
+            color="green lighten-1"
+            full-width
+            :rules="birthdayRules"
+            @input="
+              updateInput({
+                variable_path: 'birthday',
+                data: $event,
+              })
+            "
+          ></v-date-picker>
+        </v-col>
       </v-row>
 
       <v-row>
@@ -143,6 +161,7 @@ export default {
     return {
       admin_types: ["super", "normal"],
       form_valid: false,
+      admin_birthday: new Date(Date.now()).toISOString().substr(0, 10),
     };
   },
   methods: {

@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       typeRules: [(v) => !!v || this.$t("Type is required.")],
+      birthdayRules: [(v) => !!v || this.$t("Birthday is required.")],
     };
   },
   computed: {

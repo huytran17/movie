@@ -36,6 +36,12 @@
       <template v-slot:item.updated_at="{ item }">
         {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
       </template>
+
+      <template v-slot:item.birthday="{ item }">
+        <span v-if="item.birthday">
+          {{ $moment(item.birthday).format("DD-MM-YYYY") }}
+        </span>
+      </template>
     </v-data-table>
 
     <ConfirmDialog
@@ -84,6 +90,13 @@ export default {
             align: "start",
             filterable: false,
             value: "type",
+            width: 250,
+          },
+          {
+            text: "Birthday",
+            align: "start",
+            filterable: false,
+            value: "birthday",
             width: 250,
           },
           {
