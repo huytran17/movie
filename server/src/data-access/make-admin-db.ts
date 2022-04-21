@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import _ from "lodash";
 
 import IAdminDb, {
   IGetAdminAnalyticsData,
@@ -24,8 +25,19 @@ export default function makeAdminDb({
      * @param param0
      * @returns
      */
-    async findAll(): Promise<Admin[] | null> {
-      const query_conditions = { deleted_at: undefined };
+    async findAll({
+      exclude_user_ids,
+    }: {
+      exclude_user_ids: string[];
+    }): Promise<Admin[] | null> {
+      let query_conditions = { deleted_at: undefined };
+
+      const has_exclude_user_ids = !_.isEmpty(exclude_user_ids);
+      if (has_exclude_user_ids) {
+        query_conditions = Object.assign({}, query_conditions, {
+          _id: { $nin: exclude_user_ids },
+        });
+      }
 
       const existing = await adminDbModel
         .find(query_conditions)

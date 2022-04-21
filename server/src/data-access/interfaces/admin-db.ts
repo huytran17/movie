@@ -21,7 +21,11 @@ export default interface IAdminDb {
   insert: (payload: Partial<IAdmin>) => Promise<Admin | null>;
   findOne: () => Promise<Admin | null>;
   findById: ({ id }: { id: string }) => Promise<Admin | null>;
-  findAll: () => Promise<Admin[] | null>;
+  findAll: ({
+    exclude_user_ids,
+  }: {
+    exclude_user_ids: string[];
+  }) => Promise<Admin[] | null>;
   update: (updatePayload: Partial<IAdmin>) => Promise<Admin | null>;
   findByEmail: ({ email }: { email: string }) => Promise<Admin | null>;
   delete: ({ id }: { id: string }) => Promise<Admin | null>;

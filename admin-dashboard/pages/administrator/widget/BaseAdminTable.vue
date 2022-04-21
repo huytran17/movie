@@ -173,7 +173,8 @@ export default {
     },
 
     editProfile({ user }) {
-      if (!this.is_super_admin) {
+      const should_disabled = !this.is_super_admin;
+      if (should_disabled) {
         return;
       }
       this.$router.push(this.localePath(`/administrator/${user._id}`));

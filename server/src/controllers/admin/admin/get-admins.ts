@@ -14,7 +14,8 @@ export default function makeGetAdminsController({
       "Content-Type": "application/json",
     };
     try {
-      const admins = await getAdmins();
+      const user_id = _.get(httpRequest, "context.user");
+      const admins = await getAdmins({ exclude_user_ids: [user_id] });
 
       return {
         headers,
