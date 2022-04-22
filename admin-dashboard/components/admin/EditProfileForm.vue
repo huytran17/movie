@@ -143,6 +143,19 @@
                 accept="image/*"
               ></v-file-input>
             </v-col>
+            <v-col cols="12" md="6">
+              <v-autocomplete
+                :value="admin.type"
+                :items="admin_types"
+                label="Type"
+                item-text="text"
+                item-value="value"
+                :rules="typeRules"
+                @input="
+                  updateUserObject({ variable_path: 'type', data: $event })
+                "
+              ></v-autocomplete>
+            </v-col>
           </v-row>
 
           <v-row>
@@ -167,6 +180,7 @@ export default {
   mixins: [adminMixins, systemMixins],
   data() {
     return {
+      admin_types: ["super", "normal"],
       form_valid: false,
       avatar_valid: false,
       file_of_avatar: null,

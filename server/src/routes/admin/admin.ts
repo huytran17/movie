@@ -8,6 +8,7 @@ import {
   uploadAdminAvatarRules,
   getAdminRules,
   createAdminRules,
+  restoreAdminRules,
 } from "../../controllers/admin/admin/validators";
 import {
   getAdminController,
@@ -16,6 +17,7 @@ import {
   getAdminsController,
   deleteAdminController,
   createAdminController,
+  restoreAdminController,
 } from "../../controllers/admin/admin";
 import { upload } from "../../middlewares/file-upload-middleware";
 
@@ -47,6 +49,12 @@ adminRouter.put(
 );
 
 adminRouter.get("/", makeExpressCallback(getAdminsController));
+
+adminRouter.delete(
+  "/restore/:admin_id",
+  makeValidator(restoreAdminRules),
+  makeExpressCallback(restoreAdminController)
+);
 
 adminRouter.delete(
   "/delete/:admin_id",

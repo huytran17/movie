@@ -34,10 +34,10 @@ const actions: ActionTree<AdminState, RootState> = {
    * @param param1
    */
   async [ActionTypes.UPDATE_ADMIN]({ commit }, { admin }) {
-    const result = await this.$axios.$put(`/admin/admin/`, admin);
-    commit(MutationTypes.SET_ADMIN, { admin: result });
+    const { data } = await this.$axios.$put(`/admin/admin/`, admin);
+    commit(MutationTypes.SET_ADMIN, { data });
 
-    return result;
+    return data;
   },
 
   /**
@@ -47,11 +47,11 @@ const actions: ActionTree<AdminState, RootState> = {
    * @param param1
    */
   async [ActionTypes.CREATE_ADMIN]({ commit }, { admin_data }) {
-    const result = await this.$axios.$post(`/admin/admin/create-admin`, {
+    const { data } = await this.$axios.$post(`/admin/admin/create-admin`, {
       data: admin_data,
     });
 
-    return result;
+    return data;
   },
 
   /**UPLOAD_EVENT_IMAGE
@@ -71,7 +71,6 @@ const actions: ActionTree<AdminState, RootState> = {
       formData,
       config
     );
-    console.log(data);
 
     commit(MutationTypes.SET_ADMIN, { data });
 
@@ -83,13 +82,13 @@ const actions: ActionTree<AdminState, RootState> = {
    * @param {is_published: boolean}
    */
   async [ActionTypes.PUBLISH_ADMIN]({ commit }, { admin_id, is_published }) {
-    const result = await this.$axios.$post(`/admin/admin/publish`, {
+    const { data } = await this.$axios.$post(`/admin/admin/publish`, {
       admin_id,
       is_published,
     });
-    commit(MutationTypes.SET_ADMIN, { admin: result });
+    commit(MutationTypes.SET_ADMIN, { data });
 
-    return result;
+    return data;
   },
 
   /**
@@ -100,6 +99,20 @@ const actions: ActionTree<AdminState, RootState> = {
     const result = await this.$axios.$delete(`/admin/admin/delete/${admin_id}`);
 
     return result;
+  },
+
+  /**
+   * @Description publish a admin to show on mobile app
+   * @param {is_published: boolean}
+   */
+  async [ActionTypes.RESTORE_ADMIN]({ commit }, { admin_id }) {
+    const { data } = await this.$axios.$delete(
+      `/admin/admin/restore/${admin_id}`
+    );
+
+    commit(MutationTypes.SET_ADMIN, { data });
+
+    return { data };
   },
 };
 

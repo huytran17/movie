@@ -29,6 +29,7 @@ export default interface IAdminDb {
   update: (updatePayload: Partial<IAdmin>) => Promise<Admin | null>;
   findByEmail: ({ email }: { email: string }) => Promise<Admin | null>;
   delete: ({ id }: { id: string }) => Promise<Admin | null>;
+  restore: ({ id }: { id: string }) => Promise<Admin | null>;
 }
 
 export interface PaginatedAdminResult {

@@ -30,7 +30,7 @@ export default function makeAdminDb({
     }: {
       exclude_user_ids: string[];
     }): Promise<Admin[] | null> {
-      let query_conditions = { deleted_at: undefined };
+      let query_conditions = {};
 
       const has_exclude_user_ids = !_.isEmpty(exclude_user_ids);
       if (has_exclude_user_ids) {
@@ -160,6 +160,22 @@ export default function makeAdminDb({
         { _id: id },
         { deleted_at: new Date() }
       );
+      const updated = await adminDbModel
+        .findOne({ _id: id })
+        .lean({ virtuals: true });
+      if (updated) {
+        return new Admin(updated);
+      }
+      return null;
+    }
+
+    async restore({ id }: { id: string }): Promise<Admin | null> {
+      const existing = await adminDbModel.findOneAndUpdate(
+        { _id: id },
+        { deleted_at: undefined }
+      );
+      console.log(existing);
+
       const updated = await adminDbModel
         .findOne({ _id: id })
         .lean({ virtuals: true });

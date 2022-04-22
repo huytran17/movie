@@ -6,11 +6,13 @@ import makeGetAdminById from "./get-admin-by-id";
 import makeRemoveAdminById from "./delete-admin-by-id";
 import makeGetAdmins from "./get-admins";
 import makeGetAdminByEmail from "./get-admin-by-email";
+import makeRestoreAdminById from "./restore-admin-by-id";
 
 const getAdminByEmail = makeGetAdminByEmail(AdminDb);
 const createAdmin = makeCreateAdmin(AdminDb);
 const updateAdmin = makeUpdateAdmin(AdminDb);
 const removeAdminById = makeRemoveAdminById(AdminDb);
+const restoreAdminById = makeRestoreAdminById(AdminDb);
 
 /**
  * get admin by _id
@@ -31,6 +33,7 @@ const adminServices = Object.freeze({
   updateAdmin,
   removeAdminById,
   getAdminByEmail,
+  restoreAdminById,
 });
 
 export default adminServices;
@@ -41,4 +44,5 @@ export {
   updateAdmin,
   removeAdminById,
   getAdminByEmail,
+  restoreAdminById,
 };

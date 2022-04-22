@@ -10,11 +10,19 @@
     >
       <template v-slot:item.admin_tools="{ item }">
         <v-btn
-          v-if="shouldShowDeleteButton({ user: item })"
+          v-if="shouldShowDeleteButton"
           icon
           @click="openDeleteAdminConfirmDialog({ admin: item })"
         >
           <v-icon color="red">mdi-delete-forever</v-icon>
+        </v-btn>
+
+        <v-btn
+          v-if="shouldShowRestoreButton({ admin: item })"
+          icon
+          @click="openRestoreAdminConfirmDialog({ admin: item })"
+        >
+          <v-icon color="green">mdi-backup-restore</v-icon>
         </v-btn>
       </template>
 
@@ -53,7 +61,7 @@
     <ConfirmDialog
       :show_confirm_dialog="show_confirm_dialog"
       :content="confirm_content"
-      :action="deleteAdmin"
+      :action="is_open_restore_dialog ? restoreAdmin : deleteAdmin"
       @close-dialog="show_confirm_dialog = false"
     />
   </div>
@@ -158,6 +166,7 @@ export default {
       show_confirm_dialog: false,
       confirm_content: "",
       choosen_admin: null,
+      is_open_restore_dialog: false,
     };
   },
   computed: {
@@ -167,7 +176,15 @@ export default {
   },
   methods: {
     async openDeleteAdminConfirmDialog({ admin }) {
+      this.is_open_restore_dialog = false;
       this.confirm_content = `Bạn có muốn xóa quản trị viên <b>${admin.first_name} ${admin.last_name}</b> không?`;
+      this.show_confirm_dialog = true;
+      this.choosen_admin = admin;
+    },
+
+    async openRestoreAdminConfirmDialog({ admin }) {
+      this.is_open_restore_dialog = true;
+      this.confirm_content = `Bạn có muốn khôi phục quản trị viên <b>${admin.first_name} ${admin.last_name}</b> không?`;
       this.show_confirm_dialog = true;
       this.choosen_admin = admin;
     },
@@ -189,8 +206,21 @@ export default {
       this.show_confirm_dialog = false;
     },
 
-    shouldShowDeleteButton({ user }) {
-      return this.is_super_admin && user._id !== this.user._id;
+    async restoreAdmin() {
+      await Promise.all([
+        this.RESTORE_ADMIN({ admin_id: this.choosen_admin._id }),
+        this.GET_ADMINS(),
+      ]);
+
+      this.show_confirm_dialog = false;
+    },
+
+    shouldShowDeleteButton() {
+      return this.is_super_admin;
+    },
+
+    shouldShowRestoreButton({ admin }) {
+      return this.is_super_admin && admin.deleted_at;
     },
   },
   async fetch() {

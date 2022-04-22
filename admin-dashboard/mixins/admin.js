@@ -60,6 +60,7 @@ export default {
       UPDATE_ADMIN_AVATAR: "admin/UPDATE_ADMIN_AVATAR",
       UPDATE_ADMIN: "admin/UPDATE_ADMIN",
       CREATE_ADMIN: "admin/CREATE_ADMIN",
+      RESTORE_ADMIN: "admin/RESTORE_ADMIN",
     }),
 
     ...mapMutations({
