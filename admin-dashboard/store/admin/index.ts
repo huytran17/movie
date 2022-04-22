@@ -7,6 +7,7 @@ export const state = () => ({
   admins: [] as any[],
   loading: false,
   admin: {},
+  security: {},
 });
 
 export type AdminState = ReturnType<typeof state>;

@@ -65,6 +65,7 @@
                 :value="admin.email"
                 required
                 type="email"
+                :disabled="true"
                 @input="
                   updateUserObject({
                     variable_path: 'email',
@@ -167,6 +168,76 @@
           </v-row>
         </v-form>
       </v-tab-item>
+
+      <v-tab-item class="mt-4">
+        <v-form v-model="form_valid">
+          <v-row class="flex-column">
+            <v-col cols="12">
+              <v-text-field
+                :value="security.old_password"
+                :rules="oldPasswordRules"
+                :append-icon="show_current_password ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show_current_password ? 'text' : 'password'"
+                :label="$t('Current password')"
+                @click:append="show_current_password = !show_current_password"
+                @input="
+                  updateSecurityObject({
+                    variable_path: 'old_password',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                :append-icon="show_new_password ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show_new_password ? 'text' : 'password'"
+                @click:append="show_new_password = !show_new_password"
+                :rules="newPasswordRules"
+                :label="$t('New password')"
+                :value="security.new_password"
+                required
+                @input="
+                  updateSecurityObject({
+                    variable_path: 'new_password',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12">
+              <v-text-field
+                :append-icon="
+                  show_new_password_confirmation ? 'mdi-eye' : 'mdi-eye-off'
+                "
+                :type="show_new_password_confirmation ? 'text' : 'password'"
+                @click:append="
+                  show_new_password_confirmation =
+                    !show_new_password_confirmation
+                "
+                :rules="newPasswordConfirmationRules"
+                :label="$t('New password confirmation')"
+                :value="security.new_password_confirmation"
+                required
+                @input="
+                  updateSecurityObject({
+                    variable_path: 'new_password_confirmation',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" class="d-flex justify-end">
+              <v-btn depressed color="primary" @click="updateSecurity()">
+                <span v-html="$t('Lưu')"></span>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
@@ -180,6 +251,9 @@ export default {
   mixins: [adminMixins, systemMixins],
   data() {
     return {
+      show_current_password: false,
+      show_new_password_confirmation: false,
+      show_new_password: false,
       admin_types: ["super", "normal"],
       form_valid: false,
       avatar_valid: false,
@@ -229,6 +303,10 @@ export default {
 
     async updateUser() {
       await this.UPDATE_ADMIN({ admin: this.admin });
+    },
+
+    async updateSecurity() {
+      await this.UPDATE_ADMIN_SECURITY({ security_data: this.security });
     },
   },
 

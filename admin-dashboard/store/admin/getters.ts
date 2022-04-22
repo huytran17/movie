@@ -11,6 +11,7 @@ export const getters: GetterTree<AdminState, RootState> = {
   pagination: (state) => state.pagination,
   loading: (state) => state.loading,
   admin: (state) => state.admin,
+  security: (state) => state.security,
 };
 
 export default getters;

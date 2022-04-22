@@ -4,6 +4,14 @@ import { AdminState } from "./index";
 import _ from "lodash";
 
 const mutations: MutationTree<AdminState> = {
+  [MutationTypes.UPDATE_SECURITY_DATA](
+    state,
+    { data, variable_path }: { data: Object | string; variable_path: string }
+  ) {
+    state.security = _.update(state.security, variable_path, (n) => {
+      return data;
+    });
+  },
   /**
    * @description to set the jobs pagination
    * @param state

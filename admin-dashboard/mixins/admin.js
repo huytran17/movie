@@ -17,6 +17,11 @@ export default {
           (v && /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(v)) ||
           this.$t("Phone number must have valid format."),
       ],
+      oldPasswordRules: [
+        (v) => !!v || this.$t("Password is required."),
+        (v) =>
+          (v && v.length > 7) || this.$t("Password must be min 8 characters."),
+      ],
       firstNameRules: [
         (v) => !!v || this.$t("First name is required."),
         (v) =>
@@ -32,6 +37,18 @@ export default {
         (v) => !!v || this.$t("E-mail is required."),
         (v) => /.+@.+\..+/.test(v) || this.$t("E-mail must be valid."),
       ],
+      newPasswordConfirmationRules: [
+        (v) =>
+          (v && v.length > 7) || this.$t("Password must be min 8 characters."),
+        (v) =>
+          this.security.new_password === v ||
+          this.$t("Confirm Password must match Password."),
+      ],
+      newPasswordRules: [
+        (v) => !!v || this.$t("Password is required."),
+        (v) =>
+          (v && v.length > 7) || this.$t("Password must be min 8 characters."),
+      ],
     };
   },
   computed: {
@@ -40,6 +57,7 @@ export default {
       pagination: "admin/pagination",
       admins: "admin/admins",
       admin: "admin/admin",
+      security: "admin/security",
     }),
 
     /**
@@ -65,6 +83,14 @@ export default {
 
     ...mapMutations({
       SET_LOADING: "admin/SET_LOADING",
+      UPDATE_SECURITY_DATA: "admin/UPDATE_SECURITY_DATA",
     }),
+
+    updateSecurityObject({ variable_path, data }) {
+      this.UPDATE_SECURITY_DATA({
+        variable_path,
+        data,
+      });
+    },
   },
 };
