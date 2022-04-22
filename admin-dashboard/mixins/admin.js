@@ -41,7 +41,7 @@ export default {
         (v) =>
           (v && v.length > 7) || this.$t("Password must be min 8 characters."),
         (v) =>
-          this.security.new_password === v ||
+          this.security.password === v ||
           this.$t("Confirm Password must match Password."),
       ],
       newPasswordRules: [
@@ -79,6 +79,7 @@ export default {
       UPDATE_ADMIN: "admin/UPDATE_ADMIN",
       CREATE_ADMIN: "admin/CREATE_ADMIN",
       RESTORE_ADMIN: "admin/RESTORE_ADMIN",
+      UPDATE_ADMIN_SECURITY: "admin/UPDATE_ADMIN_SECURITY",
     }),
 
     ...mapMutations({

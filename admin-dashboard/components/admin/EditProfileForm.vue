@@ -10,7 +10,7 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item class="mt-4">
-        <v-form v-model="form_valid">
+        <v-form v-model="info_form_valid">
           <v-row>
             <v-col cols="12">
               <div
@@ -161,7 +161,12 @@
 
           <v-row>
             <v-col cols="12" class="d-flex justify-end">
-              <v-btn depressed color="primary" @click="updateUser()">
+              <v-btn
+                depressed
+                color="primary"
+                @click="updateUser()"
+                :disabled="!info_form_valid"
+              >
                 <span v-html="$t('Lưu')"></span>
               </v-btn>
             </v-col>
@@ -170,7 +175,7 @@
       </v-tab-item>
 
       <v-tab-item class="mt-4">
-        <v-form v-model="form_valid">
+        <v-form v-model="security_form_valid">
           <v-row class="flex-column">
             <v-col cols="12">
               <v-text-field
@@ -199,7 +204,7 @@
                 required
                 @input="
                   updateSecurityObject({
-                    variable_path: 'new_password',
+                    variable_path: 'password',
                     data: $event,
                   })
                 "
@@ -222,7 +227,7 @@
                 required
                 @input="
                   updateSecurityObject({
-                    variable_path: 'new_password_confirmation',
+                    variable_path: 'password_confirmation',
                     data: $event,
                   })
                 "
@@ -231,7 +236,12 @@
           </v-row>
           <v-row>
             <v-col cols="12" class="d-flex justify-end">
-              <v-btn depressed color="primary" @click="updateSecurity()">
+              <v-btn
+                depressed
+                color="primary"
+                @click="updateSecurity"
+                :disabled="!security_form_valid"
+              >
                 <span v-html="$t('Lưu')"></span>
               </v-btn>
             </v-col>
@@ -255,7 +265,8 @@ export default {
       show_new_password_confirmation: false,
       show_new_password: false,
       admin_types: ["super", "normal"],
-      form_valid: false,
+      info_form_valid: false,
+      security_form_valid: false,
       avatar_valid: false,
       file_of_avatar: null,
       admin_birthday: new Date(Date.now()).toISOString().substr(0, 10),
@@ -306,7 +317,16 @@ export default {
     },
 
     async updateSecurity() {
-      await this.UPDATE_ADMIN_SECURITY({ security_data: this.security });
+      await this.UPDATE_ADMIN_SECURITY({
+        admin_id: this.admin._id,
+        security_data: this.security,
+      }).then((res) => {
+        if (res.is_error) {
+          this.$toast.error(this.$t(res.message));
+          return;
+        }
+        this.$toast.success(this.$t("Updated password successfully!"));
+      });
     },
   },
 

@@ -9,6 +9,7 @@ import {
   getAdminRules,
   createAdminRules,
   restoreAdminRules,
+  updatePasswordRules,
 } from "../../controllers/admin/admin/validators";
 import {
   getAdminController,
@@ -18,6 +19,7 @@ import {
   deleteAdminController,
   createAdminController,
   restoreAdminController,
+  updatePasswordController,
 } from "../../controllers/admin/admin";
 import { upload } from "../../middlewares/file-upload-middleware";
 
@@ -46,6 +48,12 @@ adminRouter.put(
   "/:admin_id",
   makeValidator(updateAdminRules),
   makeExpressCallback(updateAdminController)
+);
+
+adminRouter.put(
+  "/security/:admin_id",
+  makeValidator(updatePasswordRules),
+  makeExpressCallback(updatePasswordController)
 );
 
 adminRouter.get("/", makeExpressCallback(getAdminsController));

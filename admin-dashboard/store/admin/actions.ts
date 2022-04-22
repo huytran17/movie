@@ -40,14 +40,15 @@ const actions: ActionTree<AdminState, RootState> = {
     return data;
   },
 
-  async [ActionTypes.UPDATE_ADMIN_SECURITY]({ commit }, { security_data }) {
-    const { data } = await this.$axios.$put(
-      `/admin/admin/security`,
-      security_data
+  async [ActionTypes.UPDATE_ADMIN_SECURITY](
+    { commit },
+    { security_data, admin_id }
+  ) {
+    const response = await this.$axios.$put(
+      `/admin/admin/security/${admin_id}`,
+      { data: security_data }
     );
-    commit(MutationTypes.SET_ADMIN, { data });
-
-    return data;
+    return response;
   },
 
   /**

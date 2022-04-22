@@ -9,7 +9,7 @@ import {
   getAdminByEmail,
   restoreAdminById,
 } from "../../../use-cases/admin";
-import { hashPassword } from "../../../config/password";
+import { hashPassword, verifyPassword } from "../../../config/password";
 
 import makeGetAdminController from "./get-admin-by-id";
 import makeUpdateAdminController from "./update-admin";
@@ -18,6 +18,15 @@ import makeGetAdminsController from "./get-admins";
 import makeDeleteAdminController from "./delete-admin";
 import makeCreateAdminController from "./create-admin";
 import makeRestoreAdminController from "./restore-admin";
+import makeUpdatePasswordController from "./update-password";
+
+const updatePasswordController = makeUpdatePasswordController({
+  updateAdmin,
+  getAdminById,
+  verifyPassword,
+  hashPassword,
+  mongoose,
+});
 
 const createAdminController = makeCreateAdminController({
   getAdminByEmail,
@@ -66,6 +75,7 @@ export default Object.freeze({
   deleteAdminController,
   createAdminController,
   restoreAdminController,
+  updatePasswordController,
 });
 
 export {
@@ -76,4 +86,5 @@ export {
   deleteAdminController,
   createAdminController,
   restoreAdminController,
+  updatePasswordController,
 };
