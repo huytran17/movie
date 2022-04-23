@@ -30,6 +30,23 @@ export default {
           this.sign_up_data.password === v ||
           this.$t("Confirm Password must match Password."),
       ],
+      newPasswordConfirmationRules: [
+        (v) =>
+          (v && v.length > 7) || this.$t("Password must be min 8 characters."),
+        (v) =>
+          this.security.password === v ||
+          this.$t("Confirm Password must match Password."),
+      ],
+      newPasswordRules: [
+        (v) => !!v || this.$t("Password is required."),
+        (v) =>
+          (v && v.length > 7) || this.$t("Password must be min 8 characters."),
+      ],
+      oldPasswordRules: [
+        (v) => !!v || this.$t("Password is required."),
+        (v) =>
+          (v && v.length > 7) || this.$t("Password must be min 8 characters."),
+      ],
     };
   },
   computed: {
@@ -38,6 +55,7 @@ export default {
       has_user: "auth/has_user",
       sign_in_data: "auth/sign_in_data",
       sign_up_data: "auth/sign_up_data",
+      security: "auth/security",
     }),
   },
   methods: {
@@ -54,6 +72,7 @@ export default {
       SET_SIGN_IN_DATA: "auth/SET_SIGN_IN_DATA",
       SET_SIGN_UP_DATA: "auth/SET_SIGN_UP_DATA",
       UPDATE_USER_STATE: "auth/UPDATE_USER_STATE",
+      UPDATE_SECURITY_DATA: "auth/UPDATE_SECURITY_DATA",
     }),
 
     /**
@@ -61,6 +80,13 @@ export default {
      */
     updateUserObject({ variable_path, data }) {
       this.UPDATE_USER_STATE({
+        variable_path,
+        data,
+      });
+    },
+
+    updateSecurityObject({ variable_path, data }) {
+      this.UPDATE_SECURITY_DATA({
         variable_path,
         data,
       });

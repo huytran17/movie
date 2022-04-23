@@ -24,6 +24,17 @@ export default {
         (v) =>
           (v && v > 0) || "Membership Level must be equal or greater than 1.",
       ],
+      addressRules: [
+        (v) => !!v || this.$t("Address is required."),
+        (v) =>
+          (v && v.length > 19) || this.$t("Address must be min 20 characters."),
+      ],
+      phoneNumberRules: [
+        (v) => !!v || this.$t("Phone number is required."),
+        (v) =>
+          (v && /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(v)) ||
+          this.$t("Phone number must have valid format."),
+      ],
     };
   },
   computed: {

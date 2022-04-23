@@ -4,6 +4,14 @@ import { MutationTypes } from "./mutation-types";
 import _ from "lodash";
 
 const mutations: MutationTree<AuthState> = {
+  [MutationTypes.UPDATE_SECURITY_DATA](
+    state,
+    { data, variable_path }: { data: Object | string; variable_path: string }
+  ) {
+    state.security = _.update(state.security, variable_path, (n) => {
+      return data;
+    });
+  },
   /**
    * set login data
    * @param state

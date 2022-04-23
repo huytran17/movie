@@ -6,11 +6,13 @@ import makeSignInController from "./sign-in";
 import makeVerifyController from "./verify";
 import makeAutoSignInController from "./auto-sign-in";
 import makeGetUserController from "./get-user";
+import makeUpdatePasswordController from "./update-password";
 
 import {
   createUser,
   getUserByEmail,
   getUserById,
+  updateUser,
 } from "../../../use-cases/user";
 
 import { verifyPassword, hashPassword } from "../../../config/password";
@@ -18,6 +20,14 @@ import {
   generateAccessToken,
   verifyAccessToken,
 } from "../../../config/accessTokenManager";
+
+const updatePasswordController = makeUpdatePasswordController({
+  updateUser,
+  getUserById,
+  verifyPassword,
+  hashPassword,
+  mongoose,
+});
 
 const getUserController = makeGetUserController({
   getUserById,
@@ -49,6 +59,7 @@ export default Object.freeze({
   verifyController,
   autoSignInController,
   getUserController,
+  updatePasswordController,
 });
 
 export {
@@ -57,4 +68,5 @@ export {
   verifyController,
   autoSignInController,
   getUserController,
+  updatePasswordController,
 };

@@ -2,27 +2,27 @@ import { Request } from "express";
 import { Mongoose } from "mongoose";
 import * as _ from "lodash";
 
-import { IUpdateAdmin } from "../../../use-cases/admin/update-admin";
-import IAdmin from "../../../interfaces/admin";
-import { IGetAdminById } from "../../../use-cases/admin/get-admin-by-id";
+import { IUpdateUser } from "../../../use-cases/user/update-user";
+import IUser from "../../../interfaces/user";
+import { IGetUserById } from "../../../use-cases/user/get-user-by-id";
 import { IVerifyPassword } from "../../../config/password/verify-password";
 import { IHashPassword } from "../../../config/password/hash-password";
 
 export default function makeUpdatePasswordController({
-  updateAdmin,
-  getAdminById,
+  updateUser,
+  getUserById,
   verifyPassword,
   hashPassword,
   mongoose,
 }: {
-  updateAdmin: IUpdateAdmin;
-  getAdminById: IGetAdminById;
+  updateUser: IUpdateUser;
+  getUserById: IGetUserById;
   verifyPassword: IVerifyPassword;
   hashPassword: IHashPassword;
   mongoose: Mongoose;
 }) {
   return async function updatePasswordController(
-    httpRequest: Request & { context: { validated: { adminDetails: IAdmin } } }
+    httpRequest: Request & { context: { validated: { userDetails: IUser } } }
   ) {
     const headers = {
       "Content-Type": "application/json",
@@ -33,16 +33,16 @@ export default function makeUpdatePasswordController({
         httpRequest,
         "context.validated.data"
       );
-      const { admin_id } = _.get(httpRequest, "context.validated");
+      const { user_id } = _.get(httpRequest, "context.validated");
 
-      const exists = await getAdminById({ id: admin_id });
+      const exists = await getUserById({ id: user_id });
       if (!exists) {
         return {
           headers,
           statusCode: 200,
           body: {
             is_error: true,
-            message: `Admin does not exists.`,
+            message: `User does not exists.`,
           },
         };
       }
@@ -72,15 +72,15 @@ export default function makeUpdatePasswordController({
         hash_password,
       });
 
-      const updatedAdmin = await updateAdmin({
-        adminDetails: update_user_payload,
+      const updatedUser = await updateUser({
+        userDetails: update_user_payload,
       });
 
       return {
         headers,
         statusCode: 200,
         body: {
-          data: updatedAdmin,
+          data: updatedUser,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {

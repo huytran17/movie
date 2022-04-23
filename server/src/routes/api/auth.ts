@@ -4,6 +4,7 @@ import makeExpressCallback from "../../express-callback";
 import {
   signInRules,
   signUpRules,
+  updatePasswordRules,
 } from "../../controllers/api/auth/validators";
 import {
   signUpController,
@@ -11,12 +12,19 @@ import {
   verifyController,
   autoSignInController,
   getUserController,
+  updatePasswordController,
 } from "../../controllers/api/auth";
 
 import authenticateUserJWT from "../../middlewares/authenticateUserJWT";
 import autoSignIn from "../../middlewares/autoSignIn";
 
 const authRouter = express.Router();
+
+authRouter.put(
+  "/security/:user_id",
+  makeValidator(updatePasswordRules),
+  makeExpressCallback(updatePasswordController)
+);
 
 authRouter.get(
   "/",

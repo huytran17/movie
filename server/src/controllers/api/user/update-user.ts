@@ -46,7 +46,7 @@ export default function makeUpdateUserController({
         headers,
         statusCode: 200,
         body: {
-          user: updatedUser,
+          data: updatedUser,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {

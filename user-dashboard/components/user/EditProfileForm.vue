@@ -14,16 +14,16 @@
           <v-row>
             <v-col cols="12">
               <div
-                v-if="get_user_avatar_location"
+                v-if="user_avatar_location"
                 class="d-flex justify-center my-3"
               >
                 <v-img
                   max-height="100px"
                   max-width="100px"
                   contain
-                  :src="get_user_avatar_location"
+                  :src="user_avatar_location"
                   alt="photo-upload"
-                  class="rounded-circle"
+                  class="avatar-border"
                 ></v-img>
               </div>
             </v-col>
@@ -65,6 +65,7 @@
                 :value="user.email"
                 required
                 type="email"
+                :disabled="true"
                 @input="
                   updateUserObject({
                     variable_path: 'email',
@@ -73,46 +74,135 @@
                 "
               ></v-text-field>
             </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                :rules="phoneNumberRules"
+                :label="$t('Phone number')"
+                :value="user.phone_number"
+                required
+                type="tel"
+                @input="
+                  updateUserObject({
+                    variable_path: 'phone_number',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
           </v-row>
 
           <v-row>
-            <v-col cols="12">
-              <div
-                class="wrapper-input-upload mx-auto px-2 d-flex align-center justify-center"
-              >
-                <input
-                  type="file"
-                  multiple
-                  name="file"
-                  @input="inputFile($event)"
-                  accept="image/*"
-                  class="input-upload"
-                />
-                <div class="d-flex justify-center align-center">
-                  <v-spacer></v-spacer>
-                  <div class="d-flex">
-                    <v-icon class="mr-4" size="40">mdi-image-plus</v-icon>
-                    <div>
-                      <span class="font-weight-bold">
-                        <span class="primary--text">Upload</span>
-                        your photo here.
-                      </span>
-                      <br />
-                      <span
-                        >Upload file in JPG, JPEG, or PNG format and maximum
-                        size 5MB</span
-                      >
-                    </div>
-                  </div>
-                  <v-spacer></v-spacer>
-                </div>
-              </div>
+            <v-col cols="12" md="6">
+              <v-text-field
+                :rules="addressRules"
+                :label="$t('Email')"
+                :value="user.address"
+                required
+                type="address"
+                :disabled="true"
+                @input="
+                  updateUserObject({
+                    variable_path: 'address',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-file-input
+                v-model="file_of_avatar"
+                small-chips
+                truncate-length="15"
+                :label="$t('Choose avatar')"
+                @change="uploadAvatar"
+                accept="image/*"
+              ></v-file-input>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="12" class="d-flex justify-end">
-              <v-btn depressed color="primary" @click="updateUser()">
+              <v-btn
+                depressed
+                color="primary"
+                @click="updateUser()"
+                :disabled="!form_valid"
+              >
+                <span v-html="$t('Lưu')"></span>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-tab-item>
+
+      <v-tab-item class="mt-4">
+        <v-form v-model="security_form_valid">
+          <v-row class="flex-column">
+            <v-col cols="12">
+              <v-text-field
+                :value="security.old_password"
+                :rules="oldPasswordRules"
+                :append-icon="show_current_password ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show_current_password ? 'text' : 'password'"
+                :label="$t('Current password')"
+                @click:append="show_current_password = !show_current_password"
+                @input="
+                  updateSecurityObject({
+                    variable_path: 'old_password',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                :append-icon="show_new_password ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show_new_password ? 'text' : 'password'"
+                @click:append="show_new_password = !show_new_password"
+                :rules="newPasswordRules"
+                :label="$t('New password')"
+                :value="security.new_password"
+                required
+                @input="
+                  updateSecurityObject({
+                    variable_path: 'password',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12">
+              <v-text-field
+                :append-icon="
+                  show_new_password_confirmation ? 'mdi-eye' : 'mdi-eye-off'
+                "
+                :type="show_new_password_confirmation ? 'text' : 'password'"
+                @click:append="
+                  show_new_password_confirmation =
+                    !show_new_password_confirmation
+                "
+                :rules="newPasswordConfirmationRules"
+                :label="$t('New password confirmation')"
+                :value="security.new_password_confirmation"
+                required
+                @input="
+                  updateSecurityObject({
+                    variable_path: 'password_confirmation',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" class="d-flex justify-end">
+              <v-btn
+                depressed
+                color="primary"
+                @click="updateSecurity"
+                :disabled="!security_form_valid"
+              >
                 <span v-html="$t('Lưu')"></span>
               </v-btn>
             </v-col>
@@ -135,6 +225,11 @@ export default {
       form_valid: false,
       avatar_valid: false,
       tab: null,
+      file_of_avatar: null,
+      security_form_valid: false,
+      show_new_password_confirmation: false,
+      show_new_password: false,
+      show_current_password: false,
       tab_items: [
         {
           text: "Thông tin chung",
@@ -148,11 +243,47 @@ export default {
     };
   },
   computed: {
-    get_user_avatar_location() {
-      return _.get(this.user, "aws.meta.location", "") || undefined;
+    user_avatar_location() {
+      return _.get(this.user, "aws.meta.location", "");
     },
   },
   methods: {
+    async updateSecurity() {
+      const { is_error, message } = await this.UPDATE_USER_SECURITY({
+        user_id: this.user._id,
+        security_data: this.security,
+      });
+
+      if (is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Updated password successfully!"));
+    },
+    /**
+     * @description input file
+     */
+    async uploadAvatar() {
+      const max_size = 50 * 1024 * 1024; // 5MB
+      const file = this.file_of_avatar;
+      const file_size = _.get(file, "size", max_size + 1);
+
+      if (file && file_size <= max_size) {
+        this.$nextTick(async () => {
+          const { data, is_error, message } = await this.UPDATE_USER_AVATAR({
+            file: this.file_of_avatar,
+            user_id: this.user._id,
+          });
+
+          if (is_error) {
+            this.$toast.error(this.$t(message));
+            return;
+          }
+          this.SET_USER({ data });
+          this.$toast.success(this.$t("Updated successfully!"));
+        });
+      }
+    },
     /**
      * @description input file
      */

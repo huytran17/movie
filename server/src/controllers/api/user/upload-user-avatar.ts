@@ -72,7 +72,7 @@ export default function makeUploadUserAvatarController({
         headers,
         statusCode: 200,
         body: {
-          user: updated_user,
+          data: updated_user,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {

@@ -5,6 +5,19 @@ import { RootState } from "../index";
 import { MutationTypes } from "./mutation-types";
 
 const actions: ActionTree<AuthState, RootState> = {
+  async [ActionTypes.UPDATE_USER_SECURITY](
+    { commit },
+    { security_data, admin_id }
+  ) {
+    const { data, is_error, message } = await this.$axios.$put(
+      `/api/auth/security/${admin_id}`,
+      { data: security_data }
+    );
+    if (!is_error) {
+      commit(MutationTypes.SET_USER, { data });
+    }
+    return { data, is_error, message };
+  },
   /**
    * login
    * @param param0

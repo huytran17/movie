@@ -11,6 +11,7 @@ export const getters: GetterTree<AuthState, RootState> = {
   sign_up_data: (state) => state.sign_up_data,
   has_user: (state) => state.has_user,
   is_edited: (state) => state.is_edited,
+  security: (state) => state.security,
 };
 
 export default getters;

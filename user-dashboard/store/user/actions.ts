@@ -65,13 +65,13 @@ const actions: ActionTree<UserState, RootState> = {
         "Content-Type": "multipart/form-data",
       },
     };
-    const result = await this.$axios.$post(
+    const { data, is_error, message } = await this.$axios.$post(
       `/api/user/upload-avatar/${user_id}`,
       formData,
       config
     );
 
-    return result;
+    return { data, is_error, message };
   },
 };
 

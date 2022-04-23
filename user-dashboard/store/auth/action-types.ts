@@ -3,5 +3,6 @@ export enum ActionTypes {
   SIGN_UP = "SIGN_UP",
   VERIFY = "VERIFY",
   AUTO_SIGN_IN = "AUTO_SIGN_IN",
+  UPDATE_USER_SECURITY = "UPDATE_USER_SECURITY",
   ME = "ME",
 }
