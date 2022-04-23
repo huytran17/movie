@@ -1,8 +1,8 @@
 <template>
-  <v-container class="mt-10 pl-3 pl-lg-15" fluid>
+  <v-container v-if="has_film" class="mt-10 pl-3 pl-lg-15" fluid>
     <v-row>
       <v-col cols="12" lg="9">
-        <Player :options="options()" />
+        <Player :options="options" :key="player_key" />
       </v-col>
       <v-col cols="12" lg="9">
         <v-tabs v-model="tab" class="mb-4">
@@ -186,6 +186,7 @@ export default {
   },
   data() {
     return {
+      player_key: 0,
       countries_mapped: [],
       languages_mapped: [],
       film_id: "",
@@ -209,16 +210,14 @@ export default {
             type: "video/mp4",
             size: 720,
           },
-          {
-            src: "/path/to/movie.webm",
-            type: "video/webm",
-            size: 1080,
-          },
         ],
       },
     };
   },
   computed: {
+    has_film() {
+      return !!this.film;
+    },
     film_duration() {
       const hour = _.get(this.film, "meta.duration.hour", "0");
       const minute = _.get(this.film, "meta.duration.minute", "0");
@@ -232,6 +231,27 @@ export default {
     film_meta() {
       return _.get(this.film, "meta");
     },
+    /**
+     * @description video options
+     */
+    options() {
+      const film_url = _.get(this.film, "aws.meta.location", "");
+      const film_title = _.get(this.film, "title", "");
+      const film_type = _.get(this.film, "aws.mime_type", "");
+
+      return Object.assign(this.default_options, {
+        type: "video",
+        title: film_title,
+        ratio: "16:9",
+        sources: [
+          {
+            src: film_url,
+            type: film_type,
+            size: 720,
+          },
+        ],
+      });
+    },
   },
   methods: {
     joinArray(array, separator) {
@@ -243,26 +263,6 @@ export default {
         film: this.film._id,
       });
       await this.GET_COMMENTS();
-    },
-    /**
-     * @description video options
-     */
-    options() {
-      return Object.assign(this.default_options, {
-        type: "video",
-        title: this.film.title,
-        sources: [
-          {
-            src: this.film.url,
-            type: "mp4",
-            size: 720,
-          },
-          {
-            src: "bTqVqk7FSmY",
-            provider: "youtube",
-          },
-        ],
-      });
     },
   },
   async fetch() {
@@ -276,6 +276,8 @@ export default {
 
       const languages = _.get(this.film, "meta.languages", []);
       this.languages_mapped = this.matchCountries(languages);
+
+      ++this.player_key;
     } catch (e) {
       console.log(e);
     } finally {

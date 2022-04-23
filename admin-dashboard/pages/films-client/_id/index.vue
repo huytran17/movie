@@ -445,11 +445,6 @@ export default {
             type: "video/mp4",
             size: 720,
           },
-          {
-            src: "/path/to/movie.webm",
-            type: "video/webm",
-            size: 1080,
-          },
         ],
       },
       file_of_film: null,
@@ -526,7 +521,6 @@ export default {
           },
           {
             src: "bTqVqk7FSmY",
-            provider: "youtube",
           },
         ],
       });
