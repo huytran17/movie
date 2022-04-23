@@ -21,7 +21,54 @@
                   <v-icon small color="primary">mdi-adjust</v-icon>
                   <span v-html="$t('Series: ')" class="font-weight-bold">
                   </span>
-                  <span v-html="$t(film_series)"></span>
+                  <span
+                    v-if="film_series"
+                    v-html="$t(film_series.title)"
+                    class="primary--text"
+                  ></span>
+                </div>
+
+                <div class="text-body-2 mt-2">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Status: ')" class="font-weight-bold">
+                  </span>
+                  <span
+                    v-if="film_meta"
+                    v-html="$t(film.meta.status)"
+                    class="primary--text text-capitalize"
+                  ></span>
+                </div>
+
+                <div class="text-body-2 mt-2">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Categories: ')" class="font-weight-bold">
+                  </span>
+                  <span
+                    v-html="$t(joinArray(film.categories, ', '))"
+                    class="primary--text text-capitalize"
+                  ></span>
+                </div>
+
+                <div class="text-body-2 mt-2">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Director: ')" class="font-weight-bold">
+                  </span>
+                  <span
+                    v-if="film_meta"
+                    v-html="$t(film.meta.director)"
+                    class="primary--text text-capitalize"
+                  ></span>
+                </div>
+
+                <div class="text-body-2 mt-2">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Country: ')" class="font-weight-bold">
+                  </span>
+                  <span
+                    v-if="film_meta"
+                    v-html="$t(joinArray(film.meta.countries, ', '))"
+                    class="primary--text text-capitalize"
+                  ></span>
                 </div>
               </v-col>
               <v-col cols="12" md="6"></v-col>
@@ -110,7 +157,19 @@ export default {
       },
     };
   },
+  computed: {
+    film_series() {
+      return _.get(this.film, "series");
+    },
+
+    film_meta() {
+      return _.get(this.film, "meta");
+    },
+  },
   methods: {
+    joinArray(array, separator) {
+      return _.join(array, separator);
+    },
     async createComment() {
       await this.CREATE_COMMENT({
         user: this.user._id,

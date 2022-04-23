@@ -173,7 +173,10 @@ export default function makeFilmDb({
         return null;
       }
 
-      const existing = await filmDbModel.findById(id).lean({ virtuals: true });
+      const existing = await filmDbModel
+        .findById(id)
+        .populate("series", "-__v")
+        .lean({ virtuals: true });
 
       if (existing) {
         return new Film(existing);

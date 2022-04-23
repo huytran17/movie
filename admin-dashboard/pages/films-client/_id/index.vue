@@ -172,7 +172,6 @@
                 label="Series"
                 item-text="title"
                 item-value="_id"
-                multiple
                 chips
                 clearable
                 deletable-chips
