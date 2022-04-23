@@ -75,7 +75,7 @@ export default function makeFilmDb({
      * @returns
      */
     async findAll(): Promise<Film[] | null> {
-      const query_conditions = { deleted_at: undefined };
+      const query_conditions = { deleted_at: { $in: [undefined, null] } };
       const existing = await filmDbModel
         .find(query_conditions)
         .populate({

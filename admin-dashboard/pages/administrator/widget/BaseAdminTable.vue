@@ -198,11 +198,15 @@ export default {
     },
 
     async deleteAdmin() {
-      await Promise.all([
+      const [{ is_error, message }] = await Promise.all([
         this.DELETE_ADMIN({ admin_id: this.choosen_admin._id }),
         this.GET_ADMINS(),
       ]);
-
+      if (!!is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Deleted admin successfully!"));
       this.show_confirm_dialog = false;
     },
 

@@ -107,8 +107,6 @@ const actions: ActionTree<FilmState, RootState> = {
       config
     );
 
-    console.log(data);
-
     if (!is_error) {
       commit(MutationTypes.SET_FILM, { data });
     }
@@ -135,9 +133,11 @@ const actions: ActionTree<FilmState, RootState> = {
    * @param {is_published: boolean}
    */
   async [ActionTypes.DELETE_FILM]({ commit }, { film_id }) {
-    const result = await this.$axios.$delete(`/admin/film/delete/${film_id}`);
+    const { data, is_error, message } = await this.$axios.$delete(
+      `/admin/film/delete/${film_id}`
+    );
 
-    return result;
+    return { data, is_error, message };
   },
 };
 

@@ -30,7 +30,7 @@ export default function makeUploadUserAvatarController({
       if (!exists) {
         return {
           headers,
-          statusCode: 200,
+          statusCode: 200, //FIXME: tech debt
           body: {
             is_error: true,
             message: "User does not exists.",

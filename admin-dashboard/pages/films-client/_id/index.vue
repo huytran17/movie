@@ -531,6 +531,7 @@ export default {
             return;
           }
           this.$toast.success(this.$t("Updated film successfully!"));
+          location.reload();
         });
       }
     },

@@ -156,11 +156,15 @@ export default {
   },
   methods: {
     async deleteUser() {
-      await Promise.all([
+      const [{ is_error, message }] = await Promise.all([
         this.DELETE_USER({ user_id: this.choosen_user._id }),
         this.GET_USERS(),
       ]);
-
+      if (!!is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Deleted user successfully!"));
       this.show_confirm_dialog = false;
     },
 

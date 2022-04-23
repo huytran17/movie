@@ -138,11 +138,15 @@ export default {
   },
   methods: {
     async deleteFeedback() {
-      await Promise.all([
+      const [{ is_error, message }] = await Promise.all([
         this.DELETE_FEEDBACK({ feedback_id: this.choosen_feedback._id }),
         this.GET_FEEDBACKS(),
       ]);
-
+      if (!!is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Deleted feedback successfully!"));
       this.show_confirm_dialog = false;
     },
     async openDeleteFilmConfirmDialog({ feedback }) {
