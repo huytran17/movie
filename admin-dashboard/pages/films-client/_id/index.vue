@@ -55,7 +55,7 @@
             clearable
             deletable-chips
             small-chips
-            @input="updateInput({ variable_path: 'category', data: $event })"
+            @input="updateInput({ variable_path: 'categories', data: $event })"
           ></v-autocomplete>
         </v-col>
       </v-row>
@@ -215,18 +215,21 @@
           ></v-autocomplete>
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field
+          <v-autocomplete
             :value="getFilmMetaData('quality')"
-            :label="$t('Quality')"
-            :rules="qualityRules"
-            required
+            :items="qualities"
+            chips
+            clearable
+            deletable-chips
+            small-chips
             @input="
               updateInput({
                 variable_path: 'meta.quality',
                 data: $event,
               })
             "
-          ></v-text-field>
+            :label="$t('Quality')"
+          ></v-autocomplete>
         </v-col>
       </v-row>
 
@@ -273,7 +276,6 @@
             :value="getFilmMetaData('status')"
             :items="statuses"
             chips
-            multiple
             clearable
             deletable-chips
             small-chips

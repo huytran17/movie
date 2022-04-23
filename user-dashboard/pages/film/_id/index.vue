@@ -4,6 +4,31 @@
       <v-col cols="12" lg="9">
         <Player :options="options()" />
       </v-col>
+      <v-col cols="12" lg="9">
+        <v-tabs v-model="tab">
+          <v-tabs-slider></v-tabs-slider>
+
+          <v-tab v-for="(tab_item, index) in tab_items" :key="index">
+            {{ tab_item.text }}
+          </v-tab>
+        </v-tabs>
+
+        <v-tabs-items v-model="tab">
+          <v-tab-item class="mt-4">
+            <v-row>
+              <v-col cols="12" md="6">
+                <div class="text-body-2">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Series: ')" class="font-weight-bold">
+                  </span>
+                  <span v-html="$t(film_series)"></span>
+                </div>
+              </v-col>
+              <v-col cols="12" md="6"></v-col>
+            </v-row>
+          </v-tab-item>
+        </v-tabs-items>
+      </v-col>
       <v-col cols="12" lg="3">
         <BaseSuggestionList :category="film.category" :exclude_id="film_id" />
       </v-col>
@@ -24,8 +49,10 @@
         <BaseCommentList />
       </v-col>
 
-      <v-col cols="12" lg="3"> <BaseFeedbacksList :film_id="film_id" /> </v-col
-    ></v-row>
+      <v-col cols="12" lg="3">
+        <BaseFeedbacksList :film_id="film_id" />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -54,6 +81,17 @@ export default {
   data() {
     return {
       film_id: "",
+      tab: "information",
+      tab_items: [
+        {
+          text: "Information",
+          value: "information",
+        },
+        {
+          text: "Trailer",
+          value: "trailer",
+        },
+      ],
       default_options: {
         type: "video",
         title: "Example title",
