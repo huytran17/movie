@@ -42,7 +42,7 @@ const filmSchema = new Schema({
     countries: [{ type: String, trim: true }],
     rating: { type: String, trim: true, default: "" },
     languages: [{ type: String, trim: true }],
-    film_studio: { type: String, trim: true, default: "" },
+    studio: { type: String, trim: true, default: "" },
     status: {
       type: String,
       trim: true,

@@ -189,10 +189,10 @@
         </v-col>
         <v-col cols="12" md="6" class="pt-0">
           <v-text-field
-            :value="new_film.meta.film_studio"
+            :value="new_film.meta.studio"
             @input="
               updateInput({
-                variable_path: 'meta.film_studio',
+                variable_path: 'meta.studio',
                 data: $event,
               })
             "

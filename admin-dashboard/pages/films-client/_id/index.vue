@@ -289,13 +289,13 @@
         </v-col>
         <v-col cols="12" md="6">
           <v-text-field
-            :value="getFilmMetaData('film_studio')"
+            :value="getFilmMetaData('studio')"
             :label="$t('Studio')"
             :rules="studioRules"
             required
             @input="
               updateInput({
-                variable_path: 'meta.film_studio',
+                variable_path: 'meta.studio',
                 data: $event,
               })
             "

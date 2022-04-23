@@ -18,7 +18,7 @@ export default interface IAdmin {
     status: string;
     tags: string[];
     age_limit: number;
-    film_studio: string;
+    studio: string;
     manufactured_at: Date;
     released_at: Date;
   };

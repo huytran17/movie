@@ -19,7 +19,7 @@ export default class Film implements IFilm {
     rating: string;
     languages: string[];
     status: string;
-    film_studio: string;
+    studio: string;
     tags: string[];
     age_limit: number;
     manufactured_at: Date;

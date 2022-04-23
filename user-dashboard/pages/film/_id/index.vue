@@ -5,7 +5,7 @@
         <Player :options="options()" />
       </v-col>
       <v-col cols="12" lg="9">
-        <v-tabs v-model="tab">
+        <v-tabs v-model="tab" class="mb-4">
           <v-tabs-slider></v-tabs-slider>
 
           <v-tab v-for="(tab_item, index) in tab_items" :key="index">
@@ -14,7 +14,7 @@
         </v-tabs>
 
         <v-tabs-items v-model="tab">
-          <v-tab-item class="mt-4">
+          <v-tab-item>
             <v-row>
               <v-col cols="12" md="6">
                 <div class="text-body-2">
@@ -28,7 +28,7 @@
                   ></span>
                 </div>
 
-                <div class="text-body-2 mt-2">
+                <div class="text-body-2 mt-4">
                   <v-icon small color="primary">mdi-adjust</v-icon>
                   <span v-html="$t('Status: ')" class="font-weight-bold">
                   </span>
@@ -39,7 +39,7 @@
                   ></span>
                 </div>
 
-                <div class="text-body-2 mt-2">
+                <div class="text-body-2 mt-4">
                   <v-icon small color="primary">mdi-adjust</v-icon>
                   <span v-html="$t('Categories: ')" class="font-weight-bold">
                   </span>
@@ -49,7 +49,7 @@
                   ></span>
                 </div>
 
-                <div class="text-body-2 mt-2">
+                <div class="text-body-2 mt-4">
                   <v-icon small color="primary">mdi-adjust</v-icon>
                   <span v-html="$t('Director: ')" class="font-weight-bold">
                   </span>
@@ -60,18 +60,47 @@
                   ></span>
                 </div>
 
-                <div class="text-body-2 mt-2">
+                <div class="text-body-2 mt-4">
                   <v-icon small color="primary">mdi-adjust</v-icon>
                   <span v-html="$t('Country: ')" class="font-weight-bold">
                   </span>
                   <span
-                    v-if="film_meta"
-                    v-html="$t(joinArray(film.meta.countries, ', '))"
+                    v-html="$t(joinArray(countries_mapped, ', '))"
                     class="primary--text text-capitalize"
                   ></span>
                 </div>
               </v-col>
-              <v-col cols="12" md="6"></v-col>
+              <v-col cols="12" md="6" class="pt-0 pt-md-4">
+                <div class="text-body-2 mt-0 mt-md-4">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Quality: ')" class="font-weight-bold">
+                  </span>
+                  <span
+                    v-if="film_meta"
+                    v-html="$t(film.meta.quality)"
+                    class="primary--text text-capitalize"
+                  ></span>
+                </div>
+                <div class="text-body-2 mt-4">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Languages: ')" class="font-weight-bold">
+                  </span>
+                  <span
+                    v-html="$t(joinArray(languages_mapped, ', '))"
+                    class="primary--text text-capitalize"
+                  ></span>
+                </div>
+                <div class="text-body-2 mt-4">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Studio: ')" class="font-weight-bold">
+                  </span>
+                  <span
+                    v-if="film_meta"
+                    v-html="$t(film.meta.studio)"
+                    class="primary--text text-capitalize"
+                  ></span>
+                </div>
+              </v-col>
             </v-row>
           </v-tab-item>
         </v-tabs-items>
@@ -108,6 +137,8 @@ import filmMixins from "@/mixins/film";
 import commentMixins from "@/mixins/comment";
 import userMixins from "@/mixins/user";
 import authMixins from "@/mixins/auth";
+import countriesMixins from "@/mixins/countries";
+import languagesMixins from "@/mixins/languages";
 
 import BaseFeedbacksList from "@/pages/feedback/BaseFeedbacksList";
 import BaseSuggestionList from "@/pages/film/widget/BaseSuggestionList";
@@ -117,7 +148,14 @@ import Player from "@/components/Player";
 
 export default {
   name: "FilmPlayer",
-  mixins: [filmMixins, commentMixins, userMixins, authMixins],
+  mixins: [
+    filmMixins,
+    commentMixins,
+    userMixins,
+    authMixins,
+    countriesMixins,
+    languagesMixins,
+  ],
   components: {
     BaseSuggestionList,
     BaseCommentForm,
@@ -127,6 +165,8 @@ export default {
   },
   data() {
     return {
+      countries_mapped: [],
+      languages_mapped: [],
       film_id: "",
       tab: "information",
       tab_items: [
@@ -203,6 +243,12 @@ export default {
       this.SET_LOADING({ data: true });
       this.film_id = this.$route.params.id;
       await this.GET_FILM({ film_id: this.film_id });
+
+      const countries = _.get(this.film, "meta.countries", []);
+      this.countries_mapped = this.matchCountries(countries);
+
+      const languages = _.get(this.film, "meta.languages", []);
+      this.languages_mapped = this.matchCountries(languages);
     } catch (e) {
       console.log(e);
     } finally {
