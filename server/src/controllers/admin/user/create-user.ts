@@ -34,7 +34,7 @@ export default function makeCreateUserController({
       const { password, password_confirmation, email: _email } = user;
       const email = _email.toLowerCase();
       const exists = await getUserByEmail({ email });
-      if (!exists) {
+      if (exists) {
         return {
           headers,
           statusCode: 200,

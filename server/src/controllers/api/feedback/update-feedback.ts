@@ -33,7 +33,14 @@ export default function makeUpdateFeedbackController({
       const { _id } = feedbackDetails; // the feedback's ID
       const exists = await getFeedbackById({ id: _id });
       if (!exists) {
-        throw new Error(`Feedback by ${_id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Feedback does not exists.",
+          },
+        };
       }
 
       const updatedFeedback = await updateFeedback({

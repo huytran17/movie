@@ -30,7 +30,14 @@ export default function makeGetUserBySlugController({
 
       const user_exists = user_by_id_exists || user_by_slug_exists;
       if (!user_exists) {
-        throw new Error(`User ${slug} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "User does not exists.",
+          },
+        };
       }
 
       return {

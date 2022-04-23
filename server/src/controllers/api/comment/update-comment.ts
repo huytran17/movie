@@ -33,7 +33,14 @@ export default function makeUpdateCommentController({
       const { _id } = commentDetails; // the comment's ID
       const exists = await getCommentById({ id: _id });
       if (!exists) {
-        throw new Error(`Comment by ${_id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Comment does not exists.",
+          },
+        };
       }
 
       const updatedComment = await updateComment({

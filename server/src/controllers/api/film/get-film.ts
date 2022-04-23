@@ -20,6 +20,16 @@ export default function makeGetFilmController({
       );
 
       const film = await getFilmById({ id: film_id });
+      if (!film) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Film does not exists.",
+          },
+        };
+      }
 
       return {
         headers,

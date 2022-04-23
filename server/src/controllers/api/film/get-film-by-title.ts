@@ -21,6 +21,16 @@ export default function makeGetFilmByTitleController({
       );
 
       const film = await getFilmByTitle({ title });
+      if (!film) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Film does not exists.",
+          },
+        };
+      }
 
       return {
         headers,

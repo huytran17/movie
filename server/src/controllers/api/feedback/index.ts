@@ -30,6 +30,7 @@ const createFeedbackController = makeCreateFeedbackController({
 
 const deleteFeedbackController = makeDeleteFeedbackController({
   deleteFeedbackById: removeFeedback,
+  getFeedbackById,
 });
 /**
  * @description update feedback's details excluding password

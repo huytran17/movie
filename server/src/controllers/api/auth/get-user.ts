@@ -21,7 +21,15 @@ export default function makeGetUserController({
       const { _id: id }: User = _.get(httpRequest, "context.user");
       const user = await getUserById({ id });
       if (!user) {
-        throw new Error(`User by ${id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            user: null,
+            message: "User does not exists.",
+          },
+        };
       }
 
       return {

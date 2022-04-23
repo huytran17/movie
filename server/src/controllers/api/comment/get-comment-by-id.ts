@@ -17,12 +17,23 @@ export default function makeGetCommentByCommentnameController({
     try {
       const { id }: { id: string } = _.get(httpRequest, "context.validated");
 
-      const comment = await getCommentById({ id });
+      const exists = await getCommentById({ id });
+
+      if (!exists) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Comment does not exists.",
+          },
+        };
+      }
 
       return {
         headers,
         statusCode: 200,
-        body: { data: comment }, // TODO: add in implementation of resource
+        body: { data: exists }, // TODO: add in implementation of resource
       };
     } catch (err) {
       // TODO: add in error handling here

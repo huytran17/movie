@@ -1,11 +1,14 @@
 import { Request } from "express";
 import * as _ from "lodash";
 import { IRemoveCommentById } from "../../../use-cases/comment/delete-comment-by-id";
+import { IGetCommentById } from "../../../use-cases/comment/get-comment-by-id";
 
 export default function makeDeleteCommentController({
   deleteCommentById,
+  getCommentById,
 }: {
   deleteCommentById: IRemoveCommentById;
+  getCommentById: IGetCommentById;
 }) {
   return async function deleteCommentController(
     httpRequest: Request & { context: { validated: { _id: string } } }
@@ -18,6 +21,18 @@ export default function makeDeleteCommentController({
         httpRequest,
         "context.validated"
       );
+
+      const exists = await getCommentById({ id: comment_id });
+      if (!exists) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Comment does not exists.",
+          },
+        };
+      }
 
       const comment = await deleteCommentById({ id: comment_id });
 

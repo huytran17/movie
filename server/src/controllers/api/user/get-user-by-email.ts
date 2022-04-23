@@ -21,6 +21,16 @@ export default function makeGetUserByUsernameController({
       );
 
       const user = await getUserByEmail({ email });
+      if (!user) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "User does not exists.",
+          },
+        };
+      }
 
       return {
         headers,

@@ -28,12 +28,26 @@ export default function makeUploadUserAvatarController({
 
       const exists = await getUserById({ id: user_id });
       if (!exists) {
-        throw new Error(`User by ${user_id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "User does not exists.",
+          },
+        };
       }
 
       const file = _.get(httpRequest, "context.file");
       if (!file) {
-        throw new Error(`File does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "User does not exists.",
+          },
+        };
       }
 
       const aws_payload = {
