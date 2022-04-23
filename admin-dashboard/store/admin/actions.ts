@@ -95,7 +95,9 @@ const actions: ActionTree<AdminState, RootState> = {
       config
     );
 
-    commit(MutationTypes.SET_ADMIN, { data });
+    if (!is_error) {
+      commit(MutationTypes.SET_ADMIN, { data });
+    }
 
     return { data, is_error, message };
   },
