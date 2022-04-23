@@ -5,6 +5,8 @@ export default {
   data() {
     return {
       titleRules: [(v) => !!v || this.$t("Title is required.")],
+      hourRules: [(v) => !!v || this.$t("Duration is required.")],
+      minuteRules: [(v) => !!v || this.$t("Duration is required.")],
       ageLimitRules: [(v) => !!v || this.$t("Age limit is required.")],
       studioRules: [(v) => !!v || this.$t("Studio is required.")],
       ratingRules: [(v) => !!v || this.$t("Rating is required.")],

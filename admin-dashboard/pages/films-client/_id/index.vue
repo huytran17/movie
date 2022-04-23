@@ -322,6 +322,41 @@
             :label="$t('Tags')"
           ></v-autocomplete>
         </v-col>
+
+        <v-col cols="12" md="6">
+          <v-row>
+            <v-col cols="6">
+              <v-text-field
+                :value="getFilmMetaData('duration.hour')"
+                :label="$t('Duration: Hour')"
+                :rules="hourRules"
+                required
+                type="number"
+                @input="
+                  updateInput({
+                    variable_path: 'meta.duration.hour',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                :value="getFilmMetaData('duration.minute')"
+                :label="$t('Duration: Minute')"
+                :rules="minuteRules"
+                required
+                type="number"
+                @input="
+                  updateInput({
+                    variable_path: 'meta.duration.minute',
+                    data: $event,
+                  })
+                "
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-col>
       </v-row>
 
       <v-row class="mt-5">

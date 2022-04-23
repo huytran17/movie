@@ -44,7 +44,18 @@
                   <span v-html="$t('Categories: ')" class="font-weight-bold">
                   </span>
                   <span
-                    v-html="$t(joinArray(film.categories, ', '))"
+                    v-html="$t(joinArray(film.categories || [], ', '))"
+                    class="primary--text text-capitalize"
+                  ></span>
+                </div>
+
+                <div class="text-body-2 mt-4">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Actors: ')" class="font-weight-bold">
+                  </span>
+                  <span
+                    v-if="film_meta"
+                    v-html="$t(joinArray(film.meta.actors || [], ', '))"
                     class="primary--text text-capitalize"
                   ></span>
                 </div>
@@ -97,6 +108,16 @@
                   <span
                     v-if="film_meta"
                     v-html="$t(film.meta.studio)"
+                    class="primary--text text-capitalize"
+                  ></span>
+                </div>
+                <div class="text-body-2 mt-4">
+                  <v-icon small color="primary">mdi-adjust</v-icon>
+                  <span v-html="$t('Duration: ')" class="font-weight-bold">
+                  </span>
+                  <span
+                    v-if="film_meta"
+                    v-html="$t(film_duration)"
                     class="primary--text text-capitalize"
                   ></span>
                 </div>
@@ -198,6 +219,12 @@ export default {
     };
   },
   computed: {
+    film_duration() {
+      const hour = _.get(this.film, "meta.duration.hour", "0");
+      const minute = _.get(this.film, "meta.duration.minute", "0");
+      const duration = `${hour}:${minute}`;
+      return duration;
+    },
     film_series() {
       return _.get(this.film, "series");
     },

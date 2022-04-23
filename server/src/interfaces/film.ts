@@ -10,7 +10,10 @@ export default interface IAdmin {
     view_count: number;
     director: string;
     actors: string[];
-    total_time: string;
+    duration: {
+      hour: string;
+      minute: string;
+    };
     countries: string[];
     quality: string;
     rating: string;
