@@ -7,10 +7,10 @@ import { MutationTypes } from "./mutation-types";
 const actions: ActionTree<AuthState, RootState> = {
   async [ActionTypes.UPDATE_USER_SECURITY](
     { commit },
-    { security_data, admin_id }
+    { security_data, user_id }
   ) {
     const { data, is_error, message } = await this.$axios.$put(
-      `/api/auth/security/${admin_id}`,
+      `/api/auth/security/${user_id}`,
       { data: security_data }
     );
     if (!is_error) {
