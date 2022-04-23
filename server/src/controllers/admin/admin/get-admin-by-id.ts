@@ -20,12 +20,22 @@ export default function makeGetAdminByAdminnameController({
         "context.validated"
       );
 
-      const admin = await getAdminById({ id: admin_id });
+      const exists = await getAdminById({ id: admin_id });
+      if (!exists) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Admin does not exist.",
+          },
+        };
+      }
 
       return {
         headers,
         statusCode: 200,
-        body: { data: admin }, // TODO: add in implementation of resource
+        body: { data: exists }, // TODO: add in implementation of resource
       };
     } catch (err) {
       // TODO: add in error handling here

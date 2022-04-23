@@ -28,7 +28,16 @@ export default function makeUpdateUserController({
       const { _id: user_id } = userDetails; // the user's ID
       const exists = await getUserById({ id: user_id });
       if (!exists) {
-        throw new Error(`User by ${user_id} does not exists.`);
+        if (!exists) {
+          return {
+            headers,
+            statusCode: 200,
+            body: {
+              is_error: true,
+              message: "User does not exist.",
+            },
+          };
+        }
       }
 
       const updatedUser = await updateUser({

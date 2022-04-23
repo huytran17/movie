@@ -33,11 +33,14 @@ const actions: ActionTree<SeriesState, RootState> = {
    * @param param1
    */
   async [ActionTypes.CREATE_SERIES]({ commit, state }) {
-    const result = await this.$axios.$post(`/admin/series/create-series`, {
-      data: state.new_series,
-    });
+    const { data, is_error, message } = await this.$axios.$post(
+      `/admin/series/create-series`,
+      {
+        data: state.new_series,
+      }
+    );
 
-    return result;
+    return { data, is_error, message };
   },
 
   /**
@@ -47,11 +50,14 @@ const actions: ActionTree<SeriesState, RootState> = {
    * @param param1
    */
   async [ActionTypes.UPDATE_SERIES]({ commit, state }, { series_id }) {
-    const { data } = await this.$axios.$put(`/admin/series/${series_id}`, {
-      data: state.series,
-    });
+    const { data, is_error, message } = await this.$axios.$put(
+      `/admin/series/${series_id}`,
+      {
+        data: state.series,
+      }
+    );
 
-    return data;
+    return { data, is_error, message };
   },
   /**
    * @Description publish a series to show on mobile app

@@ -8,8 +8,10 @@ import {
   updateUser,
   getUsers,
   deleteUserById,
+  createUser,
 } from "../../../use-cases/user";
 import makeGetUserController from "./get-user";
+import { hashPassword } from "../../../config/password";
 
 import makeGetUserBySlugController from "./get-user-by-slug";
 import makeGetUserByUsernameController from "./get-user-by-username";
@@ -18,8 +20,17 @@ import makeUpdateUserController from "./update-user";
 import makeUploadUserAvatarController from "./upload-user-avatar";
 import makeGetUsersController from "./get-users";
 import makeDeleteUserController from "./delete-user";
+import makeCreateUserController from "./create-user";
 
-const deleteUserController = makeDeleteUserController({ deleteUserById });
+const createUserController = makeCreateUserController({
+  getUserByEmail,
+  createUser,
+  hashPassword,
+});
+const deleteUserController = makeDeleteUserController({
+  deleteUserById,
+  getUserById,
+});
 /**
  * @description update user's details excluding password
  */
@@ -82,6 +93,7 @@ export default Object.freeze({
   uploadUserAvatarController,
   getUsersController,
   deleteUserController,
+  createUserController,
 });
 
 export {
@@ -93,4 +105,5 @@ export {
   uploadUserAvatarController,
   getUsersController,
   deleteUserController,
+  createUserController,
 };

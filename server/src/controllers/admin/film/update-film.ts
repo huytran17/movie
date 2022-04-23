@@ -28,7 +28,14 @@ export default function makeUpdateFilmController({
       const { _id } = filmDetails; // the film's ID
       const exists = await getFilmById({ id: _id });
       if (!exists) {
-        throw new Error(`Film by ${_id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: `Film does not exists.`,
+          },
+        };
       }
 
       const actors = _.get(filmDetails, "meta.actors", "");

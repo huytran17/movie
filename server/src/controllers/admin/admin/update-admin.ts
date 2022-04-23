@@ -28,7 +28,14 @@ export default function makeUpdateAdminController({
       const { _id: admin_id } = adminDetails; // the admin's ID
       const exists = await getAdminById({ id: admin_id });
       if (!exists) {
-        throw new Error(`Admin by ${admin_id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Admin does not exist.",
+          },
+        };
       }
 
       const updatedAdmin = await updateAdmin({
@@ -39,7 +46,7 @@ export default function makeUpdateAdminController({
         headers,
         statusCode: 200,
         body: {
-          admin: updatedAdmin,
+          data: updatedAdmin,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {

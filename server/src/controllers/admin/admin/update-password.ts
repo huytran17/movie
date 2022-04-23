@@ -73,7 +73,7 @@ export default function makeUpdatePasswordController({
         headers,
         statusCode: 200,
         body: {
-          admin: updatedAdmin,
+          data: updatedAdmin,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {

@@ -28,12 +28,26 @@ export default function makeUploadFilmAvatarController({
 
       const exists = await getFilmById({ id: film_id });
       if (!exists) {
-        throw new Error(`Film by ${film_id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: `Film does not exists.`,
+          },
+        };
       }
 
       const file = _.get(httpRequest, "context.file");
       if (!file) {
-        throw new Error(`File does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: `File does not exists.`,
+          },
+        };
       }
 
       const aws_payload = {

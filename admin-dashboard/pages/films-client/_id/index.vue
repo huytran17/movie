@@ -31,12 +31,16 @@
       <v-row>
         <v-col cols="12" md="6">
           <v-text-field
-            :rules="urlRules"
-            :label="$t('URL Film')"
-            :value="film.url"
+            :value="getFilmMetaData('age_limit')"
+            :label="$t('Age limit')"
+            :rules="ageLimitRules"
             required
-            type="email"
-            @input="updateInput({ variable_path: 'url', data: $event })"
+            @input="
+              updateInput({
+                variable_path: 'meta.age_limit',
+                data: $event,
+              })
+            "
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
@@ -285,7 +289,7 @@
         <v-col cols="12" md="6">
           <v-text-field
             :value="getFilmMetaData('film_studio')"
-            :label="$t('Quality')"
+            :label="$t('Studio')"
             :rules="studioRules"
             required
             @input="
@@ -316,20 +320,6 @@
             "
             :label="$t('Tags')"
           ></v-autocomplete>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field
-            :value="getFilmMetaData('age_limit')"
-            :label="$t('Age limit')"
-            :rules="ageLimitRules"
-            required
-            @input="
-              updateInput({
-                variable_path: 'meta.age_limit',
-                data: $event,
-              })
-            "
-          ></v-text-field>
         </v-col>
       </v-row>
 
@@ -508,7 +498,14 @@ export default {
   },
   methods: {
     async updateFilm() {
-      await this.UPDATE_FILM({ film_id: this.film._id });
+      const { is_error, message } = await this.UPDATE_FILM({
+        film_id: this.film._id,
+      });
+      if (is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Updated film successfully!"));
     },
 
     updateInput({ variable_path, data }) {
@@ -524,12 +521,16 @@ export default {
 
       if (file && file_size <= max_size) {
         this.$nextTick(async () => {
-          await this.UPLOAD_FILM({
+          const { is_error, message } = await this.UPLOAD_FILM({
             file: this.file_of_film,
             film_id: this.film._id,
           });
 
-          location.reload();
+          if (is_error) {
+            this.$toast.error(this.$t(message));
+            return;
+          }
+          this.$toast.success(this.$t("Updated film successfully!"));
         });
       }
     },
@@ -540,11 +541,15 @@ export default {
 
       if (file && file_size <= max_size) {
         this.$nextTick(async () => {
-          await this.UPDATE_FILM_THUMBNAIL({
+          const { is_error, message } = await this.UPDATE_FILM_THUMBNAIL({
             file: this.file_of_film_thumbnail,
             film_id: this.film._id,
           });
-          this.$forceUpdate();
+          if (is_error) {
+            this.$toast.error(this.$t(message));
+            return;
+          }
+          this.$toast.success(this.$t("Updated film successfully!"));
         });
       }
     },

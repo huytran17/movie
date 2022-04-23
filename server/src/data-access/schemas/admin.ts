@@ -16,7 +16,7 @@ const adminSchema = new Schema({
     lowercase: true,
   },
   email: { type: String, trim: true, lowercase: true },
-  phone_number: { type: Number },
+  phone_number: { type: String, trim: true },
   address: { type: String, trim: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },

@@ -30,7 +30,14 @@ export default function makeGetFilmBySlugController({
 
       const film_exists = film_by_id_exists || film_by_slug_exists;
       if (!film_exists) {
-        throw new Error(`Film ${slug} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: `Film does not exists.`,
+          },
+        };
       }
 
       return {

@@ -90,7 +90,16 @@ export default {
   mixins: [userMixins, authMixins, adminMixins],
   methods: {
     async createUser() {
-      await this.CREATE_USER({ user_data: this.sign_up_data });
+      const { is_error, message } = await this.CREATE_USER({
+        user: this.sign_up_data,
+      });
+
+      if (is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Created user successfully!"));
+      this.$router.push(this.localePath("/users-client"));
     },
 
     updateInput({ variable_path, data }) {

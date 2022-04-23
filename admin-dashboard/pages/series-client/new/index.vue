@@ -47,7 +47,12 @@ export default {
   },
   methods: {
     async createSeries() {
-      await this.CREATE_SERIES();
+      const { is_error, message } = await this.CREATE_SERIES();
+      if (is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Created series successfully!"));
       this.$router.push(this.localePath("/series-client"));
     },
 

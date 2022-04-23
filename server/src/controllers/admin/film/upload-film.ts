@@ -28,12 +28,26 @@ export default function makeUploadFilmController({
 
       const exists = await getFilmById({ id: film_id });
       if (!exists) {
-        throw new Error(`Film by ${film_id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: `Film does not exists.`,
+          },
+        };
       }
 
       const file = _.get(httpRequest, "context.file");
       if (!file) {
-        throw new Error(`File does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: `File does not exists.`,
+          },
+        };
       }
 
       const aws_payload = {
@@ -48,17 +62,19 @@ export default function makeUploadFilmController({
         },
       };
 
-      const new_event = Object.assign({}, exists, {
+      const updated_film = Object.assign({}, exists, {
         aws: aws_payload,
       });
 
-      const updated_event = await updateFilm({ filmDetails: new_event });
+      const final_updated_film = await updateFilm({
+        filmDetails: updated_film,
+      });
 
       return {
         headers,
         statusCode: 200,
         body: {
-          event: updated_event,
+          data: final_updated_film,
         }, // TODO: add in implementation of resource
       };
     } catch (err) {

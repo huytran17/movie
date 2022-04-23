@@ -54,6 +54,20 @@ const actions: ActionTree<UserState, RootState> = {
     return result;
   },
 
+  /**
+   *
+   * @description create user
+   * @param param0
+   * @param param1
+   */
+  async [ActionTypes.CREATE_USER]({ commit }, { user }) {
+    const { data, is_error, message } = await this.$axios.$post(
+      `/admin/user/`,
+      { data: user }
+    );
+    return { data, is_error, message };
+  },
+
   /**UPLOAD_EVENT_IMAGE
    * @Description upload a user's profile image
    * @param param0

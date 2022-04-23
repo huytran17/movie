@@ -17,12 +17,23 @@ export default function makeGetFilmByFilmnameController({
     try {
       const { id }: { id: string } = _.get(httpRequest, "context.validated");
 
-      const film = await getFilmById({ id });
+      const exists = await getFilmById({ id });
+
+      if (!exists) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: `Film does not exists.`,
+          },
+        };
+      }
 
       return {
         headers,
         statusCode: 200,
-        body: { data: film }, // TODO: add in implementation of resource
+        body: { data: exists }, // TODO: add in implementation of resource
       };
     } catch (err) {
       // TODO: add in error handling here

@@ -1,11 +1,14 @@
 import { Request } from "express";
 import * as _ from "lodash";
 import { IRestoreAdminById } from "../../../use-cases/admin/restore-admin-by-id";
+import { IGetAdminById } from "../../../use-cases/admin/get-admin-by-id";
 
 export default function makeRestoreAdminController({
   restoreAdminById,
+  getAdminById,
 }: {
   restoreAdminById: IRestoreAdminById;
+  getAdminById: IGetAdminById;
 }) {
   return async function restoreAdminController(
     httpRequest: Request & { context: { validated: { _id: string } } }
@@ -18,6 +21,18 @@ export default function makeRestoreAdminController({
         httpRequest,
         "context.validated"
       );
+
+      const exists = await getAdminById({ id: admin_id });
+      if (!exists) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Admin does not exist.",
+          },
+        };
+      }
 
       const admin = await restoreAdminById({ id: admin_id });
 

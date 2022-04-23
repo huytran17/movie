@@ -18,7 +18,14 @@ export default function makeLogoutController({
       const exists = await getAdminByEmail({ email });
 
       if (!exists) {
-        throw new Error(`Admin by ${email} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Admin does not exist.",
+          },
+        };
       }
 
       return {

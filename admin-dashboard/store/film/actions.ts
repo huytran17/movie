@@ -34,11 +34,14 @@ const actions: ActionTree<FilmState, RootState> = {
    * @param param1
    */
   async [ActionTypes.CREATE_FILM]({ commit, state }) {
-    const result = await this.$axios.$post(`/admin/film/create-film`, {
-      data: state.new_film,
-    });
+    const { data, is_error, message } = await this.$axios.$post(
+      `/admin/film/create-film`,
+      {
+        data: state.new_film,
+      }
+    );
 
-    return result;
+    return { data, is_error, message };
   },
 
   /**
@@ -48,11 +51,18 @@ const actions: ActionTree<FilmState, RootState> = {
    * @param param1
    */
   async [ActionTypes.UPDATE_FILM]({ commit, state }, { film_id }) {
-    const { data } = await this.$axios.$put(`/admin/film/${film_id}`, {
-      data: state.film,
-    });
+    const { data, is_error, message } = await this.$axios.$put(
+      `/admin/film/${film_id}`,
+      {
+        data: state.film,
+      }
+    );
 
-    return data;
+    if (!is_error) {
+      commit(MutationTypes.SET_FILM, { data });
+    }
+
+    return { data, is_error, message };
   },
 
   /**UPLOAD_EVENT_IMAGE
@@ -67,14 +77,16 @@ const actions: ActionTree<FilmState, RootState> = {
         "Content-Type": "multipart/form-data",
       },
     };
-    const { data } = await this.$axios.$post(
+    const { data, is_error, message } = await this.$axios.$post(
       `/admin/film/upload-thumbnail/${film_id}`,
       formData,
       config
     );
-    commit(MutationTypes.SET_FILM, { data });
+    if (!is_error) {
+      commit(MutationTypes.SET_FILM, { data });
+    }
 
-    return data;
+    return { data, is_error, message };
   },
 
   /**UPLOAD_EVENT_IMAGE
@@ -89,13 +101,19 @@ const actions: ActionTree<FilmState, RootState> = {
         "Content-Type": "multipart/form-data",
       },
     };
-    const result = await this.$axios.$post(
+    const { data, is_error, message } = await this.$axios.$post(
       `/admin/film/upload/${film_id}`,
       formData,
       config
     );
 
-    return result;
+    console.log(data);
+
+    if (!is_error) {
+      commit(MutationTypes.SET_FILM, { data });
+    }
+
+    return { data, is_error, message };
   },
 
   /**

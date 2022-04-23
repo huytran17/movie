@@ -52,7 +52,14 @@ export default {
   },
   methods: {
     async updateSeries() {
-      await this.UPDATE_SERIES({ series_id: this.series._id });
+      const { is_error, message } = await this.UPDATE_SERIES({
+        series_id: this.series._id,
+      });
+      if (is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Updated series successfully!"));
     },
 
     updateInput({ variable_path, data }) {

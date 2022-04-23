@@ -5,6 +5,7 @@ import getUserByEmailRules from "./get-user-by-email";
 import updateUserRules from "./update-user";
 import uploadUserAvatarRules from "./upload-user-avatar";
 import deleteUserRules from "./delete-user";
+import createUserRules from "./create-user";
 
 export default Object.freeze({
   getUserRules,
@@ -14,6 +15,7 @@ export default Object.freeze({
   updateUserRules,
   uploadUserAvatarRules,
   deleteUserRules,
+  createUserRules,
 });
 
 export {
@@ -24,4 +26,5 @@ export {
   updateUserRules,
   uploadUserAvatarRules,
   deleteUserRules,
+  createUserRules,
 };

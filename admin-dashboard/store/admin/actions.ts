@@ -34,21 +34,28 @@ const actions: ActionTree<AdminState, RootState> = {
    * @param param1
    */
   async [ActionTypes.UPDATE_ADMIN]({ commit }, { admin }) {
-    const { data } = await this.$axios.$put(`/admin/admin/`, admin);
-    commit(MutationTypes.SET_ADMIN, { data });
-
-    return data;
+    const { data, is_error, message } = await this.$axios.$put(
+      `/admin/admin/${admin._id}`,
+      admin
+    );
+    if (!is_error) {
+      commit(MutationTypes.SET_ADMIN, { data });
+    }
+    return { data, is_error, message };
   },
 
   async [ActionTypes.UPDATE_ADMIN_SECURITY](
     { commit },
     { security_data, admin_id }
   ) {
-    const response = await this.$axios.$put(
+    const { data, is_error, message } = await this.$axios.$put(
       `/admin/admin/security/${admin_id}`,
       { data: security_data }
     );
-    return response;
+    if (!is_error) {
+      commit(MutationTypes.SET_ADMIN, { data });
+    }
+    return { data, is_error, message };
   },
 
   /**
@@ -58,9 +65,14 @@ const actions: ActionTree<AdminState, RootState> = {
    * @param param1
    */
   async [ActionTypes.CREATE_ADMIN]({ commit }, { admin_data }) {
-    const { data } = await this.$axios.$post(`/admin/admin/create-admin`, {
-      data: admin_data,
-    });
+    const { data, is_error, message } = await this.$axios.$post(
+      `/admin/admin/create-admin`,
+      {
+        data: admin_data,
+      }
+    );
+
+    return { data, is_error, message };
 
     return data;
   },
@@ -77,7 +89,7 @@ const actions: ActionTree<AdminState, RootState> = {
         "Content-Type": "multipart/form-data",
       },
     };
-    const { data } = await this.$axios.$post(
+    const { data, is_error, message } = await this.$axios.$post(
       `/admin/admin/upload-avatar/${admin_id}`,
       formData,
       config
@@ -85,7 +97,7 @@ const actions: ActionTree<AdminState, RootState> = {
 
     commit(MutationTypes.SET_ADMIN, { data });
 
-    return data;
+    return { data, is_error, message };
   },
 
   /**

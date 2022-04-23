@@ -12,6 +12,14 @@ const mutations: MutationTree<AdminState> = {
       return data;
     });
   },
+  [MutationTypes.UPDATE_ADMIN_DATA](
+    state,
+    { data, variable_path }: { data: Object | string; variable_path: string }
+  ) {
+    state.admin = _.update(state.admin, variable_path, (n) => {
+      return data;
+    });
+  },
   /**
    * @description to set the jobs pagination
    * @param state

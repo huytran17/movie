@@ -28,6 +28,7 @@ export default {
       GET_USER: "user/GET_USER",
       GET_USER_BY_SLUG: "user/GET_USER_BY_SLUG",
       DELETE_USER: "user/DELETE_USER",
+      CREATE_USER: "user/CREATE_USER",
     }),
 
     ...mapMutations({

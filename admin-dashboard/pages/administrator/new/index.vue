@@ -138,7 +138,7 @@
           <v-btn
             depressed
             color="primary"
-            @click="createUser()"
+            @click="createAdmin()"
             :disabled="!form_valid"
           >
             <span v-html="$t('Lưu')"></span>
@@ -165,15 +165,16 @@ export default {
     };
   },
   methods: {
-    async createUser() {
-      await this.CREATE_ADMIN({ admin_data: this.sign_up_data }).then((res) => {
-        if (res.is_error) {
-          this.$toast.error(this.$t(res.message));
-          return;
-        }
-        this.$toast.success(this.$t("Welcome!"));
-        this.$router.push(this.localePath("/administrator"));
+    async createAdmin() {
+      const { is_error, message } = await this.CREATE_ADMIN({
+        admin_data: this.sign_up_data,
       });
+      if (is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Created admin successfully!"));
+      this.$router.push(this.localePath("/administrator"));
     },
 
     updateInput({ variable_path, data }) {

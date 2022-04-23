@@ -1,11 +1,14 @@
 import { Request } from "express";
 import * as _ from "lodash";
 import { IDeleteUserById } from "../../../use-cases/user/delete-user-by-id";
+import { IGetUserById } from "../../../use-cases/user/get-user-by-id";
 
 export default function makeDeleteUserController({
   deleteUserById,
+  getUserById,
 }: {
   deleteUserById: IDeleteUserById;
+  getUserById: IGetUserById;
 }) {
   return async function deleteUserController(
     httpRequest: Request & { context: { validated: { _id: string } } }
@@ -18,6 +21,18 @@ export default function makeDeleteUserController({
         httpRequest,
         "context.validated"
       );
+
+      const exists = await getUserById({ id: user_id });
+      if (!exists) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "User does not exist.",
+          },
+        };
+      }
 
       const user = await deleteUserById({ id: user_id });
 

@@ -30,6 +30,7 @@ const createFilmController = makeCreateFilmController({
 
 const deleteFilmController = makeDeleteFilmController({
   deleteFilmById: removeFilmById,
+  getFilmById,
 });
 /**
  * @description update film's details excluding password

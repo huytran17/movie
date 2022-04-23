@@ -360,7 +360,14 @@ export default {
   },
   methods: {
     async createFilm() {
-      await this.CREATE_FILM({ film_data: this.new_film });
+      const { is_error, message } = await this.CREATE_FILM({
+        film_data: this.new_film,
+      });
+      if (is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Created film successfully!"));
       this.$router.push(this.localePath("/films-client"));
     },
 

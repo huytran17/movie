@@ -19,12 +19,23 @@ export default function makeGetUserController({
         "context.validated"
       );
 
-      const user = await getUserById({ id: user_id });
+      const exists = await getUserById({ id: user_id });
+
+      if (!exists) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "User does not exist.",
+          },
+        };
+      }
 
       return {
         headers,
         statusCode: 200,
-        body: { data: user }, // TODO: add in implementation of resource
+        body: { data: exists }, // TODO: add in implementation of resource
       };
     } catch (err) {
       // TODO: add in error handling here

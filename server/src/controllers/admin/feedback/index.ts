@@ -1,11 +1,14 @@
-import mongoose from "mongoose";
-
-import { getFeedbacks, removeFeedback } from "../../../use-cases/feedback";
+import {
+  getFeedbacks,
+  removeFeedback,
+  getFeedbackById,
+} from "../../../use-cases/feedback";
 import makeGetFeedbacksController from "./get-feedbacks";
 import makeDeleteFeedbackController from "./delete-feedback";
 
 const deleteFeedbackController = makeDeleteFeedbackController({
   deleteFeedbackById: removeFeedback,
+  getFeedbackById,
 });
 /**
  * @description update feedback's details excluding password

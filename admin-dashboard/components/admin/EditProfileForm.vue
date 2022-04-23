@@ -34,7 +34,7 @@
                 :value="admin.first_name"
                 required
                 @input="
-                  updateUserObject({
+                  updateAdminObject({
                     variable_path: 'first_name',
                     data: $event,
                   })
@@ -48,7 +48,7 @@
                 :value="admin.last_name"
                 required
                 @input="
-                  updateUserObject({
+                  updateAdminObject({
                     variable_path: 'last_name',
                     data: $event,
                   })
@@ -67,7 +67,7 @@
                 type="email"
                 :disabled="true"
                 @input="
-                  updateUserObject({
+                  updateAdminObject({
                     variable_path: 'email',
                     data: $event,
                   })
@@ -92,7 +92,7 @@
                   v-model="admin_birthday"
                   color="green lighten-1"
                   @input="
-                    updateUserObject({
+                    updateAdminObject({
                       variable_path: 'birthday',
                       data: $event,
                     })
@@ -110,7 +110,7 @@
                 :value="admin.address"
                 required
                 @input="
-                  updateUserObject({
+                  updateAdminObject({
                     variable_path: 'address',
                     data: $event,
                   })
@@ -124,7 +124,7 @@
                 :value="admin.phone_number"
                 required
                 @input="
-                  updateUserObject({
+                  updateAdminObject({
                     variable_path: 'phone_number',
                     data: $event,
                   })
@@ -153,7 +153,7 @@
                 item-value="value"
                 :rules="typeRules"
                 @input="
-                  updateUserObject({ variable_path: 'type', data: $event })
+                  updateAdminObject({ variable_path: 'type', data: $event })
                 "
               ></v-autocomplete>
             </v-col>
@@ -303,29 +303,48 @@ export default {
 
       if (file && file_size <= max_size) {
         this.$nextTick(async () => {
-          await this.UPDATE_ADMIN_AVATAR({
+          const { is_error, message } = await this.UPDATE_ADMIN_AVATAR({
             file: this.file_of_avatar,
             admin_id: this.admin._id,
           });
-          this.$forceUpdate();
+
+          if (is_error) {
+            this.$toast.error(this.$t(message));
+            return;
+          }
+          this.$toast.success(this.$t("Updated successfully!"));
         });
       }
     },
 
     async updateUser() {
-      await this.UPDATE_ADMIN({ admin: this.admin });
+      const { is_error, message } = await this.UPDATE_ADMIN({
+        admin: this.admin,
+      });
+      if (is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Updated admin successfully!"));
     },
 
     async updateSecurity() {
-      await this.UPDATE_ADMIN_SECURITY({
+      const { is_error, message } = await this.UPDATE_ADMIN_SECURITY({
         admin_id: this.admin._id,
         security_data: this.security,
-      }).then((res) => {
-        if (res.is_error) {
-          this.$toast.error(this.$t(res.message));
-          return;
-        }
-        this.$toast.success(this.$t("Updated password successfully!"));
+      });
+
+      if (is_error) {
+        this.$toast.error(this.$t(message));
+        return;
+      }
+      this.$toast.success(this.$t("Updated password successfully!"));
+    },
+
+    updateAdminObject({ variable_path, data }) {
+      this.UPDATE_ADMIN_DATA({
+        variable_path,
+        data,
       });
     },
   },

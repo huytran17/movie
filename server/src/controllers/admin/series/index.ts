@@ -23,6 +23,7 @@ const createSeriesController = makeCreateSeriesController({
 
 const deleteSeriesController = makeDeleteSeriesController({
   deleteSeriesById: removeSeriesById,
+  getSeriesById,
 });
 /**
  * @description update series's details excluding password

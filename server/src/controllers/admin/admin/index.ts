@@ -35,9 +35,11 @@ const createAdminController = makeCreateAdminController({
 });
 const restoreAdminController = makeRestoreAdminController({
   restoreAdminById,
+  getAdminById,
 });
 const deleteAdminController = makeDeleteAdminController({
   deleteAdminById: removeAdminById,
+  getAdminById,
 });
 /**
  * @description update admin's details excluding password

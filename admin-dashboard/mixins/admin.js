@@ -85,6 +85,7 @@ export default {
     ...mapMutations({
       SET_LOADING: "admin/SET_LOADING",
       UPDATE_SECURITY_DATA: "admin/UPDATE_SECURITY_DATA",
+      UPDATE_ADMIN_DATA: "admin/UPDATE_ADMIN_DATA",
     }),
 
     updateSecurityObject({ variable_path, data }) {

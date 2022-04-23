@@ -33,7 +33,14 @@ export default function makeUpdateSeriesController({
       const { _id } = seriesDetails; // the series's ID
       const exists = await getSeriesById({ id: _id });
       if (!exists) {
-        throw new Error(`Series by ${_id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: `Series does not exists.`,
+          },
+        };
       }
 
       const updatedSeries = await updateSeries({

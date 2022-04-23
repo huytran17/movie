@@ -22,7 +22,14 @@ export default function makeGetAdminController({
 
       const user = await getAdminById({ id });
       if (!user) {
-        throw new Error(`Admin by ${id} does not exists.`);
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Admin does not exist.",
+          },
+        };
       }
 
       return {
