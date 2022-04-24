@@ -329,7 +329,7 @@ export default {
       const thumbnail = _.get(item, "aws_thumnail.meta.location", "");
       return thumbnail;
     },
-    async openDeleteFilmConfirmDialog({ film }) {
+    openDeleteFilmConfirmDialog({ film }) {
       this.confirm_content = `Bạn có muốn xóa phim <b>${film.title}</b> không?`;
       this.show_confirm_dialog = true;
       this.choosen_film = film;

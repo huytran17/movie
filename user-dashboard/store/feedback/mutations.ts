@@ -34,6 +34,10 @@ const mutations: MutationTree<FeedbackState> = {
     state.loading = data;
   },
 
+  [MutationTypes.SET_FEEDBACK](state, { data }: { data: any }) {
+    state.feedback = data;
+  },
+
   /**
    * update user state
    * @param state
@@ -44,6 +48,15 @@ const mutations: MutationTree<FeedbackState> = {
     { data, variable_path }: { data: Object | string; variable_path: string }
   ) {
     state.new_feedback = _.update(state.new_feedback, variable_path, (n) => {
+      return data;
+    });
+  },
+
+  [MutationTypes.SET_EDIT_FEEDBACK_DATA](
+    state,
+    { data, variable_path }: { data: Object | string; variable_path: string }
+  ) {
+    state.feedback = _.update(state.feedback, variable_path, (n) => {
       return data;
     });
   },

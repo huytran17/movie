@@ -8,7 +8,7 @@
               :value="new_feedback.star_count"
               background-color="green lighten-3"
               color="green"
-              @change="
+              @input="
                 updateFeedbackObject({
                   variable_path: 'star_count',
                   data: $event,
@@ -18,6 +18,7 @@
           </v-col>
           <v-col cols="12" class="pt-0"
             ><v-text-field
+              :value="new_feedback.content"
               hide-details
               placeholder="Type your feedback..."
               class="pt-0"
@@ -38,16 +39,19 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row v-if="has_feedback_list" class="pt-2 feedback-wrapper">
+    <v-row v-if="has_feedbacks" class="pt-2 feedback-wrapper">
       <v-col cols="12" class="pt-0">
         <v-row>
           <v-col
             cols="12"
-            v-for="(feedback, index) in get_feedback_list"
+            v-for="(feedback_item, index) in feedbacks"
             :key="index"
           >
             <v-row>
-              <v-col cols="11" class="pb-0 d-flex">
+              <v-col
+                :cols="can_edit_feedback ? '10' : '12'"
+                class="pb-0 d-flex"
+              >
                 <div>
                   <v-img
                     src="https://picsum.photos/id/11/500/300"
@@ -58,7 +62,7 @@
                 </div>
                 <div class="ml-3">
                   <v-rating
-                    :value="feedback.star_count"
+                    :value="feedback_item.star_count"
                     readonly
                     background-color="yellow lighten-3"
                     color="yellow"
@@ -68,27 +72,64 @@
                     <span class="app-body">
                       <span
                         class="feedback-title"
-                        v-html="$t(feedback.content)"
+                        v-html="$t(feedback_item.content)"
                       ></span>
                     </span>
                   </div>
                 </div>
+              </v-col>
+
+              <v-col v-if="can_edit_feedback" cols="2">
+                <v-menu offset-y>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon v-bind="attrs" v-on="on" class="ml-auto d-block"
+                      >mdi-dots-vertical</v-icon
+                    >
+                  </template>
+                  <v-list>
+                    <v-list-item class="clickable">
+                      <v-list-item-title
+                        @click="
+                          openEditFeedbackDialog({ feedback: feedback_item })
+                        "
+                      >
+                        <span v-html="$t('Edit')"></span>
+                      </v-list-item-title>
+                    </v-list-item>
+                    <v-list-item class="clickable">
+                      <v-list-item-title>
+                        <span v-html="$t('Delete')"></span>
+                      </v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
               </v-col>
             </v-row>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
+
+    <EditFeedbackDialog
+      :show_dialog="show_edit_feedback_dialog"
+      :choosen_feedback="feedback"
+      :action="updateFeedback"
+      @close-edit-feedback-dialog="show_edit_feedback_dialog = false"
+    />
   </div>
 </template>
 
 <script>
 import feedbackMixins from "@/mixins/feedback";
 import authMixins from "@/mixins/auth";
+import EditFeedbackDialog from "@/components/dialogs/EditFeedbackDialog";
 
 export default {
   name: "BaseFeedbacksList",
   mixins: [feedbackMixins, authMixins],
+  components: {
+    EditFeedbackDialog,
+  },
   props: {
     film_id: {
       type: String,
@@ -97,15 +138,43 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      show_edit_feedback_dialog: false,
+    };
+  },
   computed: {
-    get_feedback_list() {
-      return this.feedbacks || [];
+    can_edit_feedback(feedback) {
+      const feedback_user = _.get(feedback, "user._id", "");
+      const user_can_edit = feedback_user === this.user._id;
+
+      return user_can_edit;
     },
-    has_feedback_list() {
-      return this.get_feedback_list.length > 0;
+
+    has_feedbacks() {
+      return this.feedbacks.length > 0;
     },
   },
   methods: {
+    async updateFeedback() {
+      await Promise.all([
+        this.UPDATE_FEEDBACK({
+          feedback_id: this.feedback._id,
+        }),
+        this.GET_FEEDBACK_BY_FILM_ID({ film_id: this.film_id }),
+      ]);
+
+      this.show_edit_feedback_dialog = false;
+    },
+    openEditFeedbackDialog({ feedback }) {
+      this.show_edit_feedback_dialog = true;
+      const feedback_data_to_edit = {
+        _id: feedback._id,
+        star_count: feedback.star_count,
+        content: feedback.content,
+      };
+      this.SET_FEEDBACK({ data: feedback_data_to_edit });
+    },
     async createFeedback() {
       await Promise.all([
         this.CREATE_FEEDBACK({
@@ -114,6 +183,16 @@ export default {
         }),
         this.GET_FEEDBACK_BY_FILM_ID({ film_id: this.film_id }),
       ]);
+
+      this.updateFeedbackObject({
+        variable_path: "star_count",
+        data: 5,
+      });
+
+      this.updateFeedbackObject({
+        variable_path: "content",
+        data: "",
+      });
     },
   },
   async fetch() {

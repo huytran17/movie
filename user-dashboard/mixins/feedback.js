@@ -8,6 +8,7 @@ export default {
       pagination: "feedback/pagination",
       feedbacks: "feedback/feedbacks",
       new_feedback: "feedback/new_feedback",
+      feedback: "feedback/feedback",
     }),
 
     /**
@@ -30,10 +31,19 @@ export default {
     ...mapMutations({
       SET_LOADING: "feedback/SET_LOADING",
       UPDATE_NEW_FEEDBACK_DATA: "feedback/UPDATE_NEW_FEEDBACK_DATA",
+      SET_EDIT_FEEDBACK_DATA: "feedback/SET_EDIT_FEEDBACK_DATA",
+      SET_FEEDBACK: "feedback/SET_FEEDBACK",
     }),
 
     updateFeedbackObject({ data, variable_path }) {
       this.UPDATE_NEW_FEEDBACK_DATA({
+        data,
+        variable_path,
+      });
+    },
+
+    updateFeedbackObject({ data, variable_path }) {
+      this.SET_EDIT_FEEDBACK_DATA({
         data,
         variable_path,
       });

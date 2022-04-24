@@ -3,7 +3,6 @@ import { Mongoose } from "mongoose";
 import * as _ from "lodash";
 
 import { IUpdateFeedback } from "../../../use-cases/feedback/update-feedback";
-import IFeedback from "../../../interfaces/feedback";
 import { IGetFeedbackById } from "../../../use-cases/feedback/get-feedback-by-id";
 
 export default function makeUpdateFeedbackController({
@@ -17,7 +16,7 @@ export default function makeUpdateFeedbackController({
 }) {
   return async function updateFeedbackController(
     httpRequest: Request & {
-      context: { validated: { feedbackDetails: IFeedback } };
+      context: { validated: {} };
     }
   ) {
     const headers = {
@@ -25,13 +24,11 @@ export default function makeUpdateFeedbackController({
     };
 
     try {
-      const feedbackDetails: IFeedback = _.get(
-        httpRequest,
-        "context.validated.data"
-      );
+      const feedbackDetails = _.get(httpRequest, "context.validated.data");
 
-      const { _id } = feedbackDetails; // the feedback's ID
-      const exists = await getFeedbackById({ id: _id });
+      const { feedback_id } = _.get(httpRequest, "context.validated"); // the feedback's ID
+
+      const exists = await getFeedbackById({ id: feedback_id });
       if (!exists) {
         return {
           headers,
@@ -42,9 +39,9 @@ export default function makeUpdateFeedbackController({
           },
         };
       }
-
+      const final_details = Object.assign({}, exists, feedbackDetails);
       const updatedFeedback = await updateFeedback({
-        feedbackDetails,
+        feedbackDetails: final_details,
       });
 
       return {

@@ -317,7 +317,7 @@ export default {
   border-radius: 0 !important;
 }
 .trailer-video {
-  width: 100%;
+  min-width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
