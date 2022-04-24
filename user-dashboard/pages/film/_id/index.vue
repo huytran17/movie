@@ -124,6 +124,15 @@
               </v-col>
             </v-row>
           </v-tab-item>
+          <v-tab-item>
+            <v-row v-if="trailer_url">
+              <v-col cols="12" class="trailer-wrapper mx-auto">
+                <video controls class="trailer-video">
+                  <source :src="trailer_url" type="video/mp4" />
+                </video>
+              </v-col>
+            </v-row>
+          </v-tab-item>
         </v-tabs-items>
       </v-col>
       <v-col cols="12" lg="3">
@@ -215,6 +224,14 @@ export default {
     };
   },
   computed: {
+    trailer_url() {
+      const has_aws_location = _.get(
+        this.film,
+        "aws_trailer.meta.location",
+        ""
+      );
+      return has_aws_location;
+    },
     has_film() {
       return !!this.film;
     },
@@ -298,5 +315,18 @@ export default {
 }
 ::v-deep .v-btn {
   border-radius: 0 !important;
+}
+.trailer-video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.trailer-wrapper {
+  max-width: 500px !important;
+  width: 500px !important;
+  height: calc(500px * 9 / 16);
+  position: relative;
 }
 </style>
