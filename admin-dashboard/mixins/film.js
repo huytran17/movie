@@ -61,6 +61,7 @@ export default {
       UPDATE_FILM: "film/UPDATE_FILM",
       CREATE_FILM: "film/CREATE_FILM",
       UPLOAD_FILM: "film/UPLOAD_FILM",
+      UPLOAD_FILM_TRAILER: "film/UPLOAD_FILM_TRAILER",
     }),
 
     ...mapMutations({

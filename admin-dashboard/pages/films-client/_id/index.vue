@@ -105,7 +105,7 @@
 
       <v-row>
         <v-col v-if="film_url" cols="12">
-          <Player :options="options" />
+          <Player :options="options" :key="film_refresh_key" />
         </v-col>
       </v-row>
 
@@ -359,6 +359,24 @@
         </v-col>
       </v-row>
 
+      <v-row>
+        <v-col v-if="trailer_url" cols="12" md="6" class="video-wrapper">
+          <video controls width="100%" :key="trailer_refresh_key">
+            <source :src="trailer_url" type="video/mp4" />
+          </video>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-file-input
+            v-model="file_of_trailer"
+            small-chips
+            truncate-length="15"
+            :label="$t('Choose trailer')"
+            @change="uploadTrailer"
+            accept="video/*"
+          ></v-file-input>
+        </v-col>
+      </v-row>
+
       <v-row class="mt-5">
         <v-col cols="12" class="d-flex justify-end">
           <v-btn
@@ -402,6 +420,9 @@ export default {
   components: { Player },
   data() {
     return {
+      file_of_trailer: null,
+      trailer_refresh_key: 0,
+      film_refresh_key: 0,
       qualities: [
         {
           text: "4K",
@@ -493,6 +514,15 @@ export default {
       return has_aws_location;
     },
 
+    trailer_url() {
+      const has_aws_location = _.get(
+        this.film,
+        "aws_trailer.meta.location",
+        ""
+      );
+      return has_aws_location;
+    },
+
     film_thumbnail() {
       const has_aws_location = _.get(
         this.film,
@@ -518,9 +548,6 @@ export default {
             src: film_url,
             type: film_type,
             size: 720,
-          },
-          {
-            src: "bTqVqk7FSmY",
           },
         ],
       });
@@ -561,7 +588,28 @@ export default {
             return;
           }
           this.$toast.success(this.$t("Updated film successfully!"));
-          location.reload();
+          ++this.film_refresh_key;
+        });
+      }
+    },
+    async uploadTrailer() {
+      const max_size = 50 * 1024 * 1024; // 5MB
+      const file = this.file_of_trailer;
+      const file_size = _.get(file, "size", max_size + 1);
+
+      if (file && file_size <= max_size) {
+        this.$nextTick(async () => {
+          const { is_error, message } = await this.UPLOAD_FILM_TRAILER({
+            file: this.file_of_trailer,
+            film_id: this.film._id,
+          });
+
+          if (is_error) {
+            this.$toast.error(this.$t(message));
+            return;
+          }
+          this.$toast.success(this.$t("Updated trailer successfully!"));
+          ++this.trailer_refresh_key;
         });
       }
     },
@@ -599,4 +647,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.video-wrapper {
+  width: 100%;
+  height: calc(500px * 9 / 16);
+  position: relative;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+</style>

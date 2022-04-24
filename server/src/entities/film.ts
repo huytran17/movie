@@ -5,6 +5,7 @@ export default class Film implements IFilm {
   public readonly _id: string;
   public readonly title: string;
   public readonly aws?: Record<string, unknown>;
+  public readonly aws_trailer?: Record<string, unknown>;
   public readonly description: string;
   public readonly series: ISeries;
   public readonly aws_thumnail?: Record<string, unknown>;
@@ -35,6 +36,7 @@ export default class Film implements IFilm {
   constructor({
     _id,
     created_at,
+    aws_trailer,
     updated_at,
     aws,
     deleted_at,
@@ -56,5 +58,6 @@ export default class Film implements IFilm {
     this.created_at = created_at;
     this.updated_at = updated_at;
     this.deleted_at = deleted_at;
+    this.aws_trailer = aws_trailer;
   }
 }

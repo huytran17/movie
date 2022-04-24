@@ -114,6 +114,27 @@ const actions: ActionTree<FilmState, RootState> = {
     return { data, is_error, message };
   },
 
+  async [ActionTypes.UPLOAD_FILM_TRAILER]({ commit }, { file, film_id }) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const { data, is_error, message } = await this.$axios.$post(
+      `/admin/film/upload-trailer/${film_id}`,
+      formData,
+      config
+    );
+
+    if (!is_error) {
+      commit(MutationTypes.SET_FILM, { data });
+    }
+
+    return { data, is_error, message };
+  },
+
   /**
    * @Description publish a film to show on mobile app
    * @param {is_published: boolean}

@@ -5,6 +5,7 @@ import uploadFilmThumbnailRules from "./upload-film-thumbnail";
 import getFilmRules from "./get-film";
 import createFilmRules from "./create-film";
 import uploadFilmRules from "./upload-film";
+import uploadFilmTrailerRules from "./upload-film-trailer";
 
 export default Object.freeze({
   deleteFilmRules,
@@ -14,6 +15,7 @@ export default Object.freeze({
   getFilmRules,
   createFilmRules,
   uploadFilmRules,
+  uploadFilmTrailerRules,
 });
 
 export {
@@ -24,4 +26,5 @@ export {
   getFilmRules,
   createFilmRules,
   uploadFilmRules,
+  uploadFilmTrailerRules,
 };

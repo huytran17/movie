@@ -7,6 +7,7 @@ const filmSchema = new Schema({
   description: { type: String, required: true, trim: true },
   aws: { type: Object },
   aws_thumnail: { type: Object },
+  aws_trailer: { type: Object },
   categories: [
     {
       type: String,

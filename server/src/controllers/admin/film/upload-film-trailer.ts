@@ -4,7 +4,7 @@ import { Mongoose } from "mongoose";
 import { IGetFilmById } from "../../../use-cases/film/get-film-by-id";
 import { IUpdateFilm } from "../../../use-cases/film/update-film";
 
-export default function makeUploadFilmThumbnailController({
+export default function makeUploadFilmTrailerController({
   getFilmById,
   updateFilm,
   mongoose,
@@ -13,7 +13,7 @@ export default function makeUploadFilmThumbnailController({
   updateFilm: IUpdateFilm;
   mongoose: Mongoose;
 }) {
-  return async function uploadFilmThumbnailController(
+  return async function uploadFilmTrailerController(
     httpRequest: Request & { context: { validated: {} } }
   ) {
     const headers = {
@@ -63,7 +63,7 @@ export default function makeUploadFilmThumbnailController({
       };
 
       const film_details = Object.assign({}, exists, {
-        aws_thumbnail: aws_payload,
+        aws_trailer: aws_payload,
       });
 
       const updated_film = await updateFilm({ filmDetails: film_details });

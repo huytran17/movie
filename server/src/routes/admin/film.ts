@@ -10,6 +10,7 @@ import {
   getFilmRules,
   createFilmRules,
   uploadFilmRules,
+  uploadFilmTrailerRules,
 } from "../../controllers/admin/film/validators";
 import {
   getFilmController,
@@ -20,6 +21,7 @@ import {
   deleteFilmController,
   createFilmController,
   uploadFilmController,
+  uploadFilmTrailerController,
 } from "../../controllers/admin/film";
 import { upload } from "../../middlewares/file-upload-middleware";
 
@@ -49,6 +51,13 @@ filmRouter.post(
   upload.single("file"),
   makeValidator(uploadFilmThumbnailRules),
   makeExpressCallback(uploadFilmThumbnailController)
+);
+
+filmRouter.post(
+  "/upload-trailer/:film_id",
+  upload.single("file"),
+  makeValidator(uploadFilmTrailerRules),
+  makeExpressCallback(uploadFilmTrailerController)
 );
 
 filmRouter.put(
