@@ -10,8 +10,8 @@ const actions: ActionTree<CommentState, RootState> = {
    * @description Get all comments
    * @param param0
    */
-  async [ActionTypes.GET_COMMENTS]({ commit }) {
-    const { data } = await this.$axios.$get(`/api/comment`);
+  async [ActionTypes.GET_COMMENTS_BY_FILM_ID]({ commit }, { film_id }) {
+    const { data } = await this.$axios.$get(`/api/comment/by-film/${film_id}`);
 
     commit(MutationTypes.SET_COMMENTS, { comments: data });
     return data;
@@ -53,6 +53,8 @@ const actions: ActionTree<CommentState, RootState> = {
     const { data } = await this.$axios.$put(`/admin/comment/${comment_id}`, {
       data: state.comment,
     });
+
+    commit(MutationTypes.SET_COMMENT, { data });
 
     return data;
   },

@@ -13,6 +13,7 @@ export default interface ICommentDb {
   }) => Promise<PaginatedCommentResult | null>;
   findOne: () => Promise<Comment | null>;
   findById: ({ id }: { id: string }) => Promise<Comment | null>;
+  findByFilmId: ({ film_id }: { film_id: string }) => Promise<Comment[] | null>;
   insert: (payload: Partial<IComment>) => Promise<Comment | null>;
   delete: ({ id }: { id: string }) => Promise<Comment | null>;
   hardDelete: ({ id }: { id: string }) => Promise<Comment | null>;

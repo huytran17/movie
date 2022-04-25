@@ -5,14 +5,16 @@ import makeUpdateComment from "./update-comment";
 import makeGetCommentById from "./get-comment-by-id";
 import makeRemoveCommentById from "./delete-comment-by-id";
 import makeGetComments from "./get-comments";
+import makeGetCommentsByFilmId from "./get-comments-by-film-id";
 
 const createComment = makeCreateComment(CommentDb);
 const updateComment = makeUpdateComment(CommentDb);
 const removeCommentById = makeRemoveCommentById(CommentDb);
+const getCommentsByFilmId = makeGetCommentsByFilmId(CommentDb);
 
 /**
  * get film by _id
- * @function getCommentById
+ * @function getCommentsByFilmId
  */
 const getCommentById = makeGetCommentById(CommentDb);
 
@@ -28,6 +30,7 @@ const filmServices = Object.freeze({
   getComments,
   updateComment,
   removeCommentById,
+  getCommentsByFilmId,
 });
 
 export default filmServices;
@@ -37,4 +40,5 @@ export {
   getComments,
   updateComment,
   removeCommentById,
+  getCommentsByFilmId,
 };

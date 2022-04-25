@@ -7,11 +7,12 @@ import {
   updateCommentRules,
   createCommentRules,
   getCommentByIdRules,
+  getCommentsByFilmIdRules,
 } from "../../controllers/api/comment/validators";
 import {
   getCommentByIdController,
   updateCommentController,
-  getCommentsController,
+  getCommentsByFilmIdController,
   deleteCommentController,
   createCommentController,
 } from "../../controllers/api/comment";
@@ -24,7 +25,11 @@ commentRouter.get(
   makeExpressCallback(getCommentByIdController)
 );
 
-commentRouter.get("/", makeExpressCallback(getCommentsController));
+commentRouter.get(
+  "/by-film/:film_id",
+  makeValidator(getCommentsByFilmIdRules),
+  makeExpressCallback(getCommentsByFilmIdController)
+);
 
 commentRouter.post(
   "/create-comment/:user/:film",

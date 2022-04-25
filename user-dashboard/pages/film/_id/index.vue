@@ -279,7 +279,7 @@ export default {
         user: this.user._id,
         film: this.film._id,
       });
-      await this.GET_COMMENTS();
+      await this.GET_COMMENTS_BY_FILM_ID({ film_id: this.film._id });
     },
   },
   async fetch() {

@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      GET_COMMENTS: "comment/GET_COMMENTS",
+      GET_COMMENTS_BY_FILM_ID: "comment/GET_COMMENTS_BY_FILM_ID",
       GET_COMMENT: "comment/GET_COMMENT",
       CREATE_COMMENT: "comment/CREATE_COMMENT",
       UPDATE_COMMENT: "comment/UPDATE_COMMENT",
@@ -31,6 +31,7 @@ export default {
     ...mapMutations({
       SET_LOADING: "comment/SET_LOADING",
       UPDATE_NEW_COMMENT_DATA: "comment/UPDATE_NEW_COMMENT_DATA",
+      SET_COMMENT: "comment/SET_COMMENT",
     }),
 
     updateCommentObject({ data, variable_path }) {

@@ -1,23 +1,39 @@
 import { Request } from "express";
 import * as _ from "lodash";
 
-import { IGetCommentById } from "../../../use-cases/comment/get-comment-by-id";
+import { IGetCommentsByFilmId } from "../../../use-cases/comment/get-comments-by-film-id";
+import { IGetFilmById } from "../../../use-cases/film/get-film-by-id";
 
-export default function makeGetCommentByIdController({
-  getCommentById,
+export default function makeGetCommentsByFilmIdController({
+  getCommentsByFilmId,
+  getFilmById,
 }: {
-  getCommentById: IGetCommentById;
+  getCommentsByFilmId: IGetCommentsByFilmId;
+  getFilmById: IGetFilmById;
 }) {
-  return async function getCommentByIdController(
+  return async function getCommentsByFilmIdController(
     httpRequest: Request & { context: { validated: { _id: string } } }
   ) {
     const headers = {
       "Content-Type": "application/json",
     };
     try {
-      const { id }: { id: string } = _.get(httpRequest, "context.validated");
+      const { film_id } = _.get(httpRequest, "context.validated");
 
-      const exists = await getCommentById({ id });
+      const film_exists = await getFilmById({ id: film_id });
+
+      if (!film_exists) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Film does not exists.",
+          },
+        };
+      }
+
+      const exists = await getCommentsByFilmId({ film_id });
 
       if (!exists) {
         return {

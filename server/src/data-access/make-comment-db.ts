@@ -134,6 +134,30 @@ export default function makeCommentDb({
       return null;
     }
 
+    async findByFilmId({
+      film_id,
+    }: {
+      film_id: string;
+    }): Promise<Comment[] | null> {
+      const mongo_id_regex = new RegExp(/^[0-9a-fA-F]{24}$/i);
+      const is_mongo_id = mongo_id_regex.test(film_id);
+      if (!is_mongo_id || !film_id) {
+        return null;
+      }
+
+      const query_conditions = { deleted_at: undefined, film: film_id };
+
+      const existing = await commentDbModel
+        .find(query_conditions)
+        .lean({ virtuals: true });
+
+      if (existing) {
+        return existing.map((comment) => new Comment(comment));
+      }
+
+      return null;
+    }
+
     async insert(payload: Partial<IComment>): Promise<Comment | null> {
       const updated_payload = payload;
 
