@@ -98,7 +98,10 @@
                     </v-list-item>
                     <v-list-item class="clickable">
                       <v-list-item-title>
-                        <span v-html="$t('Delete')"></span>
+                        <span
+                          v-html="$t('Delete')"
+                          @click="deleteFeedback({ feedback: feedback_item })"
+                        ></span>
                       </v-list-item-title>
                     </v-list-item>
                   </v-list>
@@ -157,14 +160,18 @@ export default {
   },
   methods: {
     async updateFeedback() {
-      await Promise.all([
-        this.UPDATE_FEEDBACK({
-          feedback_id: this.feedback._id,
-        }),
-        this.GET_FEEDBACK_BY_FILM_ID({ film_id: this.film_id }),
-      ]);
+      await this.UPDATE_FEEDBACK({
+        feedback_id: this.feedback._id,
+      });
+      await this.GET_FEEDBACK_BY_FILM_ID({ film_id: this.film_id });
 
       this.show_edit_feedback_dialog = false;
+    },
+    async deleteFeedback({ feedback }) {
+      await this.DELETE_FEEDBACK({
+        feedback_id: feedback._id,
+      });
+      await this.GET_FEEDBACK_BY_FILM_ID({ film_id: this.film_id });
     },
     openEditFeedbackDialog({ feedback }) {
       this.show_edit_feedback_dialog = true;
@@ -176,13 +183,11 @@ export default {
       this.SET_FEEDBACK({ data: feedback_data_to_edit });
     },
     async createFeedback() {
-      await Promise.all([
-        this.CREATE_FEEDBACK({
-          user: this.user._id,
-          film: this.film_id,
-        }),
-        this.GET_FEEDBACK_BY_FILM_ID({ film_id: this.film_id }),
-      ]);
+      await this.CREATE_FEEDBACK({
+        user: this.user._id,
+        film: this.film_id,
+      });
+      await this.GET_FEEDBACK_BY_FILM_ID({ film_id: this.film_id });
 
       this.updateFeedbackObject({
         variable_path: "star_count",
