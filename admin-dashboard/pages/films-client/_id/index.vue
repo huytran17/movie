@@ -526,7 +526,7 @@ export default {
     film_thumbnail() {
       const has_aws_location = _.get(
         this.film,
-        "aws_thumnail.meta.location",
+        "aws_thumbnail.meta.location",
         ""
       );
       return has_aws_location;

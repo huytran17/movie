@@ -8,7 +8,7 @@ export default class Film implements IFilm {
   public readonly aws_trailer?: Record<string, unknown>;
   public readonly description: string;
   public readonly series: ISeries;
-  public readonly aws_thumnail?: Record<string, unknown>;
+  public readonly aws_thumbnail?: Record<string, unknown>;
   public readonly categories: CategoryType[];
   public readonly meta: {
     view_count: number;
@@ -44,7 +44,7 @@ export default class Film implements IFilm {
     series,
     description,
     meta,
-    aws_thumnail,
+    aws_thumbnail,
     categories,
   }: IFilm) {
     this._id = _id;
@@ -52,7 +52,7 @@ export default class Film implements IFilm {
     this.series = series;
     this.title = title;
     this.description = description;
-    this.aws_thumnail = aws_thumnail;
+    this.aws_thumbnail = aws_thumbnail;
     this.meta = meta;
     this.categories = categories;
     this.created_at = created_at;

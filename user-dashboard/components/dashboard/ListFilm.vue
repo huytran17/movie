@@ -22,8 +22,7 @@
               @click="$router.push(localePath(`/film/${film._id}`))"
             >
               <v-img
-                :lazy-src="film.image_lazy_src"
-                src="https://picsum.photos/id/11/500/300"
+                :src="getFilmThumbnail(film)"
                 :alt="film.title"
                 height="100%"
                 width="100%"
@@ -55,63 +54,13 @@ export default {
     list_films: {
       type: Array,
       default() {
-        return [
-          {
-            title: "Populate film",
-            url: "http://",
-            image_src: "https://picsum.photos/id/11/500/300",
-            image_lazy_src: "https://picsum.photos/id/11/10/6",
-          },
-          {
-            title: "Populate film",
-            url: "http://",
-            image_src: "https://picsum.photos/id/11/500/300",
-            image_lazy_src: "https://picsum.photos/id/11/10/6",
-          },
-          {
-            title: "Populate film",
-            url: "http://",
-            image_src: "https://picsum.photos/id/11/500/300",
-            image_lazy_src: "https://picsum.photos/id/11/10/6",
-          },
-          {
-            title: "Populate film",
-            url: "http://",
-            image_src: "https://picsum.photos/id/11/500/300",
-            image_lazy_src: "https://picsum.photos/id/11/10/6",
-          },
-          {
-            title: "Populate film",
-            url: "http://",
-            image_src: "https://picsum.photos/id/11/500/300",
-            image_lazy_src: "https://picsum.photos/id/11/10/6",
-          },
-          {
-            title: "Populate film",
-            url: "http://",
-            image_src: "https://picsum.photos/id/11/500/300",
-            image_lazy_src: "https://picsum.photos/id/11/10/6",
-          },
-          {
-            title: "Populate film",
-            url: "http://",
-            image_src: "https://picsum.photos/id/11/500/300",
-            image_lazy_src: "https://picsum.photos/id/11/10/6",
-          },
-          {
-            title: "Populate film",
-            url: "http://",
-            image_src: "https://picsum.photos/id/11/500/300",
-            image_lazy_src: "https://picsum.photos/id/11/10/6",
-          },
-          {
-            title: "Populate film",
-            url: "http://",
-            image_src: "https://picsum.photos/id/11/500/300",
-            image_lazy_src: "https://picsum.photos/id/11/10/6",
-          },
-        ];
+        return [];
       },
+    },
+  },
+  methods: {
+    getFilmThumbnail(film) {
+      return _.get(film, "aws_thumbnail.meta.location", "");
     },
   },
 };
