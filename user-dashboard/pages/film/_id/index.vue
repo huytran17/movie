@@ -143,7 +143,7 @@
       <v-col cols="12" lg="9">
         <div class="d-flex flex-column">
           <div>
-            <BaseCommentForm :content="film" />
+            <BaseCommentForm :content="new_comment" />
           </div>
           <div class="d-flex justify-end mt-4">
             <v-btn depressed color="primary" @click="createComment">
