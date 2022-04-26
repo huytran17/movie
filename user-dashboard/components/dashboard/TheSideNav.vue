@@ -49,7 +49,7 @@ export default {
       default() {
         return [
           {
-            text: "Trang chủ",
+            text: "Trang Chủ",
             value: "home",
             icon: "mdi-home",
             route: "/",
@@ -59,6 +59,54 @@ export default {
             value: "account",
             icon: "mdi-account",
             route: "/profile",
+          },
+          {
+            text: "Phim Bộ",
+            value: "series",
+            icon: "mdi-movie-roll",
+            route: "/",
+          },
+          {
+            text: "Phim Việt Nam",
+            value: "home",
+            icon: "mdi-movie-roll",
+            route: "/",
+          },
+          {
+            text: "Phim Âu - Mỹ",
+            value: "home",
+            icon: "mdi-movie-roll",
+            route: "/",
+          },
+          {
+            text: "Phim Hài",
+            value: "home",
+            icon: "mdi-movie-roll",
+            route: "/",
+          },
+          {
+            text: "Phim Trẻ Em",
+            value: "home",
+            icon: "mdi-movie-roll",
+            route: "/",
+          },
+          {
+            text: "Phim Kinh Dị",
+            value: "home",
+            icon: "mdi-movie-roll",
+            route: "/",
+          },
+          {
+            text: "Phim Tài Liệu",
+            value: "home",
+            icon: "mdi-movie-roll",
+            route: "/",
+          },
+          {
+            text: "Phim Gia Đình",
+            value: "home",
+            icon: "mdi-movie-roll",
+            route: "/",
           },
         ];
       },
