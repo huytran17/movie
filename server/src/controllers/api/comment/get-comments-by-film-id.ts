@@ -35,17 +35,6 @@ export default function makeGetCommentsByFilmIdController({
 
       const exists = await getCommentsByFilmId({ film_id });
 
-      if (!exists) {
-        return {
-          headers,
-          statusCode: 200,
-          body: {
-            is_error: true,
-            message: "Comment does not exists.",
-          },
-        };
-      }
-
       return {
         headers,
         statusCode: 200,

@@ -25,6 +25,18 @@ commentRouter.get(
   makeExpressCallback(getCommentByIdController)
 );
 
+commentRouter.put(
+  "/:comment_id",
+  makeValidator(updateCommentRules),
+  makeExpressCallback(updateCommentController)
+);
+
+commentRouter.delete(
+  "/:comment_id",
+  makeValidator(deleteCommentRules),
+  makeExpressCallback(deleteCommentController)
+);
+
 commentRouter.get(
   "/by-film/:film_id",
   makeValidator(getCommentsByFilmIdRules),

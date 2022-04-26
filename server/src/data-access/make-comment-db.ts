@@ -149,6 +149,8 @@ export default function makeCommentDb({
 
       const existing = await commentDbModel
         .find(query_conditions)
+        .populate("user", "-__v")
+        .populate("film", "-__V")
         .lean({ virtuals: true });
 
       if (existing) {

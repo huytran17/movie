@@ -17,7 +17,7 @@ export default function makeUpdateCommentController({
 }) {
   return async function updateCommentController(
     httpRequest: Request & {
-      context: { validated: { commentDetails: IComment } };
+      context: { validated: {} };
     }
   ) {
     const headers = {
@@ -25,13 +25,12 @@ export default function makeUpdateCommentController({
     };
 
     try {
-      const commentDetails: IComment = _.get(
-        httpRequest,
-        "context.validated.data"
-      );
+      const commentDetails = _.get(httpRequest, "context.validated.data");
 
-      const { _id } = commentDetails; // the comment's ID
-      const exists = await getCommentById({ id: _id });
+      const { comment_id } = _.get(httpRequest, "context.validated"); // the comment's ID
+      const { content } = commentDetails;
+
+      const exists = await getCommentById({ id: comment_id });
       if (!exists) {
         return {
           headers,
@@ -43,8 +42,12 @@ export default function makeUpdateCommentController({
         };
       }
 
+      const final_comment_data = Object.assign({}, exists, {
+        content,
+      });
+
       const updatedComment = await updateComment({
-        commentDetails,
+        commentDetails: final_comment_data,
       });
 
       return {

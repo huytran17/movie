@@ -28,7 +28,7 @@ const actions: ActionTree<CommentState, RootState> = {
   },
   /**
    *
-   * @description Update admin
+   * @description Update api
    * @param param0
    * @param param1
    */
@@ -50,11 +50,9 @@ const actions: ActionTree<CommentState, RootState> = {
    * @param param1
    */
   async [ActionTypes.UPDATE_COMMENT]({ commit, state }, { comment_id }) {
-    const { data } = await this.$axios.$put(`/admin/comment/${comment_id}`, {
-      data: state.comment,
+    const { data } = await this.$axios.$put(`/api/comment/${comment_id}`, {
+      data: state.new_comment,
     });
-
-    commit(MutationTypes.SET_COMMENT, { data });
 
     return data;
   },
@@ -63,9 +61,7 @@ const actions: ActionTree<CommentState, RootState> = {
    * @param {is_published: boolean}
    */
   async [ActionTypes.DELETE_COMMENT]({ commit }, { comment_id }) {
-    const result = await this.$axios.$delete(
-      `/admin/comment/delete/${comment_id}`
-    );
+    const result = await this.$axios.$delete(`/api/comment/${comment_id}`);
 
     return result;
   },
