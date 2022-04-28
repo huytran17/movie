@@ -64,7 +64,7 @@ export default {
             text: "Phim Bộ",
             value: "series",
             icon: "mdi-movie-roll",
-            route: "/",
+            route: "/film/series",
           },
           {
             text: "Phim Việt Nam",

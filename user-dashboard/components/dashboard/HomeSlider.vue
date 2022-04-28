@@ -6,6 +6,7 @@
     hide-delimiter-background
     show-arrows-on-hover
     :hide-delimiters="true"
+    class="mb-5"
   >
     <v-carousel-item v-for="(image, i) in slide_images" :key="i">
       <v-sheet height="100%" class="position-relative">

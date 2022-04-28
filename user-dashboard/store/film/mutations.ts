@@ -26,8 +26,13 @@ const mutations: MutationTree<FilmState> = {
     state.pagination = data;
   },
 
-  [MutationTypes.SET_FILMS](state, { films }) {
-    state.films = films;
+  [MutationTypes.SET_FILMS](state, { data, new_state = true }) {
+    if (new_state) {
+      state.films = data;
+      return;
+    }
+
+    state.films = _.uniqBy(_.concat(state.films, data), "_id");
   },
 
   [MutationTypes.SET_FILM](state, { data }: { data: any }) {

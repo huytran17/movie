@@ -1,4 +1,5 @@
 export enum ActionTypes {
   GET_FILMS = "GET_FILMS",
   GET_FILM = "GET_FILM",
+  GET_FILMS_PAGINATED = "GET_FILMS_PAGINATED",
 }

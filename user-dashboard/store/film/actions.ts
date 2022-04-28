@@ -13,8 +13,56 @@ const actions: ActionTree<FilmState, RootState> = {
   async [ActionTypes.GET_FILMS]({ commit }) {
     const { data } = await this.$axios.$get(`/api/film`);
 
-    commit(MutationTypes.SET_FILMS, { films: data });
+    commit(MutationTypes.SET_FILMS, { data });
     return data;
+  },
+  /**
+   * @description Get all films
+   * @param param0
+   */
+  async [ActionTypes.GET_FILMS_PAGINATED]({ commit }, params = {}) {
+    const query = _.get(params, "query");
+    const page = _.get(params, "page", 1);
+    const new_state = _.get(params, "new_state", false);
+    const entries_per_page = _.get(params, "entries_per_page", 15);
+    const series = _.get(params, "series");
+    const category = _.get(params, "category");
+
+    let url_query = `?page=${page}`;
+
+    if (entries_per_page) {
+      url_query += `&entries_per_page=${entries_per_page}`;
+    }
+
+    if (query) {
+      url_query += `&query=${query}`;
+    }
+
+    if (series) {
+      url_query += `&series=${series}`;
+    }
+
+    if (category) {
+      url_query += `&category=${category}`;
+    }
+
+    const { data: films, pagination } = await this.$axios.$get(
+      `/api/film/films/all-paginated/${url_query}`
+    );
+
+    commit(MutationTypes.SET_FILMS, {
+      data: films,
+      new_state,
+    });
+
+    commit(MutationTypes.SET_FILMS_PAGINATION, {
+      data: pagination,
+    });
+
+    commit(MutationTypes.SET_LOADING, {
+      data: false,
+    });
+    return films;
   },
   /**
    * @description Get single film, the chosen film state is used in payment.

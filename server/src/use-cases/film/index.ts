@@ -8,7 +8,9 @@ import makeRemoveFilmById from "./delete-film-by-id";
 import makeGetFilmBySlug from "./get-film-by-slug";
 import makeGetFilmBytitle from "./get-film-by-title";
 import makeGetFilms from "./get-films";
+import makeGetFilmsPaginated from "./get-films-paginated";
 
+const getFilmsPaginated = makeGetFilmsPaginated(FilmDb);
 const createFilm = makeCreateFilm(FilmDb);
 const updateFilm = makeUpdateFilm(FilmDb);
 const removeFilm = makeRemoveFilm(FilmDb);
@@ -47,6 +49,7 @@ const filmServices = Object.freeze({
   updateFilm,
   removeFilm,
   removeFilmById,
+  getFilmsPaginated,
 });
 
 export default filmServices;
@@ -59,4 +62,5 @@ export {
   updateFilm,
   removeFilm,
   removeFilmById,
+  getFilmsPaginated,
 };

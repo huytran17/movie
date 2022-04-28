@@ -10,6 +10,7 @@ import {
   getFilmController,
   getFilmBySlugController,
   getFilmsController,
+  getFilmsPaginatedController,
 } from "../../controllers/api/film";
 
 const filmRouter = express.Router();
@@ -21,6 +22,10 @@ filmRouter.get(
 );
 
 filmRouter.get("/", makeExpressCallback(getFilmsController));
+filmRouter.get(
+  "/films/all-paginated",
+  makeExpressCallback(getFilmsPaginatedController)
+);
 
 filmRouter.get(
   "/:slug",

@@ -103,19 +103,34 @@ export default function makeFilmDb({
       query = "",
       page = 1,
       entries_per_page = 15,
+      category = "",
+      series = "",
     }: {
       query: string;
       page: number;
       entries_per_page?: number;
+      category?: string;
+      series?: string;
     }): Promise<PaginatedFilmResult | null> {
       const number_of_entries_to_skip = (page - 1) * entries_per_page;
 
-      const query_conditions = { deleted_at: undefined };
+      let query_conditions = { deleted_at: undefined };
 
       if (query) {
-        Object.defineProperty(query_conditions, "$or", {
-          value: [{ email: { $regex: ".*" + query + ".*", $options: "si" } }],
-          writable: false,
+        Object.assign(query_conditions, {
+          $or: [{ title: { $regex: ".*" + query + ".*", $options: "si" } }],
+        });
+      }
+
+      if (category) {
+        Object.assign(query_conditions, {
+          category: category,
+        });
+      }
+
+      if (series) {
+        Object.assign(query_conditions, {
+          series: { $nin: [null, undefined] },
         });
       }
 

@@ -6,10 +6,14 @@ export default interface IFilmDb {
     query,
     page,
     entries_per_page,
+    category,
+    series,
   }: {
     query: string;
     page: number;
     entries_per_page?: number;
+    category?: string;
+    series?: string;
   }) => Promise<PaginatedFilmResult | null>;
   findOne: () => Promise<Film | null>;
   findById: ({ id }: { id: string }) => Promise<Film | null>;

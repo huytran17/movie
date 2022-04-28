@@ -3,12 +3,14 @@ import {
   getFilmBySlug,
   getFilmByTitle,
   getFilms,
+  getFilmsPaginated,
 } from "../../../use-cases/film";
 import makeGetFilmController from "./get-film";
 
 import makeGetFilmBySlugController from "./get-film-by-slug";
 import makeGetFilmByTitleController from "./get-film-by-title";
 import makeGetFilmsController from "./get-films";
+import makeGetFilmsPaginatedController from "./get-films-paginated";
 
 /**
  * get film controller based on id
@@ -17,7 +19,9 @@ import makeGetFilmsController from "./get-films";
 const getFilmsController = makeGetFilmsController({
   getFilms,
 });
-
+const getFilmsPaginatedController = makeGetFilmsPaginatedController({
+  getFilmsPaginated,
+});
 /**
  * get film controller based on id
  * @function getFilmController
@@ -48,6 +52,7 @@ export default Object.freeze({
   getFilmBySlugController,
   getFilmByTitleController,
   getFilmsController,
+  getFilmsPaginatedController,
 });
 
 export {
@@ -55,4 +60,5 @@ export {
   getFilmBySlugController,
   getFilmByTitleController,
   getFilmsController,
+  getFilmsPaginatedController,
 };

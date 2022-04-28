@@ -25,6 +25,7 @@ export default {
       GET_FILMS: "film/GET_FILMS",
       GET_FILM: "film/GET_FILM",
       GET_FILM_BY_SLUG: "film/GET_FILM_BY_SLUG",
+      GET_FILMS_PAGINATED: "film/GET_FILMS_PAGINATED",
     }),
 
     ...mapMutations({

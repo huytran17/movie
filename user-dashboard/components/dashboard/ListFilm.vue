@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5">
+  <div class="mt-1">
     <div class="title">
       <div class="text-subtitle-1 text-h6">
         <span class="app-title">
@@ -16,7 +16,7 @@
             class="clickable"
           >
             <v-card
-              class="my-4 mx-2 position-relative"
+              class="my-4 mx-1 position-relative no-border-radius no-box-shadow"
               height="250"
               width="180"
               @click="$router.push(localePath(`/film/${film._id}`))"
@@ -27,6 +27,7 @@
                 height="100%"
                 width="100%"
                 cover
+                class="no-border-radius"
               >
               </v-img>
             </v-card>
