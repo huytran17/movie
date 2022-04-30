@@ -1,25 +1,25 @@
 import { Request } from "express";
 import * as _ from "lodash";
-import { IGetFilms } from "../../../use-cases/film/get-films";
+import { IGetSeries } from "../../../use-cases/series/get-series";
 
-export default function makeGetFilmsController({
-  getFilms,
+export default function makeGetSeriesController({
+  getSeries,
 }: {
-  getFilms: IGetFilms;
+  getSeries: IGetSeries;
 }) {
-  return async function getFilmsController(
+  return async function getSeriesController(
     httpRequest: Request & { context: { validated: {} } }
   ) {
     const headers = {
       "Content-Type": "application/json",
     };
     try {
-      const films = await getFilms();
+      const series = await getSeries();
 
       return {
         headers,
         statusCode: 200,
-        body: { data: films }, // TODO: add in implementation of resource
+        body: { data: series }, // TODO: add in implementation of resource
       };
     } catch (err) {
       // TODO: add in error handling here

@@ -17,7 +17,7 @@ import {
   getFilmBySlugController,
   updateFilmController,
   uploadFilmThumbnailController,
-  getFilmsController,
+  getFilmsPaginatedController,
   deleteFilmController,
   createFilmController,
   uploadFilmController,
@@ -66,7 +66,7 @@ filmRouter.put(
   makeExpressCallback(updateFilmController)
 );
 
-filmRouter.get("/", makeExpressCallback(getFilmsController));
+filmRouter.get("/", makeExpressCallback(getFilmsPaginatedController));
 
 filmRouter.delete(
   "/delete/:film_id",

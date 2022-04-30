@@ -8,12 +8,14 @@ export type IGetFilmsPaginated = ({
   entries_per_page,
   category,
   series,
+  exclude_ids,
 }: {
   query: string;
   page: number;
   entries_per_page?: number;
   category?: string;
   series?: string;
+  exclude_ids?: string;
 }) => Promise<PaginatedFilmResult | null>;
 
 export default function makeGetFilmsPaginated(
@@ -25,12 +27,14 @@ export default function makeGetFilmsPaginated(
     entries_per_page,
     category,
     series,
+    exclude_ids,
   }: {
     query: string;
     page: number;
     entries_per_page?: number;
     category?: string;
     series?: string;
+    exclude_ids?: string;
   }): Promise<PaginatedFilmResult | null> {
     const films = await filmDb.findAllPaginated({
       query,
@@ -38,6 +42,7 @@ export default function makeGetFilmsPaginated(
       entries_per_page,
       category,
       series,
+      exclude_ids,
     });
     return films;
   };

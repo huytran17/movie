@@ -4,6 +4,9 @@
       <v-col cols="12" lg="9">
         <Player :options="options" :key="player_key" />
       </v-col>
+      <v-col cols="12" lg="3">
+        <BaseSuggestionList :category="film.category" :exclude_ids="film_id" />
+      </v-col>
       <v-col cols="12" lg="9">
         <v-tabs v-model="tab" class="mb-4">
           <v-tabs-slider></v-tabs-slider>
@@ -134,9 +137,6 @@
             </v-row>
           </v-tab-item>
         </v-tabs-items>
-      </v-col>
-      <v-col cols="12" lg="3">
-        <BaseSuggestionList :category="film.category" :exclude_id="film_id" />
       </v-col>
     </v-row>
     <v-row class="flex-column-reverse flex-lg-row">

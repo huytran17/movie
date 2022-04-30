@@ -32,9 +32,9 @@ export default {
       SET_LOADING: "film/SET_LOADING",
     }),
 
-    filterFilmByCategory({ category, exclude_id = "" }) {
+    filterFilmByCategory({ category, exclude_ids = "" }) {
       const filtered_films = _.filter(this.films, function (film) {
-        const valid = film.category === category && film._id !== exclude_id;
+        const valid = film.category === category && film._id !== exclude_ids;
         return valid;
       });
 

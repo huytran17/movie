@@ -6,6 +6,25 @@ import { RootState } from "../index";
 import _ from "lodash";
 
 const actions: ActionTree<SeriesState, RootState> = {
+  async [ActionTypes.UPDATE_SERIES_THUMBNAIL]({ commit }, { file, series_id }) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const { data, is_error, message } = await this.$axios.$post(
+      `/admin/series/upload-thumbnail/${series_id}`,
+      formData,
+      config
+    );
+    if (!is_error) {
+      commit(MutationTypes.SET_SERIES, { data });
+    }
+
+    return { data, is_error, message };
+  },
   /**
    * @description Get all series
    * @param param0

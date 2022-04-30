@@ -8,12 +8,14 @@ export default interface IFilmDb {
     entries_per_page,
     category,
     series,
+    exclude_ids,
   }: {
     query: string;
     page: number;
     entries_per_page?: number;
     category?: string;
     series?: string;
+    exclude_ids?: string;
   }) => Promise<PaginatedFilmResult | null>;
   findOne: () => Promise<Film | null>;
   findById: ({ id }: { id: string }) => Promise<Film | null>;

@@ -12,7 +12,13 @@ import makeGetSeriesController from "./get-series";
 import makeDeleteSeriesController from "./delete-series";
 import makeCreateSeriesController from "./create-series";
 import makeGetSeriesByIdController from "./get-series-by-id";
+import makeUploadSeriesThumbnailController from "./upload-series-thumbnail";
 
+const uploadSeriesThumbnailController = makeUploadSeriesThumbnailController({
+  updateSeries,
+  getSeriesById,
+  mongoose,
+});
 const getSeriesByIdController = makeGetSeriesByIdController({
   getSeriesById,
 });
@@ -45,6 +51,7 @@ export default Object.freeze({
   deleteSeriesController,
   createSeriesController,
   getSeriesByIdController,
+  uploadSeriesThumbnailController,
 });
 
 export {
@@ -53,4 +60,5 @@ export {
   deleteSeriesController,
   createSeriesController,
   getSeriesByIdController,
+  uploadSeriesThumbnailController,
 };

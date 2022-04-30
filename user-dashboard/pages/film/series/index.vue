@@ -1,20 +1,18 @@
 <template>
-  <BaseFilmsList :films_list="films" />
+  <BaseSeriesList :series_list="series_array" />
 </template>
 
 <script>
-import BaseFilmsList from "@/components/film/BaseFilmsList";
-import filmMixins from "@/mixins/film";
+import BaseSeriesList from "@/components/film/BaseSeriesList";
+import seriesMixins from "@/mixins/series";
 
 export default {
   name: "Series",
-  mixins: [filmMixins],
-  components: { BaseFilmsList },
+  mixins: [seriesMixins],
+  components: { BaseSeriesList },
   async fetch() {
     try {
-      await this.GET_FILMS_PAGINATED({
-        series: "true",
-      });
+      await this.GET_SERIES_ARRAY();
     } catch (e) {
       console.log(e);
     }

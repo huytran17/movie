@@ -1,11 +1,11 @@
 <template>
-  <v-row v-if="has_suggestion_list" class="pt-3">
+  <v-row v-if="has_suggestions_list" class="pt-3">
     <v-col cols="12">
       <v-row class="suggestion-list">
         <v-col
           cols="4"
           lg="12"
-          v-for="(film, index) in get_suggestion_list"
+          v-for="(film, index) in suggestions_list"
           :key="index"
         >
           <v-row>
@@ -49,29 +49,33 @@ export default {
         return "vietnam";
       },
     },
-    exclude_id: {
+    exclude_ids: {
       type: String,
       default() {
         return "";
       },
     },
   },
+  data() {
+    return {
+      suggestions_list: [],
+    };
+  },
   computed: {
-    get_suggestion_list() {
-      const filtered_films = this.filterFilmByCategory({
-        category: this.category,
-        exclude_id: this.exclude_id,
-      });
-      return filtered_films;
-    },
-    has_suggestion_list() {
-      return this.get_suggestion_list.length > 0;
+    has_suggestions_list() {
+      return this.suggestions_list.length > 0;
     },
   },
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
-      await Promise.all([this.GET_FILMS()]);
+      const { data, pagination } = await this.GET_FILMS_PAGINATED({
+        category: this.category,
+        exclude_ids: this.exclude_ids,
+        keep_in_store: false,
+        new_state: true,
+      });
+      this.suggestions_list = data;
     } catch (e) {
       console.log(e);
     } finally {

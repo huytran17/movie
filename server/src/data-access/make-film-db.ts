@@ -105,12 +105,14 @@ export default function makeFilmDb({
       entries_per_page = 15,
       category = "",
       series = "",
+      exclude_ids = "",
     }: {
       query: string;
       page: number;
       entries_per_page?: number;
       category?: string;
       series?: string;
+      exclude_ids?: string;
     }): Promise<PaginatedFilmResult | null> {
       const number_of_entries_to_skip = (page - 1) * entries_per_page;
 
@@ -122,15 +124,21 @@ export default function makeFilmDb({
         });
       }
 
+      if (exclude_ids) {
+        Object.assign(query_conditions, {
+          _id: { $nin: exclude_ids.split(",") },
+        });
+      }
+
       if (category) {
         Object.assign(query_conditions, {
-          category: category,
+          categories: { $in: category },
         });
       }
 
       if (series) {
         Object.assign(query_conditions, {
-          series: { $nin: [null, undefined] },
+          series: series,
         });
       }
 

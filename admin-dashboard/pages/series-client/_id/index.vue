@@ -19,6 +19,27 @@
       </v-row>
 
       <v-row>
+        <v-col cols="12" sm="7">
+          <v-file-input
+            v-model="file_of_series_thumbnail"
+            small-chips
+            truncate-length="15"
+            :label="$t('Choose thumbnail')"
+            @change="uploadThumbnail"
+            accept="image/*"
+          ></v-file-input>
+        </v-col>
+        <v-col
+          v-if="series_thumbnail"
+          cols="12"
+          sm="5"
+          class="d-flex justify-end"
+        >
+          <v-img :src="series_thumbnail"></v-img>
+        </v-col>
+      </v-row>
+
+      <v-row>
         <v-col cols="12" class="d-flex justify-end">
           <v-btn
             depressed
@@ -43,11 +64,20 @@ export default {
   data() {
     return {
       form_valid: false,
+      file_of_series_thumbnail: null,
     };
   },
   computed: {
     has_series() {
       return !!this.series;
+    },
+    series_thumbnail() {
+      const has_aws_location = _.get(
+        this.series,
+        "aws_thumbnail.meta.location",
+        ""
+      );
+      return has_aws_location;
     },
   },
   methods: {
@@ -67,6 +97,26 @@ export default {
         variable_path,
         data,
       });
+    },
+
+    async uploadThumbnail() {
+      const max_size = 50 * 1024 * 1024; // 5MB
+      const file = this.file_of_series_thumbnail;
+      const file_size = _.get(file, "size", max_size + 1);
+
+      if (file && file_size <= max_size) {
+        this.$nextTick(async () => {
+          const { is_error, message } = await this.UPDATE_SERIES_THUMBNAIL({
+            file: this.file_of_series_thumbnail,
+            series_id: this.series._id,
+          });
+          if (is_error) {
+            this.$toast.error(this.$t(message));
+            return;
+          }
+          this.$toast.success(this.$t("Updated series successfully!"));
+        });
+      }
     },
   },
   async fetch() {

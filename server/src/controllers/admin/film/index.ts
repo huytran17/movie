@@ -4,7 +4,7 @@ import {
   updateFilm,
   getFilmById,
   getFilmBySlug,
-  getFilms,
+  getFilmsPaginated,
   removeFilmById,
   createFilm,
 } from "../../../use-cases/film";
@@ -12,8 +12,8 @@ import makeGetFilmController from "./get-film";
 
 import makeGetFilmBySlugController from "./get-film-by-slug";
 import makeUpdateFilmController from "./update-film";
-import makeUploadFilmAvatarController from "./upload-film-thumbnail";
-import makeGetFilmsController from "./get-films";
+import makeUploadFilmThumbnailController from "./upload-film-thumbnail";
+import makeGetFilmsPaginatedController from "./get-films-paginated";
 import makeDeleteFilmController from "./delete-film";
 import makeCreateFilmController from "./create-film";
 import makeUploadFilmController from "./upload-film";
@@ -42,11 +42,13 @@ const deleteFilmController = makeDeleteFilmController({
 /**
  * @description update film's details excluding password
  */
-const getFilmsController = makeGetFilmsController({ getFilms });
+const getFilmsPaginatedController = makeGetFilmsPaginatedController({
+  getFilmsPaginated,
+});
 /**
  * @description update film's details excluding password
  */
-const uploadFilmThumbnailController = makeUploadFilmAvatarController({
+const uploadFilmThumbnailController = makeUploadFilmThumbnailController({
   updateFilm,
   getFilmById,
   mongoose,
@@ -81,7 +83,7 @@ export default Object.freeze({
   getFilmBySlugController,
   updateFilmController,
   uploadFilmThumbnailController,
-  getFilmsController,
+  getFilmsPaginatedController,
   deleteFilmController,
   createFilmController,
   uploadFilmController,
@@ -93,7 +95,7 @@ export {
   getFilmBySlugController,
   updateFilmController,
   uploadFilmThumbnailController,
-  getFilmsController,
+  getFilmsPaginatedController,
   deleteFilmController,
   createFilmController,
   uploadFilmController,

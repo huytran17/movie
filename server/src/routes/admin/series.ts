@@ -7,6 +7,7 @@ import {
   updateSeriesRules,
   createSeriesRules,
   getSeriesByIdRules,
+  uploadSeriesThumbnailRules,
 } from "../../controllers/admin/series/validators";
 import {
   getSeriesByIdController,
@@ -14,9 +15,18 @@ import {
   getSeriesController,
   deleteSeriesController,
   createSeriesController,
+  uploadSeriesThumbnailController,
 } from "../../controllers/admin/series";
+import { upload } from "../../middlewares/file-upload-middleware";
 
 const seriesRouter = express.Router();
+
+seriesRouter.post(
+  "/upload-thumbnail/:series_id",
+  upload.single("file"),
+  makeValidator(uploadSeriesThumbnailRules),
+  makeExpressCallback(uploadSeriesThumbnailController)
+);
 
 seriesRouter.get(
   "/:series_id",

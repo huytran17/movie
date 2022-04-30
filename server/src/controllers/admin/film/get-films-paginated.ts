@@ -1,16 +1,15 @@
-import _ from "lodash";
+import { Request } from "express";
+import * as _ from "lodash";
 import { IGetFilmsPaginated } from "../../../use-cases/film/get-films-paginated";
 
-export default function makeGetFilmsPaginatedController({
+export default function makeGetFilmsController({
   getFilmsPaginated,
 }: {
   getFilmsPaginated: IGetFilmsPaginated;
 }) {
-  return async function getFilmsPaginatedController(httpRequest: {
-    context: {
-      validated: any;
-    };
-  }) {
+  return async function getFilmsController(
+    httpRequest: Request & { context: { validated: {} } }
+  ) {
     const headers = {
       "Content-Type": "application/json",
     };
@@ -20,8 +19,8 @@ export default function makeGetFilmsPaginatedController({
         page = 1,
         entries_per_page = 15,
         category = "",
-        series,
-        exclude_ids,
+        series = "",
+        exclude_ids = "",
       }: {
         query: string;
         page: number;
@@ -30,11 +29,10 @@ export default function makeGetFilmsPaginatedController({
         series: string;
         exclude_ids?: string;
       } = _.get(httpRequest, "context.validated");
-
       const films_paginated = await getFilmsPaginated({
         query,
-        page: Number(page),
-        entries_per_page: Number(entries_per_page),
+        page,
+        entries_per_page,
         category,
         series,
         exclude_ids,
@@ -43,9 +41,7 @@ export default function makeGetFilmsPaginatedController({
       return {
         headers,
         statusCode: 200,
-        body: {
-          ...films_paginated,
-        },
+        body: { ...films_paginated }, // TODO: add in implementation of resource
       };
     } catch (err) {
       // TODO: add in error handling here
