@@ -12,7 +12,7 @@ export default {
   components: { BaseSeriesList },
   async fetch() {
     try {
-      await this.GET_SERIES_ARRAY();
+      await this.GET_SERIES_ARRAY_PAGINATED();
     } catch (e) {
       console.log(e);
     }

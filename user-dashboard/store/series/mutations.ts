@@ -26,8 +26,13 @@ const mutations: MutationTree<SeriesState> = {
     state.pagination = data;
   },
 
-  [MutationTypes.SET_SERIES_ARRAY](state, { series }) {
-    state.series_array = series;
+  [MutationTypes.SET_SERIES_ARRAY](state, { data, new_state }) {
+    if (new_state) {
+      state.series_array = data;
+      return;
+    }
+
+    state.series_array = _.uniqBy(_.concat(state.series_array, data), "_id");
   },
 
   [MutationTypes.SET_SERIES](state, { data }: { data: any }) {

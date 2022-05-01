@@ -27,6 +27,7 @@ export default {
     ...mapActions({
       GET_SERIES: "series/GET_SERIES",
       GET_SERIES_ARRAY: "series/GET_SERIES_ARRAY",
+      GET_SERIES_ARRAY_PAGINATED: "series/GET_SERIES_ARRAY_PAGINATED",
     }),
 
     ...mapMutations({

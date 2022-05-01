@@ -44,16 +44,16 @@ const actions: ActionTree<SeriesState, RootState> = {
       url_query += `&query=${query}`;
     }
 
-    const { data: films, pagination } = await this.$axios.$get(
+    const { data: series, pagination } = await this.$axios.$get(
       `/api/series/all-paginated/${url_query}`
     );
 
     if (!keep_in_store) {
-      return { data: films, pagination };
+      return { data: series, pagination };
     }
 
     commit(MutationTypes.SET_SERIES_ARRAY, {
-      data: films,
+      data: series,
       new_state,
     });
 
@@ -64,7 +64,7 @@ const actions: ActionTree<SeriesState, RootState> = {
     commit(MutationTypes.SET_LOADING, {
       data: false,
     });
-    return { data: films, pagination };
+    return { data: series, pagination };
   },
 };
 
