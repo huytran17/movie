@@ -13,7 +13,7 @@ export default {
   async fetch() {
     try {
       await this.GET_FILMS_PAGINATED({
-        category: "family",
+        categories: ["family"],
         new_state: true,
       });
     } catch (e) {

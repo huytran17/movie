@@ -35,7 +35,7 @@ export default {
       SET_FEEDBACK: "feedback/SET_FEEDBACK",
     }),
 
-    updateFeedbackObject({ data, variable_path }) {
+    updateNewFeedbackObject({ data, variable_path }) {
       this.UPDATE_NEW_FEEDBACK_DATA({
         data,
         variable_path,

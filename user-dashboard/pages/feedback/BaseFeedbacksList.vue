@@ -9,7 +9,7 @@
               background-color="green lighten-3"
               color="green"
               @input="
-                updateFeedbackObject({
+                updateNewFeedbackObject({
                   variable_path: 'star_count',
                   data: $event,
                 })
@@ -23,7 +23,7 @@
               placeholder="Type your feedback..."
               class="pt-0"
               @input="
-                updateFeedbackObject({
+                updateNewFeedbackObject({
                   variable_path: 'content',
                   data: $event,
                 })
@@ -219,6 +219,9 @@ export default {
 .feedback-list {
   max-height: 507.75px;
   overflow: auto;
+}
+.feedback-wrapper {
+  word-break: break-all;
 }
 /* width */
 .feedback-wrapper::-webkit-scrollbar {

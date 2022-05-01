@@ -8,6 +8,7 @@ export const state = () => ({
   loading: false,
   new_feedback: {
     star_count: 5,
+    content: "",
   },
   feedback: {},
 });

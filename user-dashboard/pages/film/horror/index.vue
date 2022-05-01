@@ -13,7 +13,7 @@ export default {
   async fetch() {
     try {
       await this.GET_FILMS_PAGINATED({
-        category: "horror",
+        categories: ["horror"],
         new_state: true,
       });
     } catch (e) {

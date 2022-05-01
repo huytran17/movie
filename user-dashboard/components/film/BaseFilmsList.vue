@@ -1,5 +1,5 @@
 <template>
-  <v-row class="px-3 mt-4">
+  <v-row class="px-3 my-4">
     <v-col
       v-for="(film, index) in films_list"
       :key="index"

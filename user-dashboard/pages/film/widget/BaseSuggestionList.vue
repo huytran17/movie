@@ -1,6 +1,6 @@
 <template>
   <v-row v-if="has_suggestions_list" class="pt-3">
-    <v-col cols="12">
+    <v-col cols="12" class="py-0">
       <v-row class="suggestion-list">
         <v-col
           cols="4"
@@ -11,16 +11,15 @@
           <v-row>
             <v-col cols="12" lg="5" class="d-flex d-lg-block">
               <v-img
-                src="https://picsum.photos/id/11/500/300"
+                :src="film_thumbnail"
                 cover
-                width="200px"
                 @click="$router.push(localePath(`/film/${film._id}`))"
                 class="clickable"
               ></v-img>
             </v-col>
             <v-col cols="7" class="d-none d-lg-block pl-0">
               <div class="text-body-2">
-                <span class="app-body">
+                <span class="app-title">
                   <span
                     class="suggestion-title clickable"
                     v-html="$t(film.title)"
@@ -62,6 +61,15 @@ export default {
     };
   },
   computed: {
+    film_thumbnail() {
+      const has_aws_location = _.get(
+        this.film,
+        "aws_thumbnail.meta.location",
+        ""
+      );
+      return has_aws_location;
+    },
+
     has_suggestions_list() {
       return this.suggestions_list.length > 0;
     },
@@ -69,7 +77,6 @@ export default {
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
-      console.log("-----------------", this.categories);
       const { data, pagination } = await this.GET_FILMS_PAGINATED({
         categories: this.categories,
         exclude_ids: this.exclude_ids,
@@ -88,7 +95,7 @@ export default {
 
 <style scoped>
 .suggestion-list {
-  max-height: 507.75px;
+  max-height: 630.16px;
   overflow: auto;
 }
 /* width */
