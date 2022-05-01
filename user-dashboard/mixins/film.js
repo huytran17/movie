@@ -8,7 +8,7 @@ export default {
       pagination: "film/pagination",
       films: "film/films",
       film: "film/film",
-      populate_films: "film/populate_films",
+      popular_films: "film/popular_films",
       newest_films: "film/newest_films",
     }),
 
@@ -32,9 +32,10 @@ export default {
       SET_LOADING: "film/SET_LOADING",
     }),
 
-    filterFilmByCategory({ category, exclude_ids = "" }) {
+    filterFilmByCategory({ categories, exclude_ids = "" }) {
       const filtered_films = _.filter(this.films, function (film) {
-        const valid = film.category === category && film._id !== exclude_ids;
+        const valid =
+          film.categories.includes(categories) && film._id !== exclude_ids;
         return valid;
       });
 

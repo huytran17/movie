@@ -27,6 +27,26 @@
                   ></span>
                 </span>
               </div>
+
+              <div class="text-body-2">
+                <span class="app-body">
+                  <span v-html="$t(film.description)"></span>
+                </span>
+              </div>
+
+              <div class="text-body-2">
+                <span class="app-body">
+                  <span v-html="$t(film.meta.view_count.toString())"></span>
+                  <v-icon small>mdi-eye</v-icon>
+                </span>
+              </div>
+
+              <div class="text-body-2">
+                <span class="app-body">
+                  <span v-html="$t(film.meta.rating)"></span>
+                  <v-icon small>mdi-star</v-icon>
+                </span>
+              </div>
             </v-col>
           </v-row>
         </v-col>

@@ -1,7 +1,15 @@
 import Film from "../../entities/film";
 import IFilm from "../../interfaces/film";
 export default interface IFilmDb {
-  findAll: () => Promise<Film[] | null>;
+  findAll: ({
+    categories,
+    series,
+    exclude_ids,
+  }: {
+    categories?: string[];
+    series?: string;
+    exclude_ids?: string[];
+  }) => Promise<Film[] | null>;
   findAllPaginated: ({
     query,
     page,

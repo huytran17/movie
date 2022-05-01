@@ -74,20 +74,45 @@ export default function makeFilmDb({
      * @param param0
      * @returns
      */
-    async findAll(): Promise<Film[] | null> {
-      const query_conditions = { deleted_at: { $in: [undefined, null] } };
+    async findAll({
+      categories = [],
+      series = "",
+      exclude_ids = [],
+    }: {
+      categories?: string[];
+      series?: string;
+      exclude_ids?: string[];
+    }): Promise<Film[] | null> {
+      let query_conditions = { deleted_at: undefined };
+
+      if (!_.isEmpty(exclude_ids)) {
+        Object.assign(query_conditions, {
+          _id: { $nin: exclude_ids },
+        });
+      }
+
+      if (!_.isEmpty(categories)) {
+        Object.assign(query_conditions, {
+          categories: { $in: categories },
+        });
+      }
+
+      if (series) {
+        Object.assign(query_conditions, {
+          series: series,
+        });
+      }
+
       const existing = await filmDbModel
         .find(query_conditions)
-        .populate({
-          path: "series",
-          select: "-__v",
-        })
         .sort({
-          created_at: -1, //desc
+          created_at: "desc",
         })
         .lean({ virtuals: true });
+
       if (existing) {
-        return existing.map((film) => new Film(film));
+        const data = existing.map((film) => new Film(film));
+        return data;
       }
 
       return null;
