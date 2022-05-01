@@ -125,6 +125,9 @@ export default function makeFeedbackDb({
           path: "film",
           select: "-__v",
         })
+        .sort({
+          created_at: "desc",
+        })
         .lean({ virtuals: true });
 
       if (existing) {

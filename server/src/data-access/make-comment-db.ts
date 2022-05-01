@@ -36,6 +36,9 @@ export default function makeCommentDb({
           path: "film",
           select: "-__v",
         })
+        .sort({
+          created_at: "desc",
+        })
         .lean({ virtuals: true });
       if (existing) {
         return existing.map((comment) => new Comment(comment));
@@ -151,6 +154,9 @@ export default function makeCommentDb({
         .find(query_conditions)
         .populate("user", "-__v")
         .populate("film", "-__V")
+        .sort({
+          created_at: "desc",
+        })
         .lean({ virtuals: true });
 
       if (existing) {

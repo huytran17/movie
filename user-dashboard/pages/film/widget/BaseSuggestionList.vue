@@ -1,9 +1,9 @@
 <template>
-  <v-row v-if="has_suggestions_list" class="pt-3">
+  <v-row v-if="has_suggestions_list" class="pt-3 mb-3 mb-lg-0">
     <v-col cols="12" class="py-0">
       <v-row class="suggestion-list">
         <v-col
-          cols="4"
+          cols="3"
           lg="12"
           v-for="(film, index) in suggestions_list"
           :key="index"
@@ -115,7 +115,7 @@ export default {
 
 <style scoped>
 .suggestion-list {
-  max-height: 630.16px;
+  max-height: 618.16px;
   overflow: auto;
 }
 /* width */
