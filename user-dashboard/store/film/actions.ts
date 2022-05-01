@@ -26,7 +26,7 @@ const actions: ActionTree<FilmState, RootState> = {
     const new_state = _.get(params, "new_state", false);
     const entries_per_page = _.get(params, "entries_per_page", 15);
     const series = _.get(params, "series");
-    const category = _.get(params, "category");
+    const categories = _.get(params, "categories", []);
     const keep_in_store = _.get(params, "keep_in_store", true);
     const exclude_ids = _.get(params, "exclude_ids", []);
 
@@ -40,16 +40,16 @@ const actions: ActionTree<FilmState, RootState> = {
       url_query += `&query=${query}`;
     }
 
-    if (exclude_ids) {
-      url_query += `&exclude_ids=${exclude_ids}`;
+    if (!_.isEmpty(exclude_ids)) {
+      url_query += `&exclude_ids=${exclude_ids.join(",")}`;
     }
 
     if (series) {
       url_query += `&series=${series}`;
     }
 
-    if (category) {
-      url_query += `&category=${category}`;
+    if (!_.isEmpty(categories)) {
+      url_query += `&categories=${categories.join(",")}`;
     }
 
     const { data: films, pagination } = await this.$axios.$get(

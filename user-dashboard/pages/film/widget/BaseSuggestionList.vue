@@ -43,16 +43,16 @@ export default {
   name: "BaseSuggestionList",
   mixins: [filmMixins],
   props: {
-    category: {
-      type: String,
+    categories: {
+      type: Array,
       default() {
-        return "vietnam";
+        return [];
       },
     },
     exclude_ids: {
-      type: String,
+      type: Array,
       default() {
-        return "";
+        return [];
       },
     },
   },
@@ -69,8 +69,9 @@ export default {
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
+      console.log("-----------------", this.categories);
       const { data, pagination } = await this.GET_FILMS_PAGINATED({
-        category: this.category,
+        categories: this.categories,
         exclude_ids: this.exclude_ids,
         keep_in_store: false,
         new_state: true,

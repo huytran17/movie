@@ -1,12 +1,12 @@
 <template>
-  <v-row class="px-3">
+  <v-row class="px-3 mt-4">
     <v-col
       v-for="(film, index) in films_list"
       :key="index"
       cols="6"
       sm="3"
       md="2"
-      class="px-0"
+      class="px-0 py-0"
     >
       <BaseFilmCard :film_item="film" />
     </v-col>

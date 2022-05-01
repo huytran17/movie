@@ -63,49 +63,41 @@ export default {
           {
             text: "Phim Bộ",
             value: "series",
-            icon: "mdi-movie-roll",
             route: "/film/series",
           },
           {
             text: "Phim Việt Nam",
             value: "vietnam",
-            icon: "mdi-movie-roll",
             route: "/film/vietnam",
           },
           {
             text: "Phim Âu - Mỹ",
             value: "usuk",
-            icon: "mdi-movie-roll",
             route: "/film/usuk",
           },
           {
             text: "Phim Hài",
             value: "comedy",
-            icon: "mdi-movie-roll",
             route: "/film/comedy",
           },
           {
             text: "Phim Trẻ Em",
             value: "kid",
-            icon: "mdi-movie-roll",
             route: "/film/kid",
           },
           {
             text: "Phim Kinh Dị",
             value: "horror",
-            icon: "mdi-movie-roll",
             route: "/film/horror",
           },
           {
             text: "Phim Tài Liệu",
             value: "documentary",
-            icon: "mdi-movie-roll",
             route: "/film/documentary",
           },
           {
             text: "Phim Gia Đình",
             value: "family",
-            icon: "mdi-movie-roll",
             route: "/film/family",
           },
         ];

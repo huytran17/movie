@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="my-4 mx-1 position-relative no-border-radius no-box-shadow"
+    class="my-1 mx-1 position-relative no-border-radius no-box-shadow"
     @click="$router.push(localePath(`/film/${film_item._id}`))"
   >
     <v-img

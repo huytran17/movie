@@ -2,141 +2,161 @@
   <v-container v-if="has_film" class="mt-10 pl-3 pl-lg-15" fluid>
     <v-row>
       <v-col cols="12" lg="9">
-        <Player :options="options" :key="player_key" />
+        <v-row>
+          <v-col cols="12">
+            <Player :options="options" :key="player_key" />
+          </v-col>
+
+          <v-col cols="12" class="py-0">
+            <div class="text-subtitle-1">
+              <span class="app-title">
+                <span v-html="film.title"></span>
+              </span>
+            </div>
+          </v-col>
+
+          <v-col cols="12">
+            <v-tabs v-model="tab" class="mb-4">
+              <v-tabs-slider></v-tabs-slider>
+
+              <v-tab v-for="(tab_item, index) in tab_items" :key="index">
+                {{ tab_item.text }}
+              </v-tab>
+            </v-tabs>
+
+            <v-tabs-items v-model="tab">
+              <v-tab-item>
+                <v-row>
+                  <v-col cols="12" md="6">
+                    <div class="text-body-2">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Series: ')" class="font-weight-bold">
+                      </span>
+                      <span
+                        v-if="film_series"
+                        v-html="$t(film_series.title)"
+                        class="primary--text"
+                      ></span>
+                    </div>
+
+                    <div class="text-body-2 mt-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Status: ')" class="font-weight-bold">
+                      </span>
+                      <span
+                        v-if="film_meta"
+                        v-html="$t(film.meta.status)"
+                        class="primary--text text-capitalize"
+                      ></span>
+                    </div>
+
+                    <div class="text-body-2 mt-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span
+                        v-html="$t('Categories: ')"
+                        class="font-weight-bold"
+                      >
+                      </span>
+                      <span
+                        v-html="$t(joinArray(film.categories || [], ', '))"
+                        class="primary--text text-capitalize"
+                      ></span>
+                    </div>
+
+                    <div class="text-body-2 mt-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Actors: ')" class="font-weight-bold">
+                      </span>
+                      <span
+                        v-if="film_meta"
+                        v-html="$t(joinArray(film.meta.actors || [], ', '))"
+                        class="primary--text text-capitalize"
+                      ></span>
+                    </div>
+
+                    <div class="text-body-2 mt-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Director: ')" class="font-weight-bold">
+                      </span>
+                      <span
+                        v-if="film_meta"
+                        v-html="$t(film.meta.director)"
+                        class="primary--text text-capitalize"
+                      ></span>
+                    </div>
+
+                    <div class="text-body-2 mt-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Country: ')" class="font-weight-bold">
+                      </span>
+                      <span
+                        v-html="$t(joinArray(countries_mapped, ', '))"
+                        class="primary--text text-capitalize"
+                      ></span>
+                    </div>
+                  </v-col>
+                  <v-col cols="12" md="6" class="pt-0 pt-md-4">
+                    <div class="text-body-2 mt-0 mt-md-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Quality: ')" class="font-weight-bold">
+                      </span>
+                      <span
+                        v-if="film_meta"
+                        v-html="$t(film.meta.quality)"
+                        class="primary--text text-capitalize"
+                      ></span>
+                    </div>
+                    <div class="text-body-2 mt-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Languages: ')" class="font-weight-bold">
+                      </span>
+                      <span
+                        v-html="$t(joinArray(languages_mapped, ', '))"
+                        class="primary--text text-capitalize"
+                      ></span>
+                    </div>
+                    <div class="text-body-2 mt-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Studio: ')" class="font-weight-bold">
+                      </span>
+                      <span
+                        v-if="film_meta"
+                        v-html="$t(film.meta.studio)"
+                        class="primary--text text-capitalize"
+                      ></span>
+                    </div>
+                    <div class="text-body-2 mt-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Duration: ')" class="font-weight-bold">
+                      </span>
+                      <span
+                        v-if="film_meta"
+                        v-html="$t(film_duration)"
+                        class="primary--text text-capitalize"
+                      ></span>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-tab-item>
+              <v-tab-item>
+                <v-row v-if="trailer_url">
+                  <v-col cols="12" class="trailer-wrapper mx-auto">
+                    <video controls class="trailer-video">
+                      <source :src="trailer_url" type="video/mp4" />
+                    </video>
+                  </v-col>
+                </v-row>
+              </v-tab-item>
+            </v-tabs-items>
+          </v-col>
+        </v-row>
       </v-col>
+
       <v-col cols="12" lg="3">
-        <BaseSuggestionList :category="film.category" :exclude_ids="film_id" />
-      </v-col>
-      <v-col cols="12" lg="9">
-        <v-tabs v-model="tab" class="mb-4">
-          <v-tabs-slider></v-tabs-slider>
-
-          <v-tab v-for="(tab_item, index) in tab_items" :key="index">
-            {{ tab_item.text }}
-          </v-tab>
-        </v-tabs>
-
-        <v-tabs-items v-model="tab">
-          <v-tab-item>
-            <v-row>
-              <v-col cols="12" md="6">
-                <div class="text-body-2">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Series: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-if="film_series"
-                    v-html="$t(film_series.title)"
-                    class="primary--text"
-                  ></span>
-                </div>
-
-                <div class="text-body-2 mt-4">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Status: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-if="film_meta"
-                    v-html="$t(film.meta.status)"
-                    class="primary--text text-capitalize"
-                  ></span>
-                </div>
-
-                <div class="text-body-2 mt-4">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Categories: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-html="$t(joinArray(film.categories || [], ', '))"
-                    class="primary--text text-capitalize"
-                  ></span>
-                </div>
-
-                <div class="text-body-2 mt-4">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Actors: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-if="film_meta"
-                    v-html="$t(joinArray(film.meta.actors || [], ', '))"
-                    class="primary--text text-capitalize"
-                  ></span>
-                </div>
-
-                <div class="text-body-2 mt-4">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Director: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-if="film_meta"
-                    v-html="$t(film.meta.director)"
-                    class="primary--text text-capitalize"
-                  ></span>
-                </div>
-
-                <div class="text-body-2 mt-4">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Country: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-html="$t(joinArray(countries_mapped, ', '))"
-                    class="primary--text text-capitalize"
-                  ></span>
-                </div>
-              </v-col>
-              <v-col cols="12" md="6" class="pt-0 pt-md-4">
-                <div class="text-body-2 mt-0 mt-md-4">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Quality: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-if="film_meta"
-                    v-html="$t(film.meta.quality)"
-                    class="primary--text text-capitalize"
-                  ></span>
-                </div>
-                <div class="text-body-2 mt-4">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Languages: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-html="$t(joinArray(languages_mapped, ', '))"
-                    class="primary--text text-capitalize"
-                  ></span>
-                </div>
-                <div class="text-body-2 mt-4">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Studio: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-if="film_meta"
-                    v-html="$t(film.meta.studio)"
-                    class="primary--text text-capitalize"
-                  ></span>
-                </div>
-                <div class="text-body-2 mt-4">
-                  <v-icon small color="primary">mdi-adjust</v-icon>
-                  <span v-html="$t('Duration: ')" class="font-weight-bold">
-                  </span>
-                  <span
-                    v-if="film_meta"
-                    v-html="$t(film_duration)"
-                    class="primary--text text-capitalize"
-                  ></span>
-                </div>
-              </v-col>
-            </v-row>
-          </v-tab-item>
-          <v-tab-item>
-            <v-row v-if="trailer_url">
-              <v-col cols="12" class="trailer-wrapper mx-auto">
-                <video controls class="trailer-video">
-                  <source :src="trailer_url" type="video/mp4" />
-                </video>
-              </v-col>
-            </v-row>
-          </v-tab-item>
-        </v-tabs-items>
+        <BaseSuggestionList
+          :categories="film_categories"
+          :exclude_ids="[film_id]"
+        />
       </v-col>
     </v-row>
     <v-row class="flex-column-reverse flex-lg-row">
@@ -224,6 +244,9 @@ export default {
     };
   },
   computed: {
+    film_categories() {
+      return _.get(this.film, "categories", []);
+    },
     trailer_url() {
       const has_aws_location = _.get(
         this.film,
