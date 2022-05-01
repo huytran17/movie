@@ -5,8 +5,10 @@ import makeUpdateSeries from "./update-series";
 import makeGetSeriesById from "./get-series-by-id";
 import makeRemoveSeriesById from "./delete-series-by-id";
 import makeGetSeries from "./get-series";
+import makeGetSeriesPaginated from "./get-series-paginated";
 
 const createSeries = makeCreateSeries(SeriesDb);
+const getSeriesPaginated = makeGetSeriesPaginated(SeriesDb);
 const updateSeries = makeUpdateSeries(SeriesDb);
 const removeSeriesById = makeRemoveSeriesById(SeriesDb);
 
@@ -28,6 +30,7 @@ const filmServices = Object.freeze({
   getSeries,
   updateSeries,
   removeSeriesById,
+  getSeriesPaginated,
 });
 
 export default filmServices;
@@ -37,4 +40,5 @@ export {
   getSeries,
   updateSeries,
   removeSeriesById,
+  getSeriesPaginated,
 };

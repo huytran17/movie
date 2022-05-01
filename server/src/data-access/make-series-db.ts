@@ -60,9 +60,8 @@ export default function makeSeriesDb({
       const query_conditions = { deleted_at: undefined };
 
       if (query) {
-        Object.defineProperty(query_conditions, "$or", {
-          value: [{ email: { $regex: ".*" + query + ".*", $options: "si" } }],
-          writable: false,
+        Object.assign(query_conditions, {
+          $or: [{ title: { $regex: ".*" + query + ".*", $options: "si" } }],
         });
       }
 
