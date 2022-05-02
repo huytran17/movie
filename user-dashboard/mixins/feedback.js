@@ -2,6 +2,16 @@ import _ from "lodash";
 import { mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      feedbackContentRules: [
+        (v) => !!v || "Feedback content is required",
+        (v) =>
+          (v && v.length <= 255) ||
+          "Feedback content must be less than 255 characters.",
+      ],
+    };
+  },
   computed: {
     ...mapGetters({
       feedback_loading: "feedback/loading",

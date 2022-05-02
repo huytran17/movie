@@ -2,41 +2,49 @@
   <div>
     <v-row>
       <v-col cols="12">
-        <v-row>
-          <v-col cols="12" class="pb-0">
-            <v-rating
-              :value="new_feedback.star_count"
-              background-color="green lighten-3"
-              color="green"
-              @input="
-                updateNewFeedbackObject({
-                  variable_path: 'star_count',
-                  data: $event,
-                })
-              "
-            ></v-rating>
-          </v-col>
-          <v-col cols="12" class="pt-0"
-            ><v-text-field
-              :value="new_feedback.content"
-              hide-details
-              placeholder="Type your feedback..."
-              class="pt-0"
-              @input="
-                updateNewFeedbackObject({
-                  variable_path: 'content',
-                  data: $event,
-                })
-              "
-            ></v-text-field
-          ></v-col>
+        <v-form v-model="feedback_form_valid">
+          <v-row>
+            <v-col cols="12" class="pb-0">
+              <v-rating
+                :value="new_feedback.star_count"
+                background-color="green lighten-3"
+                color="green"
+                @input="
+                  updateNewFeedbackObject({
+                    variable_path: 'star_count',
+                    data: $event,
+                  })
+                "
+              ></v-rating>
+            </v-col>
+            <v-col cols="12" class="pt-0"
+              ><v-text-field
+                :value="new_feedback.content"
+                hide-details
+                placeholder="Type your feedback..."
+                class="pt-0"
+                :rules="feedbackContentRules"
+                @input="
+                  updateNewFeedbackObject({
+                    variable_path: 'content',
+                    data: $event,
+                  })
+                "
+              ></v-text-field
+            ></v-col>
 
-          <v-col cols="12" class="pt-0 d-flex justify-end">
-            <v-btn depressed color="primary" @click="createFeedback">
-              <span v-html="$t('Gửi')"></span>
-            </v-btn>
-          </v-col>
-        </v-row>
+            <v-col cols="12" class="pt-0 d-flex justify-end">
+              <v-btn
+                depressed
+                color="primary"
+                @click="createFeedback"
+                :disabled="!feedback_form_valid"
+              >
+                <span v-html="$t('Gửi')"></span>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-col>
     </v-row>
     <v-row v-if="has_feedbacks" class="pt-2 feedback-wrapper">
@@ -144,6 +152,7 @@ export default {
   data() {
     return {
       show_edit_feedback_dialog: false,
+      feedback_form_valid: false,
     };
   },
   computed: {
