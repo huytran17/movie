@@ -8,6 +8,7 @@ import {
   createCommentRules,
   getCommentByIdRules,
   getCommentsByFilmIdRules,
+  likeCommentRules,
 } from "../../controllers/api/comment/validators";
 import {
   getCommentByIdController,
@@ -15,6 +16,7 @@ import {
   getCommentsByFilmIdController,
   deleteCommentController,
   createCommentController,
+  likeCommentController,
 } from "../../controllers/api/comment";
 
 const commentRouter = express.Router();
@@ -24,7 +26,11 @@ commentRouter.get(
   makeValidator(getCommentByIdRules),
   makeExpressCallback(getCommentByIdController)
 );
-
+commentRouter.put(
+  "/like/:comment_id/:user_id",
+  makeValidator(likeCommentRules),
+  makeExpressCallback(likeCommentController)
+);
 commentRouter.put(
   "/:comment_id",
   makeValidator(updateCommentRules),

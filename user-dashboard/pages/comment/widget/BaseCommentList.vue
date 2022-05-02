@@ -26,6 +26,26 @@
                   <span v-html="$t(comment_item.content)"></span>
                 </span>
               </div>
+
+              <div class="mt-n4 mb-2 like">
+                <v-icon
+                  small
+                  class="clickable"
+                  @click="
+                    likeComment({
+                      comment_id: comment_item._id,
+                      user_id: user._id,
+                    })
+                  "
+                  >mdi-heart-outline</v-icon
+                >
+                <span class="text-body-2">
+                  <span class="app-body">
+                    <span v-html="comment_item.like_count || 0"></span>
+                  </span>
+                </span>
+                <v-icon small class="ml-2 clickable">mdi-reply-outline</v-icon>
+              </div>
             </div>
           </v-col>
 
@@ -110,6 +130,12 @@ export default {
     },
   },
   methods: {
+    async likeComment({ comment_id, user_id }) {
+      await this.LIKE_COMMENT({
+        comment_id,
+        user_id,
+      });
+    },
     async updateComment() {
       await this.UPDATE_COMMENT({
         comment_id: this.comment._id,
@@ -150,5 +176,8 @@ export default {
 <style scoped>
 .comment-function {
   padding-left: 66px;
+}
+.like {
+  margin-left: -2px;
 }
 </style>

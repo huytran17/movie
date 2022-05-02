@@ -1,5 +1,6 @@
 import IUser from "../interfaces/user";
 import IFilm from "../interfaces/film";
+import User from "../entities/user";
 import IComment from "../interfaces/comment";
 
 export default class Comment {
@@ -7,6 +8,9 @@ export default class Comment {
   public readonly content: string;
   public readonly user: IUser;
   public readonly film: IFilm;
+  public readonly meta: {
+    liked_by: User[];
+  };
   public readonly created_at: Date;
   public readonly updated_at: Date;
   public readonly deleted_at: Date;
@@ -15,6 +19,7 @@ export default class Comment {
     _id,
     content,
     user,
+    meta,
     film,
     created_at,
     updated_at,
@@ -22,6 +27,7 @@ export default class Comment {
   }: IComment) {
     this._id = _id;
     this.content = content;
+    this.meta = meta;
     this.user = user;
     this.film = film;
     this.created_at = created_at;

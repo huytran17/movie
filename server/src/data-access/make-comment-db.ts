@@ -129,6 +129,7 @@ export default function makeCommentDb({
 
       const existing = await commentDbModel
         .findById(id)
+        .populate("meta.liked_by")
         .lean({ virtuals: true });
 
       if (existing) {

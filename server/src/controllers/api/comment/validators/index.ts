@@ -3,6 +3,7 @@ import updateCommentRules from "./update-comment";
 import createCommentRules from "./create-comment";
 import getCommentByIdRules from "./get-comment";
 import getCommentsByFilmIdRules from "./get-comments-by-film-id";
+import likeCommentRules from "./like-comment";
 
 export default Object.freeze({
   deleteCommentRules,
@@ -10,6 +11,7 @@ export default Object.freeze({
   createCommentRules,
   getCommentByIdRules,
   getCommentsByFilmIdRules,
+  likeCommentRules,
 });
 
 export {
@@ -18,4 +20,5 @@ export {
   createCommentRules,
   getCommentByIdRules,
   getCommentsByFilmIdRules,
+  likeCommentRules,
 };

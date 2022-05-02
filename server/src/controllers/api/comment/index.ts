@@ -8,6 +8,7 @@ import {
   removeCommentById,
   getCommentsByFilmId,
 } from "../../../use-cases/comment";
+import { getUserById } from "../../../use-cases/user";
 import { getFilmById } from "../../../use-cases/film";
 import makeUpdateCommentController from "./update-comment";
 import makeGetCommentsController from "./get-comments";
@@ -15,6 +16,14 @@ import makeDeleteCommentController from "./delete-comment";
 import makeCreateCommentController from "./create-comment";
 import makeGetCommentByIdController from "./get-comment-by-id";
 import makeGetCommentByFilmIdController from "./get-comments-by-film-id";
+import makeLikeCommentController from "./like-comment";
+
+const likeCommentController = makeLikeCommentController({
+  updateComment,
+  getCommentById,
+  getUserById,
+  mongoose,
+});
 
 const getCommentsByFilmIdController = makeGetCommentByFilmIdController({
   getCommentsByFilmId,
@@ -54,6 +63,7 @@ export default Object.freeze({
   createCommentController,
   getCommentByIdController,
   getCommentsByFilmIdController,
+  likeCommentController,
 });
 
 export {
@@ -63,4 +73,5 @@ export {
   createCommentController,
   getCommentByIdController,
   getCommentsByFilmIdController,
+  likeCommentController,
 };

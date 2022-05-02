@@ -56,6 +56,14 @@ const actions: ActionTree<CommentState, RootState> = {
 
     return data;
   },
+
+  async [ActionTypes.LIKE_COMMENT]({ commit }, { comment_id, user_id }) {
+    const { data } = await this.$axios.$put(
+      `/api/comment/like/${comment_id}/${user_id}`
+    );
+
+    return data;
+  },
   /**
    * @Description publish a comment to show on mobile app
    * @param {is_published: boolean}
