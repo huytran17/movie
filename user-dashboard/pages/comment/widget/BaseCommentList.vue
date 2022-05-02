@@ -6,7 +6,7 @@
           <v-col cols="12" class="d-flex pb-0">
             <div>
               <v-img
-                src="https://picsum.photos/id/11/500/300"
+                :src="user_avatar"
                 width="40"
                 height="40"
                 class="rounded-circle"
@@ -31,17 +31,20 @@
                 <v-icon
                   small
                   class="clickable"
+                  :color="userLiked(comment_item) ? 'red' : ''"
                   @click="
                     likeComment({
                       comment_id: comment_item._id,
                       user_id: user._id,
                     })
                   "
-                  >mdi-heart-outline</v-icon
+                  >{{
+                    userLiked(comment_item) ? "mdi-heart" : "mdi-heart-outline"
+                  }}</v-icon
                 >
                 <span class="text-body-2">
                   <span class="app-body">
-                    <span v-html="comment_item.like_count || 0"></span>
+                    <span v-html="countCommentLikes(comment_item)"></span>
                   </span>
                 </span>
                 <v-icon small class="ml-2 clickable">mdi-reply-outline</v-icon>
@@ -119,6 +122,7 @@ export default {
   data() {
     return {
       show_edit_comment_dialog: false,
+      film_id: null,
     };
   },
   computed: {
@@ -128,6 +132,14 @@ export default {
 
       return user_can_edit;
     },
+    user_avatar() {
+      const has_aws_location = _.get(
+        this.film,
+        "aws_thumbnail.meta.location",
+        ""
+      );
+      return has_aws_location;
+    },
   },
   methods: {
     async likeComment({ comment_id, user_id }) {
@@ -135,6 +147,15 @@ export default {
         comment_id,
         user_id,
       });
+      await this.GET_COMMENTS_BY_FILM_ID({ film_id: this.film_id });
+    },
+    userLiked(comment) {
+      const liked_array = _.get(comment, "meta.liked_by", []);
+      return liked_array.includes(this.user._id);
+    },
+    countCommentLikes(comment) {
+      const count_liked = _.get(comment, "meta.liked_by", []);
+      return count_liked.length;
     },
     async updateComment() {
       await this.UPDATE_COMMENT({
@@ -162,8 +183,8 @@ export default {
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
-      const film_id = this.$route.params.id;
-      await this.GET_COMMENTS_BY_FILM_ID({ film_id });
+      this.film_id = this.$route.params.id;
+      await this.GET_COMMENTS_BY_FILM_ID({ film_id: this.film_id });
     } catch (e) {
       console.log(e);
     } finally {
