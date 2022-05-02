@@ -54,7 +54,7 @@
               >
                 <div>
                   <v-img
-                    src="https://picsum.photos/id/11/500/300"
+                    :src="user_avatar"
                     width="40"
                     height="40"
                     class="rounded-circle"
@@ -156,6 +156,10 @@ export default {
 
     has_feedbacks() {
       return this.feedbacks.length > 0;
+    },
+    user_avatar() {
+      const has_aws_location = _.get(this.user, "aws.meta.location", "");
+      return has_aws_location;
     },
   },
   methods: {

@@ -133,11 +133,7 @@ export default {
       return user_can_edit;
     },
     user_avatar() {
-      const has_aws_location = _.get(
-        this.film,
-        "aws_thumbnail.meta.location",
-        ""
-      );
+      const has_aws_location = _.get(this.user, "aws.meta.location", "");
       return has_aws_location;
     },
   },
