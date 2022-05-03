@@ -1,5 +1,5 @@
 import ICommentAsset from "../interfaces/comment-asset";
-import Comment from "../entities/comment"
+import Comment from "../entities/comment";
 
 export default class CommentAsset {
   public readonly _id: string;

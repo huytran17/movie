@@ -3,7 +3,6 @@ import { Mongoose } from "mongoose";
 import * as _ from "lodash";
 
 import { IUpdateComment } from "../../../use-cases/comment/update-comment";
-import IComment from "../../../interfaces/comment";
 import { IGetCommentById } from "../../../use-cases/comment/get-comment-by-id";
 
 export default function makeUpdateCommentController({

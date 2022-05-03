@@ -8,6 +8,11 @@ import {
   removeCommentById,
   getCommentsByFilmId,
 } from "../../../use-cases/comment";
+import {
+  createCommentAsset,
+  updateCommentAsset,
+  getCommentAssetByCommentId,
+} from "../../../use-cases/comment-asset";
 import { getUserById } from "../../../use-cases/user";
 import { getFilmById } from "../../../use-cases/film";
 import makeUpdateCommentController from "./update-comment";
@@ -17,7 +22,15 @@ import makeCreateCommentController from "./create-comment";
 import makeGetCommentByIdController from "./get-comment-by-id";
 import makeGetCommentByFilmIdController from "./get-comments-by-film-id";
 import makeLikeCommentController from "./like-comment";
+import makeReplyCommentController from "./reply-comment";
 
+const replyCommentController = makeReplyCommentController({
+  createComment,
+  updateCommentAsset,
+  getCommentById,
+  getCommentAssetByCommentId,
+  mongoose,
+});
 const likeCommentController = makeLikeCommentController({
   updateComment,
   getCommentById,
@@ -36,6 +49,7 @@ const getCommentByIdController = makeGetCommentByIdController({
 
 const createCommentController = makeCreateCommentController({
   createComment,
+  createCommentAsset,
 });
 
 const deleteCommentController = makeDeleteCommentController({
@@ -64,6 +78,7 @@ export default Object.freeze({
   getCommentByIdController,
   getCommentsByFilmIdController,
   likeCommentController,
+  replyCommentController,
 });
 
 export {
@@ -74,4 +89,5 @@ export {
   getCommentByIdController,
   getCommentsByFilmIdController,
   likeCommentController,
+  replyCommentController,
 };

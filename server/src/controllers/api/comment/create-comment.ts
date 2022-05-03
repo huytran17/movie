@@ -3,11 +3,14 @@ import * as _ from "lodash";
 import Comment from "../../../entities/comment";
 
 import { ICreateComment } from "../../../use-cases/comment/create-comment";
+import { ICreateCommentAsset } from "../../../use-cases/comment-asset/create-comment-asset";
 
 export default function makeCreateCommentController({
   createComment,
+  createCommentAsset,
 }: {
   createComment: ICreateComment;
+  createCommentAsset: ICreateCommentAsset;
 }) {
   return async function createCommentController(
     httpRequest: Request & { context: { validated: {} } }
@@ -32,6 +35,21 @@ export default function makeCreateCommentController({
       const created_comment = await createComment({
         commentDetails: final_comment_data,
       });
+
+      const created_comment_asset = await createCommentAsset({
+        parent: created_comment._id,
+        children: [],
+      });
+      if (!created_comment_asset) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Failed while creating Comment asset.",
+          },
+        };
+      }
 
       return {
         headers,

@@ -9,6 +9,7 @@ import {
   getCommentByIdRules,
   getCommentsByFilmIdRules,
   likeCommentRules,
+  replyCommentRules,
 } from "../../controllers/api/comment/validators";
 import {
   getCommentByIdController,
@@ -17,10 +18,16 @@ import {
   deleteCommentController,
   createCommentController,
   likeCommentController,
+  replyCommentController,
 } from "../../controllers/api/comment";
 
 const commentRouter = express.Router();
 
+commentRouter.post(
+  "/reply-comment",
+  makeValidator(replyCommentRules),
+  makeExpressCallback(replyCommentController)
+);
 commentRouter.get(
   "/:comment_id",
   makeValidator(getCommentByIdRules),

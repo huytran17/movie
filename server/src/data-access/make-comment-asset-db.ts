@@ -2,6 +2,7 @@ import _ from "lodash";
 import mongoose from "mongoose";
 import ICommentAssetDb, {
   PaginatedCommentAssetResult,
+  ICommentAssetData,
 } from "./interfaces/comment-asset-db";
 import CommentAsset from "../entities/comment-asset";
 import ICommentAsset from "../interfaces/comment-asset";
@@ -117,20 +118,25 @@ export default function makeCommentAssetDb({
       return null;
     }
 
-    async insert(
-      payload: Partial<ICommentAsset>
-    ): Promise<CommentAsset | null> {
-      const updated_payload = payload;
+    async insert(insertPayload: ICommentAssetData): Promise<CommentAsset> {
+      const result = await commentAssetDbModel.create([
+        {
+          parent: insertPayload.parent,
+          children: insertPayload.children,
+        },
+      ] as any);
 
-      const result = await commentAssetDbModel.create([updated_payload]);
       const updated = await commentAssetDbModel
         .findOne({ _id: result[0]?._id })
-        .lean({ virtuals: true });
+        .populate({ path: "parent", select: "-__v" })
+        .populate({ path: "children", select: "-__v" })
+        .lean();
 
       if (updated) {
         return new CommentAsset(updated);
       }
-      return null;
+
+      return updated;
     }
 
     async delete({ id }: { id: string }): Promise<CommentAsset | null> {
