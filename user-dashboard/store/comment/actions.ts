@@ -43,6 +43,20 @@ const actions: ActionTree<CommentState, RootState> = {
     return result;
   },
 
+  async [ActionTypes.REPLY_COMMENT](
+    { commit, state },
+    { user, film, parent_comment_id }
+  ) {
+    const result = await this.$axios.$post(
+      `/api/comment/reply-comment/${user}/${film}/${parent_comment_id}`,
+      {
+        data: state.new_comment,
+      }
+    );
+
+    return result;
+  },
+
   /**
    *
    * @description Update comment

@@ -27,6 +27,7 @@ export default {
       UPDATE_COMMENT: "comment/UPDATE_COMMENT",
       DELETE_COMMENT: "comment/DELETE_COMMENT",
       LIKE_COMMENT: "comment/LIKE_COMMENT",
+      REPLY_COMMENT: "comment/REPLY_COMMENT",
     }),
 
     ...mapMutations({

@@ -37,7 +37,7 @@ export default function makeReplyCommentController({
       );
       const { user, film, parent_comment_id } = _.get(
         httpRequest,
-        "context.validated.data"
+        "context.validated"
       );
 
       const exists = await getCommentById({ id: parent_comment_id });

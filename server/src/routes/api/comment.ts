@@ -24,7 +24,7 @@ import {
 const commentRouter = express.Router();
 
 commentRouter.post(
-  "/reply-comment",
+  "/reply-comment/:user/:film/:parent_comment_id",
   makeValidator(replyCommentRules),
   makeExpressCallback(replyCommentController)
 );
