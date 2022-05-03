@@ -7,15 +7,20 @@
   >
     <v-card>
       <v-card-title class="text-body-1">
-        <span v-html="$t('Edit comment')" class="app-title"></span>
+        <span v-html="$t('Reply comment')" class="app-title"></span>
       </v-card-title>
+      <v-card-text class="mt-4">
+        <quote class="text-body-2">
+          <span class="app-body" v-html="choosen_comment.content"></span>
+        </quote>
+      </v-card-text>
       <v-card-text class="mt-4">
         <v-row>
           <v-col cols="12" class="py-0">
             <Editor
-              :content="choosen_comment"
+              :content="new_comment"
               @on-input="
-                updateNewCommentObject({
+                updateCommentObject({
                   variable_path: 'content',
                   data: $event,
                 })
@@ -41,7 +46,7 @@
 import commentMixins from "@/mixins/comment";
 
 export default {
-  name: "EditCommentDialog",
+  name: "BaseReplyCommentDialog",
   mixins: [commentMixins],
   props: {
     show_dialog: {
@@ -66,7 +71,7 @@ export default {
 
   methods: {
     closeDialog() {
-      this.$emit("close-edit-comment-dialog");
+      this.$emit("close-reply-comment-dialog");
     },
   },
 };

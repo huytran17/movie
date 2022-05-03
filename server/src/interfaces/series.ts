@@ -1,5 +1,3 @@
-import IFilm from "./film";
-
 export default interface ISeries {
   _id: string;
   title: string;

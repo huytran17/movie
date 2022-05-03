@@ -47,7 +47,17 @@
                     <span v-html="countCommentLikes(comment_item)"></span>
                   </span>
                 </span>
-                <v-icon small class="ml-2 clickable">mdi-reply-outline</v-icon>
+                <v-icon
+                  small
+                  class="ml-2 clickable"
+                  @click="
+                    () => {
+                      setChoosenComment({ comment: comment_item });
+                      openBaseReplyCommentDialog();
+                    }
+                  "
+                  >mdi-reply-outline</v-icon
+                >
               </div>
             </div>
           </v-col>
@@ -104,6 +114,12 @@
       :action="updateComment"
       @close-edit-comment-dialog="show_edit_comment_dialog = false"
     />
+    <BaseReplyCommentDialog
+      :show_dialog="show_reply_comment_dialog"
+      :choosen_comment="comment"
+      :action="createComment"
+      @close-reply-comment-dialog="show_reply_comment_dialog = false"
+    />
   </div>
 </template>
 
@@ -112,16 +128,19 @@ import authMixins from "@/mixins/auth";
 import filmMixins from "@/mixins/film";
 import commentMixins from "@/mixins/comment";
 import EditCommentDialog from "@/components/dialogs/EditCommentDialog";
+import BaseReplyCommentDialog from "@/components/dialogs/BaseReplyCommentDialog";
 
 export default {
   name: "BaseCommentList",
   mixins: [commentMixins, authMixins, filmMixins],
   components: {
     EditCommentDialog,
+    BaseReplyCommentDialog,
   },
   data() {
     return {
       show_edit_comment_dialog: false,
+      show_reply_comment_dialog: false,
       film_id: null,
     };
   },
@@ -171,6 +190,9 @@ export default {
     },
     openEditCommentDialog() {
       this.show_edit_comment_dialog = true;
+    },
+    openBaseReplyCommentDialog() {
+      this.show_reply_comment_dialog = true;
     },
     setChoosenComment({ comment }) {
       this.SET_COMMENT({ data: comment });

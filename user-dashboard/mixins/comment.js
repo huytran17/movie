@@ -33,10 +33,18 @@ export default {
       SET_LOADING: "comment/SET_LOADING",
       UPDATE_NEW_COMMENT_DATA: "comment/UPDATE_NEW_COMMENT_DATA",
       SET_COMMENT: "comment/SET_COMMENT",
+      UPDATE_COMMENT_DATA: "comment/UPDATE_COMMENT_DATA",
     }),
 
-    updateCommentObject({ data, variable_path }) {
+    updateNewCommentObject({ data, variable_path }) {
       this.UPDATE_NEW_COMMENT_DATA({
+        data,
+        variable_path,
+      });
+    },
+
+    updateCommentObject({ data, variable_path }) {
+      this.UPDATE_COMMENT_DATA({
         data,
         variable_path,
       });
