@@ -47,6 +47,7 @@ export default {
         (v) =>
           (v && v.length > 7) || this.$t("Password must be min 8 characters."),
       ],
+      birthdayRules: [(v) => !!v || "Birthday is required"],
     };
   },
   computed: {
