@@ -8,11 +8,11 @@
     :hide-delimiters="true"
     class="mb-5"
   >
-    <v-carousel-item v-for="(image, i) in slide_images" :key="i">
+    <v-carousel-item v-for="(item, i) in slide_items" :key="i">
       <v-sheet height="100%" class="position-relative">
         <v-img
-          :src="image.src"
-          :alt="image.alt"
+          :src="item.slide_image_src"
+          :alt="item.alt"
           :height="700"
           :max-height="700"
         />
@@ -22,21 +22,17 @@
           <div class="slide-title">
             <div class="text-h5 text-sm-h4">
               <span class="app-title text-capitalize">
-                <span v-html="$t(image.title)"></span>
+                <span v-html="$t(item.title)"></span>
               </span>
             </div>
           </div>
           <div class="slide-functions d-flex flex-column flex-sm-row pt-8 pb-5">
             <div>
-              <v-btn color="white" depressed tile>
-                <span v-html="$t('Xem trailer')"></span>
-              </v-btn>
-            </div>
-            <div>
               <v-btn
-                color="red white--text pr-2 ml-0 ml-sm-5 mt-3 mt-sm-0"
+                color="red white--text pr-2 ml-0 mt-3 mt-sm-0"
                 depressed
                 tile
+                @click="item.play"
               >
                 <span v-html="$t('Phát')"></span>
                 <v-icon>mdi-play</v-icon>
@@ -46,7 +42,7 @@
           <div class="slide-description">
             <div class="text-subtitle-1 text-h6">
               <span class="app-body">
-                <span v-html="$t(image.description)"></span>
+                <span v-html="$t(item.description)"></span>
               </span>
             </div>
           </div>
@@ -58,43 +54,41 @@
 
 <script>
 import systemMixins from "@/mixins/system";
+import filmMixins from "@/mixins/film";
 
 export default {
   name: "HomeSlider",
-  mixins: [systemMixins],
+  mixins: [systemMixins, filmMixins],
   data() {
     return {
-      slide_images: [
-        {
-          src: require("@/assets/images/dashboard/slide-1.webp"),
-          alt: "slide-1",
-          title: "Mắt biếc",
-          description:
-            "Mắt biếc là phim điện ảnh chính kịch lãng mạn của Việt Nam năm 2019 do Victor Vũ đạo diễn, kiêm đảm nhiệm phần kịch bản cùng với nhóm biên kịch A Type Machine.",
-        },
-        {
-          src: require("@/assets/images/dashboard/slide-2.webp"),
-          alt: "slide-2",
-          title: "Spider-man: No way home",
-          description:
-            "With Spider-Man's identity now revealed, our friendly neighborhood web-slinger is unmasked and no longer able to separate his normal life as Peter Parker from the high stakes of being a superhero. When Peter asks for help from Doctor Strange, the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
-        },
-        {
-          src: require("@/assets/images/dashboard/slide-3.webp"),
-          alt: "slide-3",
-          title: "Sherlock Holmes",
-          description:
-            "Sherlock Holmes (/ˈʃɜːrlɒk ˈhoʊmz/) is a fictional detective created by British author Sir Arthur Conan Doyle.",
-        },
-        {
-          src: require("@/assets/images/dashboard/slide-4.webp"),
-          alt: "slide-4",
-          title: "Harry Potter",
-          description:
-            "Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling. The novels chronicle the lives of a young wizard, Harry Potter, and his friends Hermione Granger and Ron Weasley, all of whom are students at Hogwarts School of Witchcraft and Wizardry.",
-        },
-      ],
+      slide_items: [],
     };
+  },
+
+  async fetch() {
+    try {
+      const { data: films } = await this.GET_FILMS_PAGINATED({
+        page: 1,
+        entries_per_page: 4,
+        keep_in_store: false,
+      });
+
+      this.slide_items = films.map((film, index) => {
+        return {
+          slide_image_src: require(`@/assets/images/dashboard/slide-${
+            index + 1
+          }.webp`),
+          alt: film.title,
+          title: film.title,
+          description: film.description,
+          play: () => {
+            this.$router.push(this.localePath(`/film/${film._id}`));
+          },
+        };
+      });
+    } catch (e) {
+      console.log(e);
+    }
   },
 };
 </script>
