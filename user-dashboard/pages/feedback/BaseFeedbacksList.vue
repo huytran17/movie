@@ -9,6 +9,7 @@
                 :value="new_feedback.star_count"
                 background-color="green lighten-3"
                 color="green"
+                :readonly="can_not_feedback"
                 @input="
                   updateNewFeedbackObject({
                     variable_path: 'star_count',
