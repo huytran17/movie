@@ -6,7 +6,9 @@ import makeGetCommentAssetByCommentId from "./get-comment-asset-by-comment-id";
 import makeDeleteCommentAssetById from "./delete-comment-asset-by-id";
 import makeGetCommentAssets from "./get-comment-assets";
 import makeGetCommentAssetPaginated from "./get-comment-asset-paginated";
+import makeGetCommentAssetsByFilmId from "./get-comment-assets-by-film-id";
 
+const getCommentAssetsByFilmId = makeGetCommentAssetsByFilmId(CommentAssetDb);
 const createCommentAsset = makeCreateCommentAsset(CommentAssetDb);
 const getCommentAssetPaginated = makeGetCommentAssetPaginated(CommentAssetDb);
 const updateCommentAsset = makeUpdateCommentAsset(CommentAssetDb);
@@ -32,6 +34,7 @@ const filmServices = Object.freeze({
   updateCommentAsset,
   deleteCommentAssetById,
   getCommentAssetPaginated,
+  getCommentAssetsByFilmId,
 });
 
 export default filmServices;
@@ -42,4 +45,5 @@ export {
   updateCommentAsset,
   deleteCommentAssetById,
   getCommentAssetPaginated,
+  getCommentAssetsByFilmId,
 };

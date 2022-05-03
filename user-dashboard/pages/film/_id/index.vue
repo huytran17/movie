@@ -185,6 +185,7 @@
 <script>
 import filmMixins from "@/mixins/film";
 import commentMixins from "@/mixins/comment";
+import commentAssetMixins from "@/mixins/comment-asset";
 import userMixins from "@/mixins/user";
 import authMixins from "@/mixins/auth";
 import countriesMixins from "@/mixins/countries";
@@ -205,6 +206,7 @@ export default {
     authMixins,
     countriesMixins,
     languagesMixins,
+    commentAssetMixins,
   ],
   components: {
     BaseSuggestionList,
@@ -302,7 +304,7 @@ export default {
         user: this.user._id,
         film: this.film._id,
       });
-      await this.GET_COMMENTS_BY_FILM_ID({ film_id: this.film._id });
+      await this.GET_COMMENT_ASSETS_BY_FILM_ID({ film_id: this.film._id });
     },
   },
   async fetch() {

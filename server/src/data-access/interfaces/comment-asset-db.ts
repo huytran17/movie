@@ -18,6 +18,11 @@ export default interface ICommentAssetDb {
     entries_per_page?: number;
   }) => Promise<PaginatedCommentAssetResult | null>;
   findByCommentId: ({ id }: { id: string }) => Promise<CommentAsset | null>;
+  findByFilmId: ({
+    film_id,
+  }: {
+    film_id: string;
+  }) => Promise<CommentAsset[] | null>;
   findById: ({ id }: { id: string }) => Promise<CommentAsset | null>;
   insert: (payload: ICommentAssetData) => Promise<CommentAsset | null>;
   delete: ({ id }: { id: string }) => Promise<CommentAsset | null>;

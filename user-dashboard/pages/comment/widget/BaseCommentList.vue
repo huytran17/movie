@@ -1,6 +1,6 @@
 <template>
   <div class="mt-6">
-    <v-row v-for="(comment_item, index) in comments" :key="index">
+    <v-row v-for="(comment_asset, index) in comment_assets" :key="index">
       <v-col cols="11">
         <v-row>
           <v-col cols="12" class="d-flex pb-0">
@@ -16,14 +16,14 @@
               <div class="text-body-2">
                 <span class="app-title">
                   <span
-                    >{{ comment_item.user.first_name }}
-                    {{ comment_item.user.last_name }}</span
+                    >{{ comment_asset.parent.user.first_name }}
+                    {{ comment_asset.parent.user.last_name }}</span
                   >
                 </span>
               </div>
               <div class="text-body-2">
                 <span class="app-body">
-                  <span v-html="$t(comment_item.content)"></span>
+                  <span v-html="$t(comment_asset.parent.content)"></span>
                 </span>
               </div>
 
@@ -31,20 +31,24 @@
                 <v-icon
                   small
                   class="clickable"
-                  :color="userLiked(comment_item) ? 'red' : ''"
+                  :color="userLiked(comment_asset.parent) ? 'red' : ''"
                   @click="
                     likeComment({
-                      comment_id: comment_item._id,
+                      comment_id: comment_asset.parent._id,
                       user_id: user._id,
                     })
                   "
                   >{{
-                    userLiked(comment_item) ? "mdi-heart" : "mdi-heart-outline"
+                    userLiked(comment_asset.parent)
+                      ? "mdi-heart"
+                      : "mdi-heart-outline"
                   }}</v-icon
                 >
                 <span class="text-body-2">
                   <span class="app-body">
-                    <span v-html="countCommentLikes(comment_item)"></span>
+                    <span
+                      v-html="countCommentLikes(comment_asset.parent)"
+                    ></span>
                   </span>
                 </span>
                 <v-icon
@@ -52,7 +56,7 @@
                   class="ml-2 clickable"
                   @click="
                     () => {
-                      setChoosenComment({ comment: comment_item });
+                      setChoosenComment({ comment: comment_asset.parent });
                       openBaseReplyCommentDialog();
                     }
                   "
@@ -68,7 +72,7 @@
                 <span class="app-body">
                   <i>
                     <small>
-                      {{ $moment(comment_item.created_at).fromNow() }}
+                      {{ $moment(comment_asset.parent.created_at).fromNow() }}
                     </small>
                   </i>
                 </span>
@@ -85,7 +89,7 @@
               v-bind="attrs"
               v-on="on"
               class="ml-auto d-block"
-              @click="setChoosenComment({ comment: comment_item })"
+              @click="setChoosenComment({ comment: comment_asset.parent })"
               >mdi-dots-vertical</v-icon
             >
           </template>
@@ -99,7 +103,7 @@
               <v-list-item-title>
                 <span
                   v-html="$t('Delete')"
-                  @click="deleteComment({ comment: comment_item })"
+                  @click="deleteComment({ comment: comment_asset.parent })"
                 ></span>
               </v-list-item-title>
             </v-list-item>
@@ -127,12 +131,13 @@
 import authMixins from "@/mixins/auth";
 import filmMixins from "@/mixins/film";
 import commentMixins from "@/mixins/comment";
+import commentAssetMixins from "@/mixins/comment-asset";
 import EditCommentDialog from "@/components/dialogs/EditCommentDialog";
 import BaseReplyCommentDialog from "@/components/dialogs/BaseReplyCommentDialog";
 
 export default {
   name: "BaseCommentList",
-  mixins: [commentMixins, authMixins, filmMixins],
+  mixins: [commentMixins, authMixins, filmMixins, commentAssetMixins],
   components: {
     EditCommentDialog,
     BaseReplyCommentDialog,
@@ -162,7 +167,7 @@ export default {
         comment_id,
         user_id,
       });
-      await this.GET_COMMENTS_BY_FILM_ID({ film_id: this.film_id });
+      await this.GET_COMMENT_ASSETS_BY_FILM_ID({ film_id: this.film_id });
     },
     userLiked(comment) {
       const liked_array = _.get(comment, "meta.liked_by", []);
@@ -176,8 +181,7 @@ export default {
       await this.UPDATE_COMMENT({
         comment_id: this.comment._id,
       });
-      const film_id = _.get(this.comment, "film._id");
-      await this.GET_COMMENTS_BY_FILM_ID({ film_id });
+      await this.GET_COMMENT_ASSETS_BY_FILM_ID({ film_id: this.film_id });
 
       this.show_edit_comment_dialog = false;
     },
@@ -185,8 +189,7 @@ export default {
       await this.DELETE_COMMENT({
         comment_id: comment._id,
       });
-      const film_id = _.get(this.comment, "film._id");
-      await this.GET_COMMENTS_BY_FILM_ID({ film_id });
+      await this.GET_COMMENT_ASSETS_BY_FILM_ID({ film_id: this.film_id });
     },
     openEditCommentDialog() {
       this.show_edit_comment_dialog = true;
@@ -198,19 +201,19 @@ export default {
       this.SET_COMMENT({ data: comment });
     },
     async replyComment() {
-      await this.CREATE_COMMENT({
+      await this.REPLY_COMMENT({
         user: this.user._id,
         film: this.film._id,
         parent_comment_id: this.comment._id,
       });
-      await this.GET_COMMENTS_BY_FILM_ID({ film_id: this.film._id });
+      await this.GET_COMMENT_ASSETS_BY_FILM_ID({ film_id: this.film._id });
     },
   },
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
       this.film_id = this.$route.params.id;
-      await this.GET_COMMENTS_BY_FILM_ID({ film_id: this.film_id });
+      await this.GET_COMMENT_ASSETS_BY_FILM_ID({ film_id: this.film_id });
     } catch (e) {
       console.log(e);
     } finally {

@@ -28,15 +28,82 @@ export default function makeCommentAssetDb({
       const query_conditions = { deleted_at: undefined };
       const existing = await commentAssetDbModel
         .find(query_conditions)
-        .populate({
-          path: "parent",
-          select: "-__v",
-        })
-        .populate({
-          path: "children",
-          select: "-__v",
+        .populate([
+          {
+            path: "parent",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+          {
+            path: "children",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+        ])
+        .lean({ virtuals: true });
+      if (existing) {
+        return existing.map((comment_asset) => new CommentAsset(comment_asset));
+      }
+
+      return null;
+    }
+
+    async findByFilmId({
+      film_id,
+    }: {
+      film_id: string;
+    }): Promise<CommentAsset[] | null> {
+      const mongo_id_regex = new RegExp(/^[0-9a-fA-F]{24}$/i);
+      const is_mongo_id = mongo_id_regex.test(film_id);
+      if (!is_mongo_id || !film_id) {
+        return null;
+      }
+
+      const query_conditions = { deleted_at: undefined, film: film_id };
+
+      const existing = await commentAssetDbModel
+        .find(query_conditions)
+        .populate([
+          {
+            path: "parent",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+          {
+            path: "children",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+        ])
+        .sort({
+          created_at: "desc",
         })
         .lean({ virtuals: true });
+
       if (existing) {
         return existing.map((comment_asset) => new CommentAsset(comment_asset));
       }
@@ -71,14 +138,30 @@ export default function makeCommentAssetDb({
 
       const existing = await commentAssetDbModel
         .find(query_conditions)
-        .populate({
-          path: "parent",
-          select: "-__v",
-        })
-        .populate({
-          path: "children",
-          select: "-__v",
-        })
+        .populate([
+          {
+            path: "parent",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+          {
+            path: "children",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+        ])
         .skip(number_of_entries_to_skip)
         .limit(entries_per_page)
         .sort({
@@ -175,14 +258,30 @@ export default function makeCommentAssetDb({
 
       const updated = await commentAssetDbModel
         .findOne({ _id: result?._id })
-        .populate({
-          path: "parent",
-          select: "-__v",
-        })
-        .populate({
-          path: "children",
-          select: "-__v",
-        })
+        .populate([
+          {
+            path: "parent",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+          {
+            path: "children",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+        ])
         .lean({ virtuals: true });
 
       if (updated) {
@@ -201,14 +300,30 @@ export default function makeCommentAssetDb({
 
       const existing = await commentAssetDbModel
         .findById(id)
-        .populate({
-          path: "parent",
-          select: "-__v",
-        })
-        .populate({
-          path: "children",
-          select: "-__v",
-        })
+        .populate([
+          {
+            path: "parent",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+          {
+            path: "children",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+        ])
         .lean({ virtuals: true });
 
       if (existing) {
@@ -228,18 +343,37 @@ export default function makeCommentAssetDb({
         return null;
       }
 
-      const query_conditions = { deleted_at: undefined, parent: id };
+      const query_conditions = {
+        deleted_at: undefined,
+        parent: new mongoose.Types.ObjectId(id),
+      };
 
       const existing = await commentAssetDbModel
-        .findById(query_conditions)
-        .populate({
-          path: "parent",
-          select: "-__v",
-        })
-        .populate({
-          path: "children",
-          select: "-__v",
-        })
+        .findOne(query_conditions)
+        .populate([
+          {
+            path: "parent",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+          {
+            path: "children",
+            populate: [
+              {
+                path: "film",
+              },
+              {
+                path: "user",
+              },
+            ],
+          },
+        ])
         .lean({ virtuals: true });
 
       if (existing) {

@@ -1,0 +1,3 @@
+export enum ActionTypes {
+  GET_COMMENT_ASSETS_BY_FILM_ID = "GET_COMMENT_ASSETS_BY_FILM_ID",
+}

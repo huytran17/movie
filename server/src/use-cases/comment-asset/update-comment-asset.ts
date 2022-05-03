@@ -19,6 +19,7 @@ export default function makeUpdateCommentAsset(
     const existing_by_id = await commentAssetDb.findById({
       id: commentAssetDetails._id as string,
     });
+
     const existing = existing_by_id;
 
     if (!existing) {

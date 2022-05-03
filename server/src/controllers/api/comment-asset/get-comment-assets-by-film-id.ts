@@ -1,9 +1,10 @@
 import { Request } from "express";
 import * as _ from "lodash";
+
 import { IGetCommentAssetsByFilmId } from "../../../use-cases/comment-asset/get-comment-assets-by-film-id";
 import { IGetFilmById } from "../../../use-cases/film/get-film-by-id";
 
-export default function makeGetCommentAssetController({
+export default function makeGetCommentAssetsByFilmIdController({
   getCommentAssetsByFilmId,
   getFilmById,
 }: {
@@ -11,7 +12,7 @@ export default function makeGetCommentAssetController({
   getFilmById: IGetFilmById;
 }) {
   return async function getCommentAssetsByFilmIdController(
-    httpRequest: Request & { context: { validated: {} } }
+    httpRequest: Request & { context: { validated: { _id: string } } }
   ) {
     const headers = {
       "Content-Type": "application/json",
@@ -32,12 +33,12 @@ export default function makeGetCommentAssetController({
         };
       }
 
-      const comment_assets = await getCommentAssetsByFilmId({ film_id });
+      const exists = await getCommentAssetsByFilmId({ film_id });
 
       return {
         headers,
         statusCode: 200,
-        body: { data: comment_assets }, // TODO: add in implementation of resource
+        body: { data: exists }, // TODO: add in implementation of resource
       };
     } catch (err) {
       // TODO: add in error handling here

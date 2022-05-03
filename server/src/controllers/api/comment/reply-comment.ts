@@ -92,10 +92,10 @@ export default function makeReplyCommentController({
         "children",
         []
       ) as Comment[];
-      const new_children_array = children_array.push(created_comment);
+      children_array.push(created_comment);
 
       const final_comment_asset_data = Object.assign({}, comment_asset_exists, {
-        children: new_children_array,
+        children: children_array,
       });
 
       const created_comment_asset = await updateCommentAsset({
