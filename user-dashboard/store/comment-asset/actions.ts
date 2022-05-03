@@ -11,7 +11,16 @@ const actions: ActionTree<CommentAssetState, RootState> = {
       `/api/comment-asset/by-film/${film_id}`
     );
 
-    commit(MutationTypes.SET_COMMENT_ASSETS, { comment_assets: data });
+    const filtered_data = _.map(data, (comment_asset: any) => {
+      comment_asset.children = _.filter(
+        comment_asset.children,
+        (child) => child.deleted_at === null || child.deleted_at === undefined
+      );
+
+      return comment_asset;
+    });
+
+    commit(MutationTypes.SET_COMMENT_ASSETS, { comment_assets: filtered_data });
     return data;
   },
 };

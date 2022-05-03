@@ -130,17 +130,6 @@
                       <span v-html="countCommentLikes(child)"></span>
                     </span>
                   </span>
-                  <v-icon
-                    small
-                    class="ml-2 clickable"
-                    @click="
-                      () => {
-                        setChoosenComment({ comment: child });
-                        openBaseReplyCommentDialog();
-                      }
-                    "
-                    >mdi-reply-outline</v-icon
-                  >
                 </div>
                 <div class="text-body-2 mt-n1">
                   <span class="app-body">
