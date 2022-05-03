@@ -117,7 +117,7 @@
     <BaseReplyCommentDialog
       :show_dialog="show_reply_comment_dialog"
       :choosen_comment="comment"
-      :action="createComment"
+      :action="replyComment"
       @close-reply-comment-dialog="show_reply_comment_dialog = false"
     />
   </div>
@@ -196,6 +196,14 @@ export default {
     },
     setChoosenComment({ comment }) {
       this.SET_COMMENT({ data: comment });
+    },
+    async replyComment() {
+      await this.CREATE_COMMENT({
+        user: this.user._id,
+        film: this.film._id,
+        parent_comment_id: this.comment._id,
+      });
+      await this.GET_COMMENTS_BY_FILM_ID({ film_id: this.film._id });
     },
   },
   async fetch() {

@@ -76,7 +76,22 @@ export default function makeReplyCommentController({
         commentDetails: final_comment_data,
       });
 
-      const children_array = _.get(comment_asset_exists, "children", []);
+      if (!created_comment) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Failed when creating comment.",
+          },
+        };
+      }
+
+      const children_array = _.get(
+        comment_asset_exists,
+        "children",
+        []
+      ) as Comment[];
       const new_children_array = children_array.push(created_comment);
 
       const final_comment_asset_data = Object.assign({}, comment_asset_exists, {

@@ -20,7 +20,7 @@
             <Editor
               :content="new_comment"
               @on-input="
-                updateCommentObject({
+                updateNewCommentObject({
                   variable_path: 'content',
                   data: $event,
                 })

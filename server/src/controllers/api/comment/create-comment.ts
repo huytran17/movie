@@ -36,6 +36,17 @@ export default function makeCreateCommentController({
         commentDetails: final_comment_data,
       });
 
+      if (!created_comment) {
+        return {
+          headers,
+          statusCode: 200,
+          body: {
+            is_error: true,
+            message: "Failed when creating comment.",
+          },
+        };
+      }
+
       const created_comment_asset = await createCommentAsset({
         parent: created_comment._id,
         children: [],

@@ -118,13 +118,15 @@ export default function makeCommentAssetDb({
       return null;
     }
 
-    async insert(insertPayload: ICommentAssetData): Promise<CommentAsset> {
+    async insert(
+      insertPayload: ICommentAssetData
+    ): Promise<CommentAsset | null> {
       const result = await commentAssetDbModel.create([
         {
           parent: insertPayload.parent,
           children: insertPayload.children,
         },
-      ] as any);
+      ]);
 
       const updated = await commentAssetDbModel
         .findOne({ _id: result[0]?._id })
