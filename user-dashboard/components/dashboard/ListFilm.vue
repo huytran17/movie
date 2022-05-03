@@ -15,7 +15,33 @@
             :key="index"
             class="clickable"
           >
+            <v-badge
+              v-if="getAgeLimit(film)"
+              color="green"
+              :content="getAgeLimitString(film)"
+              offset-y="26px"
+              :offset-x="getAgeLimit(film) < 10 ? '25px' : '30px'"
+            >
+              <v-card
+                class="my-4 mx-1 position-relative no-border-radius no-box-shadow"
+                height="250"
+                width="180"
+                @click="$router.push(localePath(`/film/${film._id}`))"
+              >
+                <v-img
+                  :src="getFilmThumbnail(film)"
+                  :alt="film.title"
+                  height="100%"
+                  width="100%"
+                  cover
+                  class="no-border-radius"
+                >
+                </v-img>
+              </v-card>
+            </v-badge>
+
             <v-card
+              v-else
               class="my-4 mx-1 position-relative no-border-radius no-box-shadow"
               height="250"
               width="180"
@@ -60,6 +86,14 @@ export default {
     },
   },
   methods: {
+    getAgeLimit(film) {
+      const age_limit = _.get(film, "meta.age_limit", 0);
+      return age_limit;
+    },
+    getAgeLimitString(film) {
+      const age_limit = this.getAgeLimit(film);
+      return `${age_limit}+`;
+    },
     getFilmThumbnail(film) {
       return _.get(film, "aws_thumbnail.meta.location", "");
     },
