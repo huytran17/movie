@@ -5,6 +5,7 @@ import {
   signInRules,
   signUpRules,
   updatePasswordRules,
+  logoutRules,
 } from "../../controllers/api/auth/validators";
 import {
   signUpController,
@@ -13,6 +14,7 @@ import {
   autoSignInController,
   getUserController,
   updatePasswordController,
+  logoutController,
 } from "../../controllers/api/auth";
 
 import authenticateUserJWT from "../../middlewares/authenticateUserJWT";
@@ -20,6 +22,12 @@ import autoSignIn from "../../middlewares/autoSignIn";
 
 const authRouter = express.Router();
 
+authRouter.post(
+  "/logout",
+  authenticateUserJWT(),
+  makeValidator(logoutRules),
+  makeExpressCallback(logoutController)
+); // DONE
 authRouter.put(
   "/security/:user_id",
   makeValidator(updatePasswordRules),

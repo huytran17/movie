@@ -7,6 +7,7 @@ import makeVerifyController from "./verify";
 import makeAutoSignInController from "./auto-sign-in";
 import makeGetUserController from "./get-user";
 import makeUpdatePasswordController from "./update-password";
+import makeLogoutController from "./logout";
 
 import {
   createUser,
@@ -21,6 +22,9 @@ import {
   verifyAccessToken,
 } from "../../../config/accessTokenManager";
 
+const logoutController = makeLogoutController({
+  getUserByEmail,
+});
 const updatePasswordController = makeUpdatePasswordController({
   updateUser,
   getUserById,
@@ -60,6 +64,7 @@ export default Object.freeze({
   autoSignInController,
   getUserController,
   updatePasswordController,
+  logoutController,
 });
 
 export {
@@ -69,4 +74,5 @@ export {
   autoSignInController,
   getUserController,
   updatePasswordController,
+  logoutController,
 };

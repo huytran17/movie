@@ -5,6 +5,29 @@ import { RootState } from "../index";
 import { MutationTypes } from "./mutation-types";
 
 const actions: ActionTree<AuthState, RootState> = {
+  async [ActionTypes.LOGOUT]({ commit }) {
+    try {
+      const { data } = await this.$axios.$post(`/api/auth/logout`);
+
+      const { is_logout } = data;
+
+      if (!is_logout) {
+        return;
+      }
+
+      localStorage.removeItem("access_token");
+      commit(MutationTypes.SET_USER, { user: null });
+      commit(MutationTypes.SET_HAS_USER, { data: false });
+
+      const origin = `${window.location.origin}/`;
+      window.location.replace(origin);
+    } catch (err: any) {
+      const error = err && err.message ? `?errorMessage=${err.message}` : "";
+      const origin = `${window.location.origin}/signin${error}`;
+
+      // window.location.replace(origin);
+    }
+  },
   async [ActionTypes.UPDATE_USER_SECURITY](
     { commit },
     { security_data, user_id }

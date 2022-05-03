@@ -1,19 +1,10 @@
 <template>
   <div>
     <div class="nav-icon">
-      <v-badge
-        color="error"
-        content="6"
-        overlap
-        right
-        :offset-y="22"
-        :offset-x="18"
-      >
-        <v-app-bar-nav-icon
-          large
-          @click.stop="drawer = !drawer"
-        ></v-app-bar-nav-icon>
-      </v-badge>
+      <v-app-bar-nav-icon
+        large
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
     </div>
 
     <v-navigation-drawer v-model="drawer" temporary top fixed>
@@ -32,6 +23,15 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
+
+        <v-list-item-group active-class="deep-purple--text text--accent-4">
+          <v-list-item @click="logout" class="py-1">
+            <v-icon color="#546E7A" class="mr-3">mdi-logout-variant</v-icon>
+            <v-list-item-title>
+              <span v-html="$t('Logout')"> </span>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -39,10 +39,11 @@
 
 <script>
 import systemMixins from "@/mixins/system";
+import authMixins from "@/mixins/auth";
 
 export default {
   name: "TheSideNav",
-  mixins: [systemMixins],
+  mixins: [systemMixins, authMixins],
   props: {
     nav_items: {
       type: Array,
@@ -108,6 +109,11 @@ export default {
     return {
       drawer: false,
     };
+  },
+  methods: {
+    async logout() {
+      await this.LOGOUT();
+    },
   },
 };
 </script>
