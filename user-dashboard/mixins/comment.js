@@ -9,6 +9,7 @@ export default {
       comments: "comment/comments",
       comment: "comment/comment",
       new_comment: "comment/new_comment",
+      edit_comment: "comment/edit_comment",
     }),
 
     /**
@@ -35,10 +36,18 @@ export default {
       UPDATE_NEW_COMMENT_DATA: "comment/UPDATE_NEW_COMMENT_DATA",
       SET_COMMENT: "comment/SET_COMMENT",
       UPDATE_COMMENT_DATA: "comment/UPDATE_COMMENT_DATA",
+      UPDATE_EDIT_COMMENT_DATA: "comment/UPDATE_EDIT_COMMENT_DATA",
     }),
 
     updateNewCommentObject({ data, variable_path }) {
       this.UPDATE_NEW_COMMENT_DATA({
+        data,
+        variable_path,
+      });
+    },
+
+    updateEditCommentObject({ data, variable_path }) {
+      this.UPDATE_EDIT_COMMENT_DATA({
         data,
         variable_path,
       });

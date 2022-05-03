@@ -12,6 +12,7 @@ export const getters: GetterTree<CommentState, RootState> = {
   loading: (state) => state.loading,
   comment: (state) => state.comment,
   new_comment: (state) => state.new_comment,
+  edit_comment: (state) => state.edit_comment,
 };
 
 export default getters;

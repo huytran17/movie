@@ -275,7 +275,10 @@ export default {
         comment_id: this.comment._id,
       });
       await this.GET_COMMENT_ASSETS_BY_FILM_ID({ film_id: this.film_id });
-
+      this.updateEditCommentObject({
+        variable_path: "content",
+        data: "",
+      });
       this.show_edit_comment_dialog = false;
     },
     async deleteComment({ comment }) {

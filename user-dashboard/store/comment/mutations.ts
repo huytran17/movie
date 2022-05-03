@@ -52,6 +52,15 @@ const mutations: MutationTree<CommentState> = {
     });
   },
 
+  [MutationTypes.UPDATE_EDIT_COMMENT_DATA](
+    state,
+    { data, variable_path }: { data: Object | string; variable_path: string }
+  ) {
+    state.edit_comment = _.update(state.edit_comment, variable_path, (n) => {
+      return data;
+    });
+  },
+
   [MutationTypes.UPDATE_COMMENT_DATA](
     state,
     { data, variable_path }: { data: Object | string; variable_path: string }

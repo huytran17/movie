@@ -65,7 +65,7 @@ const actions: ActionTree<CommentState, RootState> = {
    */
   async [ActionTypes.UPDATE_COMMENT]({ commit, state }, { comment_id }) {
     const { data } = await this.$axios.$put(`/api/comment/${comment_id}`, {
-      data: state.new_comment,
+      data: state.edit_comment,
     });
 
     return data;

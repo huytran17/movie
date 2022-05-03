@@ -10,6 +10,9 @@ export const state = () => ({
   new_comment: {
     content: "",
   },
+  edit_comment: {
+    content: "",
+  },
 });
 
 export type CommentState = ReturnType<typeof state>;

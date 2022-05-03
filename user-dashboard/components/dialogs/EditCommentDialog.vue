@@ -15,7 +15,7 @@
             <Editor
               :content="choosen_comment"
               @on-input="
-                updateNewCommentObject({
+                updateEditCommentObject({
                   variable_path: 'content',
                   data: $event,
                 })
