@@ -6,7 +6,7 @@
           <v-col cols="12" class="d-flex pb-0">
             <div>
               <v-img
-                :src="user_avatar"
+                :src="getUserAvatar(comment_asset.parent)"
                 width="40"
                 height="40"
                 class="rounded-circle"
@@ -77,6 +77,110 @@
                   </i>
                 </span>
               </div>
+            </div>
+          </v-col>
+
+          <v-col
+            cols="12"
+            v-for="(child, index) in comment_asset.children"
+            :key="index"
+            class="pl-15 d-flex justify-space-between"
+          >
+            <div class="d-flex">
+              <div>
+                <v-img
+                  :src="getUserAvatar(child)"
+                  width="40"
+                  height="40"
+                  class="rounded-circle"
+                ></v-img>
+              </div>
+              <div class="pl-4">
+                <div class="text-body-2">
+                  <span class="app-title">
+                    <span
+                      >{{ child.user.first_name }}
+                      {{ child.user.last_name }}</span
+                    >
+                  </span>
+                </div>
+                <div class="text-body-2">
+                  <span class="app-body">
+                    <span v-html="$t(child.content)"></span>
+                  </span>
+                </div>
+
+                <div class="mt-n4 like">
+                  <v-icon
+                    small
+                    class="clickable"
+                    :color="userLiked(child) ? 'red' : ''"
+                    @click="
+                      likeComment({
+                        comment_id: child._id,
+                        user_id: user._id,
+                      })
+                    "
+                    >{{
+                      userLiked(child) ? "mdi-heart" : "mdi-heart-outline"
+                    }}</v-icon
+                  >
+                  <span class="text-body-2">
+                    <span class="app-body">
+                      <span v-html="countCommentLikes(child)"></span>
+                    </span>
+                  </span>
+                  <v-icon
+                    small
+                    class="ml-2 clickable"
+                    @click="
+                      () => {
+                        setChoosenComment({ comment: child });
+                        openBaseReplyCommentDialog();
+                      }
+                    "
+                    >mdi-reply-outline</v-icon
+                  >
+                </div>
+                <div class="text-body-2 mt-n1">
+                  <span class="app-body">
+                    <i>
+                      <small>
+                        {{ $moment(child.created_at).fromNow() }}
+                      </small>
+                    </i>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    v-bind="attrs"
+                    v-on="on"
+                    class="ml-auto d-block"
+                    @click="setChoosenComment({ comment: child })"
+                    >mdi-dots-vertical</v-icon
+                  >
+                </template>
+                <v-list>
+                  <v-list-item class="clickable">
+                    <v-list-item-title @click="openEditCommentDialog">
+                      <span v-html="$t('Edit')"></span>
+                    </v-list-item-title>
+                  </v-list-item>
+                  <v-list-item class="clickable">
+                    <v-list-item-title>
+                      <span
+                        v-html="$t('Delete')"
+                        @click="deleteComment({ comment: child })"
+                      ></span>
+                    </v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </div>
           </v-col>
         </v-row>
@@ -156,12 +260,12 @@ export default {
 
       return user_can_edit;
     },
-    user_avatar() {
-      const has_aws_location = _.get(this.user, "aws.meta.location", "");
-      return has_aws_location;
-    },
   },
   methods: {
+    getUserAvatar(comment) {
+      const has_aws_location = _.get(comment, "user.aws.meta.location", "");
+      return has_aws_location;
+    },
     async likeComment({ comment_id, user_id }) {
       await this.LIKE_COMMENT({
         comment_id,

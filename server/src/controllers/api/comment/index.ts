@@ -57,6 +57,7 @@ const deleteCommentController = makeDeleteCommentController({
   deleteCommentById: removeCommentById,
   getCommentById,
   deleteCommentAssetByCommentId,
+  getCommentAssetByCommentId,
 });
 /**
  * @description update comment's details excluding password
