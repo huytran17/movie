@@ -238,6 +238,24 @@ export default function makeCommentAssetDb({
       return null;
     }
 
+    async deleteByCommentId({
+      comment_id,
+    }: {
+      comment_id: string;
+    }): Promise<CommentAsset | null> {
+      const existing = await commentAssetDbModel.findOneAndUpdate(
+        { parent: comment_id },
+        { deleted_at: new Date() }
+      );
+      const updated = await commentAssetDbModel
+        .findOne({ parent: comment_id })
+        .lean({ virtuals: true });
+      if (updated) {
+        return new CommentAsset(updated);
+      }
+      return null;
+    }
+
     async hardDelete({ id }: { id: string }): Promise<CommentAsset | null> {
       const existing = await commentAssetDbModel.deleteOne({ _id: id });
       const updated = await commentAssetDbModel

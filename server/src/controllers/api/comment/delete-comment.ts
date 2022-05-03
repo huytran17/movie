@@ -2,13 +2,16 @@ import { Request } from "express";
 import * as _ from "lodash";
 import { IRemoveCommentById } from "../../../use-cases/comment/delete-comment-by-id";
 import { IGetCommentById } from "../../../use-cases/comment/get-comment-by-id";
+import { IDeleteCommentAssetByCommentId } from "../../../use-cases/comment-asset/delete-comment-asset-by-comment-id";
 
 export default function makeDeleteCommentController({
   deleteCommentById,
   getCommentById,
+  deleteCommentAssetByCommentId,
 }: {
   deleteCommentById: IRemoveCommentById;
   getCommentById: IGetCommentById;
+  deleteCommentAssetByCommentId: IDeleteCommentAssetByCommentId;
 }) {
   return async function deleteCommentController(
     httpRequest: Request & { context: { validated: { _id: string } } }
@@ -35,6 +38,8 @@ export default function makeDeleteCommentController({
       }
 
       const comment = await deleteCommentById({ id: comment_id });
+
+      await deleteCommentAssetByCommentId({ comment_id: exists._id });
 
       return {
         headers,

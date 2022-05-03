@@ -26,6 +26,11 @@ export default interface ICommentAssetDb {
   findById: ({ id }: { id: string }) => Promise<CommentAsset | null>;
   insert: (payload: ICommentAssetData) => Promise<CommentAsset | null>;
   delete: ({ id }: { id: string }) => Promise<CommentAsset | null>;
+  deleteByCommentId: ({
+    comment_id,
+  }: {
+    comment_id: string;
+  }) => Promise<CommentAsset | null>;
   hardDelete: ({ id }: { id: string }) => Promise<CommentAsset | null>;
   update: (
     updatePayload: Partial<ICommentAsset>

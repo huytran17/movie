@@ -12,6 +12,7 @@ import {
   createCommentAsset,
   updateCommentAsset,
   getCommentAssetByCommentId,
+  deleteCommentAssetByCommentId,
 } from "../../../use-cases/comment-asset";
 import { getUserById } from "../../../use-cases/user";
 import { getFilmById } from "../../../use-cases/film";
@@ -55,6 +56,7 @@ const createCommentController = makeCreateCommentController({
 const deleteCommentController = makeDeleteCommentController({
   deleteCommentById: removeCommentById,
   getCommentById,
+  deleteCommentAssetByCommentId,
 });
 /**
  * @description update comment's details excluding password
