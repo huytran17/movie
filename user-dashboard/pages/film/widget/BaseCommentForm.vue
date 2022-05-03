@@ -1,7 +1,7 @@
 <template>
   <div class="pt-3">
     <Editor
-      :content="comment_data"
+      :content="new_comment"
       @on-input="
         updateNewCommentObject({
           variable_path: 'content',
@@ -20,13 +20,6 @@ export default {
   name: "BaseCommentForm",
   mixins: [commentMixins],
   component: { Editor },
-  data() {
-    return {
-      comment_data: {
-        content: "",
-      },
-    };
-  },
 };
 </script>
 

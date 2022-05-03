@@ -317,6 +317,7 @@ export default {
         film: this.film._id,
       });
       await this.GET_COMMENT_ASSETS_BY_FILM_ID({ film_id: this.film._id });
+      this.updateNewCommentObject({ variable_path: "content", data: "" });
     },
   },
   async fetch() {
