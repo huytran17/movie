@@ -19,6 +19,7 @@ export default {
       feedbacks: "feedback/feedbacks",
       new_feedback: "feedback/new_feedback",
       feedback: "feedback/feedback",
+      user: "auth/user",
     }),
 
     /**
@@ -27,6 +28,14 @@ export default {
      */
     pages_exists() {
       return !!_.get(this.pagination, "total_pages");
+    },
+
+    can_not_feedback() {
+      const user_can_not_feedbacked = _.some(
+        this.feedbacks,
+        (feedback) => feedback.user._id === this.user._id
+      );
+      return user_can_not_feedbacked;
     },
   },
   methods: {

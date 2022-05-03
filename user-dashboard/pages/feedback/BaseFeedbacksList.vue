@@ -24,6 +24,7 @@
                 placeholder="Type your feedback..."
                 class="pt-0"
                 :rules="feedbackContentRules"
+                :disabled="can_not_feedback"
                 @input="
                   updateNewFeedbackObject({
                     variable_path: 'content',
@@ -202,12 +203,12 @@ export default {
       });
       await this.GET_FEEDBACK_BY_FILM_ID({ film_id: this.film_id });
 
-      this.updateFeedbackObject({
+      this.updateNewFeedbackObject({
         variable_path: "star_count",
         data: 5,
       });
 
-      this.updateFeedbackObject({
+      this.updateNewFeedbackObject({
         variable_path: "content",
         data: "",
       });
