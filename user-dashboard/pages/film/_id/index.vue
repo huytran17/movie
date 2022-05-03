@@ -135,6 +135,18 @@
                         class="primary--text text-capitalize"
                       ></span>
                     </div>
+                    <div class="text-body-2 mt-4">
+                      <v-icon small color="primary">mdi-adjust</v-icon>
+                      <span v-html="$t('Age limit: ')" class="font-weight-bold">
+                      </span>
+                      <span class="primary--text text-capitalize">
+                        <span
+                          v-if="film_meta"
+                          v-html="$t(film.meta.age_limit)"
+                        ></span>
+                        <span>+</span>
+                      </span>
+                    </div>
                   </v-col>
                 </v-row>
               </v-tab-item>
