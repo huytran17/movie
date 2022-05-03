@@ -26,7 +26,7 @@
               </span>
             </div>
           </div>
-          <div class="slide-functions d-flex flex-column flex-sm-row pt-8 pb-5">
+          <div class="slide-functions d-flex flex-column flex-sm-row py-5">
             <div>
               <v-btn
                 color="red white--text pr-2 ml-0 mt-3 mt-sm-0"
