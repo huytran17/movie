@@ -10,6 +10,7 @@ export default class User implements IUser {
   public readonly email: string;
   public readonly full_name: string;
   public readonly birthday: Date;
+  public readonly completed_profile_at: Date;
   public readonly created_at: Date;
   public readonly updated_at: Date;
   public readonly deleted_at: Date;
@@ -29,6 +30,7 @@ export default class User implements IUser {
     created_at,
     updated_at,
     deleted_at,
+    completed_profile_at,
   }: IUser) {
     this._id = _id;
     this.avatar_url = avatar_url;
@@ -43,5 +45,6 @@ export default class User implements IUser {
     this.created_at = created_at;
     this.updated_at = updated_at;
     this.deleted_at = deleted_at;
+    this.completed_profile_at = completed_profile_at;
   }
 }

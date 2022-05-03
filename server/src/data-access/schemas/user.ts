@@ -18,6 +18,7 @@ const userSchema = new Schema(
     updated_at: { type: Date, default: Date.now },
     deleted_at: { type: Date, default: null },
     email_verified_at: { type: Date, default: null },
+    completed_profile_at: { type: Date, default: null },
   },
   {
     toJSON: { virtuals: true },

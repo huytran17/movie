@@ -8,6 +8,7 @@ export default interface IUser {
   email: string;
   created_at: Date;
   birthday: Date;
+  completed_profile_at: Date;
   avatar_url?: string;
   updated_at: Date;
   deleted_at: Date;
