@@ -93,22 +93,6 @@
 
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field
-                :rules="addressRules"
-                :label="$t('Email')"
-                :value="user.address"
-                required
-                type="address"
-                :disabled="true"
-                @input="
-                  updateUserObject({
-                    variable_path: 'address',
-                    data: $event,
-                  })
-                "
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6">
               <v-file-input
                 v-model="file_of_avatar"
                 small-chips

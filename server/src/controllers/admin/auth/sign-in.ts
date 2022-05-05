@@ -65,7 +65,7 @@ export default function makeSignInController({
       return {
         headers,
         statusCode: 200,
-        body: { access_token, user: exists },
+        body: { access_token, user: exists, is_loggedin: true },
       };
     } catch (err) {
       // TODO: add in error handling here
@@ -74,6 +74,7 @@ export default function makeSignInController({
         statusCode: 200,
         body: {
           error: err.message,
+          is_loggedin: false,
         },
       };
     }

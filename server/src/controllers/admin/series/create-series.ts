@@ -37,6 +37,7 @@ export default function makeCreateSeriesController({
         headers,
         statusCode: 201,
         body: {
+          is_error: false,
           data: created_series,
         },
       };
