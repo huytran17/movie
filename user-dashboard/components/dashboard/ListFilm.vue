@@ -15,62 +15,33 @@
             :key="index"
             class="clickable"
           >
-            <v-badge
-              v-if="getAgeLimit(film)"
-              color="green"
-              :content="getAgeLimitString(film)"
-              offset-y="26px"
-              :offset-x="getAgeLimit(film) < 10 ? '25px' : '30px'"
-            >
-              <v-card
-                class="my-4 mx-1 position-relative no-border-radius no-box-shadow"
-                height="250"
-                width="180"
-                @click="$router.push(localePath(`/film/${film._id}`))"
-              >
-                <v-img
-                  :src="getFilmThumbnail(film)"
-                  :alt="film.title"
-                  height="100%"
-                  width="100%"
-                  cover
-                  class="no-border-radius"
-                >
-                </v-img>
-              </v-card>
-            </v-badge>
-
-            <v-card
-              v-else
-              class="my-4 mx-1 position-relative no-border-radius no-box-shadow"
-              height="250"
-              width="180"
-              @click="$router.push(localePath(`/film/${film._id}`))"
-            >
-              <v-img
-                :src="getFilmThumbnail(film)"
-                :alt="film.title"
-                height="100%"
-                width="100%"
-                cover
-                class="no-border-radius"
-              >
-              </v-img>
-            </v-card>
+            <BaseFilmCard
+              :film_item="film"
+              @open-notification-dialog="openNotificationDialog"
+            />
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
     </div>
+
+    <BaseNotificationDialog
+      :show_notification_dialog="show_notification_dialog"
+      @close-notification-dialog="show_notification_dialog = false"
+      :content="notification_content"
+    />
   </div>
 </template>
 
 <script>
 import systemMixins from "@/mixins/system";
 import filmMixins from "@/mixins/film";
+import BaseFilmCard from "@/components/film/BaseFilmCard";
+import BaseNotificationDialog from "@/components/dialogs/BaseNotificationDialog";
 
 export default {
   name: "ListFilm",
   mixins: [systemMixins, filmMixins],
+  components: { BaseFilmCard, BaseNotificationDialog },
   props: {
     title: {
       type: String,
@@ -85,7 +56,17 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      notification_content: "",
+      show_notification_dialog: false,
+    };
+  },
   methods: {
+    openNotificationDialog({ age }) {
+      this.notification_content = `Bạn chưa đủ ${age} tuổi để xem phim này.`;
+      this.show_notification_dialog = true;
+    },
     getAgeLimit(film) {
       const age_limit = _.get(film, "meta.age_limit", 0);
       return age_limit;
