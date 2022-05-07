@@ -71,6 +71,7 @@ export default {
     },
 
     goToFilm() {
+      console.log(this.user);
       const user_birthday = _.get(this.user, "birthday");
       const user_age = this.$moment().diff(user_birthday, "years");
       const film_age_limit = _.get(this.film_item, "meta.age_limit");
@@ -86,13 +87,6 @@ export default {
 
       this.$router.push(this.localePath(`/film/${this.film_item._id}`));
     },
-  },
-  async fetch() {
-    try {
-      await this.GET_ME();
-    } catch (e) {
-      console.log(e);
-    }
   },
 };
 </script>

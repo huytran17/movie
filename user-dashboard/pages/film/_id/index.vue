@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="has_film" class="mt-10 pl-3 pl-lg-15" fluid>
+  <v-container v-if="has_film" class="mt-2 pl-3 pl-lg-15" fluid>
     <v-row>
       <v-col cols="12" lg="9">
         <v-row>

@@ -13,6 +13,12 @@
                 v-on="on"
                 :value="formatDate(birthday, 'YYYY/MM/DD')"
                 :rules="birthdayRules"
+                @input="
+                  updateUserObject({
+                    variable_path: 'birthday',
+                    data: $event,
+                  })
+                "
               ></v-text-field>
             </template>
             <v-date-picker
@@ -79,11 +85,6 @@ export default {
   async mounted() {
     try {
       await this.GET_ME();
-
-      this.updateUserObject({
-        variable_path: "birthday",
-        data: this.birthday,
-      });
     } catch (e) {
       console.log(e);
     }

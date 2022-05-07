@@ -1,5 +1,5 @@
 <template>
-  <div class="px-3 my-4">
+  <div class="px-3 mb-4 mt-2">
     <v-row class="px-3">
       <v-col
         v-for="(film, index) in films_list"
@@ -57,12 +57,10 @@
 <script>
 import BaseNotificationDialog from "@/components/dialogs/BaseNotificationDialog";
 import authMixins from "@/mixins/auth";
-import BaseFilmCard from "@/components/film/BaseFilmCard";
 export default {
   name: "BaseFilmsList",
   mixins: [authMixins],
   components: {
-    BaseFilmCard,
     BaseNotificationDialog,
   },
   props: {
@@ -117,7 +115,4 @@ export default {
 };
 </script>
 
-<style scoped>
-._wrapper {
-}
-</style>
+<style scoped></style>

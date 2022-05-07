@@ -1,6 +1,9 @@
 <template>
-  <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
+  <v-app>
     <v-main>
+      <div class="d-flex justify-center">
+        <v-img :src="logo" max-width="200"></v-img>
+      </div>
       <TheSideNav />
       <div class="h-100">
         <nuxt />
@@ -32,6 +35,7 @@ export default {
   data() {
     return {
       show_complete_profile_dialog: false,
+      logo: require("@/assets/images/netflixlogo.png"),
     };
   },
   computed: {
@@ -41,7 +45,15 @@ export default {
   },
   methods: {
     async updateUser() {
+      const has_birthday = _.get(this.user, "birthday");
+      if (!has_birthday) {
+        this.updateUserObject({
+          variable_path: "birthday",
+          data: new Date(Date.now()).toISOString().substr(0, 10),
+        });
+      }
       await this.UPDATE_USER({ user: this.user });
+      location.reload();
       this.show_complete_profile_dialog = false;
     },
   },

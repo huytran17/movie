@@ -24,7 +24,7 @@ export default {
   },
   async fetch() {
     try {
-      await Promise.all([this.GET_ME()]);
+      await this.GET_ME();
     } catch (e) {
       console.log(e);
     }
