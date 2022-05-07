@@ -4,11 +4,13 @@ import ICommentAssetDb from "../../data-access/interfaces/comment-asset-db";
 export interface ICreateCommentAssetData {
   parent: string;
   children: string[];
+  film: string;
 }
 
 export type ICreateCommentAsset = ({
   parent,
   children,
+  film,
 }: ICreateCommentAssetData) => Promise<CommentAsset | null>;
 
 export default function makeCreateCommentAsset(
@@ -17,10 +19,12 @@ export default function makeCreateCommentAsset(
   return async function createCommentAsset({
     parent,
     children,
+    film,
   }: ICreateCommentAssetData): Promise<CommentAsset | null> {
     const createdCommentAsset = await commentAssetDb.insert({
       parent,
       children,
+      film,
     });
     return createdCommentAsset;
   };

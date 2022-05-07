@@ -4,6 +4,7 @@ import ICommentAsset from "../../interfaces/comment-asset";
 export type ICommentAssetData = {
   parent: string;
   children: string[];
+  film: string;
 };
 
 export default interface ICommentAssetDb {

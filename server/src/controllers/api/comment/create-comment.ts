@@ -50,6 +50,7 @@ export default function makeCreateCommentController({
       const created_comment_asset = await createCommentAsset({
         parent: created_comment._id,
         children: [],
+        film: film,
       });
       if (!created_comment_asset) {
         return {
