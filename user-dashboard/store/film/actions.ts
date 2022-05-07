@@ -53,6 +53,20 @@ const actions: ActionTree<FilmState, RootState> = {
     });
     return { data: films, pagination };
   },
+  async [ActionTypes.UPDATE_FILM]({ commit, state }, { film_id }) {
+    const { data, is_error, message } = await this.$axios.$put(
+      `/api/film/${film_id}`,
+      {
+        data: state.film,
+      }
+    );
+
+    if (!is_error) {
+      commit(MutationTypes.SET_FILM, { data });
+    }
+
+    return { data, is_error, message };
+  },
   /**
    * @description Get all films
    * @param param0

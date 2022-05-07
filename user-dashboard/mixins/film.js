@@ -26,10 +26,12 @@ export default {
       GET_FILM: "film/GET_FILM",
       GET_FILM_BY_SLUG: "film/GET_FILM_BY_SLUG",
       GET_FILMS_PAGINATED: "film/GET_FILMS_PAGINATED",
+      UPDATE_FILM: "film/UPDATE_FILM",
     }),
 
     ...mapMutations({
       SET_LOADING: "film/SET_LOADING",
+      SET_FILM_DATA: "film/SET_FILM_DATA",
     }),
 
     filterFilmByCategory({ categories, exclude_ids = "" }) {
@@ -40,6 +42,12 @@ export default {
       });
 
       return filtered_films;
+    },
+    updateFilmObject({ data, variable_path }) {
+      this.SET_FILM_DATA({
+        data,
+        variable_path,
+      });
     },
   },
 };

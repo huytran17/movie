@@ -7,6 +7,7 @@
           lg="12"
           v-for="(film, index) in suggestions_list"
           :key="index"
+          class="pb-0"
         >
           <v-row>
             <v-col cols="12" lg="5" class="d-flex d-lg-block">

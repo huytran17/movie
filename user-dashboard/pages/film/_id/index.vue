@@ -347,6 +347,14 @@ export default {
       const languages = _.get(this.film, "meta.languages", []);
       this.languages_mapped = this.matchCountries(languages);
 
+      const view_count = _.get(this.film, "meta.view_count", 0);
+
+      this.updateFilmObject({
+        variable_path: "meta.view_count",
+        data: view_count + 1,
+      });
+      await this.UPDATE_FILM({ film_id: this.film._id });
+
       ++this.player_key;
     } catch (e) {
       console.log(e);

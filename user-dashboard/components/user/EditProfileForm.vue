@@ -168,7 +168,7 @@
                 "
                 :rules="newPasswordConfirmationRules"
                 :label="$t('New password confirmation')"
-                :value="password_confirmation"
+                :value="security.password_confirmation"
                 required
                 @input="
                   updateSecurityObject({
