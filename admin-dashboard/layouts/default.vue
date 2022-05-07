@@ -1,10 +1,13 @@
 <template>
   <v-app light>
     <v-main>
+      <div class="d-flex justify-center">
+        <v-img :src="logo" max-width="200"></v-img>
+      </div>
       <div class="nav">
         <TheSideNav />
       </div>
-      <div class="main mt-14">
+      <div class="main mt-2">
         <nuxt />
       </div>
     </v-main>
@@ -21,6 +24,11 @@ export default {
   mixins: [authMixin],
   components: {
     TheSideNav,
+  },
+  data() {
+    return {
+      logo: require("@/assets/images/netflixlogo.png"),
+    };
   },
   async fetch() {
     try {
