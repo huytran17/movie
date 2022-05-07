@@ -64,6 +64,7 @@ const actions: ActionTree<FilmState, RootState> = {
     const entries_per_page = _.get(params, "entries_per_page", 15);
     const series = _.get(params, "series");
     const categories = _.get(params, "categories", []);
+
     const keep_in_store = _.get(params, "keep_in_store", true);
     const exclude_ids = _.get(params, "exclude_ids", []);
 

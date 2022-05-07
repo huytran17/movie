@@ -11,9 +11,9 @@
           <v-row>
             <v-col cols="12" lg="5" class="d-flex d-lg-block">
               <v-img
-                :src="film_thumbnail"
+                :src="filmThumbnail(film)"
                 cover
-                @click="$router.push(localePath(`/film/${film._id}`))"
+                @click="goToFilm(film)"
                 class="clickable"
               ></v-img>
             </v-col>
@@ -23,7 +23,7 @@
                   <span
                     class="suggestion-title clickable"
                     v-html="$t(film.title)"
-                    @click="$router.push(localePath(`/film/${film._id}`))"
+                    @click="goToFilm(film)"
                   ></span>
                 </span>
               </div>
@@ -47,20 +47,37 @@
                   <v-icon small>mdi-star</v-icon>
                 </span>
               </div>
+
+              <div class="text-body-2" v-if="ageLimit(film)">
+                <span class="app-body age-limit">
+                  <span v-html="$t(ageLimit(film))"></span>
+                  <span>+</span>
+                </span>
+              </div>
             </v-col>
           </v-row>
         </v-col>
       </v-row>
     </v-col>
+    <BaseNotificationDialog
+      :show_notification_dialog="show_notification_dialog"
+      @close-notification-dialog="show_notification_dialog = false"
+      :content="notification_content"
+    />
   </v-row>
 </template>
 
 <script>
 import filmMixins from "@/mixins/film";
+import authMixins from "@/mixins/auth";
+import BaseNotificationDialog from "@/components/dialogs/BaseNotificationDialog";
 
 export default {
   name: "BaseSuggestionList",
-  mixins: [filmMixins],
+  mixins: [filmMixins, authMixins],
+  components: {
+    BaseNotificationDialog,
+  },
   props: {
     categories: {
       type: Array,
@@ -77,21 +94,40 @@ export default {
   },
   data() {
     return {
+      notification_content: "",
+      show_notification_dialog: false,
       suggestions_list: [],
     };
   },
   computed: {
-    film_thumbnail() {
-      const has_aws_location = _.get(
-        this.film,
-        "aws_thumbnail.meta.location",
-        ""
-      );
-      return has_aws_location;
-    },
-
     has_suggestions_list() {
       return this.suggestions_list.length > 0;
+    },
+  },
+  methods: {
+    filmThumbnail(film) {
+      const has_aws_location = _.get(film, "aws_thumbnail.meta.location", "");
+      return has_aws_location;
+    },
+    ageLimit(film) {
+      return _.get(film, "meta.age_limit");
+    },
+    goToFilm(film) {
+      const user_birthday = _.get(this.user, "birthday");
+      const user_age = this.$moment().diff(user_birthday, "years");
+      const film_age_limit = _.get(film, "meta.age_limit");
+      const should_compare = !_.isNil(user_age) && !_.isNil(film_age_limit);
+
+      if (should_compare) {
+        const can_not_play = user_age < film_age_limit;
+        if (can_not_play) {
+          this.notification_content = `Bạn chưa đủ ${film_age_limit} tuổi để xem phim này.`;
+          this.show_notification_dialog = true;
+          return;
+        }
+      }
+
+      this.$router.push(this.localePath(`/film/${film._id}`));
     },
   },
   async fetch() {
@@ -100,7 +136,6 @@ export default {
       const { data, pagination } = await this.GET_FILMS_PAGINATED({
         categories: this.categories,
         exclude_ids: this.exclude_ids,
-        keep_in_store: false,
         new_state: true,
       });
       this.suggestions_list = data;
@@ -146,5 +181,10 @@ export default {
 }
 ::v-deep .v-btn {
   border-radius: 0 !important;
+}
+.age-limit {
+  border: 1px solid rgb(25, 162, 248);
+  padding: 2px 3px;
+  border-radius: 4px;
 }
 </style>

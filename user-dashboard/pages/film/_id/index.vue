@@ -135,15 +135,12 @@
                         class="primary--text text-capitalize"
                       ></span>
                     </div>
-                    <div class="text-body-2 mt-4">
+                    <div class="text-body-2 mt-4" v-if="age_limit">
                       <v-icon small color="primary">mdi-adjust</v-icon>
                       <span v-html="$t('Age limit: ')" class="font-weight-bold">
                       </span>
                       <span class="primary--text text-capitalize">
-                        <span
-                          v-if="film_meta"
-                          v-html="$t(film.meta.age_limit)"
-                        ></span>
+                        <span v-if="film_meta" v-html="$t(age_limit)"></span>
                         <span>+</span>
                       </span>
                     </div>
@@ -164,7 +161,7 @@
         </v-row>
       </v-col>
 
-      <v-col cols="12" lg="3">
+      <v-col cols="12" lg="3" v-if="film_categories.length">
         <BaseSuggestionList
           :categories="film_categories"
           :exclude_ids="[film_id]"
@@ -233,6 +230,7 @@ export default {
       countries_mapped: [],
       languages_mapped: [],
       film_id: "",
+      film_categories: [],
       tab: "information",
       tab_items: [
         {
@@ -258,8 +256,8 @@ export default {
     };
   },
   computed: {
-    film_categories() {
-      return _.get(this.film, "categories", []);
+    age_limit() {
+      return _.get(this.film, "meta.age_limit");
     },
     trailer_url() {
       const has_aws_location = _.get(
@@ -325,7 +323,7 @@ export default {
       this.SET_LOADING({ data: true });
       this.film_id = this.$route.params.id;
       await this.GET_FILM({ film_id: this.film_id });
-
+      this.film_categories = _.get(this.film, "categories", []);
       const countries = _.get(this.film, "meta.countries", []);
       this.countries_mapped = this.matchCountries(countries);
 
