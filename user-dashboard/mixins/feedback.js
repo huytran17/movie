@@ -33,7 +33,7 @@ export default {
     can_not_feedback() {
       const user_can_not_feedbacked = _.some(
         this.feedbacks,
-        (feedback) => feedback.user._id === this.user._id
+        (feedback) => feedback.user && feedback.user._id === this.user._id
       );
       return user_can_not_feedbacked;
     },
