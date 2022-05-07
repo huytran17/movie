@@ -323,6 +323,23 @@ export default {
       this.SET_LOADING({ data: true });
       this.film_id = this.$route.params.id;
       await this.GET_FILM({ film_id: this.film_id });
+
+      const user_birthday = _.get(this.user, "birthday");
+      const user_age = this.$moment().diff(user_birthday, "years");
+      const film_age_limit = _.get(this.film, "meta.age_limit");
+      const should_compare = !_.isNil(user_age) && !_.isNil(film_age_limit);
+
+      if (should_compare) {
+        const can_not_play = user_age < film_age_limit;
+        if (can_not_play) {
+          this.$toast.error(
+            this.$t(`Bạn chưa đủ ${film_age_limit} để xem phim này.`)
+          );
+          this.$router.push(this.localePath("/"));
+          return;
+        }
+      }
+
       this.film_categories = _.get(this.film, "categories", []);
       const countries = _.get(this.film, "meta.countries", []);
       this.countries_mapped = this.matchCountries(countries);
