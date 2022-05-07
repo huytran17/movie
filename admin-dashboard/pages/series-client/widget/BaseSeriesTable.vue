@@ -112,16 +112,14 @@ export default {
   methods: {
     async deleteSeries() {
       const series_id = _.get(this.choosen_series, "_id", "");
-      const [{ is_error, message }] = await Promise.all([
-        this.DELETE_SERIES({ series_id }),
-        this.GET_SERIES_ARRAY(),
-      ]);
+      const { is_error, message } = await this.DELETE_SERIES({ series_id });
       if (!!is_error) {
         this.$toast.error(this.$t(message));
         return;
       }
       this.$toast.success(this.$t("Deleted series successfully!"));
       this.show_confirm_dialog = false;
+      await this.GET_SERIES_ARRAY();
     },
 
     async openDeleteSeriesConfirmDialog({ series }) {

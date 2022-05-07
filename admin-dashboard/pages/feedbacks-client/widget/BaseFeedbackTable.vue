@@ -138,16 +138,19 @@ export default {
   },
   methods: {
     async deleteFeedback() {
-      const [{ is_error, message }] = await Promise.all([
-        this.DELETE_FEEDBACK({ feedback_id: this.choosen_feedback._id }),
-        this.GET_FEEDBACKS(),
-      ]);
+      const { is_error, message } = await this.DELETE_FEEDBACK({
+        feedback_id: this.choosen_feedback._id,
+      });
+
       if (!!is_error) {
         this.$toast.error(this.$t(message));
         return;
       }
       this.$toast.success(this.$t("Deleted feedback successfully!"));
       this.show_confirm_dialog = false;
+      await this.GET_FEEDBACKS({
+        new_state: true,
+      });
     },
     async openDeleteFilmConfirmDialog({ feedback }) {
       this.confirm_content = `Bạn có muốn xóa feedback <b>${feedback.content}</b> không?`;
@@ -158,7 +161,9 @@ export default {
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
-      await this.GET_FEEDBACKS();
+      await this.GET_FEEDBACKS({
+        new_state: true,
+      });
     } catch (e) {
       console.log(e);
     } finally {

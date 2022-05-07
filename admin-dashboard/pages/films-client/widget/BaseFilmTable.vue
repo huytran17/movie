@@ -336,10 +336,9 @@ export default {
     },
 
     async deleteFilm() {
-      const [{ is_error, message }] = await Promise.all([
-        this.DELETE_FILM({ film_id: this.choosen_film._id }),
-        this.GET_FILMS(),
-      ]);
+      const { is_error, message } = await this.DELETE_FILM({
+        film_id: this.choosen_film._id,
+      });
 
       if (!!is_error) {
         this.$toast.error(this.$t(message));
@@ -347,6 +346,7 @@ export default {
       }
       this.$toast.success(this.$t("Deleted film successfully!"));
       this.show_confirm_dialog = false;
+      await this.GET_FILMS();
     },
   },
   async fetch() {
