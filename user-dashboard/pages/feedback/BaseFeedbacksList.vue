@@ -57,14 +57,14 @@
             v-for="(feedback_item, index) in feedbacks"
             :key="index"
           >
-            <v-row>
+            <v-row v-if="hasValidUser(feedback_item)">
               <v-col
                 :cols="can_edit_feedback ? '10' : '12'"
                 class="pb-0 d-flex"
               >
                 <div>
                   <v-img
-                    :src="user_avatar"
+                    :src="userAvatar(feedback_item)"
                     width="40"
                     height="40"
                     class="rounded-circle"
@@ -168,12 +168,20 @@ export default {
     has_feedbacks() {
       return this.feedbacks.length > 0;
     },
-    user_avatar() {
-      const has_aws_location = _.get(this.user, "aws.meta.location", "");
-      return has_aws_location;
-    },
   },
   methods: {
+    hasValidUser(feedback_item) {
+      const user = _.get(feedback_item, "user");
+      return !_.isNil(user);
+    },
+    userAvatar(feedback_item) {
+      const has_aws_location = _.get(
+        feedback_item,
+        "user.aws.meta.location",
+        ""
+      );
+      return has_aws_location;
+    },
     async updateFeedback() {
       await this.UPDATE_FEEDBACK({
         feedback_id: this.feedback._id,

@@ -48,7 +48,6 @@ export default {
   async fetch() {
     try {
       await this.GET_ME();
-
       const has_birthday = _.get(this.user, "birthday");
       const all_completed = !!has_birthday;
 

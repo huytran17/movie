@@ -1,7 +1,7 @@
 <template>
   <div class="mt-6">
     <v-row v-for="(comment_asset, index) in comment_assets" :key="index">
-      <v-col cols="11">
+      <v-col cols="11" v-if="hasValidUser(comment_asset.parent)">
         <v-row>
           <v-col cols="12" class="d-flex pb-0">
             <div>
@@ -15,10 +15,7 @@
             <div class="pl-4">
               <div class="text-body-2">
                 <span class="app-title">
-                  <span
-                    >{{ comment_asset.parent.user.first_name }}
-                    {{ comment_asset.parent.user.last_name }}</span
-                  >
+                  <span v-html="getUserFullname(comment_asset.parent)"></span>
                 </span>
               </div>
               <div class="text-body-2">
@@ -86,7 +83,7 @@
             :key="index"
             class="pl-15 d-flex justify-space-between"
           >
-            <div class="d-flex">
+            <div class="d-flex" v-if="hasValidUser(child)">
               <div>
                 <v-img
                   :src="getUserAvatar(child)"
@@ -98,10 +95,7 @@
               <div class="pl-4">
                 <div class="text-body-2">
                   <span class="app-title">
-                    <span
-                      >{{ child.user.first_name }}
-                      {{ child.user.last_name }}</span
-                    >
+                    <span v-html="getUserFullname(child)"></span>
                   </span>
                 </div>
                 <div class="text-body-2">
@@ -143,7 +137,7 @@
               </div>
             </div>
 
-            <div>
+            <div v-if="hasValidUser(child)">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
@@ -175,7 +169,10 @@
         </v-row>
       </v-col>
 
-      <v-col v-if="can_edit_comment" cols="1">
+      <v-col
+        v-if="can_edit_comment && hasValidUser(comment_asset.parent)"
+        cols="1"
+      >
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
@@ -265,6 +262,16 @@ export default {
     userLiked(comment) {
       const liked_array = _.get(comment, "meta.liked_by", []);
       return liked_array.includes(this.user._id);
+    },
+    getUserFullname(comment) {
+      const first_name = _.get(comment, "user.first_name", "");
+      const last_name = _.get(comment, "user.last_name", "");
+
+      return `${first_name} ${last_name}`;
+    },
+    hasValidUser(comment) {
+      const user = _.get(comment, "user");
+      return !_.isNil(user);
     },
     countCommentLikes(comment) {
       const count_liked = _.get(comment, "meta.liked_by", []);

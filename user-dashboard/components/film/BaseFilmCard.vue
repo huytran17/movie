@@ -87,6 +87,13 @@ export default {
       this.$router.push(this.localePath(`/film/${this.film_item._id}`));
     },
   },
+  async fetch() {
+    try {
+      await this.GET_ME();
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
 </script>
 

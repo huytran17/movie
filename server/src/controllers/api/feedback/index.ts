@@ -8,6 +8,7 @@ import {
   getFeedbackById,
   getFeedbacksByFilmId,
 } from "../../../use-cases/feedback";
+import { updateFilm, getFilmById } from "../../../use-cases/film";
 import makeGetFeedbacksController from "./get-feedbacks";
 import makeDeleteFeedbackController from "./delete-feedback";
 import makeCreateFeedbackController from "./create-feedback";
@@ -26,6 +27,9 @@ const updateFeedbackController = makeUpdateFeedbackController({
 
 const createFeedbackController = makeCreateFeedbackController({
   createFeedback,
+  updateFilm,
+  getFilmById,
+  getFeedbacksByFilmId,
 });
 
 const deleteFeedbackController = makeDeleteFeedbackController({
