@@ -45,4 +45,6 @@ export enum CategoryType {
   Thrilling = "thrilling",
   Adventure = "adventure",
   Legend = "legend",
+  Mentality = "mentality",
+  Martial_arts = "martial_arts",
 }

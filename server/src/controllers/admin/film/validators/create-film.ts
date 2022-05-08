@@ -3,7 +3,7 @@ const createFilmRules = {
   description: "required|string",
   categories: [
     "required",
-    "in:comedy,horror,documentary,family,kid,vietnam,usuk,fiction,theater,action,thrilling,adventure,legend",
+    "in:comedy,horror,documentary,family,kid,vietnam,usuk,fiction,theater,action,thrilling,adventure,legend,mentality,martial_arts",
   ],
   meta: {
     manufactured_at: "required|date",
