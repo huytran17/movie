@@ -25,6 +25,8 @@ const filmSchema = new Schema({
         "action",
         "theater",
         "fiction",
+        "adventure",
+        "legend",
       ],
       default: "vietnam",
     },

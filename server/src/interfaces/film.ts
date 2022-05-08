@@ -43,4 +43,6 @@ export enum CategoryType {
   Theater = "theater",
   Action = "action",
   Thrilling = "thrilling",
+  Adventure = "adventure",
+  Legend = "legend",
 }
