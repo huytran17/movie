@@ -99,4 +99,11 @@ export default {
   left: 0;
   background: rgba(0, 0, 0, 0.05);
 }
+.slide-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 </style>
