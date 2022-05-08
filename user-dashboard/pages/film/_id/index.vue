@@ -271,9 +271,8 @@ export default {
       return !!this.film;
     },
     film_duration() {
-      const hour = _.get(this.film, "meta.duration.hour", "0");
-      const minute = _.get(this.film, "meta.duration.minute", "0");
-      const duration = `${hour}:${minute}`;
+      const minute = _.get(this.film, "meta.duration", "0");
+      const duration = `${minute} phút`;
       return duration;
     },
     film_series() {

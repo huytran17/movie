@@ -44,10 +44,7 @@ const filmSchema = new Schema({
     view_count: { type: Number, trim: true, default: 0 },
     director: { type: String, trim: true, default: "" },
     actors: [{ type: String }],
-    duration: {
-      hour: { type: String, trim: true, default: "0" },
-      minute: { type: String, trim: true, default: "0" },
-    },
+    duration: { type: String, trim: true, default: "" },
     countries: [{ type: String, trim: true }],
     rating: { type: String, trim: true, default: "" },
     languages: [{ type: String, trim: true }],

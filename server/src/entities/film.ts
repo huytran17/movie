@@ -15,10 +15,7 @@ export default class Film implements IFilm {
     view_count: number;
     director: string;
     actors: string[];
-    duration: {
-      hour: string;
-      minute: string;
-    };
+    duration: string;
     countries: string[];
     quality: string;
     rating: string;
