@@ -3,6 +3,7 @@ import ISeries from "./series";
 export default interface IAdmin {
   _id: string;
   title: string;
+  subtitle?: string;
   description: string;
   series: ISeries;
   aws_thumbnail?: Record<string, unknown>;
