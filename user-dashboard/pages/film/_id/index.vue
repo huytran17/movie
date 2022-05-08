@@ -13,6 +13,11 @@
                 <span v-html="film.title"></span>
               </span>
             </div>
+            <div class="text-subtitle-2">
+              <span class="app-body">
+                <span v-html="film.subtitle"></span>
+              </span>
+            </div>
           </v-col>
 
           <v-col cols="12">
@@ -140,8 +145,7 @@
                       <span v-html="$t('Age limit: ')" class="font-weight-bold">
                       </span>
                       <span class="primary--text text-capitalize">
-                        <span v-if="film_meta" v-html="$t(age_limit)"></span>
-                        <span>+</span>
+                        <span>{{ age_limit }}+</span>
                       </span>
                     </div>
                   </v-col>

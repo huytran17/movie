@@ -30,14 +30,6 @@ export default function makeCommentAssetDb({
         .find(query_conditions)
         .populate([
           {
-            path: "film",
-            populate: [
-              {
-                path: "user",
-              },
-            ],
-          },
-          {
             path: "parent",
             populate: [
               {
@@ -84,14 +76,6 @@ export default function makeCommentAssetDb({
       const existing = await commentAssetDbModel
         .find(query_conditions)
         .populate([
-          {
-            path: "film",
-            populate: [
-              {
-                path: "user",
-              },
-            ],
-          },
           {
             path: "parent",
             populate: [
@@ -155,14 +139,6 @@ export default function makeCommentAssetDb({
       const existing = await commentAssetDbModel
         .find(query_conditions)
         .populate([
-          {
-            path: "film",
-            populate: [
-              {
-                path: "user",
-              },
-            ],
-          },
           {
             path: "parent",
             populate: [
@@ -232,6 +208,7 @@ export default function makeCommentAssetDb({
         {
           parent: insertPayload.parent,
           children: insertPayload.children,
+          film: insertPayload.film,
         },
       ]);
 
@@ -302,14 +279,6 @@ export default function makeCommentAssetDb({
         .findOne({ _id: result?._id })
         .populate([
           {
-            path: "film",
-            populate: [
-              {
-                path: "user",
-              },
-            ],
-          },
-          {
             path: "parent",
             populate: [
               {
@@ -351,14 +320,6 @@ export default function makeCommentAssetDb({
       const existing = await commentAssetDbModel
         .findById(id)
         .populate([
-          {
-            path: "film",
-            populate: [
-              {
-                path: "user",
-              },
-            ],
-          },
           {
             path: "parent",
             populate: [
@@ -409,14 +370,6 @@ export default function makeCommentAssetDb({
       const existing = await commentAssetDbModel
         .findOne(query_conditions)
         .populate([
-          {
-            path: "film",
-            populate: [
-              {
-                path: "user",
-              },
-            ],
-          },
           {
             path: "parent",
             populate: [

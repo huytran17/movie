@@ -1,6 +1,13 @@
 <template>
   <v-row v-if="has_suggestions_list" class="pt-3 mb-3 mb-lg-0">
     <v-col cols="12" class="py-0">
+      <div class="tags amber accent-2 pa-2 mb-2">
+        <div class="text-h6">
+          <span class="app-title text-uppercase">
+            <span v-html="$t('Suggestions')"></span>
+          </span>
+        </div>
+      </div>
       <v-row class="suggestion-list">
         <v-col
           cols="3"
@@ -16,6 +23,7 @@
                 cover
                 @click="goToFilm(film)"
                 class="clickable"
+                max-height="300px"
               ></v-img>
             </v-col>
             <v-col cols="7" class="d-none d-lg-block pl-0">
