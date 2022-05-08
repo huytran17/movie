@@ -28,6 +28,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    "~/plugins/vuetify",
     { src: "~/plugins/vue-toastification", ssr: false },
     { src: "~/plugins/axios", ssr: false },
     { src: "~/plugins/vue-plyr", mode: "client" },

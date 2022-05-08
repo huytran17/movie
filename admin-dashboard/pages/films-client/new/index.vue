@@ -18,13 +18,14 @@
         </v-col>
 
         <v-col cols="12" md="6">
-          <v-text-field
+          <Editor
             :rules="descriptionRules"
-            :label="$t('Description')"
-            :value="new_film.description"
-            required
-            @input="updateInput({ variable_path: 'description', data: $event })"
-          ></v-text-field>
+            :content="new_film"
+            attr="description"
+            @on-input="
+              updateInput({ variable_path: 'description', data: $event })
+            "
+          />
         </v-col>
       </v-row>
 
@@ -277,6 +278,7 @@ import countriesMixins from "@/mixins/countries";
 import languagesMixins from "@/mixins/languages";
 import tagsMixins from "@/mixins/tags";
 import seriesMixins from "@/mixins/series";
+import Editor from "@/components/Editor";
 
 export default {
   name: "NewFilm",
@@ -289,6 +291,9 @@ export default {
     tagsMixins,
     seriesMixins,
   ],
+  components: {
+    Editor,
+  },
   data() {
     return {
       form_valid: false,
