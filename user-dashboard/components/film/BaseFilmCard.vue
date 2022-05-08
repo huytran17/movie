@@ -16,6 +16,7 @@
         :src="getFilmThumbnail()"
         :alt="film_item.title"
         cover
+        max-height="345.83"
         class="no-border-radius"
       >
       </v-img>
@@ -91,4 +92,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped></style>

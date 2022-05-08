@@ -5,7 +5,7 @@ const updateFilmRules = {
   slug: "string",
   categories: [
     "required",
-    "in:comedy,horror,documentary,family,kid,vietnam,usuk,fiction,theater,action,thrilling,adventure,legend,mentality,martial_arts",
+    "in:comedy,criminal,horror,documentary,family,kid,vietnam,usuk,affection,school,fiction,theater,action,thrilling,adventure,legend,cartoon,mentality,martial_arts",
   ],
 };
 export default updateFilmRules;

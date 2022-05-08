@@ -12,7 +12,7 @@ export default {
   components: { BaseFilmsList },
   async fetch() {
     try {
-      await this.GET_FILMS_PAGINATED({
+      await this.GET_FILMS({
         categories: ["kid"],
         new_state: true,
       });

@@ -7,7 +7,7 @@
     </div>
     <v-form v-model="form_valid">
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12">
           <v-text-field
             :rules="titleRules"
             :label="$t('Title')"
@@ -16,15 +16,47 @@
             @input="updateInput({ variable_path: 'title', data: $event })"
           ></v-text-field>
         </v-col>
-
+      </v-row>
+      <v-row>
         <v-col cols="12" md="6">
           <v-text-field
-            :rules="descriptionRules"
-            :label="$t('Description')"
-            :value="film.description"
+            :rules="subtitleRules"
+            :label="$t('Subtitle')"
+            :value="film.subtitle"
             required
-            @input="updateInput({ variable_path: 'description', data: $event })"
+            @input="updateInput({ variable_path: 'subtitle', data: $event })"
           ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-textarea
+            :label="$t('Tags')"
+            :value="get_film_tags"
+            :hint="$t('Separate by comma')"
+            required
+            @input="
+              updateInput({
+                variable_path: 'meta.tags',
+                data: $event.split(','),
+              })
+            "
+          ></v-textarea>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12">
+          <div class="text-body-2 mb-2 description">
+            <span class="app-body">
+              <span v-html="$t('Description')"></span>
+            </span>
+          </div>
+          <Editor
+            :content="film"
+            attr="description"
+            @on-input="
+              updateInput({ variable_path: 'description', data: $event })
+            "
+          />
         </v-col>
       </v-row>
 
@@ -305,61 +337,21 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-autocomplete
-            :value="getFilmMetaData('tags')"
-            :items="tags"
-            chips
-            multiple
-            clearable
-            deletable-chips
-            small-chips
+          <v-text-field
+            :value="getFilmMetaData('duration')"
+            :label="$t('Duration')"
+            :rules="minuteRules"
+            required
+            type="number"
             @input="
               updateInput({
-                variable_path: 'meta.tags',
+                variable_path: 'meta.duration',
                 data: $event,
               })
             "
-            :label="$t('Tags')"
-          ></v-autocomplete>
+          ></v-text-field>
         </v-col>
 
-        <v-col cols="12" md="6">
-          <v-row>
-            <v-col cols="6">
-              <v-text-field
-                :value="getFilmMetaData('duration.hour')"
-                :label="$t('Duration: Hour')"
-                :rules="hourRules"
-                required
-                type="number"
-                @input="
-                  updateInput({
-                    variable_path: 'meta.duration.hour',
-                    data: $event,
-                  })
-                "
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field
-                :value="getFilmMetaData('duration.minute')"
-                :label="$t('Duration: Minute')"
-                :rules="minuteRules"
-                required
-                type="number"
-                @input="
-                  updateInput({
-                    variable_path: 'meta.duration.minute',
-                    data: $event,
-                  })
-                "
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-
-      <v-row>
         <v-col v-if="trailer_url" cols="12" md="6" class="video-wrapper">
           <video controls width="100%" :key="trailer_refresh_key">
             <source :src="trailer_url" type="video/mp4" />
@@ -400,8 +392,8 @@ import adminMixins from "@/mixins/admin";
 import seriesMixins from "@/mixins/series";
 import countriesMixins from "@/mixins/countries";
 import languagesMixins from "@/mixins/languages";
-import tagsMixins from "@/mixins/tags";
 import systemMixins from "@/mixins/system";
+import Editor from "@/components/Editor";
 
 import Player from "@/components/Player";
 
@@ -413,13 +405,13 @@ export default {
     adminMixins,
     countriesMixins,
     languagesMixins,
-    tagsMixins,
     seriesMixins,
     systemMixins,
   ],
-  components: { Player },
+  components: { Player, Editor },
   data() {
     return {
+      film_tags: [],
       file_of_trailer: null,
       trailer_refresh_key: 0,
       film_refresh_key: 0,
@@ -501,10 +493,55 @@ export default {
           text: "USUK",
           value: "usuk",
         },
+        {
+          text: "Fiction",
+          value: "fiction",
+        },
+        {
+          text: "Theater",
+          value: "theater",
+        },
+        {
+          text: "Action",
+          value: "action",
+        },
+        {
+          text: "Thrilling",
+          value: "thrilling",
+        },
+        {
+          text: "Legend",
+          value: "legend",
+        },
+        {
+          text: "Adventure",
+          value: "adventure",
+        },
+        {
+          text: "Cartoon",
+          value: "cartoon",
+        },
+        {
+          text: "School",
+          value: "school",
+        },
+        {
+          text: "Affection",
+          value: "affection",
+        },
+        {
+          text: "Criminal",
+          value: "criminal",
+        },
       ],
     };
   },
   computed: {
+    get_film_tags() {
+      const tags = _.get(this.film, "meta.tags", []);
+      const tags_string = tags.join(",");
+      return tags_string;
+    },
     has_film() {
       return !!this.film;
     },
@@ -660,5 +697,8 @@ video {
   position: absolute;
   top: 0;
   left: 0;
+}
+.description {
+  color: #919191;
 }
 </style>

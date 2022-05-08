@@ -13,8 +13,8 @@
           v-if="getAgeLimit(film)"
           color="green"
           :content="getAgeLimitString(film)"
-          offset-y="26px"
-          :offset-x="getAgeLimit(film) < 10 ? '25px' : '30px'"
+          offset-y="32px"
+          :offset-x="getAgeLimit(film) < 10 ? '25px' : '28px'"
           class="w-100"
         >
           <v-card
@@ -115,4 +115,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+::v-deep .v-image__image {
+  height: 345.83px !important;
+  min-height: 345.83px !important;
+  max-height: 345.83px !important;
+}
+</style>

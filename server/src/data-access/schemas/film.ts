@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const filmSchema = new Schema({
   title: { type: String, required: true, trim: true },
   subtitle: { type: String, trim: true },
+  tags: [{ type: String, trim: true }],
   description: { type: String, required: true, trim: true },
   aws: { type: Object },
   aws_thumbnail: { type: Object },
@@ -29,6 +30,10 @@ const filmSchema = new Schema({
         "legend",
         "martial_arts",
         "mentality",
+        "cartoon",
+        "school",
+        "affection",
+        "criminal",
       ],
       default: "vietnam",
     },

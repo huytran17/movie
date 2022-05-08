@@ -4,6 +4,7 @@ import ISeries from "../interfaces/series";
 export default class Film implements IFilm {
   public readonly _id: string;
   public readonly title: string;
+  public readonly tags: string[];
   public readonly subtitle?: string;
   public readonly aws?: Record<string, unknown>;
   public readonly aws_trailer?: Record<string, unknown>;
@@ -34,6 +35,7 @@ export default class Film implements IFilm {
   constructor({
     _id,
     created_at,
+    tags,
     aws_trailer,
     subtitle,
     updated_at,
@@ -50,6 +52,7 @@ export default class Film implements IFilm {
     this.aws = aws;
     this.series = series;
     this.title = title;
+    this.tags = tags;
     this.description = description;
     this.aws_thumbnail = aws_thumbnail;
     this.subtitle = subtitle;

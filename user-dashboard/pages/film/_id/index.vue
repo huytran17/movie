@@ -148,6 +148,17 @@
                 </v-row>
               </v-tab-item>
               <v-tab-item>
+                <v-row>
+                  <v-col cols="12" class="mx-auto">
+                    <div class="text-body-2">
+                      <span class="app-body">
+                        <span v-html="$t(film.description)"></span>
+                      </span>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-tab-item>
+              <v-tab-item>
                 <v-row v-if="trailer_url">
                   <v-col cols="12" class="trailer-wrapper mx-auto">
                     <video controls class="trailer-video">
@@ -162,10 +173,34 @@
       </v-col>
 
       <v-col cols="12" lg="3" v-if="film_categories.length">
-        <BaseSuggestionList
-          :categories="film_categories"
-          :exclude_ids="[film_id]"
-        />
+        <div class="d-flex flex-column">
+          <BaseSuggestionList
+            :categories="film_categories"
+            :exclude_ids="[film_id]"
+          />
+
+          <div class="tags-wrapper">
+            <div class="tags amber accent-2 pa-2 mb-2">
+              <div class="text-h6">
+                <span class="app-title text-uppercase">
+                  <span v-html="$t('Tags')"></span>
+                </span>
+              </div>
+            </div>
+
+            <v-chip
+              v-for="(tag, index) in get_film_tags"
+              :key="index"
+              class="mt-1 mx-1"
+            >
+              <div class="text-body-2">
+                <span class="app-body">
+                  <span>{{ tag }}</span>
+                </span>
+              </div>
+            </v-chip>
+          </div>
+        </div>
       </v-col>
     </v-row>
     <v-row class="flex-column-reverse flex-lg-row">
@@ -238,6 +273,10 @@ export default {
           value: "information",
         },
         {
+          text: "Description",
+          value: "description",
+        },
+        {
           text: "Trailer",
           value: "trailer",
         },
@@ -256,6 +295,9 @@ export default {
     };
   },
   computed: {
+    get_film_tags() {
+      return _.get(this.film, "meta.tags", []);
+    },
     age_limit() {
       return _.get(this.film, "meta.age_limit");
     },
@@ -388,5 +430,35 @@ export default {
   width: 500px !important;
   height: calc(500px * 9 / 16);
   position: relative;
+}
+.tags {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+.tags-wrapper {
+  position: relative;
+  z-index: 999;
+  max-height: 316px !important;
+  overflow-y: auto;
+}
+.tags-wrapper::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* Track */
+.tags-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.tags-wrapper::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.tags-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>

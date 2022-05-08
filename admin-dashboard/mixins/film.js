@@ -5,11 +5,15 @@ export default {
   data() {
     return {
       titleRules: [(v) => !!v || this.$t("Title is required.")],
+      subtitleRules: [(v) => !!v || this.$t("Subtitle is required.")],
       hourRules: [(v) => !!v || this.$t("Duration is required.")],
       minuteRules: [(v) => !!v || this.$t("Duration is required.")],
       ageLimitRules: [(v) => !!v || this.$t("Age limit is required.")],
       studioRules: [(v) => !!v || this.$t("Studio is required.")],
       ratingRules: [(v) => !!v || this.$t("Rating is required.")],
+      categoriesRules: [
+        (v) => !!v.length > 0 || this.$t("Category is required."),
+      ],
       qualityRules: [(v) => !!v || this.$t("Quality is required.")],
       actorsRules: [(v) => !!v || this.$t("Actor time is required.")],
       directorRules: [(v) => !!v || this.$t("Director is required.")],

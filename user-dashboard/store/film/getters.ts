@@ -12,8 +12,8 @@ export const getters: GetterTree<FilmState, RootState> = {
   loading: (state) => state.loading,
   film: (state) => state.film,
   popular_films: (state) =>
-    _.orderBy(state.films, ["meta.view_count"], ["asc"]),
-  newest_films: (state) => _.orderBy(state.films, ["created_at"], ["asc"]),
+    _.orderBy(state.films, ["meta.view_count"], ["desc"]),
+  newest_films: (state) => _.orderBy(state.films, ["created_at"], ["desc"]),
 };
 
 export default getters;

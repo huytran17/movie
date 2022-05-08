@@ -5,6 +5,7 @@ export default interface IAdmin {
   title: string;
   subtitle?: string;
   description: string;
+  tags: string[];
   series: ISeries;
   aws_thumbnail?: Record<string, unknown>;
   aws_trailer?: Record<string, unknown>;
@@ -47,4 +48,8 @@ export enum CategoryType {
   Legend = "legend",
   Mentality = "mentality",
   Martial_arts = "martial_arts",
+  Cartoon = "cartoon",
+  Affection = "affection",
+  School = "school",
+  Criminal = "criminal",
 }

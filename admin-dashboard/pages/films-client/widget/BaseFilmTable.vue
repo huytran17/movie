@@ -20,6 +20,12 @@
         </v-btn>
       </template>
 
+      <template v-slot:item.description="{ item }">
+        <span class="app-title description">
+          <span v-html="item.description"></span>
+        </span>
+      </template>
+
       <template v-slot:item.title="{ item }">
         <a
           @click="$router.push(localePath(`/films-client/${item._id}`))"
@@ -50,65 +56,75 @@
       </template>
 
       <template v-slot:item.categories="{ item }">
-        <ul>
-          <li v-for="(category, index) in item.categories" :key="index">
-            <div class="text-body-2">
-              <span class="app-body">
-                <span v-html="$t(category)"></span>
-              </span>
-            </div>
-          </li>
-        </ul>
+        <div class="table-scroll-y">
+          <ul>
+            <li v-for="(category, index) in item.categories" :key="index">
+              <div class="text-body-2">
+                <span class="app-body">
+                  <span v-html="$t(category)"></span>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </template>
 
       <template v-slot:item.actors="{ item }">
-        <ul>
-          <li v-for="(actor, index) in item.meta.actors" :key="index">
-            <div class="text-body-2">
-              <span class="app-body">
-                <span v-html="$t(actor)"></span>
-              </span>
-            </div>
-          </li>
-        </ul>
+        <div class="table-scroll-y">
+          <ul>
+            <li v-for="(actor, index) in item.meta.actors" :key="index">
+              <div class="text-body-2">
+                <span class="app-body">
+                  <span v-html="$t(actor)"></span>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </template>
       <template v-slot:item.meta.countries="{ item }">
-        <ul>
-          <li v-for="(country, index) in item.meta.countries" :key="index">
-            <div class="text-body-2">
-              <span class="app-body">
-                <span
-                  v-html="$t(getCountryText({ country_code: country }))"
-                ></span>
-              </span>
-            </div>
-          </li>
-        </ul>
+        <div class="table-scroll-y">
+          <ul>
+            <li v-for="(country, index) in item.meta.countries" :key="index">
+              <div class="text-body-2">
+                <span class="app-body">
+                  <span
+                    v-html="$t(getCountryText({ country_code: country }))"
+                  ></span>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </template>
       <template v-slot:item.meta.languages="{ item }">
-        <ul>
-          <li v-for="(language, index) in item.meta.languages" :key="index">
-            <div class="text-body-2">
-              <span class="app-body">
-                <span
-                  v-html="$t(getLanguageText({ language_code: language }))"
-                ></span>
-              </span>
-            </div>
-          </li>
-        </ul>
+        <div class="table-scroll-y">
+          <ul>
+            <li v-for="(language, index) in item.meta.languages" :key="index">
+              <div class="text-body-2">
+                <span class="app-body">
+                  <span
+                    v-html="$t(getLanguageText({ language_code: language }))"
+                  ></span>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </template>
 
       <template v-slot:item.meta.tags="{ item }">
-        <ul>
-          <li v-for="(tag, index) in item.meta.tags" :key="index">
-            <div class="text-body-2">
-              <span class="app-body">
-                <span v-html="$t(tag)"></span>
-              </span>
-            </div>
-          </li>
-        </ul>
+        <div class="table-scroll-y">
+          <ul>
+            <li v-for="(tag, index) in item.meta.tags" :key="index">
+              <div class="text-body-2">
+                <span class="app-body">
+                  <span v-html="$t(tag)"></span>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </template>
     </v-data-table>
 
@@ -380,5 +396,12 @@ export default {
 /* Handle on hover */
 ::v-deep .v-data-table__wrapper::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 </style>

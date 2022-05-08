@@ -26,6 +26,18 @@ export default {
           name: "Japan",
           code: "jp",
         },
+        {
+          name: "China",
+          code: "cn",
+        },
+        {
+          name: "Thailand",
+          code: "th",
+        },
+        {
+          name: "United Arab Emirates",
+          code: "ae",
+        },
       ],
     };
   },

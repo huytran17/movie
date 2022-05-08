@@ -18,8 +18,48 @@
         </v-col>
 
         <v-col cols="12" md="6">
+          <v-autocomplete
+            :value="getFilmData('series')"
+            :items="series_array"
+            label="Series"
+            item-text="title"
+            item-value="_id"
+            chips
+            clearable
+            deletable-chips
+            small-chips
+            @input="updateInput({ variable_path: 'series', data: $event })"
+          ></v-autocomplete>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-text-field
+            :label="$t('Subtitle')"
+            :value="new_film.subtitle"
+            required
+            @input="updateInput({ variable_path: 'subtitle', data: $event })"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            :value="new_film.meta.actors"
+            @input="
+              updateInput({
+                variable_path: 'meta.actors',
+                data: $event,
+              })
+            "
+            :label="$t('Actors')"
+            :hint="$t('Separate by the comma')"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12">
           <Editor
-            :rules="descriptionRules"
             :content="new_film"
             attr="description"
             @on-input="
@@ -53,6 +93,7 @@
             multiple
             deletable-chips
             small-chips
+            :rules="categoriesRules"
             chips
             @input="updateInput({ variable_path: 'categories', data: $event })"
           ></v-autocomplete>
@@ -137,37 +178,6 @@
             :label="$t('Languages')"
           ></v-autocomplete>
         </v-col>
-        <v-col cols="12" md="6">
-          <v-autocomplete
-            :value="new_film.meta.tags"
-            :items="tags"
-            chips
-            multiple
-            clearable
-            deletable-chips
-            small-chips
-            @input="
-              updateInput({
-                variable_path: 'meta.tags',
-                data: $event,
-              })
-            "
-            :label="$t('Tags')"
-          ></v-autocomplete>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field
-            :value="new_film.meta.actors"
-            @input="
-              updateInput({
-                variable_path: 'meta.actors',
-                data: $event,
-              })
-            "
-            :label="$t('Actors')"
-            :hint="$t('Separate by the comma')"
-          ></v-text-field>
-        </v-col>
       </v-row>
 
       <v-row class="mt-0">
@@ -239,18 +249,13 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-autocomplete
-            :value="getFilmData('series')"
-            :items="series_array"
-            label="Series"
-            item-text="title"
-            item-value="_id"
-            chips
-            clearable
-            deletable-chips
-            small-chips
-            @input="updateInput({ variable_path: 'series', data: $event })"
-          ></v-autocomplete>
+          <v-textarea
+            :label="$t('Tags')"
+            :value="new_film.meta.tags"
+            :hint="$t('Separate by comma')"
+            required
+            @input="updateInput({ variable_path: 'meta.tags', data: $event })"
+          ></v-textarea>
         </v-col>
       </v-row>
 
@@ -276,7 +281,6 @@ import authMixins from "@/mixins/auth";
 import adminMixins from "@/mixins/admin";
 import countriesMixins from "@/mixins/countries";
 import languagesMixins from "@/mixins/languages";
-import tagsMixins from "@/mixins/tags";
 import seriesMixins from "@/mixins/series";
 import Editor from "@/components/Editor";
 
@@ -288,7 +292,6 @@ export default {
     adminMixins,
     countriesMixins,
     languagesMixins,
-    tagsMixins,
     seriesMixins,
   ],
   components: {
@@ -359,6 +362,54 @@ export default {
         {
           text: "USUK",
           value: "usuk",
+        },
+        {
+          text: "Fiction",
+          value: "fiction",
+        },
+        {
+          text: "Theater",
+          value: "theater",
+        },
+        {
+          text: "Action",
+          value: "action",
+        },
+        {
+          text: "Thrilling",
+          value: "thrilling",
+        },
+        {
+          text: "Legend",
+          value: "legend",
+        },
+        {
+          text: "Adventure",
+          value: "adventure",
+        },
+        {
+          text: "Martial arts",
+          value: "martial_arts",
+        },
+        {
+          text: "Mentality",
+          value: "mentality",
+        },
+        {
+          text: "Cartoon",
+          value: "cartoon",
+        },
+        {
+          text: "School",
+          value: "school",
+        },
+        {
+          text: "Affection",
+          value: "affection",
+        },
+        {
+          text: "Criminal",
+          value: "criminal",
         },
       ],
     };

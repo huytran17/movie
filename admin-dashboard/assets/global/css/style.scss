@@ -127,3 +127,25 @@ input:-webkit-autofill:active {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+.table-scroll-y {
+  max-height: 200px;
+  overflow: auto;
+}
+.table-scroll-y::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* Track */
+.table-scroll-y::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.table-scroll-y::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.table-scroll-y::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

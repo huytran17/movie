@@ -35,21 +35,24 @@
                 </span>
               </div>
 
-              <div class="text-body-2">
+              <div class="text-body-2 mt-1">
                 <span class="app-body">
                   <span v-html="$t(film.meta.view_count.toString())"></span>
                   <v-icon small>mdi-eye</v-icon>
                 </span>
               </div>
 
-              <div class="text-body-2">
+              <div
+                v-if="film.meta && film.meta.rating"
+                class="text-body-2 mt-1"
+              >
                 <span class="app-body">
                   <span v-html="$t(film.meta.rating)"></span>
                   <v-icon small>mdi-star</v-icon>
                 </span>
               </div>
 
-              <div class="text-body-2" v-if="ageLimit(film)">
+              <div class="text-body-2 mt-1" v-if="ageLimit(film)">
                 <span class="app-body age-limit">
                   <span v-html="$t(ageLimit(film))"></span>
                   <span>+</span>
@@ -134,10 +137,11 @@ export default {
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
-      const { data, pagination } = await this.GET_FILMS_PAGINATED({
+      const { data, pagination } = await this.GET_FILMS({
         categories: this.categories,
         exclude_ids: this.exclude_ids,
         new_state: true,
+        keep_in_store: false,
       });
       this.suggestions_list = data;
     } catch (e) {
@@ -151,7 +155,8 @@ export default {
 
 <style scoped>
 .suggestion-list {
-  max-height: 618.16px;
+  max-height: 631.16px;
+  min-height: 631.16px;
   overflow: auto;
 }
 /* width */

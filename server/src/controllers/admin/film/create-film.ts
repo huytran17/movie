@@ -22,8 +22,12 @@ export default function makeCreateFilmController({
       const actors = _.get(filmDetails, "meta.actors", "");
       const actors_array = _.split(actors, ",");
 
+      const tags = _.get(filmDetails, "meta.tags", "");
+      const tags_array = _.split(tags, ",");
+
       const final_film_details = Object.assign({}, filmDetails, {
         "meta.actors": actors_array,
+        "meta.tags": tags_array,
       });
 
       const created_film = await createFilm({

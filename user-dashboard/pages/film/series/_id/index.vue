@@ -14,7 +14,7 @@ export default {
   async fetch() {
     try {
       const series_id = this.$route.params.id;
-      await this.GET_FILMS_PAGINATED({
+      await this.GET_FILMS({
         series: series_id,
         new_state: true,
       });
