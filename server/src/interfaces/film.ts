@@ -41,4 +41,7 @@ export enum CategoryType {
   Kid = "kid",
   Vietnam = "vietnam",
   USUK = "usuk",
+  Fiction = "fiction",
+  Theater = "theater",
+  Action = "action",
 }
