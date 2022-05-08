@@ -30,7 +30,7 @@
               </div>
 
               <div class="text-body-2">
-                <span class="app-body">
+                <span class="app-body description">
                   <span v-html="$t(film.description)"></span>
                 </span>
               </div>
@@ -187,5 +187,12 @@ export default {
   border: 1px solid rgb(25, 162, 248);
   padding: 2px 3px;
   border-radius: 4px;
+}
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 </style>
