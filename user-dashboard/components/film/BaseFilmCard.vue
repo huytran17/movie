@@ -3,8 +3,8 @@
     v-if="getAgeLimit()"
     color="green"
     :content="getAgeLimitString()"
-    offset-y="26px"
-    :offset-x="getAgeLimit() < 10 ? '25px' : '30px'"
+    offset-y="20px"
+    :offset-x="getAgeLimit() < 10 ? '23px' : '27px'"
   >
     <v-card
       class="my-1 mx-1 position-relative no-border-radius no-box-shadow"
