@@ -109,7 +109,6 @@ export default {
     try {
       this.SET_LOADING({ data: true });
       await this.GET_FILMS();
-      console.log(this.popular_films);
     } catch (e) {
       console.log(e);
     } finally {

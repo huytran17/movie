@@ -13,6 +13,7 @@ const actions: ActionTree<FilmState, RootState> = {
   async [ActionTypes.GET_FILMS]({ commit }, params = {}) {
     const new_state = _.get(params, "new_state", false);
     const series = _.get(params, "series");
+    const query = _.get(params, "query");
     const categories = _.get(params, "categories", []);
     const keep_in_store = _.get(params, "keep_in_store", true);
     const exclude_ids = _.get(params, "exclude_ids", []);
@@ -21,6 +22,11 @@ const actions: ActionTree<FilmState, RootState> = {
 
     if (!_.isEmpty(exclude_ids)) {
       url_query += `&exclude_ids=${exclude_ids.join(",")}`;
+    }
+
+    if (query) {
+      url_query += `&query=${query}`;
+      console.log(query);
     }
 
     if (series) {

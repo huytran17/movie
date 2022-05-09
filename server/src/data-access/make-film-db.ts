@@ -78,10 +78,12 @@ export default function makeFilmDb({
       categories = [],
       series = "",
       exclude_ids = [],
+      query,
     }: {
       categories?: string[];
       series?: string;
       exclude_ids?: string[];
+      query?: string;
     }): Promise<Film[] | null> {
       let query_conditions = { deleted_at: undefined };
 
@@ -100,6 +102,21 @@ export default function makeFilmDb({
       if (series) {
         Object.assign(query_conditions, {
           series: series,
+        });
+      }
+
+      if (query) {
+        Object.assign(query_conditions, {
+          $and: [
+            {
+              $or: [
+                { title: new RegExp(".*" + query + ".*", "si") },
+                { "meta.actors": new RegExp(".*" + query + ".*", "si") },
+                { "meta.director": new RegExp(".*" + query + ".*", "si") },
+                { categories: new RegExp(".*" + query + ".*", "si") },
+              ],
+            },
+          ],
         });
       }
 

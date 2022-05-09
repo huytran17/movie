@@ -5,10 +5,12 @@ export type IGetFilms = ({
   categories,
   series,
   exclude_ids,
+  query,
 }: {
   categories?: string[];
   series?: string;
   exclude_ids?: string[];
+  query?: string;
 }) => Promise<Film[] | null>;
 
 export default function makeGetFilms(filmDb: IFilmDb): IGetFilms {
@@ -16,15 +18,18 @@ export default function makeGetFilms(filmDb: IFilmDb): IGetFilms {
     categories,
     series,
     exclude_ids,
+    query,
   }: {
     categories?: string[];
     series?: string;
     exclude_ids?: string[];
+    query?: string;
   }): Promise<Film[] | null> {
     const films = await filmDb.findAll({
       categories,
       series,
       exclude_ids,
+      query,
     });
     return films;
   };

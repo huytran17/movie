@@ -5,10 +5,12 @@ export default interface IFilmDb {
     categories,
     series,
     exclude_ids,
+    query,
   }: {
     categories?: string[];
     series?: string;
     exclude_ids?: string[];
+    query?: string;
   }) => Promise<Film[] | null>;
   findAllPaginated: ({
     query,

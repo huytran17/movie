@@ -1,9 +1,30 @@
 <template>
   <v-app>
     <v-main>
-      <div class="d-flex justify-center">
-        <v-img :src="logo" max-width="200"></v-img>
-      </div>
+      <v-row class="d-flex justify-center">
+        <v-col cols="12" md="4" class="pa-0"> </v-col>
+        <v-col cols="12" md="4" class="d-flex justify-center pb-0">
+          <v-img :src="logo" max-width="200"></v-img>
+        </v-col>
+        <v-col
+          cols="12"
+          md="4"
+          class="d-flex flex-column justify-center pt-md-3 pt-0 pb-3 pb-md-0"
+        >
+          <div class="px-3">
+            <v-text-field
+              placeholder="Search by title, actors, director, category"
+              filled
+              rounded
+              dense
+              hide-details
+              append-icon="mdi-magnify"
+              v-model="query"
+              @click:append="goToSearchPage"
+            ></v-text-field>
+          </div>
+        </v-col>
+      </v-row>
       <TheSideNav />
       <div class="h-100">
         <nuxt />
@@ -36,6 +57,7 @@ export default {
     return {
       show_complete_profile_dialog: false,
       logo: require("@/assets/images/netflixlogo.png"),
+      query: "",
     };
   },
   computed: {
@@ -44,6 +66,16 @@ export default {
     },
   },
   methods: {
+    goToSearchPage() {
+      if (!this.query) {
+        return;
+      }
+      const path = this.$route.path;
+      const is_search_path = path === "/search";
+      if (!is_search_path) {
+        this.$router.push(this.localePath(`/search?query=${this.query}`));
+      }
+    },
     async updateUser() {
       const has_birthday = _.get(this.user, "birthday");
       if (!has_birthday) {
@@ -66,9 +98,18 @@ export default {
       if (!all_completed) {
         this.show_complete_profile_dialog = true;
       }
+      await this.GET_FILMS({
+        query: this.query,
+        new_state: true,
+      });
     } catch (e) {
       console.log(e);
     }
   },
 };
 </script>
+<style scoped>
+::v-deep .v-input__control {
+  margin: auto 0;
+}
+</style>

@@ -132,7 +132,11 @@ export default function makeCommentAssetDb({
 
       if (query) {
         Object.assign(query_conditions, {
-          $or: [{ title: { $regex: ".*" + query + ".*", $options: "si" } }],
+          $and: [
+            {
+              $or: [{ title: new RegExp(".*" + query + ".*", "si") }],
+            },
+          ],
         });
       }
 
