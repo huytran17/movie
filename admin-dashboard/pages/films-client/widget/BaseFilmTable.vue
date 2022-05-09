@@ -1,132 +1,143 @@
 <template>
   <div>
     <BaseTableLoader v-if="film_loading" />
-    <v-data-table
-      v-else
-      :headers="headers"
-      :items="get_films"
-      :search="search"
-      :items-per-page="15"
-    >
-      <template v-slot:item.film_tools="{ item }">
-        <v-btn
-          icon
-          @click="$router.push(localePath(`/films-client/${item._id}`))"
-        >
-          <v-icon color="primary">mdi-grease-pencil</v-icon>
-        </v-btn>
-        <v-btn icon @click="openDeleteFilmConfirmDialog({ film: item })">
-          <v-icon color="red">mdi-delete-forever</v-icon>
-        </v-btn>
-      </template>
+    <v-card v-else>
+      <v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="get_films"
+        :search="search"
+        :items-per-page="15"
+      >
+        <template v-slot:item.film_tools="{ item }">
+          <v-btn
+            icon
+            @click="$router.push(localePath(`/films-client/${item._id}`))"
+          >
+            <v-icon color="primary">mdi-grease-pencil</v-icon>
+          </v-btn>
+          <v-btn icon @click="openDeleteFilmConfirmDialog({ film: item })">
+            <v-icon color="red">mdi-delete-forever</v-icon>
+          </v-btn>
+        </template>
 
-      <template v-slot:item.description="{ item }">
-        <span class="app-title description">
-          <span v-html="item.description"></span>
-        </span>
-      </template>
-
-      <template v-slot:item.title="{ item }">
-        <a
-          @click="$router.push(localePath(`/films-client/${item._id}`))"
-          class="text-body-2 primary--text"
-        >
-          <span class="app-title">
-            {{ item.title }}
+        <template v-slot:item.description="{ item }">
+          <span class="app-title description">
+            <span v-html="item.description"></span>
           </span>
-        </a>
-      </template>
-      <template v-slot:item.thumnail="{ item }">
-        <v-img :src="getFilmThumbnail(item)" max-width="200px"></v-img>
-      </template>
-      <template v-slot:item.created_at="{ item }">
-        {{ $moment(item.created_at).format("DD-MM-YYYY") }}
-      </template>
+        </template>
 
-      <template v-slot:item.updated_at="{ item }">
-        {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
-      </template>
+        <template v-slot:item.title="{ item }">
+          <a
+            @click="$router.push(localePath(`/films-client/${item._id}`))"
+            class="text-body-2 primary--text"
+          >
+            <span class="app-title">
+              {{ item.title }}
+            </span>
+          </a>
+        </template>
+        <template v-slot:item.thumnail="{ item }">
+          <v-img :src="getFilmThumbnail(item)" max-width="200px"></v-img>
+        </template>
+        <template v-slot:item.created_at="{ item }">
+          {{ $moment(item.created_at).format("DD-MM-YYYY") }}
+        </template>
 
-      <template v-slot:item.meta.released_at="{ item }">
-        {{ $moment(item.meta.released_at).format("DD-MM-YYYY") }}
-      </template>
+        <template v-slot:item.updated_at="{ item }">
+          {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
+        </template>
 
-      <template v-slot:item.meta.manufactured_at="{ item }">
-        {{ $moment(item.meta.manufactured_at).format("DD-MM-YYYY") }}
-      </template>
+        <template v-slot:item.meta.released_at="{ item }">
+          {{ $moment(item.meta.released_at).format("DD-MM-YYYY") }}
+        </template>
 
-      <template v-slot:item.categories="{ item }">
-        <div class="table-scroll-y">
-          <ul>
-            <li v-for="(category, index) in item.categories" :key="index">
-              <div class="text-body-2">
-                <span class="app-body">
-                  <span v-html="$t(category)"></span>
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </template>
+        <template v-slot:item.meta.manufactured_at="{ item }">
+          {{ $moment(item.meta.manufactured_at).format("DD-MM-YYYY") }}
+        </template>
 
-      <template v-slot:item.actors="{ item }">
-        <div class="table-scroll-y">
-          <ul>
-            <li v-for="(actor, index) in item.meta.actors" :key="index">
-              <div class="text-body-2">
-                <span class="app-body">
-                  <span v-html="$t(actor)"></span>
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </template>
-      <template v-slot:item.meta.countries="{ item }">
-        <div class="table-scroll-y">
-          <ul>
-            <li v-for="(country, index) in item.meta.countries" :key="index">
-              <div class="text-body-2">
-                <span class="app-body">
-                  <span
-                    v-html="$t(getCountryText({ country_code: country }))"
-                  ></span>
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </template>
-      <template v-slot:item.meta.languages="{ item }">
-        <div class="table-scroll-y">
-          <ul>
-            <li v-for="(language, index) in item.meta.languages" :key="index">
-              <div class="text-body-2">
-                <span class="app-body">
-                  <span
-                    v-html="$t(getLanguageText({ language_code: language }))"
-                  ></span>
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </template>
+        <template v-slot:item.categories="{ item }">
+          <div class="table-scroll-y">
+            <ul>
+              <li v-for="(category, index) in item.categories" :key="index">
+                <div class="text-body-2">
+                  <span class="app-body">
+                    <span v-html="$t(category)"></span>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </template>
 
-      <template v-slot:item.meta.tags="{ item }">
-        <div class="table-scroll-y">
-          <ul>
-            <li v-for="(tag, index) in item.meta.tags" :key="index">
-              <div class="text-body-2">
-                <span class="app-body">
-                  <span v-html="$t(tag)"></span>
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </template>
-    </v-data-table>
+        <template v-slot:item.actors="{ item }">
+          <div class="table-scroll-y">
+            <ul>
+              <li v-for="(actor, index) in item.meta.actors" :key="index">
+                <div class="text-body-2">
+                  <span class="app-body">
+                    <span v-html="$t(actor)"></span>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </template>
+        <template v-slot:item.meta.countries="{ item }">
+          <div class="table-scroll-y">
+            <ul>
+              <li v-for="(country, index) in item.meta.countries" :key="index">
+                <div class="text-body-2">
+                  <span class="app-body">
+                    <span
+                      v-html="$t(getCountryText({ country_code: country }))"
+                    ></span>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </template>
+        <template v-slot:item.meta.languages="{ item }">
+          <div class="table-scroll-y">
+            <ul>
+              <li v-for="(language, index) in item.meta.languages" :key="index">
+                <div class="text-body-2">
+                  <span class="app-body">
+                    <span
+                      v-html="$t(getLanguageText({ language_code: language }))"
+                    ></span>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </template>
+
+        <template v-slot:item.meta.tags="{ item }">
+          <div class="table-scroll-y">
+            <ul>
+              <li v-for="(tag, index) in item.meta.tags" :key="index">
+                <div class="text-body-2">
+                  <span class="app-body">
+                    <span v-html="$t(tag)"></span>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </template>
+      </v-data-table>
+    </v-card>
 
     <ConfirmDialog
       :show_confirm_dialog="show_confirm_dialog"
