@@ -1,5 +1,5 @@
 <template>
-  <BaseNoContent v-if="films.length" />
+  <BaseNoContent v-if="films.length <= 0" />
   <BaseFilmsList2 v-else :films_list="films" />
 </template>
 
