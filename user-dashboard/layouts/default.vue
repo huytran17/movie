@@ -106,10 +106,6 @@ export default {
       if (!all_completed) {
         this.show_complete_profile_dialog = true;
       }
-      await this.GET_FILMS({
-        query: this.query,
-        new_state: true,
-      });
     } catch (e) {
       console.log(e);
     }

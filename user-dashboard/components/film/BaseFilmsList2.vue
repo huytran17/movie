@@ -67,6 +67,10 @@ export default {
     };
   },
 
+  created() {
+    console.log(this.films_list);
+  },
+
   methods: {
     openNotificationDialog({ age }) {
       this.notification_content = `Bạn chưa đủ ${age} tuổi để xem phim này.`;
