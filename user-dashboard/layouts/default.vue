@@ -13,7 +13,7 @@
         >
           <div class="px-3">
             <v-text-field
-              placeholder="Search by title, actors, director, category"
+              placeholder="Search by title, actors, director, category, tags"
               filled
               rounded
               dense

@@ -13,7 +13,7 @@ export default {
   async fetch() {
     try {
       await this.GET_FILMS({
-        categories: ["kid"],
+        categories: ["cartoon", "kid"],
         new_state: true,
       });
     } catch (e) {

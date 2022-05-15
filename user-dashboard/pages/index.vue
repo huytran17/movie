@@ -32,9 +32,19 @@
       :list_films="comedy_films"
     />
     <ListFilm
-      v-if="has_documentary_films"
-      title="Phim tài liệu"
-      :list_films="documentary_films"
+      v-if="has_theater_films"
+      title="Phim chiếu rạp"
+      :list_films="theater_films"
+    />
+    <ListFilm
+      v-if="has_fiction_films"
+      title="Phim viễn tưởng"
+      :list_films="fiction_films"
+    />
+    <ListFilm
+      v-if="has_action_films"
+      title="Phim hành động"
+      :list_films="action_films"
     />
     <ListFilm v-if="has_kid_films" title="Trẻ em" :list_films="kid_films" />
     <ListFilm
@@ -62,14 +72,20 @@ export default {
     horror_films() {
       return this.filterFilmByCategory({ categories: "horror" });
     },
-    documentary_films() {
-      return this.filterFilmByCategory({ categories: "documentary" });
+    theater_films() {
+      return this.filterFilmByCategory({ categories: "theater" });
     },
     family_films() {
       return this.filterFilmByCategory({ categories: "family" });
     },
     kid_films() {
-      return this.filterFilmByCategory({ categories: "kid" });
+      return this.filterFilmByCategory({ categories: "cartoon" });
+    },
+    fiction_films() {
+      return this.filterFilmByCategory({ categories: "fiction" });
+    },
+    action_films() {
+      return this.filterFilmByCategory({ categories: "action" });
     },
     vietnam_films() {
       return this.filterFilmByCategory({ categories: "vietnam" });
@@ -77,11 +93,17 @@ export default {
     usuk_films() {
       return this.filterFilmByCategory({ categories: "usuk" });
     },
+    has_fiction_films() {
+      return this.fiction_films.length > 0;
+    },
+    has_action_films() {
+      return this.action_films.length > 0;
+    },
     has_comedy_films() {
       return this.comedy_films.length > 0;
     },
-    has_documentary_films() {
-      return this.documentary_films.length > 0;
+    has_theater_films() {
+      return this.theater_films.length > 0;
     },
     has_family_films() {
       return this.family_films.length > 0;
@@ -108,7 +130,7 @@ export default {
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
-      await this.GET_FILMS();
+      await this.GET_FILMS({ exclude_series: true });
     } catch (e) {
       console.log(e);
     } finally {
