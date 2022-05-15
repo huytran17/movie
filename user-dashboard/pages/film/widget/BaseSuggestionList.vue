@@ -26,7 +26,7 @@
                 max-height="300px"
               ></v-img>
             </v-col>
-            <v-col cols="7" class="d-none d-lg-block pl-0">
+            <v-col cols="12" lg="7" class="pl-3 pl-lg-0">
               <div class="text-body-2">
                 <span class="app-title">
                   <span
