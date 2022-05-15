@@ -19,6 +19,13 @@
           class="no-border-radius"
         >
         </v-img>
+        <v-card-title v-if="show_title">
+          <div class="text-body-2">
+            <span class="app-title">
+              <span>{{ film.title }}</span>
+            </span>
+          </div>
+        </v-card-title>
       </v-card>
     </v-col>
 
@@ -44,6 +51,12 @@ export default {
       type: Array,
       default() {
         return [];
+      },
+    },
+    show_title: {
+      type: Boolean,
+      default() {
+        return false;
       },
     },
   },

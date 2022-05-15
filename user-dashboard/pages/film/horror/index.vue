@@ -1,6 +1,6 @@
 <template>
   <BaseNoContent v-if="films.length <= 0" />
-  <BaseFilmsList2 v-else :films_list="films" />
+  <BaseFilmsList2 v-else :films_list="films" :show_title="true" />
 </template>
 
 <script>

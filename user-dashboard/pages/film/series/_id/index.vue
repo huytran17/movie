@@ -1,5 +1,5 @@
 <template>
-  <BaseFilmsList2 :films_list="films" />
+  <BaseFilmsList2 :films_list="films" :show_title="true" />
 </template>
 
 <script>
