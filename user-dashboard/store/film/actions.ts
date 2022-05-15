@@ -17,7 +17,59 @@ const actions: ActionTree<FilmState, RootState> = {
     const categories = _.get(params, "categories", []);
     const keep_in_store = _.get(params, "keep_in_store", true);
     const exclude_ids = _.get(params, "exclude_ids", []);
-    const exclude_series = _.get(params, "exclude_series", false);
+
+    let url_query = `?page=1`;
+
+    if (!_.isEmpty(exclude_ids)) {
+      url_query += `&exclude_ids=${exclude_ids.join(",")}`;
+    }
+
+    if (query) {
+      url_query += `&query=${query}`;
+    }
+
+    if (series) {
+      url_query += `&series=${series}`;
+    }
+
+    if (!_.isEmpty(categories)) {
+      url_query += `&categories=${categories.join(",")}`;
+    }
+
+    const { data: films, pagination } = await this.$axios.$get(
+      `/api/film/${url_query}`
+    );
+
+    if (!keep_in_store) {
+      return { data: films, pagination };
+    }
+
+    commit(MutationTypes.SET_FILMS, {
+      data: films,
+      new_state,
+    });
+
+    commit(MutationTypes.SET_FILMS_PAGINATION, {
+      data: pagination,
+    });
+
+    commit(MutationTypes.SET_LOADING, {
+      data: false,
+    });
+    return { data: films, pagination };
+  },
+  /**
+   * @description Get all films
+   * @param param0
+   */
+  async [ActionTypes.GET_FILMS_EXCLUDE_SERIES]({ commit }, params = {}) {
+    const new_state = _.get(params, "new_state", false);
+    const series = _.get(params, "series");
+    const query = _.get(params, "query");
+    const categories = _.get(params, "categories", []);
+    const keep_in_store = _.get(params, "keep_in_store", true);
+    const exclude_ids = _.get(params, "exclude_ids", []);
+    const exclude_series = _.get(params, "exclude_series", true);
 
     let url_query = `?page=1`;
 
@@ -48,13 +100,9 @@ const actions: ActionTree<FilmState, RootState> = {
       return { data: films, pagination };
     }
 
-    commit(MutationTypes.SET_FILMS, {
+    commit(MutationTypes.SET_FILMS_EXCLUDE_SERIES, {
       data: films,
       new_state,
-    });
-
-    commit(MutationTypes.SET_FILMS_PAGINATION, {
-      data: pagination,
     });
 
     commit(MutationTypes.SET_LOADING, {

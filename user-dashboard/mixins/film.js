@@ -7,6 +7,7 @@ export default {
       film_loading: "film/loading",
       pagination: "film/pagination",
       films: "film/films",
+      films_exclude_series: "film/films_exclude_series",
       film: "film/film",
       popular_films: "film/popular_films",
       newest_films: "film/newest_films",
@@ -27,6 +28,7 @@ export default {
       GET_FILM_BY_SLUG: "film/GET_FILM_BY_SLUG",
       GET_FILMS_PAGINATED: "film/GET_FILMS_PAGINATED",
       UPDATE_FILM: "film/UPDATE_FILM",
+      GET_FILMS_EXCLUDE_SERIES: "film/GET_FILMS_EXCLUDE_SERIES",
     }),
 
     ...mapMutations({
@@ -35,11 +37,14 @@ export default {
     }),
 
     filterFilmByCategory({ categories, exclude_ids = "" }) {
-      const filtered_films = _.filter(this.films, function (film) {
-        const valid =
-          film.categories.includes(categories) && film._id !== exclude_ids;
-        return valid;
-      });
+      const filtered_films = _.filter(
+        this.films_exclude_series,
+        function (film) {
+          const valid =
+            film.categories.includes(categories) && film._id !== exclude_ids;
+          return valid;
+        }
+      );
 
       return filtered_films;
     },

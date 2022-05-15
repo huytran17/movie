@@ -42,6 +42,17 @@ const mutations: MutationTree<FilmState> = {
 
     state.films = _.uniqBy(_.concat(state.films, data), "_id");
   },
+  [MutationTypes.SET_FILMS_EXCLUDE_SERIES](state, { data, new_state = true }) {
+    if (new_state) {
+      state.films_exclude_series = data;
+      return;
+    }
+
+    state.films_exclude_series = _.uniqBy(
+      _.concat(state.films_exclude_series, data),
+      "_id"
+    );
+  },
 
   [MutationTypes.SET_FILM](state, { data }: { data: any }) {
     state.film = data;

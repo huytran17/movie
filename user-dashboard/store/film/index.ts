@@ -5,6 +5,7 @@ export const state = () => ({
     total: 0,
   },
   films: [] as any[],
+  films_exclude_series: [] as any[],
   loading: false,
   film: {},
 });

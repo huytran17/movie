@@ -130,7 +130,7 @@ export default {
   async fetch() {
     try {
       this.SET_LOADING({ data: true });
-      await this.GET_FILMS({ exclude_series: true });
+      await this.GET_FILMS_EXCLUDE_SERIES();
     } catch (e) {
       console.log(e);
     } finally {
