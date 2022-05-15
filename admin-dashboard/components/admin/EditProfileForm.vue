@@ -79,7 +79,7 @@
               <v-menu transition="scale-transition" offset-y min-width="auto">
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    label="Birthday"
+                    :label="$t('Birthday')"
                     prepend-icon="mdi-calendar"
                     readonly
                     v-bind="attrs"
@@ -148,7 +148,7 @@
               <v-autocomplete
                 :value="admin.type"
                 :items="admin_types"
-                label="Type"
+                :label="$t('Type')"
                 item-text="text"
                 item-value="value"
                 :rules="typeRules"
