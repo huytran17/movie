@@ -197,7 +197,7 @@
               :key="index"
               class="mt-1 mx-1"
             >
-              <div class="text-body-2">
+              <div class="text-body-2 clickable" @click="searchByTags(tag)">
                 <span class="app-body">
                   <span>{{ tag }}</span>
                 </span>
@@ -351,6 +351,9 @@ export default {
     },
   },
   methods: {
+    searchByTags(tag) {
+      return this.$router.push(this.localePath(`/search?query=${tag}`));
+    },
     joinArray(array, separator) {
       return _.join(array, separator);
     },
