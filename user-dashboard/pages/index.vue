@@ -46,7 +46,11 @@
       title="Phim hành động"
       :list_films="action_films"
     />
-    <ListFilm v-if="has_kid_films" title="Trẻ em" :list_films="kid_films" />
+    <ListFilm
+      v-if="has_kid_films"
+      title="Phim trẻ em"
+      :list_films="kid_films"
+    />
     <ListFilm
       v-if="has_family_films"
       title="Phim Gia đình"
