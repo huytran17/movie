@@ -28,6 +28,9 @@ export default function makeSeriesDb({
       const query_conditions = { deleted_at: undefined };
       const existing = await seriesDbModel
         .find(query_conditions)
+        .sort({
+          created_at: "desc",
+        })
         .populate({
           path: "film",
           select: "-__v",
