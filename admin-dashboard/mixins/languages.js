@@ -36,6 +36,10 @@ export default {
           name: "United Arab Emirates",
           code: "ae",
         },
+        {
+          name: "Korea",
+          code: "kr",
+        },
       ],
     };
   },
