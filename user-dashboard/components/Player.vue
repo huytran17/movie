@@ -1,7 +1,7 @@
 <template>
   <div>
     <vue-plyr class="player" :options="options">
-      <video controls crossorigin>
+      <video controls crossorigin :data-poster="poster">
         <source
           v-for="(source, index) in options.sources"
           :key="index"
@@ -28,6 +28,12 @@
 export default {
   props: {
     options: { type: Object, required: true },
+    poster: {
+      type: String,
+      default() {
+        return "";
+      },
+    },
   },
 };
 </script>

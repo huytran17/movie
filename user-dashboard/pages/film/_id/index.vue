@@ -4,7 +4,11 @@
       <v-col cols="12" lg="9">
         <v-row>
           <v-col cols="12">
-            <Player :options="options" :key="player_key" />
+            <Player
+              :options="options"
+              :key="player_key"
+              :poster="get_film_thumbnail"
+            />
           </v-col>
 
           <v-col cols="12" class="py-0">
@@ -299,6 +303,9 @@ export default {
     };
   },
   computed: {
+    get_film_thumbnail() {
+      return _.get(this.film, "aws_thumbnail.meta.location", "");
+    },
     get_film_tags() {
       return _.get(this.film, "meta.tags", []);
     },
