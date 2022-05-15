@@ -10,9 +10,9 @@
         <span v-html="$t('Reply comment')" class="app-title"></span>
       </v-card-title>
       <v-card-text class="mt-4">
-        <quote class="text-body-2">
+        <blockquote class="text-body-2">
           <span class="app-body" v-html="choosen_comment.content"></span>
-        </quote>
+        </blockquote>
       </v-card-text>
       <v-card-text class="mt-4">
         <v-row>

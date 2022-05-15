@@ -45,10 +45,11 @@ import TheSideNav from "@/components/dashboard/TheSideNav";
 import BaseUserCompleteProfile from "@/components/dialogs/BaseUserCompleteProfile";
 import authMixin from "@/mixins/auth";
 import userMixins from "@/mixins/user";
+import filmMixins from "@/mixins/film";
 
 export default {
   name: "DefaultLayout",
-  mixins: [authMixin, userMixins],
+  mixins: [authMixin, userMixins, filmMixins],
   components: {
     TheSideNav,
     BaseUserCompleteProfile,
@@ -66,15 +67,22 @@ export default {
     },
   },
   methods: {
-    goToSearchPage() {
+    async goToSearchPage() {
       if (!this.query) {
         return;
       }
       const path = this.$route.path;
       const is_search_path = path === "/search";
       if (!is_search_path) {
-        this.$router.push(this.localePath(`/search?query=${this.query}`));
+        return this.$router.push(
+          this.localePath(`/search?query=${this.query}`)
+        );
       }
+
+      await this.GET_FILMS({
+        query: this.query,
+        new_state: true,
+      });
     },
     async updateUser() {
       const has_birthday = _.get(this.user, "birthday");

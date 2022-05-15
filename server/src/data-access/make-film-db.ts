@@ -114,15 +114,34 @@ export default function makeFilmDb({
       }
 
       if (query) {
+        const decoded_query = decodeURIComponent(query);
+
         Object.assign(query_conditions, {
           $and: [
             {
               $or: [
-                { title: new RegExp(".*" + query + ".*", "si") },
-                { "meta.actors": new RegExp(".*" + query + ".*", "si") },
-                { "meta.director": new RegExp(".*" + query + ".*", "si") },
-                { "meta.tags": new RegExp(".*" + query + ".*", "si") },
-                { categories: new RegExp(".*" + query + ".*", "si") },
+                { title: new RegExp(".*" + decoded_query + ".*", "si") },
+                {
+                  "meta.actors": {
+                    $in: [decoded_query],
+                  },
+                },
+                {
+                  "meta.director": new RegExp(
+                    ".*" + decoded_query + ".*",
+                    "si"
+                  ),
+                },
+                {
+                  "meta.tags": {
+                    $in: [decoded_query],
+                  },
+                },
+                {
+                  categories: {
+                    $in: [decoded_query],
+                  },
+                },
               ],
             },
           ],
