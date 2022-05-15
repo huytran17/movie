@@ -67,9 +67,9 @@ export default {
             route: "/film/series",
           },
           {
-            text: "Phim Việt Nam",
-            value: "vietnam",
-            route: "/film/vietnam",
+            text: "Phim Hình Sự",
+            value: "criminal",
+            route: "/film/criminal",
           },
           {
             text: "Phim Âu - Mỹ",
@@ -92,14 +92,14 @@ export default {
             route: "/film/horror",
           },
           {
-            text: "Phim Tài Liệu",
-            value: "documentary",
-            route: "/film/documentary",
+            text: "Phim Viễn Tưởng",
+            value: "fiction",
+            route: "/film/fiction",
           },
           {
-            text: "Phim Gia Đình",
-            value: "family",
-            route: "/film/family",
+            text: "Phim Tâm Lý",
+            value: "mentality",
+            route: "/film/mentality",
           },
         ];
       },

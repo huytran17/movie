@@ -28,7 +28,7 @@
             <v-text-field
               :value="choosen_feedback.content"
               hide-details
-              placeholder="Type your feedback..."
+              :placeholder="$t('Type your feedback...')"
               class="pt-0"
               @input="
                 updateFeedbackObject({

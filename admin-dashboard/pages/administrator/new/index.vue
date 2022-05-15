@@ -106,7 +106,7 @@
           <v-autocomplete
             :value="sign_up_data.type"
             :items="admin_types"
-            label="Type"
+            :label="$t('Type')"
             item-text="text"
             item-value="value"
             :rules="typeRules"
@@ -115,7 +115,7 @@
         </v-col>
         <v-col cols="12" md="6">
           <div class="text-body-2">
-            <label class="date-picker-label"> Birthday </label>
+            <label class="date-picker-label" v-html="$t('Birthday')"> </label>
           </div>
           <v-date-picker
             :value="sign_up_data.birthday"

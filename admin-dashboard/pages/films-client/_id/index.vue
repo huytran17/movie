@@ -79,7 +79,7 @@
           <v-autocomplete
             :value="film.categories"
             :items="film_categories"
-            label="Category"
+            :label="$t('Category')"
             item-text="text"
             item-value="value"
             multiple
@@ -108,7 +108,7 @@
           <v-menu transition="scale-transition" offset-y min-width="auto">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                label="Manufacture at"
+                :label="$t('Manufacture at')"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
@@ -148,7 +148,7 @@
               <v-menu transition="scale-transition" offset-y min-width="auto">
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    label="Release at"
+                    :label="$t('Release at')"
                     prepend-icon="mdi-calendar"
                     readonly
                     v-bind="attrs"
@@ -201,7 +201,7 @@
               <v-autocomplete
                 :value="getFilmData('series')"
                 :items="series_array"
-                label="Series"
+                :label="$t('Series')"
                 item-text="title"
                 item-value="_id"
                 chips

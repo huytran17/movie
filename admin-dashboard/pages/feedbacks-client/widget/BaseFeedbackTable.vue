@@ -69,28 +69,28 @@ export default {
       default() {
         return [
           {
-            text: "Content",
+            text: this.$t("Content"),
             align: "start",
             filterable: false,
             value: "content",
             width: 200,
           },
           {
-            text: "Star count",
+            text: this.$t("Star count"),
             align: "start",
             filterable: false,
             value: "star_count",
             width: 200,
           },
           {
-            text: "Created by",
+            text: this.$t("Created by"),
             align: "start",
             filterable: false,
             value: "user_full_name",
             width: 250,
           },
           {
-            text: "Feedback on",
+            text: this.$t("Feedback on"),
             align: "start",
             filterable: false,
             value: "feedback_on",
@@ -98,21 +98,21 @@ export default {
           },
 
           {
-            text: "Created at",
+            text: this.$t("Created at"),
             align: "start",
             filterable: false,
             value: "created_at",
             width: 250,
           },
           {
-            text: "Last updated at",
+            text: this.$t("Last updated at"),
             align: "start",
             filterable: false,
             value: "updated_at",
             width: 250,
           },
           {
-            text: "Tools",
+            text: this.$t("Tools"),
             align: "center",
             filterable: false,
             value: "feedback_tools",

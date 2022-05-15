@@ -15,7 +15,7 @@ export default {
   async fetch() {
     try {
       await this.GET_FILMS({
-        categories: ["family"],
+        categories: ["mentality"],
         new_state: true,
       });
     } catch (e) {

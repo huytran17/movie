@@ -2,16 +2,6 @@
   <div>
     <BaseTableLoader v-if="film_loading" />
     <v-card v-else>
-      <v-card-title>
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-card-title>
       <v-data-table
         :headers="headers"
         :items="get_films"
@@ -49,6 +39,24 @@
         <template v-slot:item.thumnail="{ item }">
           <v-img :src="getFilmThumbnail(item)" max-width="200px"></v-img>
         </template>
+        <template v-slot:item.meta.duration="{ item }">
+          <div class="text-body-2">
+            <span class="app-body">
+              <span
+                >{{ item.meta.duration ? item.meta.duration : "_" }} phút</span
+              >
+            </span>
+          </div>
+        </template>
+        <template v-slot:item.view_count="{ item }">
+          <div class="text-body-2">
+            <span class="app-body">
+              <span>{{
+                item.meta.view_count ? item.meta.view_count : "0"
+              }}</span>
+            </span>
+          </div>
+        </template>
         <template v-slot:item.created_at="{ item }">
           {{ $moment(item.created_at).format("DD-MM-YYYY") }}
         </template>
@@ -76,6 +84,13 @@
                 </div>
               </li>
             </ul>
+          </div>
+        </template>
+        <template v-slot:item.series="{ item }">
+          <div class="text-body-2">
+            <span class="app-body">
+              <span v-html="$t(item.series.title)"></span>
+            </span>
           </div>
         </template>
 
@@ -168,56 +183,56 @@ export default {
       default() {
         return [
           {
-            text: "Title",
+            text: this.$t("Title"),
             align: "start",
             filterable: false,
             value: "title",
             width: 200,
           },
           {
-            text: "Description",
+            text: this.$t("Description"),
             align: "start",
             filterable: false,
             value: "description",
             width: 250,
           },
           {
-            text: "Category",
+            text: this.$t("Category"),
             align: "start",
             filterable: false,
             value: "categories",
             width: 200,
           },
           {
-            text: "Manufacture year",
+            text: this.$t("Manufacture at"),
             align: "start",
             filterable: false,
             value: "meta.manufactured_at",
             width: 200,
           },
           {
-            text: "Release at",
+            text: this.$t("Release at"),
             align: "start",
             filterable: false,
             value: "meta.released_at",
             width: 250,
           },
           {
-            text: "Series",
+            text: this.$t("Series"),
             align: "start",
             filterable: false,
-            value: "series.title",
+            value: "series",
             width: 200,
           },
           {
-            text: "Thumnail",
+            text: this.$t("Thumnail"),
             align: "start",
             filterable: false,
             value: "thumnail",
             width: 250,
           },
           {
-            text: "Views",
+            text: this.$t("Views"),
             align: "start",
             filterable: false,
             value: "view_count",
@@ -225,7 +240,7 @@ export default {
             sortable: false,
           },
           {
-            text: "Director",
+            text: this.$t("Director"),
             align: "start",
             filterable: false,
             value: "meta.director",
@@ -233,7 +248,7 @@ export default {
             sortable: false,
           },
           {
-            text: "Actors",
+            text: this.$t("Actors"),
             align: "start",
             filterable: false,
             value: "actors",
@@ -241,15 +256,15 @@ export default {
             sortable: false,
           },
           {
-            text: "Total time",
+            text: this.$t("Total time"),
             align: "start",
             filterable: false,
-            value: "meta.total_time",
+            value: "meta.duration",
             width: 150,
             sortable: false,
           },
           {
-            text: "Country",
+            text: this.$t("Country"),
             align: "start",
             filterable: false,
             value: "meta.countries",
@@ -257,7 +272,7 @@ export default {
             sortable: false,
           },
           {
-            text: "Quality",
+            text: this.$t("Quality"),
             align: "start",
             filterable: false,
             value: "meta.quality",
@@ -265,7 +280,7 @@ export default {
             sortable: false,
           },
           {
-            text: "Rating",
+            text: this.$t("Rating"),
             align: "start",
             filterable: false,
             value: "meta.rating",
@@ -273,7 +288,7 @@ export default {
             sortable: false,
           },
           {
-            text: "Language",
+            text: this.$t("Language"),
             align: "start",
             filterable: false,
             value: "meta.languages",
@@ -281,15 +296,15 @@ export default {
             sortable: false,
           },
           {
-            text: "Film studio",
+            text: this.$t("Film studio"),
             align: "start",
             filterable: false,
-            value: "meta.film_studio",
+            value: "meta.studio",
             width: 150,
             sortable: false,
           },
           {
-            text: "Status",
+            text: this.$t("Status"),
             align: "start",
             filterable: false,
             value: "meta.status",
@@ -297,7 +312,7 @@ export default {
             sortable: false,
           },
           {
-            text: "Tags",
+            text: this.$t("Tags"),
             align: "start",
             filterable: false,
             value: "meta.tags",
@@ -305,7 +320,7 @@ export default {
             sortable: false,
           },
           {
-            text: "Age limit",
+            text: this.$t("Age limit"),
             align: "start",
             filterable: false,
             value: "meta.age_limit",
@@ -313,21 +328,21 @@ export default {
             sortable: false,
           },
           {
-            text: "Created at",
+            text: this.$t("Created at"),
             align: "start",
             filterable: false,
             value: "created_at",
             width: 250,
           },
           {
-            text: "Last updated at",
+            text: this.$t("Last updated at"),
             align: "start",
             filterable: false,
             value: "updated_at",
             width: 250,
           },
           {
-            text: "Tools",
+            text: this.$t("Tools"),
             align: "center",
             filterable: false,
             value: "film_tools",
@@ -353,7 +368,8 @@ export default {
   },
   methods: {
     getFilmThumbnail(item) {
-      const thumbnail = _.get(item, "aws_thumnail.meta.location", "");
+      const thumbnail = _.get(item, "aws_thumbnail.meta.location", "");
+      console.log(thumbnail);
       return thumbnail;
     },
     openDeleteFilmConfirmDialog({ film }) {

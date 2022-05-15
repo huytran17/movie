@@ -22,7 +22,7 @@
               ><v-text-field
                 :value="new_feedback.content"
                 hide-details
-                placeholder="Type your feedback..."
+                :placeholder="$t('Type your feedback...')"
                 class="pt-0"
                 :rules="feedbackContentRules"
                 :disabled="can_not_feedback"

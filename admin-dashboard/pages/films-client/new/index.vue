@@ -87,7 +87,7 @@
           <v-autocomplete
             :value="new_film.categories"
             :items="film_categories"
-            label="Categories"
+            :label="$t('Categories')"
             item-text="text"
             item-value="value"
             multiple
@@ -103,7 +103,9 @@
       <v-row>
         <v-col cols="12" md="6">
           <div class="text-body-2">
-            <label class="date-picker-label"> Manufacture at </label>
+            <label class="date-picker-label">
+              {{ $t("Manufacture at") }}
+            </label>
           </div>
           <v-date-picker
             :value="new_film.meta.manufactured_at"
@@ -120,7 +122,7 @@
         </v-col>
         <v-col cols="12" md="6">
           <div class="text-body-2">
-            <label class="date-picker-label"> Release at </label>
+            <label class="date-picker-label"> {{ $t("Release at") }} </label>
           </div>
           <v-date-picker
             :value="new_film.meta.released_at"

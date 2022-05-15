@@ -277,15 +277,15 @@ export default {
       tab: "information",
       tab_items: [
         {
-          text: "Information",
+          text: this.$t("Information"),
           value: "information",
         },
         {
-          text: "Description",
+          text: this.$t("Description"),
           value: "description",
         },
         {
-          text: "Trailer",
+          text: this.$t("Trailer"),
           value: "trailer",
         },
       ],

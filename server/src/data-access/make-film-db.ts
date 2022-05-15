@@ -150,6 +150,10 @@ export default function makeFilmDb({
 
       const existing = await filmDbModel
         .find(query_conditions)
+        .populate({
+          path: "series",
+          select: "-__v",
+        })
         .sort({
           created_at: "desc",
         })

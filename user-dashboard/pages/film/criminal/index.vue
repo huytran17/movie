@@ -5,8 +5,8 @@
 
 <script>
 import BaseFilmsList2 from "@/components/film/BaseFilmsList2";
-import filmMixins from "@/mixins/film";
 import BaseNoContent from "@/components/BaseNoContent";
+import filmMixins from "@/mixins/film";
 
 export default {
   name: "Films",
@@ -15,7 +15,7 @@ export default {
   async fetch() {
     try {
       await this.GET_FILMS({
-        categories: ["documentary"],
+        categories: ["criminal"],
         new_state: true,
       });
     } catch (e) {

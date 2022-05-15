@@ -30,11 +30,6 @@
         {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
       </template>
 
-      <template v-slot:item.email_verified_at="{ item }">
-        <span v-if="item.email_verified_at">
-          {{ $moment(item.updated_at).format("DD-MM-YYYY") }}
-        </span>
-      </template>
       <template v-slot:item.birthday="{ item }">
         <span v-if="item.birthday">
           {{ $moment(item.birthday).format("DD-MM-YYYY") }}
@@ -74,63 +69,56 @@ export default {
       default() {
         return [
           {
-            text: "User name",
+            text: this.$t("User name"),
             align: "start",
             filterable: false,
             value: "full_name",
             width: 200,
           },
           {
-            text: "Email",
+            text: this.$t("Email"),
             align: "start",
             filterable: false,
             value: "email",
             width: 250,
           },
           {
-            text: "Birthday",
+            text: this.$t("Birthday"),
             align: "start",
             filterable: false,
             value: "birthday",
             width: 250,
           },
           {
-            text: "Age",
+            text: this.$t("Age"),
             align: "start",
             filterable: false,
             value: "age",
             width: 250,
           },
           {
-            text: "Phone number",
+            text: this.$t("Phone number"),
             align: "start",
             filterable: false,
             value: "phone_number",
             width: 200,
           },
           {
-            text: "Email verified at",
-            align: "start",
-            filterable: false,
-            value: "email_verified_at",
-            width: 250,
-          },
-          {
-            text: "Joined at",
+            text: this.$t("Joined at"),
             align: "start",
             filterable: false,
             value: "created_at",
             width: 250,
           },
           {
-            text: "Last updated at",
+            text: this.$t("Last updated at"),
             align: "start",
             filterable: false,
             value: "updated_at",
             width: 250,
           },
           {
-            text: "Tools",
+            text: this.$t("Tools"),
             align: "center",
             filterable: false,
             value: "user_tools",

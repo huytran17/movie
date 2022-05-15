@@ -77,7 +77,7 @@ export default {
         return {
           slide_image_src: require(`@/assets/images/dashboard/slide-${
             index + 1
-          }.webp`),
+          }.jpg`),
           alt: film.title,
           title: film.title,
           description: film.description,

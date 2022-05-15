@@ -15,7 +15,7 @@ export default {
         (v) => !!v.length > 0 || this.$t("Category is required."),
       ],
       qualityRules: [(v) => !!v || this.$t("Quality is required.")],
-      actorsRules: [(v) => !!v || this.$t("Actor time is required.")],
+      actorsRules: [(v) => !!v || this.$t("Actor is required.")],
       directorRules: [(v) => !!v || this.$t("Director is required.")],
       totalTimeRules: [(v) => !!v || this.$t("Total time is required.")],
       // countriesRules: [(v) => !!v || this.$t("Country is required.")],

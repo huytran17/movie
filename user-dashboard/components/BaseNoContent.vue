@@ -3,7 +3,7 @@
     <div class="d-flex flex-column justify-center">
       <div class="text-h6">
         <span class="app-title">
-          <span v-html="$t('No data found..')"></span>
+          <span v-html="$t('No data found...')"></span>
         </span>
       </div>
       <div>
