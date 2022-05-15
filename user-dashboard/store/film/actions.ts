@@ -17,6 +17,7 @@ const actions: ActionTree<FilmState, RootState> = {
     const categories = _.get(params, "categories", []);
     const keep_in_store = _.get(params, "keep_in_store", true);
     const exclude_ids = _.get(params, "exclude_ids", []);
+    const exclude_series = _.get(params, "exclude_series", false);
 
     let url_query = `?page=1`;
 
@@ -26,7 +27,9 @@ const actions: ActionTree<FilmState, RootState> = {
 
     if (query) {
       url_query += `&query=${query}`;
-      console.log(query);
+    }
+    if (exclude_series) {
+      url_query += `&exclude_series=${exclude_series}`;
     }
 
     if (series) {

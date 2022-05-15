@@ -20,11 +20,13 @@ export default function makeGetFilmsController({
         series,
         exclude_ids = "",
         query = "",
+        exclude_series = false,
       }: {
         categories: string;
         series: string;
         exclude_ids?: string;
         query?: string;
+        exclude_series?: boolean;
       } = _.get(httpRequest, "context.validated");
 
       const categories_array = categories ? categories.split(",") : [];
@@ -35,6 +37,7 @@ export default function makeGetFilmsController({
         series,
         exclude_ids: exclude_ids_array,
         query,
+        exclude_series,
       });
 
       return {
