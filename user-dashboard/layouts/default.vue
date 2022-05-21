@@ -28,7 +28,7 @@
         </v-col>
       </v-row>
       <TheSideNav />
-      <div class="h-100">
+      <div class="pb-5">
         <nuxt />
         <BaseUserCompleteProfile
           :show_dialog="show_complete_profile_dialog"
