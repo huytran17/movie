@@ -37,12 +37,11 @@
               <v-tab-item>
                 <v-row>
                   <v-col cols="12" md="6">
-                    <div class="text-body-2">
+                    <div v-if="film_series" class="text-body-2">
                       <v-icon small color="primary">mdi-adjust</v-icon>
                       <span v-html="$t('Series: ')" class="font-weight-bold">
                       </span>
                       <span
-                        v-if="film_series"
                         v-html="$t(film_series.title)"
                         class="primary--text"
                       ></span>
