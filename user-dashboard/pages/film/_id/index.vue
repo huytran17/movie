@@ -54,7 +54,7 @@
                       </span>
                       <span
                         v-if="film_meta"
-                        v-html="$t(film.meta.status)"
+                        v-html="$t(status_mapped)"
                         class="primary--text text-capitalize"
                       ></span>
                     </div>
@@ -67,7 +67,7 @@
                       >
                       </span>
                       <span
-                        v-html="$t(joinArray(film.categories || [], ', '))"
+                        v-html="$t(joinArray(categories_mapped, ', '))"
                         class="primary--text text-capitalize"
                       ></span>
                     </div>
@@ -111,7 +111,7 @@
                       </span>
                       <span
                         v-if="film_meta"
-                        v-html="$t(film.meta.quality)"
+                        v-html="$t(quality_mapped)"
                         class="primary--text text-capitalize"
                       ></span>
                     </div>
@@ -180,10 +180,10 @@
         </v-row>
       </v-col>
 
-      <v-col cols="12" lg="3" v-if="film_categories.length">
+      <v-col cols="12" lg="3" v-if="client_film_categories.length">
         <div class="d-flex flex-column">
           <BaseSuggestionList
-            :categories="film_categories"
+            :categories="client_film_categories"
             :exclude_ids="[film_id]"
           />
 
@@ -242,7 +242,9 @@ import userMixins from "@/mixins/user";
 import authMixins from "@/mixins/auth";
 import countriesMixins from "@/mixins/countries";
 import languagesMixins from "@/mixins/languages";
-
+import qualityMixins from "@/mixins/quality";
+import statusMixins from "@/mixins/status";
+import categoriesMixins from "@/mixins/categories";
 import BaseFeedbacksList from "@/pages/feedback/BaseFeedbacksList";
 import BaseSuggestionList from "@/pages/film/widget/BaseSuggestionList";
 import BaseCommentForm from "@/pages/film/widget/BaseCommentForm";
@@ -259,6 +261,9 @@ export default {
     countriesMixins,
     languagesMixins,
     commentAssetMixins,
+    qualityMixins,
+    statusMixins,
+    categoriesMixins,
   ],
   components: {
     BaseSuggestionList,
@@ -270,10 +275,8 @@ export default {
   data() {
     return {
       player_key: 0,
-      countries_mapped: [],
-      languages_mapped: [],
       film_id: "",
-      film_categories: [],
+      client_film_categories: [],
       tab: "information",
       tab_items: [
         {
@@ -303,6 +306,30 @@ export default {
     };
   },
   computed: {
+    quality_mapped() {
+      const quality = _.get(this.film, "meta.quality");
+      return this.getQualityText({ quality_code: quality });
+    },
+    status_mapped() {
+      const status = _.get(this.film, "meta.status");
+      return this.getStatusText({ status_code: status });
+    },
+
+    categories_mapped() {
+      const categories = _.get(this.film, "categories", []);
+      return this.matchCategories(categories);
+    },
+
+    languages_mapped() {
+      const languages = _.get(this.film, "meta.languages", []);
+      return this.matchCountries(languages);
+    },
+
+    countries_mapped() {
+      const countries = _.get(this.film, "meta.countries", []);
+      return this.matchCountries(countries);
+    },
+
     get_film_thumbnail() {
       return _.get(this.film, "aws_thumbnail.meta.location", "");
     },
@@ -395,12 +422,7 @@ export default {
         }
       }
 
-      this.film_categories = _.get(this.film, "categories", []);
-      const countries = _.get(this.film, "meta.countries", []);
-      this.countries_mapped = this.matchCountries(countries);
-
-      const languages = _.get(this.film, "meta.languages", []);
-      this.languages_mapped = this.matchCountries(languages);
+      this.client_film_categories = _.get(this.film, "categories", []);
 
       const view_count = _.get(this.film, "meta.view_count", 0);
 

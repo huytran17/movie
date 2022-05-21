@@ -283,6 +283,9 @@ import authMixins from "@/mixins/auth";
 import adminMixins from "@/mixins/admin";
 import countriesMixins from "@/mixins/countries";
 import languagesMixins from "@/mixins/languages";
+import qualityMixins from "@/mixins/quality";
+import statusMixins from "@/mixins/status";
+import categoriesMixins from "@/mixins/categories";
 import seriesMixins from "@/mixins/series";
 import Editor from "@/components/Editor";
 
@@ -295,6 +298,9 @@ export default {
     countriesMixins,
     languagesMixins,
     seriesMixins,
+    qualityMixins,
+    statusMixins,
+    categoriesMixins,
   ],
   components: {
     Editor,
@@ -302,118 +308,8 @@ export default {
   data() {
     return {
       form_valid: false,
-      qualities: [
-        {
-          text: "4K",
-          value: "4k",
-        },
-        {
-          text: "Full HD",
-          value: "full hd",
-        },
-        {
-          text: "HD",
-          value: "hd",
-        },
-        {
-          text: "Low",
-          value: "low",
-        },
-      ],
-      statuses: [
-        {
-          text: "Available",
-          value: "available",
-        },
-        {
-          text: "Blocked",
-          value: "blocked",
-        },
-        {
-          text: "Updating",
-          value: "updating",
-        },
-      ],
       film_manufactured_at: new Date(Date.now()).toISOString().substr(0, 10),
       film_released_at: new Date(Date.now()).toISOString().substr(0, 10),
-      film_categories: [
-        {
-          text: "Comedy",
-          value: "comedy",
-        },
-        {
-          text: "Horror",
-          value: "horror",
-        },
-        {
-          text: "Documentary",
-          value: "documentary",
-        },
-        {
-          text: "Family",
-          value: "family",
-        },
-        {
-          text: "Kid",
-          value: "kid",
-        },
-        {
-          text: "Vietnam",
-          value: "vietnam",
-        },
-        {
-          text: "USUK",
-          value: "usuk",
-        },
-        {
-          text: "Fiction",
-          value: "fiction",
-        },
-        {
-          text: "Theater",
-          value: "theater",
-        },
-        {
-          text: "Action",
-          value: "action",
-        },
-        {
-          text: "Thrilling",
-          value: "thrilling",
-        },
-        {
-          text: "Legend",
-          value: "legend",
-        },
-        {
-          text: "Adventure",
-          value: "adventure",
-        },
-        {
-          text: "Martial arts",
-          value: "martial_arts",
-        },
-        {
-          text: "Mentality",
-          value: "mentality",
-        },
-        {
-          text: "Cartoon",
-          value: "cartoon",
-        },
-        {
-          text: "School",
-          value: "school",
-        },
-        {
-          text: "Affection",
-          value: "affection",
-        },
-        {
-          text: "Criminal",
-          value: "criminal",
-        },
-      ],
     };
   },
   methods: {

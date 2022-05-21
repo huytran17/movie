@@ -87,7 +87,7 @@
           </div>
         </template>
         <template v-slot:item.series="{ item }">
-          <div class="text-body-2">
+          <div v-if="item.series" class="text-body-2">
             <span class="app-body">
               <span v-html="$t(item.series.title)"></span>
             </span>
